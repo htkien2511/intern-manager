@@ -1,6 +1,9 @@
 import React from "react";
+import FormWatch from "./components/intern/infoIntern/FormWatch";
 function App() {
-  return <div className="red-color">App</div>;
+  return (
+    <FormWatch />
+  );
 }
 
 export default App;

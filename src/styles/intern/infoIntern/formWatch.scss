@@ -1,0 +1,123 @@
+.form-watch{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    h2 {
+        font-size: 35px;
+    }
+    &__body{
+        background-color: #eeef;
+        border-radius: 8px;
+        box-shadow: 4px 4px #888888;
+        display: flex;
+        justify-content: space-between;
+        &__info{
+            padding: 36px;
+            h4{
+                font-size: 25px;
+            }
+            form{
+                .info__name{
+                    margin-top: 10px;
+                    margin-bottom: 10px;
+                    label{
+                        font-weight: bold;
+                        margin-right: 10px;
+                    }
+                    input{
+                        border-radius: 5px;
+                        height: 30px;
+                    }
+                }
+                .info__email{
+                    margin-bottom: 10px;
+                    label{
+                        font-weight: bold;
+                        margin-right: 38px;
+                    }
+                    input{
+                        border-radius: 5px;
+                        height: 30px;
+                    }
+                }
+                .info__phone{
+                    margin-bottom: 10px;
+                    label{
+                        font-weight: bold;
+                        margin-right: 36px;
+                    }
+                    input{
+                        border-radius: 5px;
+                        height: 30px;
+                    }
+                }
+                .info__sex{
+                    margin-bottom: 10px;
+                    #sex{
+                        font-weight: bold;
+                    }
+                    label{
+                        margin-right: 49px;
+                    }
+                }
+                .info__address{
+                    margin-bottom: 10px;
+                    label{
+                        font-weight: bold;
+                        margin-right: 24px;
+                    }
+                    input{
+                        border-radius: 5px;
+                        height: 30px;
+                    }
+                }
+            }
+        }
+        &__account{
+            padding: 36px;
+            h4{
+                font-size: 25px;
+            }
+            form{
+                .account__username{
+                    margin-top: 10px;
+                    margin-bottom: 10px;
+                    label{
+                        font-weight: bold;
+                        margin-right: 10px;
+                    }
+                    input{
+                        border-radius: 5px;
+                        height: 30px;
+                    }
+                }
+                .account__password{
+                    margin-bottom: 10px;
+                    label{
+                        font-weight: bold;
+                        margin-right: 14px;
+                    }
+                    input{
+                        border-radius: 5px;
+                        height: 30px;
+                    }
+                }
+            }
+        }
+    }
+    .btn-edit{
+        background-color: #008CBA;
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 13px; 
+        border-radius: 8px;
+        text-justify: auto;
+        width: 200px;
+        font-weight: bold;
+        margin: 30px;  
+    }
+}
