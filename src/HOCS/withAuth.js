@@ -6,8 +6,8 @@ const withAuth = (Component, showMenu = false) => (props) => {
     <div className="app">
       <Header showMenu={showMenu} />
       <div className="app__body">
-        <div className="app__content">
-          <div className="app__content__inner">
+        <div className="app__content__sidebar">
+          <div className="app__content__inner sidebar">
             <SideBar />
             <Component {...props} />
           </div>

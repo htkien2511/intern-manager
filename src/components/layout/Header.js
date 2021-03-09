@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 import { ROUTE_LOGIN } from "../../utils/routes";
+import DropdownUserMenu from "../common/DropdownUserMenu";
 
 function Header() {
 
@@ -13,13 +14,14 @@ function Header() {
                 </NavLink>
 
                 <div className="header__inner__menu flex items-center">
-                    {/* <NavLink activeClassName="--active" to="/" exact>
+                    <NavLink activeClassName="--active" to="/" exact>
                         <span>Home page</span>
-                    </NavLink> */}
+                    </NavLink>
 
                     <NavLink activeClassName="--active" to={ROUTE_LOGIN}>
                         <button className="button button--login">Login</button>
                     </NavLink>
+                    <DropdownUserMenu />
                 </div>
             </div>
         </div>

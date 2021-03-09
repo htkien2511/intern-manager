@@ -1,21 +1,23 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
-import logo from "../../assets/images/logo.png";
-import { ROUTE_LOGIN } from "../../utils/routes";
-
 function SideBar() {
 
     return (
         <div className="side-bar">
-            <div className="header__inner flex items-center space-between">
-                <NavLink to="/" className="header__inner__logo">
-                    <img src={logo} alt="Logo" />
-                </NavLink>
-
-                <div className="header__inner__menu flex items-center">
-                    <NavLink activeClassName="--active" to={ROUTE_LOGIN}>
-                        <button className="button button--login">Login</button>
-                    </NavLink>
+            <div className="side-bar__inner flex items-center space-between">
+                <div className="side-bar__inner-item">
+                    <div className="side-bar__inner-item__inner border-corner">Manage Account Intern</div>
+                </div>
+                <div className="side-bar__inner-item">
+                    <div className="side-bar__inner-item__inner border-corner">Item2</div>
+                </div>
+                <div className="side-bar__inner-item">
+                    <div className="side-bar__inner-item__inner border-corner">Item3</div>
+                </div>
+                <div className="side-bar__inner-item">
+                    <div className="side-bar__inner-item__inner border-corner">Item4</div>
+                </div>
+                <div className="side-bar__inner-item">
+                    <div className="side-bar__inner-item__inner border-corner">Item5</div>
                 </div>
             </div>
         </div>
