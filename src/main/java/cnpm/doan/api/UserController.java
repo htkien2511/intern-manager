@@ -22,12 +22,12 @@ public class UserController {
     @Autowired
     private RoleService roleService;
 
-    @GetMapping("/user")
+    @GetMapping("/users")
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     public ResponseEntity getUser(@RequestParam(name = "role_name") String roleName) {
         System.out.println(roleName);
         List<User> users = userService.findUserByRoleName(roleName);
-        List<UserDomain> result = users.stream().map(t -> new UserDomain(t.getName(), t.getEmail(), t.getDepartment().getName(), t.getAddress()))
+        List<UserDomain> result = users.stream().map(t -> new UserDomain(t))
                 .collect(Collectors.toList());
         return ResponseEntity.ok(result);
     }
@@ -44,5 +44,11 @@ public class UserController {
         newUser.setRoles(roleService.findRoleByRoleName("ROLE_USER"));
         userService.createUser(newUser);
         return ResponseEntity.ok(account.getEmail());
+    }
+
+    @PostMapping("/user_profile")
+    public ResponseEntity<?> getUserProfile(@RequestParam("email") String email) {
+        User user = userService.findUserByEmail(email);
+        return ResponseEntity.ok(new UserDomain(user));
     }
 }

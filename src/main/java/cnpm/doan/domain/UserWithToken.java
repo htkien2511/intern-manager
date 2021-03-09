@@ -1,10 +1,17 @@
 package cnpm.doan.domain;
 
+import cnpm.doan.entity.User;
+
 public class UserWithToken extends UserDomain {
     private String token;
 
-    public UserWithToken(String name, String email, String department, String address, String token) {
-        super(name, email, department, address);
+    public UserWithToken(String name, String email, String department, String address, String role, String token) {
+        super(name, email, department, address, role);
+        this.token = token;
+    }
+
+    public UserWithToken(User user, String token) {
+        super(user.getName(), user.getEmail(), user.getDepartment().getName(), user.getAddress(), user.getRoles().getRoleName());
         this.token = token;
     }
 
@@ -15,4 +22,5 @@ public class UserWithToken extends UserDomain {
     public void setToken(String token) {
         this.token = token;
     }
+
 }

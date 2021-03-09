@@ -1,5 +1,6 @@
 package cnpm.doan.api;
 
+import cnpm.doan.domain.ResponeDomain;
 import cnpm.doan.domain.UserDomain;
 import cnpm.doan.entity.User;
 import cnpm.doan.service.UserService;
@@ -8,6 +9,7 @@ import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.ui.Model;
@@ -54,7 +56,7 @@ public class ForgotPasswordController {
     public ResponseEntity showResetPasswordForm(@RequestParam(value = "token") String token) {
         User user = userService.findUserByResetPasswordToken(token);
         if (user == null) {
-            return ResponseEntity.ok(Message.INVALID_TOKEN.getDetail());
+            return ResponseEntity.ok(new ResponeDomain(Message.INVALID_TOKEN.getDetail(), HttpStatus.BAD_REQUEST));
         }
         return ResponseEntity.ok("oke");
     }
@@ -63,10 +65,10 @@ public class ForgotPasswordController {
     public ResponseEntity processResetPassword(@RequestParam("token") String token, @RequestParam("password") String password) {
         User user = userService.findUserByResetPasswordToken(token);
         if (user == null) {
-            return ResponseEntity.ok(Message.INVALID_TOKEN.getDetail());
+            return ResponseEntity.ok(new ResponeDomain(Message.INVALID_TOKEN.getDetail(), HttpStatus.BAD_REQUEST));
         } else {
             userService.updatePassword(user, password);
-            UserDomain userDomain = new UserDomain(user.getName(), user.getEmail(), user.getAddress(), user.getDepartment().getName());
+            UserDomain userDomain = new UserDomain(user);
             return ResponseEntity.ok(userDomain);
         }
     }
@@ -80,14 +82,14 @@ public class ForgotPasswordController {
         helper.setSubject(cnpm.doan.util.Message.SUBJECT_EMAIL_FORGOT_PASS.getDetail());
         String content = "<img src='https://scontent.fdad3-2.fna.fbcdn.net/v/t1.0-9/48384579_317001252241916_6859686426733182976_n.png?_nc_cat=101&ccb=1-3&_nc_sid=09cbfe&_nc_ohc=BuiQGHLlFAMAX-VNYVr&_nc_ht=scontent.fdad3-2.fna&oh=7e28303c598f2cc682e25c3ed10e1cd1&oe=606A0F6A'> "
                 + "<br>"
-                + "<p>Shapee Cloud chào bạn</p>"
+                + "<p>Dear user.</p>"
                 + "<br>"
-                + "<p>Chúng tôi vừa nhận được yêu cầu thay đổi mật khẩu của bạn.</p>"
-                + "<p>Hãy click vào link bên dưới để tiến hành thay đổi mật khẩu của bản nhé!</p>"
+                + "<p>We have received your reset password request</p>"
+                + "<p>Please click below button to reset your password.</p>"
                 + "<p><a href='" + link + "' style='padding:10px 20px;background-color:#337ab7;text-decoration:none;color:#fffffe;border-radius:5px;display:inline-block;max-width:70%;font-size:16px;margin:10px 0' >Thay đổi mật khẩu</a></p>"
-                + "<p>Bỏ qua email này nếu bạn đã nhớ mật khẩu của mình."
+                + "<p>Ignore this email if you have remembered your password."
                 + "<br>"
-                + "Shapee Cloud chúc bạn một ngày tốt lành.</p>";
+                + "Have a nice day.</p>";
         ;
         helper.setText(content, true);
         mailSender.send(message);

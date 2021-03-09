@@ -1,16 +1,36 @@
 package cnpm.doan.domain;
 
+import cnpm.doan.entity.User;
+
 public class UserDomain {
     private String name;
     private String email;
     private String department;
     private String address;
+    private String role;
 
-    public UserDomain(String name, String email, String department, String address) {
+    public UserDomain(String name, String email, String department, String address, String role) {
         this.name = name;
         this.email = email;
         this.department = department;
         this.address = address;
+        this.role = role;
+    }
+
+    public UserDomain(User user) {
+        this.name = user.getName();
+        this.email = user.getEmail();
+        this.department = user.getDepartment().getName();
+        this.address = user.getAddress();
+        this.role = user.getRoles().getRoleName();
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getAddress() {
