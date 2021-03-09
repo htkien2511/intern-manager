@@ -27,13 +27,13 @@ const Footer = () => {
                             support
             </p>
                         <ul>
-                            {(
+                            {
                                 <li>
                                     <NavLink activeClassName="--active" to="/feedback">
                                         <span className="link">Feedback</span>
                                     </NavLink>
                                 </li>
-                            )}
+                            }
                         </ul>
                     </div>
                     <div className="footer__inner__links__item follow-us">

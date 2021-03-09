@@ -1,10 +1,12 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
+import { getAuth } from "../../utils/helpers";
 import { ROUTE_LOGIN } from "../../utils/routes";
 import DropdownUserMenu from "../common/DropdownUserMenu";
 
 function Header() {
+    const auth = getAuth();
 
     return (
         <div className="header">
@@ -17,11 +19,11 @@ function Header() {
                     <NavLink activeClassName="--active" to="/" exact>
                         <span>Home page</span>
                     </NavLink>
-
-                    <NavLink activeClassName="--active" to={ROUTE_LOGIN}>
-                        <button className="button button--login">Login</button>
-                    </NavLink>
-                    <DropdownUserMenu />
+                    {auth && auth.token ? <DropdownUserMenu auth={auth} /> : (
+                        <NavLink activeClassName="--active" to={ROUTE_LOGIN}>
+                            <button className="button button--login">Login</button>
+                        </NavLink>
+                    )}
                 </div>
             </div>
         </div>
