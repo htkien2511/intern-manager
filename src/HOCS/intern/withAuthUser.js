@@ -1,5 +1,5 @@
 import React from "react";
-import { HeaderUser, Footer } from "../components/layout";
+import { HeaderUser, Footer } from "../../components/layout";
 
 const withAuthUser = (Component, showMenu = false) => (props) => {
     return (
