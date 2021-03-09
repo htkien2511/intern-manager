@@ -1,4 +1,10 @@
 @import "./intern/infoIntern/formWatch";
+@import "./intern/taskManagement/taskManagement";
+@import "./intern/feedback/feedback";
+@import "./intern/feedback/sendFeedback";
+@import "./intern/feedback/conversation";
+@import "./intern/calendar/calendarTable";
+
 //global
 @import "./global/reset";
 @import "./global/variables";
