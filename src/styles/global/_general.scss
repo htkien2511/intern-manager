@@ -33,12 +33,15 @@
 .j-center {
   justify-content: center;
 }
-.link:hover {
+.link {
   color: #f0860e;
+  &:hover {
+    color: blue;
+  }
 }
 .app {
   transition: 0.25s ease;
-  background-color: #e4fff2;
+  background-color: #cfe3fa;
   min-height: 100vh;
 
   &:after {
@@ -88,25 +91,6 @@ a {
   align-items: center;
 }
 
-.confirm-centered {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  .modal-content {
-    width: 300px;
-    justify-content: center;
-    margin-left: 150px;
-  }
-}
-
-.centered_addpopup {
-  margin-top: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .lb {
   margin-top: 10px;
   font-size: 22px;
@@ -115,23 +99,6 @@ a {
   color: #089453;
 }
 
-.modal-dialog {
-  margin-top: 10%;
-}
-
-.member {
-  display: flex;
-  flex-direction: column;
-  justify-items: center;
-  text-align: center;
-  background: #e4fff2;
-
-  .member-img {
-    width: 150px;
-    height: 150px;
-    border-radius: 100%;
-  }
-}
-.ewslVP.ewslVP {
+.invalid-feedback {
   color: red;
 }

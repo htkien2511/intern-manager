@@ -13,12 +13,12 @@ function Header() {
                 </NavLink>
 
                 <div className="header__inner__menu flex items-center">
-                    <NavLink activeClassName="--active" to="/" exact>
+                    {/* <NavLink activeClassName="--active" to="/" exact>
                         <span>Home page</span>
-                    </NavLink>
+                    </NavLink> */}
 
                     <NavLink activeClassName="--active" to={ROUTE_LOGIN}>
-                        <span>Login</span>
+                        <button className="button button--login">Login</button>
                     </NavLink>
                 </div>
             </div>

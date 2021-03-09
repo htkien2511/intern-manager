@@ -1,14 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { FormBox } from "../common";
 import { Form as ReForm } from "reactstrap";
 import { isEmpty, isEmail } from "validator";
 import { useSelector } from "react-redux";
-import { ROUTE_FORGOTPASSWORD, ROUTE_REGISTER } from "../../utils/routes";
 
 const Form = ({ handleSubmit }) => {
   const [error, setError] = React.useState({});
-  const [form, setForm] = React.useState({ email: "", password: "" });
+  const [form, setForm] = React.useState({ name: "", email: "", password: "", confirmPassword: "" });
   const [errorLogin, setErrorLogin] = React.useState();
   const storeLogin = useSelector((store) => store.login);
   const loading = storeLogin.loading;
@@ -22,9 +20,20 @@ const Form = ({ handleSubmit }) => {
         errorState.email = "Email not valid";
       }
     }
+    if (isEmpty(form.name)) {
+      errorState.name = "Please enter name";
+    }
     if (isEmpty(form.password)) {
       errorState.password = "Please enter password";
     }
+    if (isEmpty(form.confirmPassword)) {
+      errorState.confirmPassword = "Please enter confirm password";
+    } else {
+      if (form.confirmPassword !== form.password) {
+        errorState.confirmPassword = "Please enter confirm password match with password";
+      }
+    }
+
     return errorState;
   };
   const handleSubmitForm = (event) => {
@@ -35,8 +44,10 @@ const Form = ({ handleSubmit }) => {
     }
 
     const formData = {
+      name: form.name,
       email: form.email,
       password: form.password,
+      confirmPassword: form.confirmPassword
     };
     handleSubmit(formData);
   };
@@ -57,10 +68,21 @@ const Form = ({ handleSubmit }) => {
       <div className="login__inner">
         <ReForm className="radius-l login__inner__form">
           <div className="login__inner__form__text">
-            <p>Login to your account</p>
+            <p>Register your account</p>
             <div className="error">{errorLogin}</div>
           </div>
 
+          <FormBox
+            propsInput={{
+              name: "Name",
+              placeholder: "Name",
+              onChange: handleChange,
+              onFocus: handleFocus,
+              value: form.name,
+              disabled: false,
+            }}
+            error={error.name}
+          />
           <FormBox
             propsInput={{
               name: "email",
@@ -72,7 +94,6 @@ const Form = ({ handleSubmit }) => {
             }}
             error={error.email}
           />
-
           <FormBox
             propsInput={{
               type: "password",
@@ -85,21 +106,20 @@ const Form = ({ handleSubmit }) => {
             }}
             error={error.password}
           />
+          <FormBox
+            propsInput={{
+              name: "confirmPassword",
+              placeholder: "Confirm password",
+              onChange: handleChange,
+              onFocus: handleFocus,
+              value: form.confirmPassword,
+              disabled: false,
+            }}
+            error={error.confirmPassword}
+          />
           <button disabled={loading} className="button button--secondary">
-            Login
+            Register
           </button>
-          <div className="flex space-between">
-            <div>
-              <Link to={ROUTE_FORGOTPASSWORD} className="primary link">
-                Forgot Password?
-              </Link>
-            </div>
-            <div>
-              <Link to={ROUTE_REGISTER} className="primary link">
-                Register
-              </Link>
-            </div>
-          </div>
         </ReForm>
       </div>
     </section>

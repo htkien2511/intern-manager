@@ -17,43 +17,33 @@ const Footer = () => {
                         <ul>
                             <li className>
                                 <NavLink activeClassName="--active" exact to="/">
-                                    <span>Home page</span>
+                                    <span className="link">Home page</span>
                                 </NavLink>
                             </li>
                         </ul>
                     </div>
                     <div className="footer__inner__links__item">
-                        <p className="text--xlarge underline underline--primary margin-b">
+                        <p className="text--xlarge underline underline--secondary margin-b">
                             support
             </p>
                         <ul>
                             {(
                                 <li>
                                     <NavLink activeClassName="--active" to="/feedback">
-                                        <span>Feedback</span>
+                                        <span className="link">Feedback</span>
                                     </NavLink>
                                 </li>
                             )}
                         </ul>
                     </div>
                     <div className="footer__inner__links__item follow-us">
-                        <p className="text--xlarge underline underline--primary margin-b">
+                        <p className="text--xlarge underline underline--secondary margin-b">
                             Follow us
             </p>
                         <ul>
                             <li>
-                                <a href="https://twitter.com/PhanTrongDuc5">
-                                    <span className="icon-twitter"></span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://www.facebook.com/Provide-tutors-100101211925466">
+                                <a href="https://www.facebook.com/shapeecloud">
                                     <span className="icon-facebook"></span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="https://www.instagram.com/tutors.matchingservice/?fbclid=IwAR042Gixk0QaIMG1e2wKGJhiE9XK0iq9CCCvquvtJ--nT_L-agSTMjNM1yM">
-                                    <span className="icon-instagram"></span>
                                 </a>
                             </li>
                         </ul>
