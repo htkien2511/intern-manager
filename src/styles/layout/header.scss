@@ -1,8 +1,8 @@
 .header {
   width: 100%;
-  background-color: $white;
+  background-color: #ace4df;
   position: sticky;
-  // box-shadow: 1px 1px 15px $light-grey;
+  box-shadow: 1px 1px 15px $light-grey;
   top: 0;
   z-index: 999;
   position: sticky;
@@ -36,7 +36,7 @@
     .button--login {
       height: 40px;
       width: 100px;
-      background: cadetblue;
+      background: rgb(36, 17, 143);
       outline: none;
       color: white;
       border: none;
