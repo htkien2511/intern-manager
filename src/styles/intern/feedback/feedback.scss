@@ -1,25 +1,28 @@
 .list{
     h1{
-        text-align: center;
-        font-size: 35px;
-        font-weight: bold;
         margin-bottom: 30px;
+        font-size: 55px;
+        text-align: center;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        color: #E24B3B;
     }
-    .btn-new{
-        background-color: #008CBA;
-        border: none;
-        color: white;
-        padding: 15px 32px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 15px; 
-        border-radius: 8px;
-        text-justify: auto;
-        width: 180px;
-        font-weight: bold;
+    .new__feedback{
         margin-bottom: 30px;
-        margin-left: 68%;
+        margin-left: 68%;   
+        .btn-new{
+            background-color: #008CBA;
+            border: none;
+            color: white;
+            padding: 15px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 15px; 
+            border-radius: 8px;
+            text-justify: auto;
+            width: 170px;
+            font-weight: bold;
+        }
     }
     .list_feedback{
         display: flex;
@@ -41,9 +44,6 @@
                 padding: 5px;
                 border-radius: 8px;
                 font-weight: bold;
-                a{
-                    text-decoration: none;
-                }
             }
         }
     }

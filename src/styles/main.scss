@@ -1,10 +1,12 @@
-@import "./intern/infoIntern/formWatch.scss";
-@import"./intern/taskManagement/taskManagement.scss";
-@import"./intern/feedback/feedback.scss";
-@import"./intern/feedback/sendFeedback.scss";
-@import"./intern/feedback/conversation.scss";
-@import"./intern/calendar/calendarTable.scss";
-
+//user
+@import "./intern/home/home";
+@import "./intern/infoIntern/formWatch";
+@import "./intern/infoIntern/formEdit";
+@import"./intern/taskManagement/taskManagement";
+@import"./intern/feedback/feedback";
+@import"./intern/feedback/sendFeedback";
+@import"./intern/feedback/conversation";
+@import"./intern/calendar/calendarTable";
 
 //global
 @import "./global/reset";
@@ -20,7 +22,12 @@
 @import "./global/underline";
 
 //layout
-@import "./layout/header.scss";
-@import "./layout/footer.scss";
+@import "./layout/header";
+@import "./layout/footer";
+@import "./layout/sideBar";
 //pages
 @import "./pages/login";
+@import "./pages/register";
+@import "./pages/forgotPassword";
+//admin
+@import "./pages/admin/manageIntern/manageIntern";

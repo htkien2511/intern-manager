@@ -2,20 +2,25 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FormBox } from "../common";
 import { Form as ReForm } from "reactstrap";
-import { isEmpty } from "validator";
+import { isEmpty, isEmail } from "validator";
 import { useSelector } from "react-redux";
+import { ROUTE_FORGOTPASSWORD, ROUTE_REGISTER } from "../../utils/routes";
 
 const Form = ({ handleSubmit }) => {
   const [error, setError] = React.useState({});
-  const [form, setForm] = React.useState({ userName: "", password: "" });
+  const [form, setForm] = React.useState({ email: "", password: "" });
   const [errorLogin, setErrorLogin] = React.useState();
   const storeLogin = useSelector((store) => store.login);
   const loading = storeLogin.loading;
   const validate = () => {
     const errorState = {};
     // check validate
-    if (isEmpty(form.userName)) {
-      errorState.userName = "Please enter user name";
+    if (isEmpty(form.email)) {
+      errorState.email = "Please enter email";
+    } else {
+      if (!isEmail(form.email)) {
+        errorState.email = "Email not valid";
+      }
     }
     if (isEmpty(form.password)) {
       errorState.password = "Please enter password";
@@ -30,7 +35,7 @@ const Form = ({ handleSubmit }) => {
     }
 
     const formData = {
-      userName: form.userName,
+      email: form.email,
       password: form.password,
     };
     handleSubmit(formData);
@@ -58,14 +63,14 @@ const Form = ({ handleSubmit }) => {
 
           <FormBox
             propsInput={{
-              name: "userName",
-              placeholder: "User Name",
+              name: "email",
+              placeholder: "Email",
               onChange: handleChange,
               onFocus: handleFocus,
-              value: form.userName,
+              value: form.email,
               disabled: false,
             }}
-            error={error.userName}
+            error={error.email}
           />
 
           <FormBox
@@ -85,12 +90,12 @@ const Form = ({ handleSubmit }) => {
           </button>
           <div className="flex space-between">
             <div>
-              <Link to="/forgot-password" className="primary link">
+              <Link to={ROUTE_FORGOTPASSWORD} className="primary link">
                 Forgot Password?
               </Link>
             </div>
             <div>
-              <Link to="/register" className="primary link">
+              <Link to={ROUTE_REGISTER} className="primary link">
                 Register
               </Link>
             </div>

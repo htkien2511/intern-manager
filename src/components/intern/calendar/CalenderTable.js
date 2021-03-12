@@ -2,7 +2,7 @@ import React from "react";
 function CalenderTable() {
   return(
         <div className="calendar">
-            <h2>Calendar</h2>
+            <h2>Sign up for a calendar</h2>
             <div className="select-time">
                 <label>Choose time</label>
                 <select>
@@ -30,6 +30,8 @@ function CalenderTable() {
                         <th>Wednesday</th>
                         <th>Thursday</th>
                         <th>Friday</th>
+                        <th>Saturday</th>
+                        <th>Sunday</th>
                     </tr>
                     <tr>
                         <td>
@@ -44,6 +46,7 @@ function CalenderTable() {
                                 <option value="All day">All day</option>
                                 <option value="Morning">Morning</option>
                                 <option value="Afternoon">Afternoon</option>
+                                <option value="Vacation">Vacation</option>
                             </select>
                         </td>
                         <td id="Tuesday">
@@ -52,6 +55,7 @@ function CalenderTable() {
                                 <option value="All day">All day</option>
                                 <option value="Morning">Morning</option>
                                 <option value="Afternoon">Afternoon</option>
+                                <option value="Vacation">Vacation</option>
                             </select>
                         </td>
                         <td id="Wednesday">
@@ -60,6 +64,7 @@ function CalenderTable() {
                                 <option value="All day">All day</option>
                                 <option value="Morning">Morning</option>
                                 <option value="Afternoon">Afternoon</option>
+                                <option value="Vacation">Vacation</option>
                             </select>
                         </td>
                         <td id="Thursday">
@@ -68,6 +73,7 @@ function CalenderTable() {
                                 <option value="All day">All day</option>
                                 <option value="Morning">Morning</option>
                                 <option value="Afternoon">Afternoon</option>
+                                <option value="Vacation">Vacation</option>
                             </select>
                         </td>
                         <td id="Friday">
@@ -76,11 +82,30 @@ function CalenderTable() {
                                 <option value="All day">All day</option>
                                 <option value="Morning">Morning</option>
                                 <option value="Afternoon">Afternoon</option>
+                                <option value="Vacation">Vacation</option>
                             </select>
-                        </td>   
+                        </td>
+                        <td id="Saturday">
+                            <label>8</label>
+                            <select>
+                                <option value="All day">All day</option>
+                                <option value="Morning">Morning</option>
+                                <option value="Afternoon">Afternoon</option>
+                                <option value="Vacation">Vacation</option>
+                            </select>
+                        </td>
+                        <td id="Sunday">
+                            <label>8</label>
+                            <select>
+                                <option value="All day">All day</option>
+                                <option value="Morning">Morning</option>
+                                <option value="Afternoon">Afternoon</option>
+                                <option value="Vacation">Vacation</option>
+                            </select>
+                        </td> 
                     </tr>
                 </table>
-                <center><button className="btn-send">Register</button></center> 
+                <center><button className="btn-send">Submit</button></center> 
             </div>    
         </div>
         

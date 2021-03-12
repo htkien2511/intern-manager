@@ -49,6 +49,12 @@
             margin: 5px 8px 5px 0;
           }
         }
+        .icon-facebook {
+          color: blue;
+          &:hover {
+            color: chocolate;
+          }
+        }
       }
     }
   }

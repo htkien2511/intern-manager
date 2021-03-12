@@ -1,39 +1,51 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
+import { ROUTE_SEND_FEEDBACK, ROUTE_CONVERSATION } from "../../../utils/routes";
 function List() {
   return(
         <div className="list">
             <h1>Intern's Feedbacks</h1>
-            <button className="btn-new">New Feedback</button>
+            <div className="new__feedback">
+                <NavLink activeClassName="--active" to={ROUTE_SEND_FEEDBACK}>
+                    <button className="btn-new">New Feedback</button>
+                </NavLink>
+            </div>
             <div className="list_feedback">
                 <div className="list-child">
-                    <p>21/02/2021</p>
-                    <h2>
-                        <a>Information Intern</a>
-                    </h2>
+                    <NavLink activeClassName="--active" to={ROUTE_CONVERSATION}>
+                        <p>21/02/2021</p>
+                        <h2>Information Intern</h2>
+                    </NavLink> 
                 </div>
                 <div className="list-child">
-                    <p>21/02/2021</p>
-                    <h2>
-                        <a>Information Intern</a>
-                    </h2>
+                    <NavLink activeClassName="--active" to={ROUTE_CONVERSATION}>
+                        <p>21/02/2021</p>
+                        <h2>Information Intern</h2>
+                    </NavLink> 
                 </div>
                 <div className="list-child">
-                    <p>21/02/2021</p>
-                    <h2>
-                        <a>Information Intern</a>
-                    </h2>
+                    <NavLink activeClassName="--active" to={ROUTE_CONVERSATION}>
+                        <p>21/02/2021</p>
+                        <h2>Information Intern</h2>
+                    </NavLink> 
                 </div>
                 <div className="list-child">
-                    <p>21/02/2021</p>
-                    <h2>
-                        <a>Information Intern</a>
-                    </h2>
+                    <NavLink activeClassName="--active" to={ROUTE_CONVERSATION}>
+                        <p>21/02/2021</p>
+                        <h2>Information Intern</h2>
+                    </NavLink> 
                 </div>
                 <div className="list-child">
-                    <p>21/02/2021</p>
-                    <h2>
-                        <a>Information Intern</a>
-                    </h2>
+                    <NavLink activeClassName="--active" to={ROUTE_CONVERSATION}>
+                        <p>21/02/2021</p>
+                        <h2>Information Intern</h2>
+                    </NavLink> 
+                </div>
+                <div className="list-child">
+                    <NavLink activeClassName="--active" to={ROUTE_CONVERSATION}>
+                        <p>21/02/2021</p>
+                        <h2>Information Intern</h2>
+                    </NavLink> 
                 </div>
             </div>
         </div>

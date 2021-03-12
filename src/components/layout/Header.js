@@ -2,6 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../../assets/images/logo.png";
 import { ROUTE_LOGIN } from "../../utils/routes";
+import DropdownUserMenu from "../common/DropdownUserMenu";
 
 function Header() {
 
@@ -18,8 +19,9 @@ function Header() {
                     </NavLink>
 
                     <NavLink activeClassName="--active" to={ROUTE_LOGIN}>
-                        <span>Login</span>
+                        <button className="button button--login">Login</button>
                     </NavLink>
+                    <DropdownUserMenu />
                 </div>
             </div>
         </div>
