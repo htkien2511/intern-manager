@@ -20,10 +20,10 @@ function Chatting() {
                     </div>
                     <p>Me, ....................</p>
                 </div>
-            </div>
-            <div className="message">
-                <textarea rows="3" cols="95"></textarea>
-                <button className="btn-send">Send</button>
+                <div className="message">
+                    <textarea rows="3" cols="95"></textarea>
+                    <button className="btn-send">Send</button>
+                </div>
             </div>
         </div>
 
