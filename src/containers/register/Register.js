@@ -2,11 +2,11 @@ import React from "react";
 import { Form } from "../../components/register";
 
 const Register = () => {
-  const handleLogin = (formData) => {
+  const handleRegister = (formData) => {
 
   };
 
-  return <Form handleSubmit={handleLogin} />;
+  return <Form handleSubmit={handleRegister} />;
 };
 
 export default Register;

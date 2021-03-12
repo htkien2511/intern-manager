@@ -13,9 +13,10 @@
         cursor: pointer;
       }
       img {
-        width: 180px;
+        width: 200px;
         height: 80px;
-        border-radius: 50%;
+        border-radius: 10%;
+        box-shadow: 1px 1px 5px rgb(56, 46, 46);
       }
     }
     &__links {

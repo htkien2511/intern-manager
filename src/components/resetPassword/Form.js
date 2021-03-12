@@ -1,7 +1,7 @@
 import React from "react";
 import { FormBox } from "../common";
 import { Form as ReForm } from "reactstrap";
-import { isEmpty, isEmail } from "validator";
+import { isEmpty } from "validator";
 import { useSelector } from "react-redux";
 
 const Form = ({ handleSubmit }) => {
@@ -51,7 +51,7 @@ const Form = ({ handleSubmit }) => {
 
     return (
         <section onSubmit={handleSubmitForm} className="forgot-password">
-            <div className="login__inner">
+            <div className="forgot-password__inner">
                 <ReForm className="radius-l login__inner__form">
                     <div className="login__inner__form__text">
                         <p>Reset password</p>

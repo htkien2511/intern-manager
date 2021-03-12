@@ -2,6 +2,7 @@
   @include form_login();
   &__inner {
     @include form_login_inner();
+    padding: 20px;
     &__form {
       @include form_style();
       span {

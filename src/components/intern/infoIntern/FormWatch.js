@@ -9,7 +9,7 @@ function FormWatch() {
             <div className="form-watch__body">
                 <div className="form-watch__body__info">
                     <div>
-                        <img src={logo} className="avatar"/>
+                        <img src={logo} className="avatar" alt="avatar"/>
                     </div>  
                     <form>
                         <div className="info__name">

@@ -48,7 +48,7 @@ const Form = ({ handleSubmit }) => {
 
   return (
     <section onSubmit={handleSubmitForm} className="forgot-password">
-      <div className="login__inner">
+      <div className="forgot-password__inner">
         <ReForm className="radius-l login__inner__form">
           <div className="login__inner__form__text">
             <p>Forgot password?</p>

@@ -86,6 +86,5 @@ const DropdownUserMenu = () => {
             </DropdownMenu>
         </StyledDropdownUserMenu>
     );
-};
-
+}
 export default DropdownUserMenu;
