@@ -63,29 +63,28 @@ const StyledDropdownUserMenu = styled(ButtonDropdown)`
   }
 `;
 
-const DropdownUserMenu = ({ auth }) => {
-  const [dropdownOpen, setOpen] = useState(false);
-  const toggle = () => setOpen(!dropdownOpen);
-  return (
-    <StyledDropdownUserMenu isOpen={dropdownOpen} toggle={toggle}>
-      <DropdownToggle>
-        {/* <img src={avatar || defaultAvatar} alt="Avatar" className="avatar" /> */}
-        <img src={defaultAvatar} alt="Avatar" className="avatar" />
-        <ChevronDown />
-      </DropdownToggle>
-      <DropdownMenu>
-        <NavLink
-          to={auth && auth.role === "admin" ? "/admin" : "/login"}
-          onClick={() => {
-            localStorage.clear();
-          }}
-        >
-          <SignInAlt />
-          <p>Logout</p>
-        </NavLink>
-      </DropdownMenu>
-    </StyledDropdownUserMenu>
-  );
-};
-
+const DropdownUserMenu = () => {
+    const [dropdownOpen, setOpen] = useState(false);
+    const toggle = () => setOpen(!dropdownOpen);
+    return (
+        <StyledDropdownUserMenu isOpen={dropdownOpen} toggle={toggle}>
+            <DropdownToggle>
+                {/* <img src={avatar || defaultAvatar} alt="Avatar" className="avatar" /> */}
+                <img src={defaultAvatar} alt="Avatar" className="avatar" />
+                <ChevronDown />
+            </DropdownToggle>
+            <DropdownMenu>
+                <NavLink
+                    to={"/admin"}
+                    onClick={() => {
+                      localStorage.clear();
+                    }}
+                >
+                    <SignInAlt />
+                    <p>Logout</p>
+                </NavLink>
+            </DropdownMenu>
+        </StyledDropdownUserMenu>
+    );
+}
 export default DropdownUserMenu;

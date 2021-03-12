@@ -1,0 +1,209 @@
+.form-watch{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    h2{
+        font-size: 55px;
+        margin: 30px;
+        text-align: center;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        color: #E24B3B;
+        margin-left: 30px;
+    }
+    &__body{
+        &__info{
+            display: flex;
+            flex-direction: row;
+            padding: 36px;
+            .edit-avatar{
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                .avatar{
+                    width: 200px;
+                    height: 200px;
+                    border-radius: 100px;
+                    margin-top: 30px;
+                }
+                // .file{
+                //     margin-top: 20px;
+                //     margin-left: -30%;
+                // }
+                .file{
+                    margin-top: 20px;
+                    margin-left: -100%;
+                    border: 2px solid black;
+                    border-radius: 15px;
+                    background-color: white;
+                    .inputfile{
+                        width: 0.1px;
+                        height: 0.1px;
+                        opacity: 0;
+                        overflow: hidden;
+                        position: absolute;
+                        z-index: -1;
+                        
+                    }
+                    .inputfile + label {
+                        font-size: 1.25em;
+                        color: black;
+                        display: inline-block;
+                        cursor: pointer;
+                        padding: 10px;
+                    }
+    
+                    .inputfile:focus + label,
+                    .inputfile + label:hover {
+                        border-radius: 15px;
+                        background-color: #8EE1BA;
+                    }
+                }
+            }
+            .form__edit{
+                font-size: 18px;
+                font-family: Verdana, Geneva, Tahoma, sans-serif;
+                margin-left: 30px;
+                .info__name{
+                    margin-top: 30px;
+                    label{
+                        font-weight: bold;
+                        margin-right: 41px;
+                        color: #393B3D;
+                    }
+                    input{
+                        width: 65%;
+                        color: #393B3D;
+                        border-radius: 5px;
+                        padding: 12px;
+                        font-size: 17px;
+                    }
+                }
+                .info__email{
+                    margin-top: 30px;
+                    label{
+                        font-weight: bold;
+                        margin-right: 87px;
+                        color: #393B3D;
+                    }
+                    input{
+                        width: 65%;
+                        color: #393B3D;
+                        border-radius: 5px;
+                        padding: 12px;
+                        font-size: 17px;
+                    }
+                }
+                .info__department{
+                    margin-top: 30px;
+                    label{
+                        font-weight: bold;
+                        margin-right: 20px;
+                        color: #393B3D;
+                    }
+                    input{
+                        width: 65%;
+                        color: #393B3D;
+                        border-radius: 5px;
+                        padding: 12px;
+                        font-size: 17px;
+                    }
+                }
+                .info__sex{
+                    margin-top: 30px;
+                    #title{
+                        font-weight: bold;
+                    }
+                    span{
+                        margin-right: 114px;
+                        color:#393B3D;
+                    }
+                    input{
+                       
+                        margin-right: 10px;
+                    }
+                }
+                .info__address{
+                    margin-top: 30px;
+                    label{
+                        font-weight: bold;
+                        margin-right: 62px;
+                        color: #393B3D;
+                    }
+                    input{
+                        width: 65%;
+                        color: #393B3D;
+                        border-radius: 5px;
+                        padding: 12px;
+                        font-size: 17px;
+                    }
+                }
+                p{
+                    margin-top: 50px;
+                    font-size: 30px;
+                    color: #E24B3B;
+                }
+                .current__pass{
+                    margin-top: 30px;
+                    label{
+                        font-weight: bold;
+                        margin-right: 10px;
+                        color: #393B3D;
+                    }
+                    input{
+                        width: 55%;
+                        color: #393B3D;
+                        border-radius: 5px;
+                        padding: 12px;
+                        font-size: 17px;
+                    }
+                }
+                .new__pass{
+                    margin-top: 50px;
+                    label{
+                        font-weight: bold;
+                        margin-right: 44px;
+                        color: #393B3D;
+                    }
+                    input{
+                        width: 55%;
+                        color: #393B3D;
+                        border-radius: 5px;
+                        padding: 12px;
+                        font-size: 17px;
+                    }
+                }
+                .confirm_pass{
+                    margin-top: 30px;
+                    label{
+                        font-weight: bold;
+                        margin-right: 5px;
+                        color: #393B3D;
+                    }
+                    input{
+                        width: 55%;
+                        color: #393B3D;
+                        border-radius: 5px;
+                        padding: 12px;
+                        font-size: 17px;
+                    }
+                }
+                .btn-edit{
+                    background-color: #008CBA;
+                    border: none;
+                    color: white;
+                    padding: 15px;
+                    text-align: center;
+                    text-decoration: none;
+                    display: inline-block;
+                    font-size: 20px; 
+                    border-radius: 8px;
+                    text-justify: auto;
+                    width: 100px;
+                    font-weight: bold;
+                    margin-top: 50px;
+                }
+            }
+        }
+    }
+}

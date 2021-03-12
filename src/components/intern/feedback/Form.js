@@ -1,6 +1,6 @@
 import React from "react";
 function Form() {
-  return(
+    return(
         <div className="form">
             <h1>Send Feedback</h1>
             <div className="form-feedback">

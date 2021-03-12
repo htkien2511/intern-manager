@@ -1,0 +1,37 @@
+.banner {
+    margin-bottom: 40px;
+    &__inner {
+        &__text{
+            h1{
+                font-size: 60px;
+            }
+            h2{
+                font-size: 60px;
+            }
+            .text--primary{
+                color: crimson;
+            }
+            div{
+                h2{
+                    font-size: 40px;
+                    margin-top: 50px;
+                    margin-bottom: 30px;
+                    font-weight: bold;
+                }
+                p{
+                    font-size: 20px;
+                    margin-bottom: 10px;
+                }
+            }
+        }
+        &__image {
+            img {
+            margin-top: -50%;
+            border-radius: 50%;
+            border: 0.5px solid rgb(17, 233, 204);
+            }
+        }
+    }
+    margin-bottom: 80px;
+  }
+  

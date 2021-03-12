@@ -20,10 +20,14 @@ function TaskManagement() {
                             Làm Web Thực tập
                         </td>
                         <td>
-                            <input type="checkbox" value="Cv1" />
-                            <label>CV1</label>
-                            <input type="checkbox" value="CV2" />
-                            <label>Cv2</label>
+                            <div className="work">
+                                <input type="checkbox" value="Cv1" />
+                                <label>CV1</label>
+                            </div>
+                            <div  className="work">
+                                <input type="checkbox" value="Cv2" />
+                                <label>CV2</label>
+                            </div>
                         </td>
                         <td>
                             21/1/2021
@@ -40,10 +44,14 @@ function TaskManagement() {
                             Làm Web Thực tập
                         </td>
                         <td>
-                            <input type="checkbox" value="Cv1" />
-                            <label>CV1</label>
-                            <input type="checkbox" value="CV2" />
-                            <label>Cv2</label>
+                            <div className="work">
+                                <input type="checkbox" value="Cv1" />
+                                <label>CV1</label>
+                            </div>
+                            <div  className="work">
+                                <input type="checkbox" value="Cv2" />
+                                <label>CV2</label>
+                            </div>
                         </td>
                         <td>
                             21/1/2021
@@ -60,10 +68,14 @@ function TaskManagement() {
                             Làm Web Thực tập
                         </td>
                         <td>
-                            <input type="checkbox" value="Cv1" />
-                            <label>CV1</label>
-                            <input type="checkbox" value="CV2" />
-                            <label>Cv2</label>
+                            <div className="work">
+                                <input type="checkbox" value="Cv1" />
+                                <label>CVvvvvvvvvvvvvvvvvvvvvvvvvvvv1</label>
+                            </div>
+                            <div  className="work">
+                                <input type="checkbox" value="Cv2" />
+                                <label>CVvvvvvvvvvvvvvvvvvvvvvvvvvvv2</label>
+                            </div>
                         </td>
                         <td>
                             21/1/2021

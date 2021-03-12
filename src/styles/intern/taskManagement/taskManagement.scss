@@ -1,13 +1,15 @@
 .task-management{
     h2{
-        font-size: 35px;
-        margin: 25px;
         display: flex;
         flex-direction: column;
         align-items: center;
-        margin-bottom: 40px;
+        font-size: 55px;
+        margin: 30px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        color: #E24B3B;
     }
     div{
+        margin-top: 60px;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -16,25 +18,38 @@
             border-collapse: collapse;
             width: 90%;
             text-align: center;
+            tr{
+                background-color: rgb(216, 228, 149);
+            }
             tr:nth-child(even){
-                background-color: #f2f2f2;
+                background-color:rgb(245, 230, 210);
             }
-            tr:hover {background-color: #ddd;
-            }
+            tr:hover {background-color: rgb(231, 142, 209);
+            }   
             th{
                 padding-top: 12px;
                 padding-bottom: 12px;
                 text-align: left;
                 background-color: rgb(51, 119, 223);
                 color: white;
-                border: 1px solid #ddd;
+                border: 2px solid #ddd;
                 padding: 10px;
                 font-weight: bold;
                 text-align: center;
             }
             td{
-                border: 1px solid #ddd;
+                border: 2px solid #ddd;
                 padding: 10px;
+                .work{
+                    display: flex;
+                    flex-direction: row;
+                    margin-top: -10px;
+                    input{
+                    }
+                    label{
+                        padding: 5px;
+                    }
+                }
             }
         }
     }

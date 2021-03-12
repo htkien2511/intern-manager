@@ -1,9 +1,12 @@
+//user
+@import "./intern/home/home";
 @import "./intern/infoIntern/formWatch";
-@import "./intern/taskManagement/taskManagement";
-@import "./intern/feedback/feedback";
-@import "./intern/feedback/sendFeedback";
-@import "./intern/feedback/conversation";
-@import "./intern/calendar/calendarTable";
+@import "./intern/infoIntern/formEdit";
+@import"./intern/taskManagement/taskManagement";
+@import"./intern/feedback/feedback";
+@import"./intern/feedback/sendFeedback";
+@import"./intern/feedback/conversation";
+@import"./intern/calendar/calendarTable";
 
 //global
 @import "./global/reset";
