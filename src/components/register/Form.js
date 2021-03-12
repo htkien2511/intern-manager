@@ -7,21 +7,21 @@ import { useSelector } from "react-redux";
 const Form = ({ handleSubmit }) => {
   const [error, setError] = React.useState({});
   const [form, setForm] = React.useState({ name: "", email: "", password: "", confirmPassword: "" });
-  const [errorLogin, setErrorLogin] = React.useState();
-  const storeLogin = useSelector((store) => store.login);
-  const loading = storeLogin.loading;
+  const [errorRegister, setErrorRegister] = React.useState();
+  const storeRegister = useSelector((store) => store.register);
+  const loading = storeRegister.loading;
   const validate = () => {
     const errorState = {};
     // check validate
+    if (isEmpty(form.name)) {
+      errorState.name = "Please enter name";
+    }
     if (isEmpty(form.email)) {
       errorState.email = "Please enter email";
     } else {
       if (!isEmail(form.email)) {
         errorState.email = "Email not valid";
       }
-    }
-    if (isEmpty(form.name)) {
-      errorState.name = "Please enter name";
     }
     if (isEmpty(form.password)) {
       errorState.password = "Please enter password";
@@ -60,21 +60,21 @@ const Form = ({ handleSubmit }) => {
       ...error,
       [event.target.name]: "",
     });
-    setErrorLogin("");
+    setErrorRegister("");
   };
 
   return (
-    <section onSubmit={handleSubmitForm} className="login">
-      <div className="login__inner">
+    <section onSubmit={handleSubmitForm} className="register">
+      <div className="register__inner">
         <ReForm className="radius-l login__inner__form">
           <div className="login__inner__form__text">
             <p>Register your account</p>
-            <div className="error">{errorLogin}</div>
+            <div className="error">{errorRegister}</div>
           </div>
 
           <FormBox
             propsInput={{
-              name: "Name",
+              name: "name",
               placeholder: "Name",
               onChange: handleChange,
               onFocus: handleFocus,

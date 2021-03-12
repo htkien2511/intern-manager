@@ -2,16 +2,21 @@
   width: 100%;
   background-color: $white;
   position: sticky;
-  box-shadow: 1px 1px 15px $light-grey;
+  // box-shadow: 1px 1px 15px $light-grey;
   top: 0;
   z-index: 999;
+  position: sticky;
+  top: 0;
   &__inner {
-    padding: 10px 40px;
+    padding: 10px 50px;
     &__logo {
       img {
-        width: 180px;
-        height: 80px;
-        border-radius: 50%;
+        width: 100px;
+        border-bottom-left-radius: 10px;
+        border-bottom-right-radius: 10px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        box-shadow: 1px 1px 5px rgb(56, 46, 46);
       }
     }
     &__menu {
