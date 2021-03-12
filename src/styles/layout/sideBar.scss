@@ -1,29 +1,32 @@
 .side-bar {
   height: 100vh;
-  width: 350px;
+  width: 300px;
   position: fixed;
-  background-color: #fff;
+  background-color: $white;
+  box-shadow: 1px 1px 15px $light-grey;
   &__inner {
     padding: 110px 16px;
     display: flex;
     flex-direction: column;
-    &-item {
-      height: 50px;
-      width: 100%;
-      &__inner {
-        height: 40px;
-        padding: 8px 16px;
-        color: blue;
-        // background: rgb(83, 67, 230);
-        display: flex;
-        align-items: center;
-        &:hover {
-          background: chocolate;
-          cursor: pointer;
+    &__items {
+      &--item {
+        height: 50px;
+        width: 100%;
+        &__inner {
+          height: 40px;
+          padding: 8px 16px;
+          color: rgb(70, 64, 64);
+          // background: rgb(83, 67, 230);
+          display: flex;
+          align-items: center;
+          &:hover {
+            background: chocolate;
+            cursor: pointer;
+          }
         }
-      }
-      &:not(:last-child) {
-        margin-bottom: 40px;
+        &:not(:last-child) {
+          margin-bottom: 40px;
+        }
       }
     }
   }

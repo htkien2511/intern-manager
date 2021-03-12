@@ -1,5 +1,5 @@
 import React from "react";
-import { HeaderUser, Footer } from "../../components/layout";
+import { HeaderUser } from "../../components/layout";
 
 const withAuthUser = (Component, showMenu = false) => (props) => {
     return (
@@ -12,7 +12,6 @@ const withAuthUser = (Component, showMenu = false) => (props) => {
                     </div>
                 </div>
             </div>
-            <Footer />
         </div>
     );
 };

@@ -19,6 +19,8 @@
         padding: 30px;
         background-color: white;
         border-radius: 5px;
+        border: 3px solid #FABA84;
+        box-shadow: 4px 4px #FBD386;
         .list_chat_child{
             margin-top: 15px;
             div{
@@ -44,32 +46,32 @@
                 border-radius: 8px;
             }
         }
-    }
-    .message{
-        background-color: white;
-        display: flex;
-        flex-direction: row;
-        width: 60%;
-        padding: 30px;
-        margin-top: -25px;
-        textarea{
-            border-radius: 12px;
-            padding: 10px;
-        }
-        .btn-send{
-            background-color: #008CBA;
-            border: none;
-            color: white;
-            padding: 15px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 20px; 
-            border-radius: 8px;
-            text-justify: auto;
-            width: 100px;
-            font-weight: bold;
-            margin-left: 10px;
+        .message{
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            margin-top: 20px;
+            textarea{
+                border-radius: 12px;
+                padding: 10px;
+            }
+            .btn-send{
+                background-color: #008CBA;
+                border: none;
+                color: white;
+                padding: 15px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 20px; 
+                border-radius: 8px;
+                text-justify: auto;
+                width: 100px;
+                font-weight: bold;
+                margin-left: 10px;
+            }
         }
     }
+
+ 
 }

@@ -8,7 +8,7 @@ function FormEdit() {
             <div className="form-watch__body">
                 <div className="form-watch__body__info">
                     <div className="edit-avatar">
-                        <img src={imageUrl} className="avatar" alt="avatar"/>
+                        <img src={imageUrl} className="avatar" alt="avatarnp"/>
                         <div className="file flex items-center">
                             <input type="file" name="file" id="file" class="inputfile" onChange={(event)=>{setImageUrl(URL.createObjectURL(event.target.files[0]))}}/>
                             <label for="file">Choose a file</label>
