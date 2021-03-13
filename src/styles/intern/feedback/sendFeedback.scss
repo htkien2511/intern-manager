@@ -29,6 +29,10 @@
                     width: 98%;
                     padding: 5px;
                     margin-top: 15px;
+                    margin-bottom: 10px;
+                }
+                .error__editProfile{
+                    color: red !important;
                 }
             }
             .content-feedback{
@@ -44,6 +48,10 @@
                     padding: 5px;
                     margin-top: 15px;
                     box-shadow: 1px 1px 1px #999;
+                    margin-bottom: 10px;
+                }
+                .error__editProfile{
+                    color: red !important;
                 }
             }
             .btn-send{

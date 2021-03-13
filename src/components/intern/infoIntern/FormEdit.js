@@ -191,7 +191,6 @@ function FormEdit() {
                   placeholder="*******"
                   value={form.newPass}
                   name="newPass"
-                  onFocus
                   onChange={handleChange}
                   onFocus={handleFocus}
                 />
@@ -212,7 +211,9 @@ function FormEdit() {
               </div>
               <span className="error__editProfile">{error.confirmPass}</span>
             </div>
+            <center>
             <button className="btn-edit">Save</button>
+            </center>
           </form>
         </div>
       </div>
