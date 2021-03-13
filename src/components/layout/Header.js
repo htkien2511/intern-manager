@@ -20,7 +20,9 @@ function Header() {
                         <span>Home page</span>
                     </NavLink>
                     {auth && auth.token ? <DropdownUserMenu auth={auth} /> : (
-                        <DropdownUserMenu auth={auth} />
+                        <NavLink activeClassName="--active" to={ROUTE_LOGIN}>
+                            <button className="button button--login">Login</button>
+                        </NavLink>
                     )}
                 </div>
             </div>
