@@ -6,102 +6,127 @@
         font-size: 55px;
         margin: 30px;
         text-align: center;
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
         color: #E24B3B;
+        margin-bottom: 60px;
     }
     &__body{
-        margin-left: -13%;
+        width: 100%;
         &__info{
             display: flex;
             flex-direction: row;
             justify-content: center;
-            padding: 36px;
             div{
+                background: #eaeaea;
+                border-radius: 16px;
+                // height: 250px;
+                // width: 250px;
                 .avatar{
                     width: 200px;
                     height: 200px;
                     border-radius: 100px;
-                    margin-top: 30px;
                 }
             }
             form{
                 font-size: 20px;
-                font-family: Verdana, Geneva, Tahoma, sans-serif;
+                border-radius: 16px;
                 margin-left: 30px;
-                border: 3px solid #FABA84;
-                box-shadow: 4px 4px #FBD386;
-                width: 50%;
-                padding: 50px;
-                background-color: whitesmoke;
+                padding: 40px;
+                background-color: #eaeaea;
+                width: 80%;
                 .info__name{
-                    margin-top: 30px;
+                    // width: 100%;
                     label{
                         font-weight: bold;
-                        margin-right: 44px;
-                        color: #353739;
+                        color: #393B3D;
+                        padding-bottom: 8px;
                     }
-                    span{
+                    p{
+                        margin-top: 12px;
                         color: #404244;
+                        padding: 5px;
+                        background-color: white;
+                        width: 100%;
                     }
                 }
                 .info__email{
-                    margin-top: 30px;
+                    // width: 100%;
+                    margin-top: 15px;
                     label{
                         font-weight: bold;
-                        margin-right: 90px;
-                        color: #353739;
+                        color: #393B3D;
+                        padding-bottom: 8px;
                     }
-                    span{
+                    p{
                         color: #404244;
+                        padding: 5px;
+                        background-color: white;
+                        width: 100%;
+                        margin-top: 12px;
                     }
                 }
                 .info__department{
-                    margin-top: 30px;
+                    // width: 100%;
+                    margin-top: 15px;
                     label{
                         font-weight: bold;
-                        margin-right: 20px;
-                        color: #353739;
+                        color: #393B3D;
+                        padding-bottom: 8px;
                     }
-                    span{
+                    p{
                         color: #404244;
+                        padding: 5px;
+                        background-color: white;
+                        width: 100%;
+                        margin-top: 12px;
                     }
                 }
                 .info__sex{
-                    margin-top: 30px;
+                    // width: 100%;
+                    margin-top: 15px;
                     label{
                         font-weight: bold;
-                        margin-right: 70px;
-                        color: #353739;
+                        color: #393B3D;
+                        padding-bottom: 8px;
                     }
-                    span{
+                    p{
                         color: #404244;
+                        padding: 5px;
+                        background-color: white;
+                        width: 100%;
+                        margin-top: 12px;
                     }
                 }
                 .info__address{
-                    margin-top: 30px;
+                    // width: 100%;
+                    margin-top: 15px;
                     label{
                         font-weight: bold;
-                        margin-right: 64px;
-                        color: #353739;
+                        color: #393B3D;
+                        padding-bottom: 8px;
                     }
-                    span{
+                    p{
                         color: #404244;
+                        padding: 5px;
+                        background-color: white;
+                        width: 100%;
+                        margin-top: 12px;
                     }
                 }
                 .btn-edit{
                     background-color: #008CBA;
                     border: none;
                     color: white;
-                    padding: 15px;
+                    padding: 10px;
                     text-align: center;
                     text-decoration: none;
                     display: inline-block;
-                    font-size: 20px; 
+                    font-size: 18px; 
                     border-radius: 8px;
                     text-justify: auto;
                     width: 150px;
                     font-weight: bold;
                     margin-top: 50px;
+                    outline: none;
                 }
             }
         }

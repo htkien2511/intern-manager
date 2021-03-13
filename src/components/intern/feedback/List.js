@@ -7,7 +7,9 @@ function List() {
             <h1>Intern's Feedbacks</h1>
             <div className="new__feedback">
                 <NavLink activeClassName="--active" to={ROUTE_SEND_FEEDBACK}>
-                    <button className="btn-new">New Feedback</button>
+                    <button className="btn-new">
+                    <i class="fi-rr-add"></i>
+                    </button>
                 </NavLink>
             </div>
             <div className="list_feedback">

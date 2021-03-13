@@ -7,11 +7,11 @@
         font-size: 55px;
         margin: 30px;
         text-align: center;
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-family: "Shippori Mincho B1", sans-serif;
         color: #E24B3B;
         margin-left: 30px;
     }
-    &__body{
+    &__body__edit{
         width: 100%;
         &__info{
             display: flex;
@@ -22,11 +22,15 @@
                 display: flex;
                 flex-direction: column;
                 align-items: center;
+                width: 20%;
+                background: #eaeaea;
+                height: 348px;
+                border-radius: 16px;
                 .avatar{
                     width: 200px;
                     height: 200px;
                     border-radius: 100px;
-                    margin-top: 30px;
+                    margin: 20px;
                 }
                 .file{
                     margin-top: 20px;
@@ -59,31 +63,24 @@
             }
             .form__edit{
                 font-size: 20px;
-                font-family: Verdana, Geneva, Tahoma, sans-serif;
+                border-radius: 16px;
                 margin-left: 30px;
-                border: 3px solid #FABA84;
-                box-shadow: 4px 4px #FBD386;
-                width: 50%;
-                padding: 50px;
-                background-color: whitesmoke;
+                padding: 40px;
+                background-color: #eaeaea;
                 .edit_info__name{
-                    margin-top: 30px;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
                     div{
                         margin-bottom: 15px;
                         width: 100%;
                         label{
                             font-weight: bold;
-                            margin-right: 46px;
                             color: #393B3D;
+                            padding-bottom: 8px;
                         }
                         input{
-                            width: 65%;
+                            margin-top: 10px;
                             color: #393B3D;
-                            border-radius: 5px;
                             padding: 12px;
+                            width: 100%;
                             font-size: 17px;
                         }
                     }
@@ -93,24 +90,22 @@
                 }
                 .edit_info__email{
                     margin-top: 30px;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
                     div{
                         margin-bottom: 15px;
                         width: 100%;
                         label{
                             font-weight: bold;
-                            margin-right: 92px;
                             color: #393B3D;
+                            padding-bottom: 8px;
                         }
                         input{
-                            width: 65%;
+                            margin-top: 10px;
                             color: #393B3D;
-                            border-radius: 5px;
                             padding: 12px;
+                            width: 100%;
                             font-size: 17px;
                         }
+
                     }
                     .error__editProfile{
                         color: red !important;
@@ -118,24 +113,22 @@
                 }
                 .edit_info__department{
                     margin-top: 30px;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
                     div{
                         margin-bottom: 15px;
                         width: 100%;
                         label{
                             font-weight: bold;
-                            margin-right: 20px;
                             color: #393B3D;
+                            padding-bottom: 8px;
                         }
                         input{
-                            width: 65%;
+                            margin-top: 10px;
                             color: #393B3D;
-                            border-radius: 5px;
                             padding: 12px;
+                            width: 100%;
                             font-size: 17px;
                         }
+
                     }
                     .error__editProfile{
                         color: red !important;
@@ -145,7 +138,7 @@
                     margin-top: 30px;
                     #title{
                         font-weight: bold;
-                        margin-right: 65px;
+                        margin-right: 25px;
                         color: #393B3D;
                     }
                     span{
@@ -157,24 +150,22 @@
                 }
                 .edit_info__address{
                     margin-top: 30px;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
                     div{
                         margin-bottom: 15px;
                         width: 100%;
                         label{
                             font-weight: bold;
-                            margin-right: 62px;
                             color: #393B3D;
+                            padding-bottom: 8px;
                         }
                         input{
-                            width: 65%;
+                            margin-top: 10px;
                             color: #393B3D;
-                            border-radius: 5px;
                             padding: 12px;
+                            width: 100%;
                             font-size: 17px;
                         }
+
                     }
                     .error__editProfile{
                         color: red !important;
@@ -187,24 +178,22 @@
                 }
                 .edit_current__pass{
                     margin-top: 30px;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
                     div{
                         margin-bottom: 15px;
                         width: 100%;
                         label{
                             font-weight: bold;
-                            margin-right: 10px;
                             color: #393B3D;
+                            padding-bottom: 8px;
                         }
                         input{
-                            width: 55%;
+                            margin-top: 10px;
                             color: #393B3D;
-                            border-radius: 5px;
                             padding: 12px;
+                            width: 100%;
                             font-size: 17px;
                         }
+
                     }
                     .error__editProfile{
                         color: red !important;
@@ -212,24 +201,22 @@
                 }
                 .edit_new__pass{
                     margin-top: 30px;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
                     div{
                         margin-bottom: 15px;
                         width: 100%;
                         label{
                             font-weight: bold;
-                            margin-right: 44px;
                             color: #393B3D;
+                            padding-bottom: 8px;
                         }
                         input{
-                            width: 55%;
+                            margin-top: 10px;
                             color: #393B3D;
-                            border-radius: 5px;
                             padding: 12px;
+                            width: 100%;
                             font-size: 17px;
                         }
+
                     }
                     .error__editProfile{
                         color: red !important;
@@ -237,24 +224,22 @@
                 }
                 .edit_confirm_pass{
                     margin-top: 30px;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
                     div{
                         margin-bottom: 15px;
                         width: 100%;
                         label{
                             font-weight: bold;
-                            margin-right: 5px;
                             color: #393B3D;
+                            padding-bottom: 8px;
                         }
                         input{
-                            width: 55%;
+                            margin-top: 10px;
                             color: #393B3D;
-                            border-radius: 5px;
                             padding: 12px;
+                            width: 100%;
                             font-size: 17px;
                         }
+
                     }
                     .error__editProfile{
                         color: red !important;
@@ -273,7 +258,8 @@
                     text-justify: auto;
                     width: 100px;
                     font-weight: bold;
-                    margin-top: 50px;
+                    margin-top: 30px;
+                    outline: none;
                 }
             }
         }

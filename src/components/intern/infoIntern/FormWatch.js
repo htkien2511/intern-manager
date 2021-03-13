@@ -14,23 +14,23 @@ function FormWatch() {
                     <form>
                         <div className="info__name">
                             <label>Full name:</label>
-                            <span>Phan Gia Sang</span>
+                            <p>Phan Gia Sang</p>
                         </div>      
                         <div className="info__email">   
                             <label>Email:</label>  
-                            <span>sang@gmail.com</span>
+                            <p>sang@gmail.com</p>
                         </div>
                         <div className="info__department">
                             <label>Department:</label>
-                            <span>Dev</span>
+                            <p>Dev</p>
                         </div>
                         <div className="info__sex">
                             <label id="sex">Gender:</label>
-                            <span>Male</span>
+                            <p>Male</p>
                         </div>
                         <div className="info__address">
                             <label>Address:</label>
-                            <span>Hue</span>
+                            <p>Hue</p>
                         </div>
                         <NavLink activeClassName="--active" to={ROUTE_EDIT_PROFILE}>
                             <button className="btn-edit">Edit Profile</button>

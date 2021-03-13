@@ -3,25 +3,24 @@
         margin-bottom: 30px;
         font-size: 55px;
         text-align: center;
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
         color: #E24B3B;
     }
     .new__feedback{
         margin-bottom: 30px;
-        margin-left: 68%;   
+        margin-left: 75%;   
         .btn-new{
-            background-color: #008CBA;
+            background-color: rgba(158, 154, 154, 0.808);
             border: none;
-            color: white;
-            padding: 15px 20px;
-            text-align: center;
+            color: black;
+            padding: 10px 15px;
+            text-align: right;
             text-decoration: none;
             display: inline-block;
-            font-size: 15px; 
+            font-size: 30px; 
             border-radius: 8px;
             text-justify: auto;
-            width: 170px;
             font-weight: bold;
+            outline: none;
         }
     }
     .list_feedback{
@@ -30,7 +29,7 @@
         align-items: center;
         width: 100%;
         .list-child {
-            background-color: rgb(241, 229, 212);
+            background-color: rgba(158, 154, 154, 0.808);
             padding: 10px;
             border-radius: 8px;
             margin-bottom: 15px;
@@ -40,7 +39,7 @@
                 color: rgb(189, 8, 44);
             }
             h2{
-                background-color:rgb(117, 192, 235);
+                background-color:white;
                 padding: 5px;
                 color: #38495A;
                 border-radius: 8px;

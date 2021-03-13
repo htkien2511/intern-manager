@@ -75,8 +75,8 @@ function FormEdit() {
     <div className="form-edit">
       <h2>Edit Profile</h2>
       <div className="error">{errorEditProfile}</div>
-      <div className="form-edit__body">
-        <div className="form-edit__body__info">
+      <div className="form-edit__body__edit">
+        <div className="form-edit__body__edit__info">
           <div className="edit-avatar">
             <img src={imageUrl} className="avatar" alt="avatar" />
             <div className="file flex items-center">
