@@ -25,8 +25,8 @@ function FormWatch() {
                             <span>Dev</span>
                         </div>
                         <div className="info__sex">
-                            <label id="sex">Sex:</label>
-                            <span>Nam</span>
+                            <label id="sex">Gender:</label>
+                            <span>Male</span>
                         </div>
                         <div className="info__address">
                             <label>Address:</label>
