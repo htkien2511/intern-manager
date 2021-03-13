@@ -43,13 +43,14 @@
   &__body {
     width: 100%;
     margin-left: 300px;
-    background-color: $white;
+    background-image: url("../../assets/images/background.jpg");
     height: 100vh;
   }
 }
 .app {
   transition: 0.25s ease;
-  background-color: $white;
+  // background-color: $white;
+  background-image: url("../../assets/images/background.jpg");
   min-height: 100vh;
 
   &:after {
@@ -126,4 +127,8 @@ a {
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
+}
+//table
+.makeStyles-container-2 {
+  max-height: 750px !important;
 }

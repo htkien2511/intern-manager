@@ -1,90 +1,42 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import { ButtonDropdown, DropdownToggle, DropdownMenu } from "reactstrap";
-import { NavLink } from "react-router-dom";
-import { SignInAlt, ChevronDown } from "../common/icons";
-import defaultAvatar from "../../assets/images/avatar-picture.svg";
-
-const StyledDropdownUserMenu = styled(ButtonDropdown)`
-  &&& {
-    & > .btn {
-      background: transparent;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      border: 0;
-      &:focus,
-      &:active {
-        outline: none !important;
-        box-shadow: none !important;
-        background: transparent !important;
-      }
-      .avatar {
-        width: 50px;
-        border-radius: 100%;
-      }
-      svg {
-        color: #08135a;
-        margin: 0 0 0 12px;
-        transition: 0.3s ease;
-      }
-    }
-    @media only screen and (max-width: 899px) {
-      & > .btn {
-        display: none;
-      }
-    }
-
-    .dropdown-menu {
-      left: auto;
-      right: 0;
-      box-shadow: 0px 1px 8px 0px #c5c5c5;
-      border: 0;
-      min-width: 9rem;
-      position: inherit;
-      display: none;
-      a {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        flex-direction: row;
-        padding: 8px 16px !important;
-        p {
-          margin: 0;
-        }
-        svg {
-          margin: 5px 8px 5px 0;
-          width: 22px;
-        }
-      }
-    }
-  }
-`;
+import React, { useState, useEffect, useRef } from "react";
 
 const DropdownUserMenu = () => {
-    const [dropdownOpen, setOpen] = useState(false);
-    const toggle = () => setOpen(!dropdownOpen);
-    return (
-        <StyledDropdownUserMenu isOpen={dropdownOpen} toggle={toggle}>
-            <DropdownToggle>
-                {/* <img src={avatar || defaultAvatar} alt="Avatar" className="avatar" /> */}
-                <img src={defaultAvatar} alt="Avatar" className="avatar" />
-                <ChevronDown />
-            </DropdownToggle>
-            <DropdownMenu>
-                <NavLink
-                    to={"/admin"}
-                    onClick={() => {
-                      localStorage.clear();
-                    }}
-                >
-                    <SignInAlt />
-                    <p>Logout</p>
-                </NavLink>
-            </DropdownMenu>
-        </StyledDropdownUserMenu>
-    );
-}
+  const [isShown, setIsShown] = useState(false);
+
+  const logoutWrapper = useRef(null);
+
+  const useClickOutside = (ref) => {
+    useEffect(() => {
+      function handleClickOutside(event) {
+        if (ref.current && !ref.current.contains(event.target)) {
+          setIsShown(false);
+        }
+      }
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
+    }, [ref]);
+  };
+
+  var styleIcon = isShown ? "fi-rr-caret-up" : "fi-rr-caret-down";
+  useClickOutside(logoutWrapper);
+  return (
+    <div ref={logoutWrapper} className="style-userContainer">
+      <div className="style-userInfor" onClick={() => setIsShown(!isShown)}>
+        {/* <div className="style-avatarContainer"> */}
+        <img src="https://picsum.photos/200" alt="" className="style-avatarContainer" />
+        {/* </div> */}
+      </div>
+      {isShown && (
+        <div className="style-dropdownContainer">
+          <div className="style-dropdownItem">
+            <i class="fi-rr-sign-out" />
+            <span className="">Logout</span>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
 export default DropdownUserMenu;

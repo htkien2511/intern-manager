@@ -1,0 +1,57 @@
+.style-userInfor {
+  position: relative;
+  display: flex;
+  background-image: url("../../assets/images/manager.png");
+  justify-content: center;
+  border: 1px solid #7b8191;
+  padding: 10px;
+  cursor: pointer;
+  width: 40px;
+  border-radius: 50%;
+  height: 40px;
+  margin-left: 32px;
+}
+.style-avatarContainer {
+  display: inline-block;
+  border-radius: 50%;
+  cursor: pointer;
+  width: 60px;
+  height: 60px;
+  margin-top: -10px;
+}
+.style-dropdownContainer {
+  position: absolute;
+  top: 95px;
+  right: 20px;
+  border-radius: 10px;
+  padding: 16px 25px;
+  background-color: rgb(218, 218, 218);
+  box-shadow: 1px 1px 8px rgb(160, 143, 127);
+  cursor: pointer;
+}
+.style-dropdownItem {
+  padding: 8px;
+  font-weight: 700;
+}
+.style-dropdownItem i {
+  vertical-align: middle;
+  padding-right: 16px;
+  font-size: 20px;
+}
+.style-dropdownItem:not(:last-child) {
+  border-bottom: 2px solid #5b617c;
+}
+.style-dropdownContainer::after {
+  content: "";
+  width: 0;
+  height: 0;
+  position: absolute;
+  top: 3px;
+  right: 45px;
+  transform: translateY(-100%);
+  border: 15px solid transparent;
+  border-bottom-color: rgb(218, 218, 218);
+}
+.style-dropdownItem span:hover {
+  color: #5e5ce6;
+}

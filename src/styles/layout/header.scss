@@ -1,11 +1,12 @@
 .header {
   width: 100%;
-  background-color: #ace4df;
+  background-color: $white;
   position: sticky;
-  box-shadow: 1px 1px 15px $light-grey;
+  // box-shadow: 1px 1px 15px $light-grey;
   top: 0;
   z-index: 999;
   position: sticky;
+  height: 95px;
   top: 0;
   &__inner {
     padding: 10px 50px;
