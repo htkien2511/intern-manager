@@ -16,6 +16,7 @@ function Header() {
                 </NavLink>
 
                 <div className="header__inner__menu flex items-center">
+                    <i class="fi-rr-home" style={{ paddingTop: 10 }}></i>
                     <NavLink activeClassName="--active" to="/" exact>
                         <span>Home page</span>
                     </NavLink>

@@ -13,7 +13,7 @@ function SideBar() {
                     <div className="side-bar__inner__items--menu">
                         <div className="side-bar__inner__items--menu__item flex">
                             <div className="temp"></div>
-                            <img src={leaderImage} alt="" />
+                            <i class="fi-rr-user"></i>
                             <NavLink
                                 activeClassName="side-bar__inner__items--menu__item__inner border-corner"
                                 to="/a"
@@ -23,8 +23,7 @@ function SideBar() {
                         </div>
                         <div className="side-bar__inner__items--menu__item flex">
                             <div className="temp"></div>
-
-                            <img src={leaderImage} alt="" />
+                            <i class="fi-rr-user"></i>
                             <NavLink
                                 activeClassName="side-bar__inner__items--menu__item--active"
                                 to="/admin/manage-intern"
@@ -34,9 +33,7 @@ function SideBar() {
                         </div>
                         <div className="side-bar__inner__items--menu__item flex">
                             <div className="temp"></div>
-
-                            <img src={leaderImage} alt="" />
-
+                            <i class="fi-rr-calendar"></i>
                             <NavLink
                                 activeClassName="side-bar__inner__items--menu__item__inner border-corner"
                                 to="/a"
@@ -46,8 +43,7 @@ function SideBar() {
                         </div>
                         <div className="side-bar__inner__items--menu__item flex">
                             <div className="temp"></div>
-
-                            <img src={leaderImage} alt="" />
+                            <i class="fi-rr-list-check"></i>
                             <NavLink
                                 activeClassName="side-bar__inner__items--menu__item__inner border-corner"
                                 to="/a"
@@ -57,8 +53,7 @@ function SideBar() {
                         </div>
                         <div className="side-bar__inner__items--menu__item flex">
                             <div className="temp"></div>
-
-                            <img src={leaderImage} alt="" />
+                            <i class="fi-rr-hourglass-end"></i>
                             <NavLink
                                 activeClassName="side-bar__inner__items--menu__item__inner border-corner"
                                 to="/a"
@@ -68,8 +63,7 @@ function SideBar() {
                         </div>
                         <div className="side-bar__inner__items--menu__item flex">
                             <div className="temp"></div>
-
-                            <img src={leaderImage} alt="" />
+                            <i class="fi-rr-stats"></i>
                             <NavLink
                                 activeClassName="side-bar__inner__items--menu__item__inner border-corner"
                                 to="/a"
