@@ -1,9 +1,8 @@
-.form-watch{
+.form-edit{
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 3px solid #FABA84;
-    box-shadow: 4px 4px #FBD386;
+    justify-content: center;
     h2{
         font-size: 55px;
         margin: 30px;
@@ -13,9 +12,11 @@
         margin-left: 30px;
     }
     &__body{
+        width: 100%;
         &__info{
             display: flex;
             flex-direction: row;
+            justify-content: center;
             padding: 36px;
             .edit-avatar{
                 display: flex;
@@ -27,13 +28,8 @@
                     border-radius: 100px;
                     margin-top: 30px;
                 }
-                // .file{
-                //     margin-top: 20px;
-                //     margin-left: -30%;
-                // }
                 .file{
                     margin-top: 20px;
-                    margin-left: -100%;
                     border: 2px solid black;
                     border-radius: 15px;
                     background-color: white;
@@ -62,81 +58,126 @@
                 }
             }
             .form__edit{
-                font-size: 18px;
+                font-size: 20px;
                 font-family: Verdana, Geneva, Tahoma, sans-serif;
                 margin-left: 30px;
-                .info__name{
+                border: 3px solid #FABA84;
+                box-shadow: 4px 4px #FBD386;
+                width: 50%;
+                padding: 50px;
+                background-color: whitesmoke;
+                .edit_info__name{
                     margin-top: 30px;
-                    label{
-                        font-weight: bold;
-                        margin-right: 41px;
-                        color: #393B3D;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    div{
+                        margin-bottom: 15px;
+                        width: 100%;
+                        label{
+                            font-weight: bold;
+                            margin-right: 46px;
+                            color: #393B3D;
+                        }
+                        input{
+                            width: 65%;
+                            color: #393B3D;
+                            border-radius: 5px;
+                            padding: 12px;
+                            font-size: 17px;
+                        }
                     }
-                    input{
-                        width: 65%;
-                        color: #393B3D;
-                        border-radius: 5px;
-                        padding: 12px;
-                        font-size: 17px;
+                    .error__editProfile{
+                        color: red !important;
                     }
                 }
-                .info__email{
+                .edit_info__email{
                     margin-top: 30px;
-                    label{
-                        font-weight: bold;
-                        margin-right: 87px;
-                        color: #393B3D;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    div{
+                        margin-bottom: 15px;
+                        width: 100%;
+                        label{
+                            font-weight: bold;
+                            margin-right: 92px;
+                            color: #393B3D;
+                        }
+                        input{
+                            width: 65%;
+                            color: #393B3D;
+                            border-radius: 5px;
+                            padding: 12px;
+                            font-size: 17px;
+                        }
                     }
-                    input{
-                        width: 65%;
-                        color: #393B3D;
-                        border-radius: 5px;
-                        padding: 12px;
-                        font-size: 17px;
+                    .error__editProfile{
+                        color: red !important;
                     }
                 }
-                .info__department{
+                .edit_info__department{
                     margin-top: 30px;
-                    label{
-                        font-weight: bold;
-                        margin-right: 20px;
-                        color: #393B3D;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    div{
+                        margin-bottom: 15px;
+                        width: 100%;
+                        label{
+                            font-weight: bold;
+                            margin-right: 20px;
+                            color: #393B3D;
+                        }
+                        input{
+                            width: 65%;
+                            color: #393B3D;
+                            border-radius: 5px;
+                            padding: 12px;
+                            font-size: 17px;
+                        }
                     }
-                    input{
-                        width: 65%;
-                        color: #393B3D;
-                        border-radius: 5px;
-                        padding: 12px;
-                        font-size: 17px;
+                    .error__editProfile{
+                        color: red !important;
                     }
                 }
-                .info__sex{
+                .edit_info__sex{
                     margin-top: 30px;
                     #title{
                         font-weight: bold;
+                        margin-right: 65px;
+                        color: #393B3D;
                     }
                     span{
                         margin-right: 114px;
-                        color:#393B3D;
                     }
                     input{
-                       
                         margin-right: 10px;
                     }
                 }
-                .info__address{
+                .edit_info__address{
                     margin-top: 30px;
-                    label{
-                        font-weight: bold;
-                        margin-right: 62px;
-                        color: #393B3D;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    div{
+                        margin-bottom: 15px;
+                        width: 100%;
+                        label{
+                            font-weight: bold;
+                            margin-right: 62px;
+                            color: #393B3D;
+                        }
+                        input{
+                            width: 65%;
+                            color: #393B3D;
+                            border-radius: 5px;
+                            padding: 12px;
+                            font-size: 17px;
+                        }
                     }
-                    input{
-                        width: 65%;
-                        color: #393B3D;
-                        border-radius: 5px;
-                        padding: 12px;
-                        font-size: 17px;
+                    .error__editProfile{
+                        color: red !important;
                     }
                 }
                 p{
@@ -144,49 +185,79 @@
                     font-size: 30px;
                     color: #E24B3B;
                 }
-                .current__pass{
+                .edit_current__pass{
                     margin-top: 30px;
-                    label{
-                        font-weight: bold;
-                        margin-right: 10px;
-                        color: #393B3D;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    div{
+                        margin-bottom: 15px;
+                        width: 100%;
+                        label{
+                            font-weight: bold;
+                            margin-right: 10px;
+                            color: #393B3D;
+                        }
+                        input{
+                            width: 55%;
+                            color: #393B3D;
+                            border-radius: 5px;
+                            padding: 12px;
+                            font-size: 17px;
+                        }
                     }
-                    input{
-                        width: 55%;
-                        color: #393B3D;
-                        border-radius: 5px;
-                        padding: 12px;
-                        font-size: 17px;
+                    .error__editProfile{
+                        color: red !important;
                     }
                 }
-                .new__pass{
-                    margin-top: 50px;
-                    label{
-                        font-weight: bold;
-                        margin-right: 44px;
-                        color: #393B3D;
+                .edit_new__pass{
+                    margin-top: 30px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    div{
+                        margin-bottom: 15px;
+                        width: 100%;
+                        label{
+                            font-weight: bold;
+                            margin-right: 44px;
+                            color: #393B3D;
+                        }
+                        input{
+                            width: 55%;
+                            color: #393B3D;
+                            border-radius: 5px;
+                            padding: 12px;
+                            font-size: 17px;
+                        }
                     }
-                    input{
-                        width: 55%;
-                        color: #393B3D;
-                        border-radius: 5px;
-                        padding: 12px;
-                        font-size: 17px;
+                    .error__editProfile{
+                        color: red !important;
                     }
                 }
-                .confirm_pass{
+                .edit_confirm_pass{
                     margin-top: 30px;
-                    label{
-                        font-weight: bold;
-                        margin-right: 5px;
-                        color: #393B3D;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    div{
+                        margin-bottom: 15px;
+                        width: 100%;
+                        label{
+                            font-weight: bold;
+                            margin-right: 5px;
+                            color: #393B3D;
+                        }
+                        input{
+                            width: 55%;
+                            color: #393B3D;
+                            border-radius: 5px;
+                            padding: 12px;
+                            font-size: 17px;
+                        }
                     }
-                    input{
-                        width: 55%;
-                        color: #393B3D;
-                        border-radius: 5px;
-                        padding: 12px;
-                        font-size: 17px;
+                    .error__editProfile{
+                        color: red !important;
                     }
                 }
                 .btn-edit{

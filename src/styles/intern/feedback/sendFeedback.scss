@@ -12,9 +12,9 @@
     }
     .form-feedback{
         width: 65%;
-        background-color: #B0F0FA;
+        background-color: #f7edc2;
         border-radius: 8px;
-        box-shadow: 8px 8px #294D5C;
+        box-shadow: 8px 8px  #ccc18f;
         form{
             padding: 30px;
             font-size: 20px;
@@ -29,6 +29,10 @@
                     width: 98%;
                     padding: 5px;
                     margin-top: 15px;
+                    margin-bottom: 10px;
+                }
+                .error__editProfile{
+                    color: red !important;
                 }
             }
             .content-feedback{
@@ -44,6 +48,10 @@
                     padding: 5px;
                     margin-top: 15px;
                     box-shadow: 1px 1px 1px #999;
+                    margin-bottom: 10px;
+                }
+                .error__editProfile{
+                    color: red !important;
                 }
             }
             .btn-send{
