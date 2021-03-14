@@ -6,7 +6,8 @@ public enum Message {
     INVALID_TOKEN("This token was accessed or expired "),
     EMAIL_NOT_FOUND("Email is not found"), ERROR_SENDING_EMAIL("Error while sending email"),
     CONTENT_EMAIL("Please check in your email"),
-    USER_NOT_FOUND("Your password ỏ email is incorrect!");
+    USER_NOT_FOUND("Your password or email is incorrect!"),
+    MISSING_UNAUTHORIZED("missing authorized to access this URL");
     private String detail;
 
     Message(String detail) {

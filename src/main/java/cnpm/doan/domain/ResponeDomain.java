@@ -1,14 +1,15 @@
 package cnpm.doan.domain;
 
+import cnpm.doan.util.HTTPStatus;
 import org.springframework.http.HttpStatus;
 
 public class ResponeDomain {
     private String messsage;
-    private HttpStatus status;
+    private boolean success;
 
-    public ResponeDomain(String messsage, HttpStatus status) {
+    public ResponeDomain(String messsage, boolean status) {
         this.messsage = messsage;
-        this.status = status;
+        this.success = status;
     }
 
     public String getMesssage() {
@@ -19,11 +20,11 @@ public class ResponeDomain {
         this.messsage = messsage;
     }
 
-    public HttpStatus getStatus() {
-        return status;
+    public boolean getSuccess() {
+        return success;
     }
 
-    public void setStatus(HttpStatus status) {
-        this.status = status;
+    public void setSuccess(boolean success) {
+        this.success = success;
     }
 }

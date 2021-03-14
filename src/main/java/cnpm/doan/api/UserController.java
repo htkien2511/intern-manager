@@ -1,6 +1,7 @@
 package cnpm.doan.api;
 
 import cnpm.doan.domain.Account;
+import cnpm.doan.domain.RegisterAccount;
 import cnpm.doan.domain.UserDomain;
 import cnpm.doan.entity.User;
 import cnpm.doan.service.RoleService;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
-
+@CrossOrigin
 @RestController
 public class UserController {
     @Autowired
@@ -23,22 +24,22 @@ public class UserController {
     private RoleService roleService;
 
     @GetMapping("/users")
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
-    public ResponseEntity getUser(@RequestParam(name = "role_name") String roleName) {
-        System.out.println(roleName);
-        List<User> users = userService.findUserByRoleName(roleName);
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_MANAGER')")
+    public ResponseEntity getUser() {
+        List<User> users = userService.findUserByRoleName("ROLE_USER");
         List<UserDomain> result = users.stream().map(t -> new UserDomain(t))
                 .collect(Collectors.toList());
         return ResponseEntity.ok(result);
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@ModelAttribute Account account) {
+    public ResponseEntity<?> register(@ModelAttribute RegisterAccount account) {
         User user = userService.findUserByEmail(account.getEmail());
         if (user != null) {
             return ResponseEntity.ok(Message.EMAIL_EXISTED.getDetail());
         }
         User newUser = new User();
+        newUser.setName(account.getName());
         newUser.setEmail(account.getEmail());
         newUser.setPassword(new BCryptPasswordEncoder().encode(account.getPassword()));
         newUser.setRoles(roleService.findRoleByRoleName("ROLE_USER"));

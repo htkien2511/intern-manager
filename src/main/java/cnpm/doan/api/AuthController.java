@@ -10,6 +10,7 @@ import cnpm.doan.security.JwtUtil;
 import cnpm.doan.security.UserPrincipal;
 import cnpm.doan.service.TokenService;
 import cnpm.doan.service.UserService;
+import cnpm.doan.util.HTTPStatus;
 import cnpm.doan.util.Message;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,7 +36,7 @@ public class AuthController {
         System.out.println(account.getEmail() + "," + account.getPassword());
         UserPrincipal userPrincipal = userService.findByUsername(account.getEmail());
         if (account == null || !new BCryptPasswordEncoder().matches(account.getPassword(), userPrincipal.getPassword())) {
-            return ResponseEntity.ok(new ResponeDomain(Message.USER_NOT_FOUND.getDetail(), HttpStatus.BAD_REQUEST));
+            return ResponseEntity.ok(new ResponeDomain(Message.USER_NOT_FOUND.getDetail(), HTTPStatus.fail));
         }
         Token token = new Token();
         token.setToken(jwtUtil.generateToken(userPrincipal));
