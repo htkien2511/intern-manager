@@ -19,7 +19,7 @@ const DropdownUserMenu = () => {
     }, [ref]);
   };
 
-  var styleIcon = isShown ? "fi-rr-caret-up" : "fi-rr-caret-down";
+  // var styleIcon = isShown ? "fi-rr-caret-up" : "fi-rr-caret-down";
   useClickOutside(logoutWrapper);
   return (
     <div ref={logoutWrapper} className="style-userContainer">
