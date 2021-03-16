@@ -8,7 +8,7 @@ function FormWatch() {
             <h2>Intern's Profile</h2>
             <div className="form-watch__body">
                 <div className="form-watch__body__info">
-                    <div>
+                    <div className="info_avatar">
                         <img src={logo} className="avatar" alt="avatar"/>
                     </div>  
                     <form>

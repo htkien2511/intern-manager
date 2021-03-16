@@ -10,20 +10,21 @@
         margin-bottom: 60px;
     }
     &__body{
-        width: 100%;
+        width: 80%;
         &__info{
             display: flex;
             flex-direction: row;
             justify-content: center;
-            div{
+            .info_avatar{
                 background: #eaeaea;
                 border-radius: 16px;
-                // height: 250px;
-                // width: 250px;
+                height: 220px;
+                width: 230px;
                 .avatar{
                     width: 200px;
                     height: 200px;
                     border-radius: 100px;
+                    padding: 5px;
                 }
             }
             form{
