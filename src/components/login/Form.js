@@ -5,6 +5,7 @@ import { Form as ReForm } from "reactstrap";
 import { isEmpty, isEmail } from "validator";
 import { useSelector } from "react-redux";
 import { ROUTE_FORGOTPASSWORD, ROUTE_REGISTER } from "../../utils/routes";
+import image from "../../assets/images/logo_bg.png";
 
 const Form = ({ handleSubmit }) => {
   const [error, setError] = React.useState({});
@@ -55,7 +56,7 @@ const Form = ({ handleSubmit }) => {
   return (
     <section onSubmit={handleSubmitForm} className="login">
       <div className="login__inner flex items-center contents-center">
-        <img src="https://picsum.photos/400/600" alt="" />
+        <img src={image} alt="" />
         <ReForm className="radius-l login__inner__form">
           <div className="login__inner__form__text">
             <p>Login to your account</p>

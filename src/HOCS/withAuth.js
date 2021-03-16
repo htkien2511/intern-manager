@@ -8,7 +8,7 @@ import { ROUTE_ADMIN_LOGIN } from "../utils/routes";
 const withAuth = (Component, showMenu = false) => (props) => {
   return (
     <div className="app__admin flex flex-row">
-      {!(getAuth() && getAuth().token) ? (
+      {(getAuth() && getAuth().token) ? (
         <>
           <SideBar />
           <div className="app__admin__body">

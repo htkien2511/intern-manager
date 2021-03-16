@@ -43,14 +43,15 @@
   &__body {
     width: 100%;
     margin-left: 300px;
-    background: url("../../assets/images/background.jpg") no-repeat;
+    background-color: $white;
+    // background: url("../../assets/images/background.jpg") no-repeat;
     height: 100vh;
   }
 }
 .app {
   transition: 0.25s ease;
-  // background-color: $white;
-  background: url("../../assets/images/background.jpg") no-repeat;
+  background-color: $white;
+  // background: url("../../assets/images/background.jpg") no-repeat;
   min-height: 100vh;
 
   &:after {
