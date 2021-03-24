@@ -1,15 +1,17 @@
 .style-userInfor {
   position: relative;
   display: flex;
-  background-image: url("../../assets/images/manager.png");
   justify-content: center;
-  border: 1px solid #7b8191;
   padding: 10px;
   cursor: pointer;
   width: 40px;
   border-radius: 50%;
   height: 40px;
   margin-left: 32px;
+  & > i {
+    font-size: 40px;
+    color: rgb(0, 0, 0);
+  }
 }
 .style-avatarContainer {
   display: inline-block;

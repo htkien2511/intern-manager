@@ -10,7 +10,15 @@
   top: 0;
   &__inner {
     padding: 10px 50px;
+    &__title {
+      color: white;
+      font-size: 24px;
+      text-transform: capitalize;
+    }
     &__logo {
+      &__admin {
+        opacity: 0 !important;
+      }
       img {
         width: 150px;
         height: 80px;
@@ -38,9 +46,11 @@
           .header__inner__menu > i {
             color: #ff9100 !important;
           }
+          & > span {
+            border-bottom: 2px solid rgb(230, 93, 1);
+          }
         }
         span {
-          border-bottom: 2px solid rgb(230, 93, 1);
           color: white;
         }
         margin: 0 16px;

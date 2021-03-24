@@ -2,5 +2,46 @@
   width: 100%;
   &__inner {
     padding: 32px 16px;
+    &__top {
+      margin: 16px 0px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      &__button--add {
+        position: relative;
+        & > i {
+          font-size: 18px;
+          top: calc(50% - 10px);
+          right: calc(50% - 90px);
+          position: absolute;
+          color: white;
+        }
+        &__btn {
+          width: 300px !important;
+          height: 40px !important;
+        }
+      }
+      &__search {
+        position: relative;
+        & > i {
+          position: absolute;
+          left: 10px;
+          top: 8px;
+        }
+        width: calc(50% - 300px);
+        & > input {
+          text-align: center;
+        }
+        ::-webkit-input-placeholder {
+          text-align: center;
+          padding: 0 8px;
+        }
+
+        :-moz-placeholder {
+          text-align: center;
+          padding: 0 8px;
+        }
+      }
+    }
   }
 }

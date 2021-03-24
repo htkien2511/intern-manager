@@ -8,6 +8,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
+import { Button, Input } from "reactstrap";
 
 const columns = [
     { id: 'id', label: 'Id', minWidth: 170 },
@@ -30,27 +31,24 @@ const columns = [
         minWidth: 170,
         align: 'left',
     },
+    {
+        id: 'actions',
+        label: 'Actions',
+        minWidth: 170,
+        align: 'left',
+    },
 ];
 
-function createData(id, name, email, department, address) {
-    return { id, name, email, department, address };
+function createData(id, name, email, department, address, actions) {
+    return { id, name, email, department, address, actions };
 }
 
 const rows = [
-    createData(0, "Phan Trong Duc", "trongduc.iter@gmail.com", "Frontend Dev", "La Hai Dong Xuan Phu Yen"),
-    createData(1, "Phan Trong Duc", "trongduc.iter@gmail.com", "Frontend Dev", "La Hai Dong Xuan Phu Yen"),
-    createData(2, "Phan Trong Duc", "trongduc.iter@gmail.com", "Frontend Dev", "La Hai Dong Xuan Phu Yen"),
-    createData(3, "Phan Trong Duc", "trongduc.iter@gmail.com", "Frontend Dev", "La Hai Dong Xuan Phu Yen"),
-    createData(4, "Phan Trong Duc", "trongduc.iter@gmail.com", "Frontend Dev", "La Hai Dong Xuan Phu Yen"),
-    createData(5, "Phan Trong Duc", "trongduc.iter@gmail.com", "Frontend Dev", "La Hai Dong Xuan Phu Yen"),
-    createData(6, "Phan Trong Duc", "trongduc.iter@gmail.com", "Frontend Dev", "La Hai Dong Xuan Phu Yen"),
-    createData(7, "Phan Trong Duc", "trongduc.iter@gmail.com", "Frontend Dev", "La Hai Dong Xuan Phu Yen"),
-    createData(8, "Phan Trong Duc", "trongduc.iter@gmail.com", "Frontend Dev", "La Hai Dong Xuan Phu Yen"),
-    createData(9, "Phan Trong Duc", "trongduc.iter@gmail.com", "Frontend Dev", "La Hai Dong Xuan Phu Yen"),
-    createData(10, "Phan Trong Duc", "trongduc.iter@gmail.com", "Frontend Dev", "La Hai Dong Xuan Phu Yen"),
-    createData(11, "Phan Trong Duc", "trongduc.iter@gmail.com", "Frontend Dev", "La Hai Dong Xuan Phu Yen"),
-    createData(12, "Phan Trong Duc", "trongduc.iter@gmail.com", "Frontend Dev", "La Hai Dong Xuan Phu Yen"),
-    createData(13, "Phan Trong Duc", "trongduc.iter@gmail.com", "Frontend Dev", "La Hai Dong Xuan Phu Yen"),
+    createData(0, "Hoang Trong Kien", "htk@gmail.com", "Android, IOS Dev", "Thua Thien Hue", "Edit|Delete"),
+    createData(1, "Nguyen Thi Hong", "nth99@gmail.com", "Java Dev", "Quang Binh", "Edit|Delete"),
+    createData(2, "Phan Trong Duc", "trongduc.iter@gmail.com", "Frontend Dev", "Phu Yen", "Edit|Delete"),
+    createData(3, "Phan Gia Sang", "sang99@gmail.com", "Php Dev", "Thua Thien Hue", "Edit|Delete"),
+    createData(4, "Phan Thanh Binh", "ptb99@gmail.com", "Android Dev", "Quang Nam", "Edit|Delete"),
 ];
 
 const useStyles = makeStyles({
@@ -79,6 +77,16 @@ export default function ManageIntern() {
     return (
         <div className="manage-intern">
             <div className="manage-intern__inner">
+                <div className="manage-intern__inner__top">
+                    <div className="manage-intern__inner__top__button--add">
+                        <Button className="button manage-intern__inner__top__button--add__btn">General Account</Button>
+                        <i class="fi-rr-plus"></i>
+                    </div>
+                    <div className="button manage-intern__inner__top__search">
+                        <i class="fi-rr-search"></i>
+                        <Input type="text" name="search" id="searchKey" placeholder="Search accounts" />
+                    </div>
+                </div>
                 <Paper className={classes.root}>
                     <TableContainer className={classes.container}>
                         <Table stickyHeader aria-label="sticky table">

@@ -84,7 +84,7 @@ function FormEdit() {
                 type="file"
                 name="file"
                 id="file"
-                class="inputfile"
+                className="inputfile"
                 onChange={(event) => {
                   setImageUrl(URL.createObjectURL(event.target.files[0]));
                 }}
@@ -212,7 +212,7 @@ function FormEdit() {
               <span className="error__editProfile">{error.confirmPass}</span>
             </div>
             <center>
-            <button className="btn-edit">Save</button>
+              <button className="btn-edit">Save</button>
             </center>
           </form>
         </div>

@@ -16,6 +16,14 @@
         background-color: rgb(248, 132, 0);
         width: 100%;
         color: honeydew;
+        position: relative;
+        & > i {
+          position: absolute;
+          top: 0;
+          right: 0;
+          font-size: 20px;
+          color: rgb(7, 2, 66);
+        }
       }
       &--menu {
         padding: 32px 0;
@@ -23,14 +31,11 @@
         &__item {
           height: 50px;
           width: 100%;
-          padding: 0 32px;
+          padding: 0 24px;
           box-sizing: border-box;
           align-items: center;
           &--active {
             color: rgb(0, 3, 204) !important;
-            .temp {
-              display: none !important;
-            }
           }
           .temp {
             width: 5px;
@@ -54,14 +59,6 @@
           a {
             color: rgb(78, 71, 71);
             margin-left: 15px;
-          }
-          &__inner {
-            box-sizing: border-box;
-            height: 40px;
-            padding: 8px 16px;
-            color: rgb(70, 64, 64);
-            display: flex;
-            align-items: center;
           }
           &:not(:last-child) {
             margin-bottom: 40px;

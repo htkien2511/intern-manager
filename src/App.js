@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import HomePage from "./containers/HomePage"
 import withAuthUser from "./HOCS/intern/withAuthUser";
 import { withAuth, withAuthLayout } from "./HOCS";
-import { ROUTE_FORGOTPASSWORD, ROUTE_LOGIN, ROUTE_MANAGEINTERN, ROUTE_REGISTER, ROUTE_RESETPASSWORD, ROUTE_ADMIN_LOGIN } from "./utils/routes";
+import { ROUTE_FORGOTPASSWORD, ROUTE_LOGIN, ROUTE_MANAGEINTERN, ROUTE_REGISTER, ROUTE_RESETPASSWORD, ROUTE_ADMIN_LOGIN, ROUTE_MANAGESCHEDULE, ROUTE_MANAGESCHEDULE_DETAIL } from "./utils/routes";
 import { ForgotPassword } from "./containers/forgotPassword";
 import { ResetPassword } from "./containers/resetPassword";
 import { ManageIntern } from "./containers/admin/manageAccountIntern";
@@ -18,6 +18,7 @@ import SendFeedback from "./containers/intern/feedback/SendFeedback";
 import Conversation from "./containers/intern/feedback/Conversation";
 import Calendar from "./containers/intern/calendar/Calendar";
 import { ROUTE_PROFILE, ROUTE_EDIT_PROFILE, ROUTE_CONVERSATION, ROUTE_FEEDBACKS, ROUTE_REGISTER_SCHEDULE, ROUTE_TASK_MANAGEMENT, ROUTE_SEND_FEEDBACK } from "./utils/routes";
+import { ManageSchedule, ManageScheduleDetail } from "./containers/admin/manageScheduleIntern";
 
 function App() {
   return (
@@ -30,7 +31,9 @@ function App() {
         <Route path={ROUTE_FORGOTPASSWORD} component={withAuthLayout(ForgotPassword)} exact />
         <Route path={ROUTE_RESETPASSWORD} component={withAuthLayout(ResetPassword)} exact />
         {/* Admin */}
-        <Route path={ROUTE_MANAGEINTERN} component={withAuth(ManageIntern)} exact />
+        <Route path={ROUTE_MANAGEINTERN} component={withAuth(ManageIntern, false)} exact />
+        <Route path={ROUTE_MANAGESCHEDULE} component={withAuth(ManageSchedule, false)} exact />
+        <Route path={ROUTE_MANAGESCHEDULE_DETAIL} component={withAuth(ManageScheduleDetail, false)} exact />
         <Route path={ROUTE_PROFILE} component={withAuthUser(InfoIntern)} exact />
         <Route path={ROUTE_EDIT_PROFILE} component={withAuthUser(EditProfile)} exact />
         <Route path={ROUTE_TASK_MANAGEMENT} component={withAuthUser(TaskManagement)} exact />

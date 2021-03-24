@@ -1,10 +1,10 @@
 import React from "react";
 import { Header, Footer } from "../components/layout";
 
-const withAuthLayout = (Component, showMenu = false) => (props) => {
+const withAuthLayout = (Component, showLogo = true) => (props) => {
     return (
         <div className="app">
-            <Header showMenu={showMenu} />
+            <Header showLogo={showLogo} />
             <div className="app__body">
                 <div className="app__content">
                     <div className="app__content__inner">
