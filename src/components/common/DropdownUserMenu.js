@@ -19,18 +19,15 @@ const DropdownUserMenu = () => {
     }, [ref]);
   };
 
-  // var styleIcon = isShown ? "fi-rr-caret-up" : "fi-rr-caret-down";
   useClickOutside(logoutWrapper);
   return (
     <div ref={logoutWrapper} className="style-userContainer">
       <div className="style-userInfor" onClick={() => setIsShown(!isShown)}>
-        {/* <div className="style-avatarContainer"> */}
         <img src="https://picsum.photos/200" alt="" className="style-avatarContainer" />
-        {/* </div> */}
       </div>
       {isShown && (
         <div className="style-dropdownContainer">
-          <div className="style-dropdownItem">
+          <div className="style-dropdownItem" onClick={() => localStorage.clear()}>
             <i class="fi-rr-sign-out" />
             <span className="">Logout</span>
           </div>

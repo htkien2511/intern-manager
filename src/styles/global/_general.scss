@@ -34,26 +34,24 @@
   justify-content: center;
 }
 .link {
-  color: #f0860e;
+  color: white;
   &:hover {
-    color: blue;
+    color: rgb(255, 153, 0);
   }
 }
 .app__admin {
   &__body {
     width: 100%;
     margin-left: 300px;
-    background-color: $white;
-    // background: url("../../assets/images/background.jpg") no-repeat;
-    height: 100vh;
+    min-height: 100vh;
   }
 }
 .app {
+  background-image: url("../../assets/images/background_login_register_forgotpass_resetpass.png");
+  background-position: center;
+  background-size: cover;
   transition: 0.25s ease;
-  background-color: $white;
-  // background: url("../../assets/images/background.jpg") no-repeat;
   min-height: 100vh;
-
   &:after {
     content: "";
     display: table;
@@ -133,4 +131,7 @@ a {
 .makeStyles-container-4,
 .makeStyles-container-2 {
   max-height: 680px !important;
+}
+body {
+  font-family: "GT-Walsheim" !important;
 }

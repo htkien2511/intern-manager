@@ -1,39 +1,31 @@
 .footer {
-  background-color: $white;
+  background-color: rgb(29, 116, 167);
   &__inner {
     padding: 24px 50px;
     text-align: center;
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
     &__logo {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      &:hover {
-        cursor: pointer;
-      }
-      img {
-        width: 200px;
-        height: 80px;
-        display: none;
-        border-radius: 10%;
-        box-shadow: 1px 1px 5px rgb(56, 46, 46);
-      }
+      display: inline-block;
+      align-self: flex-end;
+      color: white;
     }
     &__links {
       display: flex;
       flex-wrap: wrap;
+      justify-content: space-between;
       &__item {
-        margin: 0 50px;
+        margin: 0 80px;
         text-align: left;
-        p {
+        & > p {
           text-transform: capitalize;
+          color: rgb(255, 168, 38);
         }
         li {
           margin: 5px 0;
         }
-        a {
-          color: $black;
+        & > a {
           text-decoration: none;
           font-size: 16px;
           line-height: 20px;
@@ -52,7 +44,7 @@
           }
         }
         .icon-facebook {
-          color: blue;
+          color: white;
           &:hover {
             color: chocolate;
           }

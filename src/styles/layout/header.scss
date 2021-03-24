@@ -1,8 +1,8 @@
 .header {
   width: 100%;
-  background-color: rgb(27, 23, 23);
+  background-color: rgb(29, 116, 167);
   position: sticky;
-  box-shadow: 1px 1px 15px black;
+  box-shadow: 1px 1px 8px rgb(105, 105, 105);
   top: 0;
   z-index: 999;
   position: sticky;
@@ -12,35 +12,36 @@
     padding: 10px 50px;
     &__logo {
       img {
-        width: 100px;
+        width: 150px;
+        height: 80px;
         border-bottom-left-radius: 10px;
         border-bottom-right-radius: 10px;
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
-        box-shadow: 1px 1px 5px rgb(56, 46, 46);
       }
     }
     &__menu {
-      i {
-        color: $purple;
+      & > i {
         font-size: 18px;
         padding-top: 10px;
+        color: white;
         &:hover {
-          color: #e6962e;
+          cursor: pointer;
+          color: #ff9100 !important;
         }
       }
-      a {
+      & > a {
         font-size: 20px;
-        color: $purple;
         &:hover,
         &.--active {
-          i {
-            color: #e6962e !important;
+          & > span,
+          .header__inner__menu > i {
+            color: #ff9100 !important;
           }
-          color: #e6962e;
-          span {
-            border-bottom: 2px solid $purple;
-          }
+        }
+        span {
+          border-bottom: 2px solid rgb(230, 93, 1);
+          color: white;
         }
         margin: 0 16px;
       }
@@ -48,12 +49,12 @@
     .button--login {
       height: 40px;
       width: 100px;
-      background: rgb(36, 17, 143);
+      background: rgb(255, 143, 38);
       outline: none;
-      color: white;
+      color: rgb(22, 21, 21);
       border: none;
       &:hover {
-        background-color: #ebae5f;
+        background-color: #ffc982;
         color: $black;
       }
     }
