@@ -1,6 +1,7 @@
 package com.example.manager_intern.data.dao
 
 import com.example.manager_intern.data.model.Task
+import java.time.LocalDateTime
 import java.util.*
 
 class TaskDao {
@@ -10,30 +11,30 @@ class TaskDao {
 
     private fun mockData(): MutableList<Task> {
         return mutableListOf(
-            Task("Training Android", Date(), "Training android of fox code studio"),
-            Task("Training IOS", Date(), "Training android of fox code studio"),
-            Task("Final Project", Date(), "Training android of fox code studio"),
-            Task("Training IOS", Date(), "Training android of fox code studio"),
-            Task("Training IOS", Date(), "Training android of fox code studio"),
-            Task("Training IOS", Date(), "Training android of fox code studio"),
-            Task("Training IOS", Date(), "Training android of fox code studio"),
-            Task("Training IOS", Date(), "Training android of fox code studio"),
-            Task("Training IOS", Date(), "Training android of fox code studio"),
-            Task("Training IOS", Date(), "Training android of fox code studio"),
-            Task("Training IOS", Date(), "Training android of fox code studio"),
-            Task("Training IOS", Date(), "Training android of fox code studio"),
-            Task("Training Android", Date(), "Training android of fox code studio"),
-            Task("Training IOS", Date(), "Training android of fox code studio"),
-            Task("Final Project", Date(), "Training android of fox code studio"),
-            Task("Training IOS", Date(), "Training android of fox code studio"),
-            Task("Training IOS", Date(), "Training android of fox code studio"),
-            Task("Training IOS", Date(), "Training android of fox code studio"),
-            Task("Training IOS", Date(), "Training android of fox code studio"),
-            Task("Training IOS", Date(), "Training android of fox code studio"),
-            Task("Training IOS", Date(), "Training android of fox code studio"),
-            Task("Training IOS", Date(), "Training android of fox code studio"),
-            Task("Training IOS", Date(), "Training android of fox code studio"),
-            Task("Training IOS", Date(), "Training android of fox code studio")
+            Task("Training Android", Calendar.getInstance().time, "Training android of fox code studio"),
+            Task("Training IOS", Calendar.getInstance().time, "Training android of fox code studio"),
+            Task("Final Project", Calendar.getInstance().time, "Training android of fox code studio"),
+            Task("Training IOS", Calendar.getInstance().time, "Training android of fox code studio"),
+            Task("Training IOS", Calendar.getInstance().time, "Training android of fox code studio"),
+            Task("Training IOS", Calendar.getInstance().time, "Training android of fox code studio"),
+            Task("Training IOS", Calendar.getInstance().time, "Training android of fox code studio"),
+            Task("Training IOS", Calendar.getInstance().time, "Training android of fox code studio"),
+            Task("Training IOS", Calendar.getInstance().time, "Training android of fox code studio"),
+            Task("Training IOS", Calendar.getInstance().time, "Training android of fox code studio"),
+            Task("Training IOS", Calendar.getInstance().time, "Training android of fox code studio"),
+            Task("Training IOS", Calendar.getInstance().time, "Training android of fox code studio"),
+            Task("Training Android", Calendar.getInstance().time, "Training android of fox code studio"),
+            Task("Training IOS", Calendar.getInstance().time, "Training android of fox code studio"),
+            Task("Final Project", Calendar.getInstance().time, "Training android of fox code studio"),
+            Task("Training IOS", Calendar.getInstance().time, "Training android of fox code studio"),
+            Task("Training IOS", Calendar.getInstance().time, "Training android of fox code studio"),
+            Task("Training IOS", Calendar.getInstance().time, "Training android of fox code studio"),
+            Task("Training IOS", Calendar.getInstance().time, "Training android of fox code studio"),
+            Task("Training IOS", Calendar.getInstance().time, "Training android of fox code studio"),
+            Task("Training IOS", Calendar.getInstance().time, "Training android of fox code studio"),
+            Task("Training IOS", Calendar.getInstance().time, "Training android of fox code studio"),
+            Task("Training IOS", Calendar.getInstance().time, "Training android of fox code studio"),
+            Task("Training IOS", Calendar.getInstance().time, "Training android of fox code studio")
         )
     }
 }

@@ -1,5 +1,6 @@
 package com.example.manager_intern.ui.main.home
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,69 +8,36 @@ import com.example.manager_intern.R
 import com.example.manager_intern.base.BaseRecyclerViewAdapter
 import com.example.manager_intern.base.BaseViewHolder
 import com.example.manager_intern.data.model.Task
-import com.example.manager_intern.databinding.ItemTaskBinding
+import com.example.manager_intern.databinding.ItemProjectBinding
 import com.example.manager_intern.utils.Constants
-import com.google.android.gms.ads.AdView
+import java.util.*
 
-class HomeAdapter(list: MutableList<Any>) :
-    BaseRecyclerViewAdapter<Any>(list) {
+class HomeAdapter(var list: List<Task>, val itemHomeClickListener: (Task) -> Unit) :
+    BaseRecyclerViewAdapter<Task>(list) {
 
-    override fun setViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<Any> {
-        val view: View?
-        return when (viewType) {
-            Constants.ADS_TYPE -> {
-                view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_banner_ads, parent, false)
-                BannerViewHolder(view)
-            }
-
-            else -> {
-                view =
-                    LayoutInflater.from(parent.context).inflate(R.layout.item_task, parent, false)
-                TaskViewHolder(view)
-            }
-        }
+    override fun setViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<Task> {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_project, parent, false)
+        return TaskViewHolder(view)
     }
 
     override fun getItemViewType(position: Int): Int {
-        if (position % Constants.ITEMS_PER_ID == 0 && position != 0) {
-            return Constants.ADS_TYPE
-        }
         return Constants.CONTENT_TYPE
     }
 
-    inner class TaskViewHolder(itemView: View) : BaseViewHolder<Any>(itemView) {
+    inner class TaskViewHolder(itemView: View) : BaseViewHolder<Task>(itemView) {
 
-        private val binding by viewBinding(ItemTaskBinding::bind)
+        private val binding by viewBinding(ItemProjectBinding::bind)
 
-        override fun onBind(item: Any) {
-            if (item is Task) {
-                with(binding) {
-                    tvTitleTask.text = item.title
-                    tvDescriptionTask.text = item.description
-                    tvDueDateTask.text = item.dueDate.toString()
-                }
+        override fun onBind(item: Task) {
+            with(binding) {
+                titleTask.text = item.title
+
+                val rd = Random()
+                val color = Color.argb(255, rd.nextInt(256), rd.nextInt(256), rd.nextInt(256))
+                binding.backgroundTask.setBackgroundColor(color)
             }
 
-            //itemView.setOnClickListener { itemHomeClickListener(item) }
-        }
-    }
-
-    inner class BannerViewHolder(itemView: View) : BaseViewHolder<Any>(itemView) {
-
-        override fun onBind(item: Any) {
-            if (item is AdView) {
-                val adCardView = itemView as ViewGroup
-                if (adCardView.childCount > 0) {
-                    adCardView.removeAllViews()
-                }
-
-                if (item.parent != null) {
-                    (item.parent as ViewGroup).removeView(item)
-                }
-
-                adCardView.addView(item)
-            }
+            itemView.setOnClickListener { itemHomeClickListener(item) }
         }
     }
 }

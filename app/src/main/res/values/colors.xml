@@ -8,8 +8,14 @@
     <color name="white_80">#CCFFFFFF</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="primary">#1c447f</color>
+    <color name="primary">#0079be</color>
     <color name="primarySecond">#3983c2</color>
     <color name="middleCenter">#2c66a5</color>
     <color name="text_small">#8B959A</color>
+    <color name="bubbleLight">#ECEFF1</color>
+    <color name="textPrimary">#49555F</color>
+    <color name="defaultColor">#EEE</color>
+    <color name="pink">#FFB4CF</color>
+    <color name="blue_light">#d9ebf5</color>
+    <color name="green">#61bd4f</color>
 </resources>

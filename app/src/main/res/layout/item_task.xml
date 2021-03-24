@@ -2,47 +2,41 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:background="@drawable/bg_item_task"
-    android:layout_marginBottom="@dimen/dimen_16"
     android:layout_height="wrap_content"
-    android:padding="@dimen/dimen_8">
+    android:layout_marginBottom="@dimen/dimen_8"
+    android:paddingVertical="@dimen/dimen_4">
 
-    <TextView
-        android:id="@+id/tvTitleTask"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/llItemTask"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:textSize="@dimen/text_17"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/tvDueDateTask"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_4"
-        android:textColor="@color/text_small"
-        android:textSize="@dimen/text_14"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvTitleTask" />
-
-    <TextView
-        android:id="@+id/tvDescriptionTask"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dimen_4"
-        android:textColor="@color/text_small"
-        android:textSize="@dimen/text_14"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDueDateTask" />
-
-    <ImageView
-        android:id="@+id/imgIsDone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_baseline_cloud_done"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <CheckBox
+            android:id="@+id/chkIsDone"
+            android:layout_width="30dp"
+            android:layout_gravity="center_vertical"
+            android:layout_height="30dp"
+            android:buttonTint="@color/black" />
+
+        <TextView
+            android:id="@+id/tvTask"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_8"
+            android:layout_gravity="center_vertical"
+            android:text="Hoan thanh giao dien"
+            android:textColor="@color/textPrimary"
+            android:textSize="@dimen/text_17" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/bubbleLight"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,6 +5,10 @@ import com.example.manager_intern.R
 import com.example.manager_intern.base.BaseActivity
 import com.example.manager_intern.databinding.MainActBinding
 import com.example.manager_intern.ui.main.home.HomeFragment
+import com.example.manager_intern.ui.main.message.MessageFragment
+import com.example.manager_intern.ui.main.schedule.ScheduleFrag
+import com.example.manager_intern.ui.main.schedule.task.TaskFragment
+import com.example.manager_intern.ui.main.user.UserFragment
 
 class MainActivity : BaseActivity() {
     override val binding by viewBinding(MainActBinding::inflate)
@@ -22,11 +26,15 @@ class MainActivity : BaseActivity() {
                     true
                 }
                 R.id.bottomNavScheduler -> {
-                    loadFragment(HomeFragment())
+                    loadFragment(ScheduleFrag())
                     true
                 }
                 R.id.bottomNavMessage -> {
-                    loadFragment(HomeFragment())
+                    loadFragment(MessageFragment())
+                    true
+                }
+                R.id.bottomNavUser -> {
+                    loadFragment(UserFragment())
                     true
                 }
                 else -> false
@@ -38,7 +46,6 @@ class MainActivity : BaseActivity() {
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.fragmentContainer, fragment)
-            .addToBackStack(null)
             .commit()
     }
 }
