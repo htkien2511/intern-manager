@@ -1,73 +1,95 @@
-.form{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.send-feedback{
     h1{
         font-size: 55px;
         margin: 30px;
         text-align: center;
         color: #E24B3B;
-        margin-bottom: 60px;
+        margin-bottom: 80px;
     }
-    .form-feedback{
-        width: 65%;
-        background-color: #f7edc2;
-        border-radius: 8px;
-        box-shadow: 8px 8px  #ccc18f;
-        form{
-            padding: 30px;
-            font-size: 20px;
-            .title-feedback{
-                label{
-                    display: block;
-                    font-weight: bold;
+    .form{
+        display: flex;
+        flex-direction: row;
+        // align-items: center;
+        .info__contact{
+            width: 40%;
+            margin-right: 30px;
+            h3{
+                font-size: 45px;
+                color: #E24B3B;
+                margin-bottom: 60px;
+            }
+            div{
+                font-size: 20px;
+                margin-bottom: 15px;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                i{
+                    font-size: 35px;
+                    margin-right: 20px;
+                    color: chocolate;
                 }
-                input{
-                    border-radius: 8px;
-                    height: 30px;
-                    width: 98%;
-                    padding: 5px;
-                    margin-top: 15px;
-                    margin-bottom: 10px;
-                }
-                .error__editProfile{
-                    color: red !important;
+                span{
+
                 }
             }
-            .content-feedback{
-                width: 100%;
-                label{
-                    display: block; 
-                    font-weight: bold;
-                    margin-top: 15px;
+        }
+        .form-feedback{
+            width: 55%;
+            form{
+                font-size: 20px;
+                .title-feedback{
+                    label{
+                        display: block;
+                        font-weight: bold;
+                    }
+                    input{
+                        border-radius: 8px;
+                        height: 30px;
+                        width: 98%;
+                        padding: 10px;
+                        margin-top: 15px;
+                        margin-bottom: 10px;
+                    }
+                    .error__editProfile{
+                        color: red !important;
+                    }
                 }
-                textarea{
+                .content-feedback{
+                    width: 100%;
+                    label{
+                        display: block; 
+                        font-weight: bold;
+                        margin-top: 15px;
+                    }
+                    textarea{
+                        border-radius: 8px;
+                        width: 98%;
+                        padding: 10px;
+                        margin-top: 15px;
+                        box-shadow: 1px 1px 1px #999;
+                        margin-bottom: 10px;
+                    }
+                    .error__editProfile{
+                        color: red !important;
+                    }
+                }
+                .btn-send{
+                    background-color: #008CBA;
+                    border: none;
+                    color: white;
+                    padding: 15px;
+                    text-align: center;
+                    text-decoration: none;
+                    display: inline-block;
+                    font-size: 20px; 
                     border-radius: 8px;
-                    width: 98%;
-                    padding: 5px;
-                    margin-top: 15px;
-                    box-shadow: 1px 1px 1px #999;
-                    margin-bottom: 10px;
+                    text-justify: auto;
+                    width: 100px;
+                    font-weight: bold;
+                    margin-top: 30px;
+                    outline: none;
                 }
-                .error__editProfile{
-                    color: red !important;
-                }
-            }
-            .btn-send{
-                background-color: #008CBA;
-                border: none;
-                color: white;
-                padding: 15px;
-                text-align: center;
-                text-decoration: none;
-                display: inline-block;
-                font-size: 20px; 
-                border-radius: 8px;
-                text-justify: auto;
-                width: 100px;
-                font-weight: bold;
-                margin-top: 30px;
-                outline: none;
             }
         }
     }
