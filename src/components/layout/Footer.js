@@ -13,7 +13,7 @@ const Footer = () => {
               learn more
             </p>
             <ul>
-              <li className>
+              <li>
                 <NavLink activeClassName="--active" exact to="/">
                   <span className="link">Home page</span>
                 </NavLink>
