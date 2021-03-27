@@ -1,11 +1,11 @@
 import React from "react";
-import how1 from "../assets/images/how1.png";
-import how2 from "../assets/images/how2.png";
-import how3 from "../assets/images/how3.png";
-import how4 from "../assets/images/how4.png";
-import showcase1  from "../assets/images/showcase1.jpg";
-import showcase2  from "../assets/images/showcase2.jpg";
-import showcase3  from "../assets/images/showcase3.jpg";
+import how1 from "assets/images/how1.png";
+import how2 from "assets/images/how2.png";
+import how3 from "assets/images/how3.png";
+import how4 from "assets/images/how4.png";
+import showcase1  from "assets/images/showcase1.jpg";
+import showcase2  from "assets/images/showcase2.jpg";
+import showcase3  from "assets/images/showcase3.jpg";
 
 
 function HomePage(props) {

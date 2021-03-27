@@ -1,6 +1,8 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { ROUTE_MANAGESCHEDULE } from "../../utils/routes";
+// import leaderImage from "../../assets/images/manager.png";
+
 function SideBar() {
   return (
     <div className="side-bar">

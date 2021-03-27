@@ -80,10 +80,10 @@ export default function ManageIntern() {
                 <div className="manage-intern__inner__top">
                     <div className="manage-intern__inner__top__button--add">
                         <Button className="button manage-intern__inner__top__button--add__btn">General Account</Button>
-                        <i class="fi-rr-plus"></i>
+                        <i className="fi-rr-plus"></i>
                     </div>
                     <div className="button manage-intern__inner__top__search">
-                        <i class="fi-rr-search"></i>
+                        <i className="fi-rr-search"></i>
                         <Input type="text" name="search" id="searchKey" placeholder="Search accounts" />
                     </div>
                 </div>

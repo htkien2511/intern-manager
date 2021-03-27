@@ -37,44 +37,65 @@ function Form() {
     setSendFeedback("");
   };
   return (
-    <div className="form">
-      <h1>Send Feedback</h1>
-      <div className="error">{errorSendFeedback}</div>
-      <div className="form-feedback">
-        <form onSubmit={handleSubmit}>
-          <div className="title-feedback">
-            <label>Title:</label>
-            <input
-              type="text"
-              value={form.title}
-              name="title"
-              placeholder="Title"
-              onChange={handleChange}
-              onFocus={handleFocus}
-            />
-            {
-              error.title &&  <span className="error__editProfile">{error.title}</span>
-            }
+    <div className="send-feedback">
+      <div>
+        <h1>Send Feedback</h1>
+      </div>
+      <div className="form">
+        <div className="error">{errorSendFeedback}</div>
+        <div className="info__contact">
+          <h3>Contact Information</h3>
+          <div>
+            <i className="fi-rr-marker"></i>
+            <span className="">
+              Jl. Dr. Ir Soekarno No.16 - 17 Street , Roadblock, West County
+            </span>
           </div>
-          <div className="content-feedback">
-            <label>Content:</label>
-            <textarea
-              rows="10"
-              value={form.content}
-              name="content"
-              placeholder="Content"
-              onChange={handleChange}
-              onFocus={handleFocus}
-            />
-            {
-              error.content &&  <span className="error__editProfile">{error.content}</span>
-            }
+          <div>
+          <i className="fi-rr-envelope"></i>
+            <span className="">info@funclub.com</span>
           </div>
-          <center>
-            <button className="btn-send" >Send</button>
-            {/* disabled={isEmpty(form.title) && isEmpty(form.content)} */}
-          </center>
-        </form>
+          <div>
+          <i className="fi-rr-smartphone"></i>
+            <span className=""> 012 123 3456 6789</span>
+          </div>
+        </div>
+        <div className="form-feedback">
+          <form onSubmit={handleSubmit}>
+            <div className="title-feedback">
+              <label>Title:</label>
+              <input
+                type="text"
+                value={form.title}
+                name="title"
+                placeholder="Title"
+                onChange={handleChange}
+                onFocus={handleFocus}
+              />
+              {error.title && (
+                <span className="error__editProfile">{error.title}</span>
+              )}
+            </div>
+            <div className="content-feedback">
+              <label>Content:</label>
+              <textarea
+                rows="10"
+                value={form.content}
+                name="content"
+                placeholder="Content"
+                onChange={handleChange}
+                onFocus={handleFocus}
+              />
+              {error.content && (
+                <span className="error__editProfile">{error.content}</span>
+              )}
+            </div>
+            <center>
+              <button className="btn-send">Send</button>
+              {/* disabled={isEmpty(form.title) && isEmpty(form.content)} */}
+            </center>
+          </form>
+        </div>
       </div>
     </div>
   );
