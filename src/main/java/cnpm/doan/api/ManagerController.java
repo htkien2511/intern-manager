@@ -24,13 +24,16 @@ public class ManagerController {
         if (manager == null) {
             return ResponseEntity.ok(new ResponeDomain(Message.USER_NOT_FOUND.getDetail(), false));
         }
-        return ResponseEntity.ok(new UserDomain(manager));
+        return ResponseEntity.ok(new ResponeDomain(new UserDomain(manager), Message.SUCCESSFUlLY.getDetail(), true));
     }
 
     @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     @GetMapping("/managers")
     public ResponseEntity<?> getAllManager() {
         List<User> managers = userService.findUserByRoleName("ROLE_MANAGER");
-        return ResponseEntity.ok(managers);
+        if (managers.size() == 0) {
+            return ResponseEntity.ok(new ResponeDomain(Message.EMPTY_RESULT.getDetail(), Message.SUCCESSFUlLY.getDetail(), true));
+        }
+        return ResponseEntity.ok(new ResponeDomain(managers, Message.SUCCESSFUlLY.getDetail(), true));
     }
 }

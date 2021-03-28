@@ -2,6 +2,7 @@ package cnpm.doan.api;
 
 import cnpm.doan.domain.Account;
 import cnpm.doan.domain.RegisterAccount;
+import cnpm.doan.domain.ResponeDomain;
 import cnpm.doan.domain.UserDomain;
 import cnpm.doan.entity.User;
 import cnpm.doan.service.RoleService;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
 @CrossOrigin
 @RestController
 public class UserController {
@@ -29,7 +31,7 @@ public class UserController {
         List<User> users = userService.findUserByRoleName("ROLE_USER");
         List<UserDomain> result = users.stream().map(t -> new UserDomain(t))
                 .collect(Collectors.toList());
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(new ResponeDomain(result, Message.SUCCESSFUlLY.getDetail(), true));
     }
 
     @PostMapping("/register")
@@ -44,12 +46,15 @@ public class UserController {
         newUser.setPassword(new BCryptPasswordEncoder().encode(account.getPassword()));
         newUser.setRoles(roleService.findRoleByRoleName("ROLE_USER"));
         userService.createUser(newUser);
-        return ResponseEntity.ok(account.getEmail());
+        return ResponseEntity.ok(new ResponeDomain(account.getEmail(), Message.SUCCESSFUlLY.getDetail(), true));
     }
 
     @PostMapping("/user_profile")
     public ResponseEntity<?> getUserProfile(@RequestParam("email") String email) {
         User user = userService.findUserByEmail(email);
-        return ResponseEntity.ok(new UserDomain(user));
+        if (user == null) {
+            return ResponseEntity.ok(new ResponeDomain(Message.USER_NOT_FOUND.getDetail(), false));
+        }
+        return ResponseEntity.ok(new ResponeDomain(user, Message.SUCCESSFUlLY.getDetail(), true));
     }
 }

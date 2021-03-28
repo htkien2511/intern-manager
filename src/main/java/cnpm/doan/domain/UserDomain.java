@@ -68,4 +68,5 @@ public class UserDomain {
     public void setDepartment(String department) {
         this.department = department;
     }
+
 }

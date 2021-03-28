@@ -43,7 +43,7 @@ public class AuthController {
         tokenService.createToken(token);
         User user = userService.findUserByEmail(account.getEmail());
         UserWithToken userWithToken = new UserWithToken(user, token.getToken());
-        return ResponseEntity.ok(userWithToken);
+        return ResponseEntity.ok(new ResponeDomain(userWithToken, Message.SUCCESSFUlLY.getDetail(), true));
     }
 
 }
