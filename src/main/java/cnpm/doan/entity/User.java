@@ -19,6 +19,8 @@ public class User {
     private String email;
     @Column(name = "address")
     private String address;
+    @Column(name = "gender")
+    private String gender;
     @ManyToOne()
     @JoinColumn(name = "role_id")
     private Role roles;
@@ -27,6 +29,7 @@ public class User {
     private Department department;
     @Column(name = "reset_password_token")
     private String resetPasswordToken;
+
 
     public User() {
 
@@ -38,14 +41,23 @@ public class User {
         this.password = password;
     }
 
-    public User(int id, String name, String password, String email, String address, Role roles, Department department) {
+    public User(int id, String name, String password, String email, String address, String gender, Role roles, Department department) {
         this.id = id;
+        this.gender = gender;
         this.name = name;
         this.password = password;
         this.email = email;
         this.address = address;
         this.roles = roles;
         this.department = department;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
     public String getResetPasswordToken() {

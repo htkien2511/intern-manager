@@ -7,13 +7,16 @@ public class UserDomain {
     private String email;
     private String department;
     private String address;
+    private String gender;
     private String role;
 
-    public UserDomain(String name, String email, String department, String address, String role) {
+
+    public UserDomain(String name, String email, String department, String address, String gender, String role) {
         this.name = name;
         this.email = email;
         this.department = department;
         this.address = address;
+        this.gender = gender;
         this.role = role;
     }
 
@@ -23,6 +26,7 @@ public class UserDomain {
         this.department = user.getDepartment().getName();
         this.address = user.getAddress();
         this.role = user.getRoles().getRoleName();
+        this.gender = user.getGender();
     }
 
     public String getRole() {

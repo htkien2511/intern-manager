@@ -12,7 +12,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User findUserByResetPasswordToken(String token);
 
-    @Query("select new User(u.id, u.name, u.password, u.email,u.address, u.roles, u.department) from User u where u.roles.roleName = ?1")
+    @Query("select new User(u.id, u.name, u.password, u.email,u.address, u.gender, u.roles, u.department) from User u where u.roles.roleName = ?1")
     List<User> findUserByRoleName(String roleName);
 
 }

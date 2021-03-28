@@ -5,18 +5,13 @@ import cnpm.doan.domain.UserDomain;
 import cnpm.doan.entity.User;
 import cnpm.doan.service.UserService;
 import cnpm.doan.util.CustormException;
+import cnpm.doan.util.HTTPStatus;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.repository.query.Param;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
 import cnpm.doan.util.Message;
@@ -26,6 +21,7 @@ import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 
+@CrossOrigin
 @RestController
 public class ForgotPasswordController {
     @Autowired
@@ -44,11 +40,11 @@ public class ForgotPasswordController {
             String resetPasswordLink = siteURL.replace(request.getServletPath(), "") + "/reset_password?token=" + token;
             System.out.println(resetPasswordLink);
             sendEmail(email, resetPasswordLink);
-            return ResponseEntity.ok(Message.CONTENT_EMAIL.getDetail());
+            return ResponseEntity.ok(new ResponeDomain(Message.CONTENT_EMAIL.getDetail(), HTTPStatus.success));
         } catch (CustormException ex) {
             return ResponseEntity.ok(ex.getErrorType().getDetail());
         } catch (UnsupportedEncodingException | MessagingException e) {
-            return ResponseEntity.ok(Message.ERROR_SENDING_EMAIL.getDetail());
+            return ResponseEntity.ok(new ResponeDomain(Message.ERROR_SENDING_EMAIL.getDetail(), HTTPStatus.fail));
         }
     }
 
@@ -56,7 +52,7 @@ public class ForgotPasswordController {
     public ResponseEntity showResetPasswordForm(@RequestParam(value = "token") String token) {
         User user = userService.findUserByResetPasswordToken(token);
         if (user == null) {
-            return ResponseEntity.ok(new ResponeDomain(Message.INVALID_TOKEN.getDetail(), HttpStatus.BAD_REQUEST));
+            return ResponseEntity.ok(new ResponeDomain(Message.INVALID_TOKEN.getDetail(), HTTPStatus.fail));
         }
         return ResponseEntity.ok("oke");
     }
@@ -65,7 +61,7 @@ public class ForgotPasswordController {
     public ResponseEntity processResetPassword(@RequestParam("token") String token, @RequestParam("password") String password) {
         User user = userService.findUserByResetPasswordToken(token);
         if (user == null) {
-            return ResponseEntity.ok(new ResponeDomain(Message.INVALID_TOKEN.getDetail(), HttpStatus.BAD_REQUEST));
+            return ResponseEntity.ok(new ResponeDomain(Message.INVALID_TOKEN.getDetail(), HTTPStatus.success));
         } else {
             userService.updatePassword(user, password);
             UserDomain userDomain = new UserDomain(user);
