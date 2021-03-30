@@ -1,15 +1,27 @@
 package cnpm.doan.domain;
 
-import cnpm.doan.util.HTTPStatus;
-import org.springframework.http.HttpStatus;
-
 public class ResponeDomain {
+    private Object data;
     private String messsage;
     private boolean success;
 
     public ResponeDomain(String messsage, boolean status) {
         this.messsage = messsage;
         this.success = status;
+    }
+
+    public ResponeDomain(Object object, String messsage, boolean success) {
+        this.data = object;
+        this.messsage = messsage;
+        this.success = success;
+    }
+
+    public Object getData() {
+        return data;
+    }
+
+    public void setData(Object data) {
+        this.data = data;
     }
 
     public String getMesssage() {

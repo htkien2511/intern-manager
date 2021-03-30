@@ -9,7 +9,8 @@ public enum Message {
     USER_NOT_FOUND("Your password or email is incorrect!"),
     MISSING_UNAUTHORIZED("missing authorized to access this URL"),
     EMPTY_RESULT("Empty result"),
-    DATA_NOT_EXIST("Data not exist");
+    DATA_NOT_EXIST("Data not exist"),
+    SUCCESSFUlLY("Successfully");
     private String detail;
 
     Message(String detail) {
