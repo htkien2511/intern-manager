@@ -7,10 +7,11 @@ import com.example.manager_intern.databinding.MainActBinding
 import com.example.manager_intern.ui.main.home.HomeFragment
 import com.example.manager_intern.ui.main.message.MessageFragment
 import com.example.manager_intern.ui.main.schedule.ScheduleFrag
-import com.example.manager_intern.ui.main.schedule.task.TaskFragment
 import com.example.manager_intern.ui.main.user.UserFragment
 
-class MainActivity : BaseActivity() {
+class MainActivity : BaseActivity<MainViewModel>() {
+
+    override var viewModelFactory = MainViewModel::class.java
     override val binding by viewBinding(MainActBinding::inflate)
 
     override fun initView() {
@@ -47,5 +48,9 @@ class MainActivity : BaseActivity() {
             .beginTransaction()
             .replace(R.id.fragmentContainer, fragment)
             .commit()
+    }
+
+    override fun onBackPressed() {
+        moveTaskToBack(true)
     }
 }

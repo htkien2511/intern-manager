@@ -6,7 +6,10 @@ import com.example.manager_intern.base.BaseActivity
 import com.example.manager_intern.databinding.RegisterActBinding
 import com.example.manager_intern.ui.login.LoginActivity
 
-class RegisterActivity : BaseActivity() {
+class RegisterActivity : BaseActivity<RegisterViewModel>() {
+
+    override var viewModelFactory = RegisterViewModel::class.java
+
     override val binding by viewBinding(RegisterActBinding::inflate)
 
     override fun initView() {

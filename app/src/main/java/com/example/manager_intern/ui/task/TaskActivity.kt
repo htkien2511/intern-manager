@@ -3,12 +3,13 @@ package com.example.manager_intern.ui.task
 import com.example.manager_intern.R
 import com.example.manager_intern.base.BaseActivity
 import com.example.manager_intern.data.dao.AttachmentDao
-import com.example.manager_intern.data.dao.TaskDao
 import com.example.manager_intern.data.dao.TaskTestDao
 import com.example.manager_intern.data.dao.UserDao
 import com.example.manager_intern.databinding.DetailTaskActBinding
 
-class TaskActivity : BaseActivity() {
+class TaskActivity : BaseActivity<TaskViewModel>() {
+
+    override var viewModelFactory = TaskViewModel::class.java
 
     override val binding by viewBinding(DetailTaskActBinding::inflate)
 
