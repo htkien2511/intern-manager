@@ -5,7 +5,7 @@ import { getAuth } from "../../utils/helpers";
 import { ROUTE_LOGIN } from "../../utils/routes";
 import DropdownUserMenu from "../common/DropdownUserMenu";
 
-function Header({ showLogo }) {
+function Header({ showLogo, title }) {
   const auth = getAuth();
 
   return (
@@ -13,7 +13,7 @@ function Header({ showLogo }) {
       <div className="header__inner flex items-center space-between">
         {
           !showLogo ? (
-            <div className="header__inner__title">Admin page</div>
+            <div className="header__inner__title">{title}</div>
           )
             :
             <NavLink to="/" className="header__inner__logo">

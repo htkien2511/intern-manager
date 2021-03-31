@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -9,6 +9,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import { Button, Input } from "reactstrap";
+import ModalCUUser from "./ModalCUUser";
+import Popup from 'components/common/core/Popup';
 
 const columns = [
     { id: 'id', label: 'Id', minWidth: 170 },
@@ -44,11 +46,11 @@ function createData(id, name, email, department, address, actions) {
 }
 
 const rows = [
-    createData(0, "Hoang Trong Kien", "htk@gmail.com", "Android, IOS Dev", "Thua Thien Hue", "Edit|Delete"),
-    createData(1, "Nguyen Thi Hong", "nth99@gmail.com", "Java Dev", "Quang Binh", "Edit|Delete"),
-    createData(2, "Phan Trong Duc", "trongduc.iter@gmail.com", "Frontend Dev", "Phu Yen", "Edit|Delete"),
-    createData(3, "Phan Gia Sang", "sang99@gmail.com", "Php Dev", "Thua Thien Hue", "Edit|Delete"),
-    createData(4, "Phan Thanh Binh", "ptb99@gmail.com", "Android Dev", "Quang Nam", "Edit|Delete"),
+    createData("1111", "Hoang Trong Kien", "htk@gmail.com", "Android, IOS Dev", "Thua Thien Hue", "Edit|Delete"),
+    createData("2222", "Nguyen Thi Hong", "nth99@gmail.com", "Java Dev", "Quang Binh", "Edit|Delete"),
+    createData("3222", "Phan Trong Duc", "trongduc.iter@gmail.com", "Frontend Dev", "Phu Yen", "Edit|Delete"),
+    createData("4222", "Phan Gia Sang", "sang99@gmail.com", "Php Dev", "Thua Thien Hue", "Edit|Delete"),
+    createData("2225", "Phan Thanh Binh", "ptb99@gmail.com", "Android Dev", "Quang Nam", "Edit|Delete"),
 ];
 
 const useStyles = makeStyles({
@@ -73,18 +75,70 @@ export default function ManageIntern() {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
+    const handleConfirm = () => {
+        console.log("deleted");
+        console.log({ infoRow });
+        // handle delete api
+        setOpenModalDelete(false);
+    }
+    const [openModalAdd, setOpenModalAdd] = useState(false);
+    const [openModalEdit, setOpenModalEdit] = useState(false);
+    const [infoRow, setInfoRow] = useState({ id: "", name: "", email: "", department: "", address: "" });
+    const [openModalDelete, setOpenModalDelete] = useState(false);
+    const handleAction = (item, row) => {
+        switch (item) {
+            case "Edit": {
+                setInfoRow({ ...infoRow, id: row.id, name: row.name, email: row.email, department: row.department, address: row.address });
+                setOpenModalEdit(true);
+                break;
+            }
+            case "Delete": {
+                setOpenModalDelete(true);
+                setInfoRow({ ...infoRow, id: row.id, name: row.name, email: row.email, department: row.department, address: row.address });
+                break;
+            }
+            default:
+                break;
+        }
+    }
+
+    const renderCell = (column, value, indexRow, row) => {
+        switch (column.id) {
+            case "actions": {
+                const actions = value.split("|");
+                return (
+                    <TableCell key={column.id + " - " + indexRow} align={column.align}>
+                        <div>
+                            {actions.map((item, index) => {
+                                return (
+                                    <button key={index} style={{ margin: 5, color: 'white' }} className={`button ${item === "Edit" ? "button--secondary" : "button--danger"}`}
+                                        onClick={() => handleAction(item, row)}>{item}</button>
+                                )
+                            })}
+                        </div>
+                    </TableCell>
+                )
+            }
+            default:
+                return (
+                    <TableCell key={column.id + " - " + indexRow} align={column.align}>
+                        {column.format && typeof value === 'number' ? column.format(value) : value}
+                    </TableCell>
+                )
+        }
+    }
 
     return (
         <div className="manage-intern">
             <div className="manage-intern__inner">
                 <div className="manage-intern__inner__top">
-                    <div className="manage-intern__inner__top__button--add">
+                    <div className="manage-intern__inner__top__button--add" onClick={() => setOpenModalAdd(true)}>
                         <Button className="button manage-intern__inner__top__button--add__btn">General Account</Button>
                         <i className="fi-rr-plus"></i>
                     </div>
                     <div className="button manage-intern__inner__top__search">
                         <i className="fi-rr-search"></i>
-                        <Input type="text" name="search" id="searchKey" placeholder="Search accounts" />
+                        <Input type="text" name="search" id="searchKey" placeholder="Search account(s)" />
                     </div>
                 </div>
                 <Paper className={classes.root}>
@@ -104,15 +158,13 @@ export default function ManageIntern() {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                                {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, indexRow) => {
                                     return (
-                                        <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
+                                        <TableRow hover role="checkbox" tabIndex={-1} key={indexRow}>
                                             {columns.map((column) => {
                                                 const value = row[column.id];
                                                 return (
-                                                    <TableCell key={column.id} align={column.align}>
-                                                        {column.format && typeof value === 'number' ? column.format(value) : value}
-                                                    </TableCell>
+                                                    renderCell(column, value, indexRow, row)
                                                 );
                                             })}
                                         </TableRow>
@@ -132,6 +184,9 @@ export default function ManageIntern() {
                     />
                 </Paper>
             </div>
+            {openModalAdd && <ModalCUUser setOpenModal={setOpenModalAdd} title="Add account user" />}
+            {openModalEdit && <ModalCUUser setOpenModal={setOpenModalEdit} title="Edit account user" infoUser={infoRow} />}
+            {openModalDelete && <Popup onCancel={setOpenModalDelete} onConfirm={handleConfirm} />}
         </div>
     );
 }

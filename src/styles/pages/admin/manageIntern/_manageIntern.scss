@@ -30,7 +30,7 @@
         }
         width: calc(50% - 300px);
         & > input {
-          text-align: center;
+          padding-left: 30px;
         }
         ::-webkit-input-placeholder {
           text-align: center;

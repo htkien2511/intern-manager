@@ -1,24 +1,26 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
-import { ROUTE_MANAGESCHEDULE } from "../../utils/routes";
-// import leaderImage from "../../assets/images/manager.png";
+import { setTitle } from "redux/actions/admin/setTitle";
+import { ROUTE_MANAGE_ACCOUNT_WAITING, ROUTE_MANAGE_FEEDBACK__INTERN, ROUTE_MANAGE_INTERN, ROUTE_MANAGE_LEADER, ROUTE_MANAGE_SCHEDULE, ROUTE_MANAGE_TASK, ROUTE_VIEW_STATISTIC } from "../../utils/routes";
 
 function SideBar() {
+  const dispatch = useDispatch();
   return (
     <div className="side-bar">
       <div className="side-bar__inner flex items-center space-between">
         <div className="side-bar__inner__items flex flex-col">
           <div className="side-bar__inner__items--logo flex items-center contents-center">
-            {/* <i class="fi-rr-align-justify"></i> */}
             <span>SHAPEE CLOUND</span>
           </div>
           <div className="side-bar__inner__items--menu">
-            <div className="side-bar__inner__items--menu__item flex">
+            <div className="side-bar__inner__items--menu__item flex" >
               <div className="temp"></div>
               <i className="fi-rr-user"></i>
               <NavLink
                 activeClassName="side-bar__inner__items--menu__item__inner border-corner"
-                to="/a"
+                to={ROUTE_MANAGE_LEADER}
+                onClick={() => dispatch(setTitle("Manage Leader"))}
               >
                 Manage Leader
               </NavLink>
@@ -28,7 +30,8 @@ function SideBar() {
               <i className="fi-rr-user"></i>
               <NavLink
                 activeClassName="side-bar__inner__items--menu__item--active"
-                to="/admin/manage-intern"
+                to={ROUTE_MANAGE_INTERN}
+                onClick={() => dispatch(setTitle("Manage Intern"))}
               >
                 Manage Intern
               </NavLink>
@@ -38,7 +41,8 @@ function SideBar() {
               <i className="fi-rr-calendar"></i>
               <NavLink
                 activeClassName="side-bar__inner__items--menu__item--active border-corner"
-                to={ROUTE_MANAGESCHEDULE}
+                to={ROUTE_MANAGE_SCHEDULE}
+                onClick={() => dispatch(setTitle("Manage Schedule Intern"))}
               >
                 Manage Schedule Intern
               </NavLink>
@@ -48,9 +52,21 @@ function SideBar() {
               <i className="fi-rr-list-check"></i>
               <NavLink
                 activeClassName="side-bar__inner__items--menu__item--active border-corner"
-                to="/a"
+                to={ROUTE_MANAGE_TASK}
+                onClick={() => dispatch(setTitle("Manage Task Intern"))}
               >
                 Manage Task Intern
+              </NavLink>
+            </div>
+            <div className="side-bar__inner__items--menu__item flex">
+              <div className="temp"></div>
+              <i className="fi-rr-list-check"></i>
+              <NavLink
+                activeClassName="side-bar__inner__items--menu__item--active border-corner"
+                to={ROUTE_MANAGE_FEEDBACK__INTERN}
+                onClick={() => dispatch(setTitle("Manage Feedback Intern"))}
+              >
+                Manage Feedback Intern
               </NavLink>
             </div>
             <div className="side-bar__inner__items--menu__item flex">
@@ -58,7 +74,8 @@ function SideBar() {
               <i className="fi-rr-hourglass-end"></i>
               <NavLink
                 activeClassName="side-bar__inner__items--menu__item--active border-corner"
-                to="/a"
+                to={ROUTE_MANAGE_ACCOUNT_WAITING}
+                onClick={() => dispatch(setTitle("Manage Account  Waiting"))}
               >
                 Manage Account Waiting
               </NavLink>
@@ -68,7 +85,8 @@ function SideBar() {
               <i className="fi-rr-stats"></i>
               <NavLink
                 activeClassName="side-bar__inner__items--menu__item--active border-corner"
-                to="/a"
+                to={ROUTE_VIEW_STATISTIC}
+                onClick={() => dispatch(setTitle("View statistics"))}
               >
                 View statistics
               </NavLink>

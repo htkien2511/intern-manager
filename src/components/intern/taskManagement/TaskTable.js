@@ -4,9 +4,9 @@ import { taskListData } from "utils/mockData";
 // import { NavLink } from "react-router-dom";
 
 function TaskManagement() {
-    const handleChangeCheckTask=(content)=>{
-        console.log(content.id, content.checked);
-    }
+  const handleChangeCheckTask = (content) => {
+    console.log(content.id, content.checked);
+  }
   return (
     <div className="task-management">
       <h2>Task Management</h2>
@@ -28,18 +28,15 @@ function TaskManagement() {
                 <tr key={index}>
                   <td>{item.id}</td>
                   <td>Làm Web Thực tập</td>
-                  <td>
+                  <td style={{ width: 450 }}>
                     {item.listNameTask.map((item, index) => {
                       return (
                         <DropPanel key={index}>
                           <DropPanel.Trigger>
-                            {({ toggle }) => (
+                            {({ toggle, isShowing }) => (
                               <div className="work">
-                                <label>{item.task}</label>
-                                <i
-                                  className="fi-rr-angle-small-down"
-                                  onClick={toggle}
-                                ></i>
+                                <label style={{ marginRight: 10 }}>{item.task}</label>
+                                <i className={`fi-rr-angle-small-${isShowing ? "down" : "up"}`} onClick={toggle} style={{ cursor: "pointer" }} />
                               </div>
                             )}
                           </DropPanel.Trigger>
@@ -48,7 +45,7 @@ function TaskManagement() {
                               item.taskDetails && item.taskDetails.map((content, index) => {
                                 return (
                                   <div key={index}>
-                                    <input type="checkbox" checked={content.checked} onChange={()=>handleChangeCheckTask(content)}/>
+                                    <input type="checkbox" checked={content.checked} onChange={() => handleChangeCheckTask(content)} />
                                     {content.value}
                                   </div>
                                 );

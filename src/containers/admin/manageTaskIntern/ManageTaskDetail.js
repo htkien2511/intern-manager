@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Table } from "reactstrap";
 import { Checkbox } from '@material-ui/core';
 
-export default function ManageScheduleDetail() {
+export default function ManageIntern() {
   return (
     <div className="manage-schedule-detail">
       <div className="manage-schedule-detail__inner">

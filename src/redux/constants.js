@@ -18,3 +18,4 @@ export const RESETPASSWORD_API_FAIL = "RESETPASSWORD_API_FAIL";
 export const GET_USER = "GET_USER";
 export const GET_USER_SUCCEED = "GET_USER_SUCCEED";
 export const GET_USER_FAILED = "GET_USER_FAILED";
+export const SET_TITLE = "SET_TITLE";

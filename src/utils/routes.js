@@ -15,8 +15,16 @@ export
   const ROUTE_RESETPASSWORD = "/reset-password";
 //admin
 export const ROUTE_ADMIN_LOGIN = "/admin";
-export const ROUTE_MANAGEINTERN = "/admin/manage-intern";
-export const ROUTE_MANAGESCHEDULE = "/admin/manage-schedule"
-export const ROUTE_MANAGESCHEDULE_DETAIL = "/admin/manage-schedule:userId";
+export const ROUTE_MANAGE_INTERN = "/admin/manage-intern";
+export const ROUTE_MANAGE_SCHEDULE = "/admin/manage-schedule"
+export const ROUTE_MANAGE_SCHEDULE_DETAIL = "/admin/manage-schedule:userId";
+export const ROUTE_MANAGE_LEADER = "/admin/manage-leader";
+export const ROUTE_MANAGE_TASK = "/admin/manage-task";
+export const ROUTE_MANAGE_TASK_DETAIL = "/admin/manage-task:userId";
+export const ROUTE_MANAGE_FEEDBACK__INTERN = "/admin/manage-feedback";
+export const ROUTE_MANAGE_FEEDBACK__INTERN_DETAIL = "/admin/manage-feedback:userId";
+export const ROUTE_MANAGE_ACCOUNT_WAITING = "/admin/manage-account-waiting";
+export const ROUTE_VIEW_STATISTIC = "/admin/view-statistic";
+export const ROUTE_VIEW_STATISTIC_DETAIL = "/admin/view-statistic:userId";
 
 

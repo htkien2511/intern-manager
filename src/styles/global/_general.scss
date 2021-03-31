@@ -26,6 +26,12 @@
   justify-content: space-between;
 }
 
+.align__center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .text-center {
   text-align: center;
 }
@@ -130,8 +136,30 @@ a {
 //table
 .makeStyles-container-4,
 .makeStyles-container-2 {
-  max-height: 680px !important;
+  max-height: none !important;
 }
 body {
   font-family: "GT-Walsheim" !important;
+}
+// table
+.MuiPaper-root {
+  .MuiTableContainer-root {
+    table {
+      thead {
+        tr {
+          th {
+            background: black;
+            color: white;
+          }
+        }
+      }
+      tbody {
+        tr {
+          td {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
 }
