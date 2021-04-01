@@ -1,0 +1,126 @@
+.test-library {
+  &__inner {
+    padding: 40px;
+    &__header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      &__title {
+        font-weight: bold;
+        letter-spacing: 1.44px;
+        color: #004257;
+        font-size: 32px;
+      }
+      .button--create-new {
+        position: relative;
+        &__icon--plus {
+          position: absolute;
+          font-size: 26px;
+          color: #70808c;
+          left: 18px;
+        }
+        &__btn--create {
+          width: 164px;
+          height: 48px;
+          border-radius: 30px;
+          background-color: #eaeaea;
+          border: 1px solid#70808c !important;
+          box-shadow: 1px 1px 4px rgb(190, 190, 190);
+          & > span {
+            color: #70808c;
+            font-size: 14px;
+            margin-left: 15px;
+          }
+          &:hover,
+          &:focus,
+          &:active {
+            outline: none !important;
+            background-color: rgb(223, 223, 223) !important;
+          }
+        }
+      }
+    }
+    &__content {
+      margin-top: 26px;
+      &__test-plan {
+        & > table {
+          & > thead {
+            & > tr {
+              & > th {
+                padding: 0 0 10px 0;
+                border: none;
+                font-size: 24px;
+                font-weight: bold;
+                letter-spacing: 0px;
+                text-transform: uppercase;
+                color: #004257;
+                &:not(:first-child) {
+                  font-size: 13px;
+                  letter-spacing: 0.52px;
+                  color: #58656e;
+                }
+              }
+            }
+          }
+          & > tbody {
+            & > tr {
+              & > td {
+                padding: 0;
+                border: none;
+                color: #58656e;
+                &:not(:first-child) {
+                  font-size: 13px;
+                }
+                &:last-child {
+                  .test-plan__content {
+                    background: none;
+                  }
+                }
+                .test-plan__content {
+                  background-color: white;
+                  margin: 0 5px 5px 0;
+                  height: 40px;
+                  .block--icon {
+                    width: 40px;
+                    height: 40px;
+                    border-radius: 4px;
+                    margin-right: 5px;
+                    cursor: pointer;
+                    & > img {
+                      width: 18px;
+                    }
+                  }
+                  &--actions {
+                    display: flex;
+                  }
+                  &__inner {
+                    padding: 5px 10px;
+                    display: flex;
+                    align-items: center;
+                    &--owner {
+                      & > i {
+                        width: 30px;
+                        height: 30px;
+                        margin-right: 6px;
+                        border-radius: 50%;
+                        background-color: #70808c5f;
+                      }
+                    }
+                    .icon--star {
+                      width: 18px;
+                    }
+                    &--test__plan {
+                      flex-direction: column;
+                      align-items: unset;
+                      position: relative;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

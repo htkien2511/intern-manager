@@ -1,6 +1,5 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-// import logo from "../../assets/images/logo.png";
 import LogoOfficial from "assets/images/logoInternManage.png";
 import { getAuth } from "../../utils/helpers";
 import { ROUTE_LOGIN } from "../../utils/routes";

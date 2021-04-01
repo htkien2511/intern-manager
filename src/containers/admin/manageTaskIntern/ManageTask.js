@@ -9,7 +9,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import { useHistory } from 'react-router';
-import { ROUTE_MANAGE_SCHEDULE_DETAIL } from '../../../utils/routes';
+import { ROUTE_MANAGE_TASK_DETAIL } from '../../../utils/routes';
 import { Input } from "reactstrap";
 
 const columns = [
@@ -65,7 +65,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function ManageSchedule() {
+export default function ManageTask() {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -108,7 +108,7 @@ export default function ManageSchedule() {
               <TableBody>
                 {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, indexRow) => {
                   return (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={indexRow} onClick={() => { history.push(ROUTE_MANAGE_SCHEDULE_DETAIL) }}>
+                    <TableRow hover role="checkbox" tabIndex={-1} key={indexRow} onClick={() => { history.push(ROUTE_MANAGE_TASK_DETAIL) }}>
                       {columns.map((column) => {
                         const value = row[column.id];
                         return (
