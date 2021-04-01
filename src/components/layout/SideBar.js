@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { setTitle } from "redux/actions/admin/setTitle";
 import { ROUTE_MANAGE_ACCOUNT_WAITING, ROUTE_MANAGE_FEEDBACK__INTERN, ROUTE_MANAGE_INTERN, ROUTE_MANAGE_LEADER, ROUTE_MANAGE_SCHEDULE, ROUTE_MANAGE_TASK, ROUTE_VIEW_STATISTIC } from "../../utils/routes";
+import Logo from "assets/images/logoInternManage.png";
 
 function SideBar() {
   const dispatch = useDispatch();
@@ -11,7 +12,8 @@ function SideBar() {
       <div className="side-bar__inner flex items-center space-between">
         <div className="side-bar__inner__items flex flex-col">
           <div className="side-bar__inner__items--logo flex items-center contents-center">
-            <span>SHAPEE CLOUND</span>
+            {/* <span>SHAPEE CLOUND</span> */}
+            <img src={Logo} alt="" style={{ width: 300, height: 95 }} />
           </div>
           <div className="side-bar__inner__items--menu">
             <div className="side-bar__inner__items--menu__item flex" >

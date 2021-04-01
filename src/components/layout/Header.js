@@ -1,6 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import logo from "../../assets/images/logo.png";
+// import logo from "../../assets/images/logo.png";
+import LogoOfficial from "assets/images/logoInternManage.png";
 import { getAuth } from "../../utils/helpers";
 import { ROUTE_LOGIN } from "../../utils/routes";
 import DropdownUserMenu from "../common/DropdownUserMenu";
@@ -17,7 +18,7 @@ function Header({ showLogo, title }) {
           )
             :
             <NavLink to="/" className="header__inner__logo">
-              <img src={logo} alt="Logo" />
+              <img src={LogoOfficial} alt="Logo" />
             </NavLink>
         }
         <div className="header__inner__menu flex items-center">

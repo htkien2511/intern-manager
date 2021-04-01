@@ -79,7 +79,7 @@ function FormEdit() {
         <div className="form-edit__body__edit__info">
           <div className="edit-avatar">
             <img src={imageUrl} className="avatar" alt="avatar" />
-            <div className="file flex items-center">
+            <div className="file align__center">
               <input
                 type="file"
                 name="file"
@@ -89,7 +89,7 @@ function FormEdit() {
                   setImageUrl(URL.createObjectURL(event.target.files[0]));
                 }}
               />
-              <label for="file">Upload Image</label>
+              <label htmlFor="file">Upload Image</label>
             </div>
           </div>
           <form className="form__edit" onSubmit={handleSubmit}>

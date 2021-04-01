@@ -137,7 +137,7 @@ export default function ManageIntern() {
                         <i className="fi-rr-plus"></i>
                     </div>
                     <div className="button manage-intern__inner__top__search">
-                        <i className="fi-rr-search"></i>
+                        <i className="fi-rr-search pointer"></i>
                         <Input type="text" name="search" id="searchKey" placeholder="Search account(s)" />
                     </div>
                 </div>

@@ -1,267 +1,258 @@
-.form-edit{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    h2{
-        font-size: 55px;
-        margin: 30px;
-        text-align: center;
-        font-family: "Shippori Mincho B1", sans-serif;
-        color: #E24B3B;
-        margin-left: 30px;
-    }
-    &__body__edit{
-        width: 100%;
-        &__info{
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            padding: 30px;
-            .edit-avatar{
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                width: 20%;
-                background: #eaeaea;
-                height: 300px;
-                border-radius: 16px;
-                .avatar{
-                    width: 200px;
-                    height: 200px;
-                    border-radius: 100px;
-                    margin: 10px;
-                }
-                .file{
-                    margin-top: 10px;
-                    border: 2px solid black;
-                    border-radius: 15px;
-                    background-color: white;
-                    .inputfile{
-                        width: 0.1px;
-                        height: 0.1px;
-                        opacity: 0;
-                        overflow: hidden;
-                        position: absolute;
-                        z-index: -1;
-                        
-                    }
-                    .inputfile + label {
-                        font-size: 1.25em;
-                        color: black;
-                        display: inline-block;
-                        cursor: pointer;
-                        padding: 10px;
-                    }
-    
-                    .inputfile:focus + label,
-                    .inputfile + label:hover {
-                        border-radius: 15px;
-                        background-color: #a8ccbb;
-                    }
-                }
-            }
-            .form__edit{
-                font-size: 20px;
-                border-radius: 16px;
-                margin-left: 20px;
-                padding: 50px;
-                background-color: #eaeaea;
-                .edit_info__name{
-                    div{
-                        margin-bottom: 15px;
-                        width: 100%;
-                        label{
-                            font-weight: bold;
-                            color: #393B3D;
-                            padding-bottom: 8px;
-                        }
-                        input{
-                            margin-top: 10px;
-                            color: #393B3D;
-                            padding: 12px;
-                            width: 100%;
-                            font-size: 17px;
-                        }
-                    }
-                    .error__editProfile{
-                        color: red !important;
-                    }
-                }
-                .edit_info__email{
-                    margin-top: 30px;
-                    div{
-                        margin-bottom: 15px;
-                        width: 100%;
-                        label{
-                            font-weight: bold;
-                            color: #393B3D;
-                            padding-bottom: 8px;
-                        }
-                        input{
-                            margin-top: 10px;
-                            color: #393B3D;
-                            padding: 12px;
-                            width: 100%;
-                            font-size: 17px;
-                        }
-
-                    }
-                    .error__editProfile{
-                        color: red !important;
-                    }
-                }
-                .edit_info__department{
-                    margin-top: 30px;
-                    div{
-                        margin-bottom: 15px;
-                        width: 100%;
-                        label{
-                            font-weight: bold;
-                            color: #393B3D;
-                            padding-bottom: 8px;
-                        }
-                        input{
-                            margin-top: 10px;
-                            color: #393B3D;
-                            padding: 12px;
-                            width: 100%;
-                            font-size: 17px;
-                        }
-
-                    }
-                    .error__editProfile{
-                        color: red !important;
-                    }
-                }
-                .edit_info__sex{
-                    margin-top: 30px;
-                    #title{
-                        font-weight: bold;
-                        margin-right: 25px;
-                        color: #393B3D;
-                    }
-                    span{
-                        margin-right: 114px;
-                    }
-                    input{
-                        margin-right: 10px;
-                    }
-                }
-                .edit_info__address{
-                    margin-top: 30px;
-                    div{
-                        margin-bottom: 15px;
-                        width: 100%;
-                        label{
-                            font-weight: bold;
-                            color: #393B3D;
-                            padding-bottom: 8px;
-                        }
-                        input{
-                            margin-top: 10px;
-                            color: #393B3D;
-                            padding: 12px;
-                            width: 100%;
-                            font-size: 17px;
-                        }
-
-                    }
-                    .error__editProfile{
-                        color: red !important;
-                    }
-                }
-                p{
-                    margin-top: 50px;
-                    font-size: 30px;
-                    color: #E24B3B;
-                }
-                .edit_current__pass{
-                    margin-top: 30px;
-                    div{
-                        margin-bottom: 15px;
-                        width: 100%;
-                        label{
-                            font-weight: bold;
-                            color: #393B3D;
-                            padding-bottom: 8px;
-                        }
-                        input{
-                            margin-top: 10px;
-                            color: #393B3D;
-                            padding: 12px;
-                            width: 100%;
-                            font-size: 17px;
-                        }
-
-                    }
-                    .error__editProfile{
-                        color: red !important;
-                    }
-                }
-                .edit_new__pass{
-                    margin-top: 30px;
-                    div{
-                        margin-bottom: 15px;
-                        width: 100%;
-                        label{
-                            font-weight: bold;
-                            color: #393B3D;
-                            padding-bottom: 8px;
-                        }
-                        input{
-                            margin-top: 10px;
-                            color: #393B3D;
-                            padding: 12px;
-                            width: 100%;
-                            font-size: 17px;
-                        }
-
-                    }
-                    .error__editProfile{
-                        color: red !important;
-                    }
-                }
-                .edit_confirm_pass{
-                    margin-top: 30px;
-                    div{
-                        margin-bottom: 15px;
-                        width: 100%;
-                        label{
-                            font-weight: bold;
-                            color: #393B3D;
-                            padding-bottom: 8px;
-                        }
-                        input{
-                            margin-top: 10px;
-                            color: #393B3D;
-                            padding: 12px;
-                            width: 100%;
-                            font-size: 17px;
-                        }
-
-                    }
-                    .error__editProfile{
-                        color: red !important;
-                    }
-                }
-                .btn-edit{
-                    background-color: #008CBA;
-                    border: none;
-                    color: white;
-                    padding: 15px;
-                    text-align: center;
-                    text-decoration: none;
-                    display: inline-block;
-                    font-size: 20px; 
-                    border-radius: 8px;
-                    text-justify: auto;
-                    width: 100px;
-                    font-weight: bold;
-                    margin-top: 30px;
-                    outline: none;
-                }
-            }
+.form-edit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  h2 {
+    font-size: 55px;
+    margin: 30px;
+    text-align: center;
+    font-family: "Shippori Mincho B1", sans-serif;
+    color: #e24b3b;
+    margin-left: 30px;
+  }
+  &__body__edit {
+    width: 100%;
+    &__info {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      padding: 30px;
+      .edit-avatar {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 20%;
+        background: #eaeaea;
+        height: 300px;
+        border-radius: 16px;
+        .avatar {
+          width: 200px;
+          height: 200px;
+          border-radius: 100px;
+          margin: 10px;
         }
+        .file {
+          margin-top: 10px;
+          border-radius: 15px;
+          border: 1px solid;
+          background-color: white;
+          &:hover,
+          &:focus {
+            background-color: #a8ccbb;
+          }
+          .inputfile {
+            width: 0.1px;
+            height: 0.1px;
+            opacity: 0;
+            overflow: hidden;
+            position: absolute;
+            z-index: -1;
+          }
+          .inputfile + label {
+            font-size: 1.25em;
+            color: black;
+            display: inline-block;
+            cursor: pointer;
+            padding: 10px;
+          }
+        }
+      }
+      .form__edit {
+        font-size: 20px;
+        border-radius: 16px;
+        margin-left: 20px;
+        padding: 50px;
+        background-color: #eaeaea;
+        .edit_info__name {
+          div {
+            margin-bottom: 15px;
+            width: 100%;
+            label {
+              font-weight: bold;
+              color: #393b3d;
+              padding-bottom: 8px;
+            }
+            input {
+              margin-top: 10px;
+              color: #393b3d;
+              padding: 12px;
+              width: 100%;
+              font-size: 17px;
+            }
+          }
+          .error__editProfile {
+            color: red !important;
+          }
+        }
+        .edit_info__email {
+          margin-top: 30px;
+          div {
+            margin-bottom: 15px;
+            width: 100%;
+            label {
+              font-weight: bold;
+              color: #393b3d;
+              padding-bottom: 8px;
+            }
+            input {
+              margin-top: 10px;
+              color: #393b3d;
+              padding: 12px;
+              width: 100%;
+              font-size: 17px;
+            }
+          }
+          .error__editProfile {
+            color: red !important;
+          }
+        }
+        .edit_info__department {
+          margin-top: 30px;
+          div {
+            margin-bottom: 15px;
+            width: 100%;
+            label {
+              font-weight: bold;
+              color: #393b3d;
+              padding-bottom: 8px;
+            }
+            input {
+              margin-top: 10px;
+              color: #393b3d;
+              padding: 12px;
+              width: 100%;
+              font-size: 17px;
+            }
+          }
+          .error__editProfile {
+            color: red !important;
+          }
+        }
+        .edit_info__sex {
+          margin-top: 30px;
+          #title {
+            font-weight: bold;
+            margin-right: 25px;
+            color: #393b3d;
+          }
+          span {
+            margin-right: 114px;
+          }
+          input {
+            margin-right: 10px;
+          }
+        }
+        .edit_info__address {
+          margin-top: 30px;
+          div {
+            margin-bottom: 15px;
+            width: 100%;
+            label {
+              font-weight: bold;
+              color: #393b3d;
+              padding-bottom: 8px;
+            }
+            input {
+              margin-top: 10px;
+              color: #393b3d;
+              padding: 12px;
+              width: 100%;
+              font-size: 17px;
+            }
+          }
+          .error__editProfile {
+            color: red !important;
+          }
+        }
+        p {
+          margin-top: 50px;
+          font-size: 30px;
+          color: #e24b3b;
+        }
+        .edit_current__pass {
+          margin-top: 30px;
+          div {
+            margin-bottom: 15px;
+            width: 100%;
+            label {
+              font-weight: bold;
+              color: #393b3d;
+              padding-bottom: 8px;
+            }
+            input {
+              margin-top: 10px;
+              color: #393b3d;
+              padding: 12px;
+              width: 100%;
+              font-size: 17px;
+            }
+          }
+          .error__editProfile {
+            color: red !important;
+          }
+        }
+        .edit_new__pass {
+          margin-top: 30px;
+          div {
+            margin-bottom: 15px;
+            width: 100%;
+            label {
+              font-weight: bold;
+              color: #393b3d;
+              padding-bottom: 8px;
+            }
+            input {
+              margin-top: 10px;
+              color: #393b3d;
+              padding: 12px;
+              width: 100%;
+              font-size: 17px;
+            }
+          }
+          .error__editProfile {
+            color: red !important;
+          }
+        }
+        .edit_confirm_pass {
+          margin-top: 30px;
+          div {
+            margin-bottom: 15px;
+            width: 100%;
+            label {
+              font-weight: bold;
+              color: #393b3d;
+              padding-bottom: 8px;
+            }
+            input {
+              margin-top: 10px;
+              color: #393b3d;
+              padding: 12px;
+              width: 100%;
+              font-size: 17px;
+            }
+          }
+          .error__editProfile {
+            color: red !important;
+          }
+        }
+        .btn-edit {
+          background-color: #008cba;
+          border: none;
+          color: white;
+          padding: 15px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 20px;
+          border-radius: 8px;
+          text-justify: auto;
+          width: 100px;
+          font-weight: bold;
+          margin-top: 30px;
+          outline: none;
+        }
+      }
     }
+  }
 }
