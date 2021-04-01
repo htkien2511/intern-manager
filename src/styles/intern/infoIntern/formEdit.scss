@@ -63,14 +63,19 @@
         border-radius: 16px;
         margin-left: 20px;
         padding: 50px;
-        background-color: #eaeaea;
+        background-color: #84c6ff;
+        box-shadow: 1px 1px 5px gray;
+        input {
+          border-radius: 8px;
+          outline: none;
+        }
         .edit_info__name {
           div {
             margin-bottom: 15px;
             width: 100%;
             label {
               font-weight: bold;
-              color: #393b3d;
+              color: brown;
               padding-bottom: 8px;
             }
             input {
@@ -92,7 +97,7 @@
             width: 100%;
             label {
               font-weight: bold;
-              color: #393b3d;
+              color: brown;
               padding-bottom: 8px;
             }
             input {
@@ -114,7 +119,7 @@
             width: 100%;
             label {
               font-weight: bold;
-              color: #393b3d;
+              color: brown;
               padding-bottom: 8px;
             }
             input {
@@ -150,7 +155,7 @@
             width: 100%;
             label {
               font-weight: bold;
-              color: #393b3d;
+              color: brown;
               padding-bottom: 8px;
             }
             input {

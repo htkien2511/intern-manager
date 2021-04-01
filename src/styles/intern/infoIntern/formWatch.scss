@@ -1,135 +1,140 @@
-.form-watch{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    h2{
-        font-size: 55px;
-        margin: 30px;
-        text-align: center;
-        color: #E24B3B;
-        margin-bottom: 60px;
-    }
-    &__body{
-        width: 80%;
-        &__info{
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            .info_avatar{
-                background: #eaeaea;
-                border-radius: 16px;
-                height: 220px;
-                width: 230px;
-                .avatar{
-                    width: 200px;
-                    height: 200px;
-                    border-radius: 100px;
-                    padding: 5px;
-                }
-            }
-            form{
-                font-size: 20px;
-                border-radius: 16px;
-                margin-left: 30px;
-                padding: 40px;
-                background-color: #eaeaea;
-                width: 80%;
-                .info__name{
-                    // width: 100%;
-                    label{
-                        font-weight: bold;
-                        color: #393B3D;
-                        padding-bottom: 8px;
-                    }
-                    p{
-                        margin-top: 12px;
-                        color: #404244;
-                        padding: 10px;
-                        background-color: white;
-                        width: 100%;
-                    }
-                }
-                .info__email{
-                    // width: 100%;
-                    margin-top: 15px;
-                    label{
-                        font-weight: bold;
-                        color: #393B3D;
-                        padding-bottom: 8px;
-                    }
-                    p{
-                        color: #404244;
-                        padding: 10px;
-                        background-color: white;
-                        width: 100%;
-                        margin-top: 12px;
-                    }
-                }
-                .info__department{
-                    // width: 100%;
-                    margin-top: 15px;
-                    label{
-                        font-weight: bold;
-                        color: #393B3D;
-                        padding-bottom: 8px;
-                    }
-                    p{
-                        color: #404244;
-                        padding: 10px;
-                        background-color: white;
-                        width: 100%;
-                        margin-top: 12px;
-                    }
-                }
-                .info__sex{
-                    // width: 100%;
-                    margin-top: 15px;
-                    label{
-                        font-weight: bold;
-                        color: #393B3D;
-                        padding-bottom: 8px;
-                    }
-                    p{
-                        color: #404244;
-                        padding: 10px;
-                        background-color: white;
-                        width: 100%;
-                        margin-top: 12px;
-                    }
-                }
-                .info__address{
-                    // width: 100%;
-                    margin-top: 15px;
-                    label{
-                        font-weight: bold;
-                        color: #393B3D;
-                        padding-bottom: 8px;
-                    }
-                    p{
-                        color: #404244;
-                        padding: 10px;
-                        background-color: white;
-                        width: 100%;
-                        margin-top: 12px;
-                    }
-                }
-                .btn-edit{
-                    background-color: #008CBA;
-                    border: none;
-                    color: white;
-                    padding: 10px;
-                    text-align: center;
-                    text-decoration: none;
-                    display: inline-block;
-                    font-size: 18px; 
-                    border-radius: 8px;
-                    text-justify: auto;
-                    width: 150px;
-                    font-weight: bold;
-                    margin-top: 50px;
-                    outline: none;
-                }
-            }
+.form-watch {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  h2 {
+    font-size: 55px;
+    margin: 30px;
+    text-align: center;
+    color: #e24b3b;
+    margin-bottom: 60px;
+  }
+  &__body {
+    width: 80%;
+    &__info {
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      .info_avatar {
+        box-shadow: 1px 1px 5px #7f7e7e;
+        background-color: #b2e2e0;
+        border-radius: 16px;
+        height: 220px;
+        width: 230px;
+        .avatar {
+          width: 200px;
+          height: 200px;
+          border-radius: 100px;
+          padding: 5px;
         }
+      }
+      form {
+        font-size: 20px;
+        border-radius: 16px;
+        margin-left: 30px;
+        padding: 40px;
+        background-color: #eaeaea;
+        width: 60%;
+        box-shadow: 1px 1px 5px #7f7e7e;
+        background-color: #b2e2e0;
+        p {
+          border-radius: 8px;
+        }
+        .info__name {
+          // width: 100%;
+          label {
+            font-weight: bold;
+            color: #393b3d;
+            padding-bottom: 8px;
+          }
+          p {
+            margin-top: 12px;
+            color: #404244;
+            padding: 10px;
+            background-color: white;
+            width: 100%;
+          }
+        }
+        .info__email {
+          margin-top: 15px;
+          label {
+            font-weight: bold;
+            color: #393b3d;
+            padding-bottom: 8px;
+          }
+          p {
+            color: #404244;
+            padding: 10px;
+            background-color: white;
+            width: 100%;
+            margin-top: 12px;
+          }
+        }
+        .info__department {
+          // width: 100%;
+          margin-top: 15px;
+          label {
+            font-weight: bold;
+            color: #393b3d;
+            padding-bottom: 8px;
+          }
+          p {
+            color: #404244;
+            padding: 10px;
+            background-color: white;
+            width: 100%;
+            margin-top: 12px;
+          }
+        }
+        .info__sex {
+          // width: 100%;
+          margin-top: 15px;
+          label {
+            font-weight: bold;
+            color: #393b3d;
+            padding-bottom: 8px;
+          }
+          p {
+            color: #404244;
+            padding: 10px;
+            background-color: white;
+            width: 100%;
+            margin-top: 12px;
+          }
+        }
+        .info__address {
+          // width: 100%;
+          margin-top: 15px;
+          label {
+            font-weight: bold;
+            color: #393b3d;
+            padding-bottom: 8px;
+          }
+          p {
+            color: #404244;
+            padding: 10px;
+            background-color: white;
+            width: 100%;
+            margin-top: 12px;
+          }
+        }
+        .btn-edit {
+          background-color: #008cba;
+          border: none;
+          color: white;
+          padding: 10px;
+          text-align: center;
+          text-decoration: none;
+          display: inline-block;
+          font-size: 18px;
+          border-radius: 8px;
+          text-justify: auto;
+          width: 150px;
+          font-weight: bold;
+          margin-top: 50px;
+          outline: none;
+        }
+      }
     }
+  }
 }
