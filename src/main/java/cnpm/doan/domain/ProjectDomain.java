@@ -1,14 +1,14 @@
 package cnpm.doan.domain;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 public class ProjectDomain {
     private String title;
     private String description;
-    private LocalDate dueDate;
+    private String dueDate;
     private String usernameOfAdmin;
 
-    public ProjectDomain(String title, String description, LocalDate dueDate, String usernameOfAdmin) {
+    public ProjectDomain(String title, String description, String dueDate, String usernameOfAdmin) {
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
@@ -31,11 +31,11 @@ public class ProjectDomain {
         this.description = description;
     }
 
-    public LocalDate getDueDate() {
+    public String getDueDate() {
         return dueDate;
     }
 
-    public void setDueDate(LocalDate dueDate) {
+    public void setDueDate(String dueDate) {
         this.dueDate = dueDate;
     }
 
@@ -45,5 +45,15 @@ public class ProjectDomain {
 
     public void setUsernameOfAdmin(String usernameOfAdmin) {
         this.usernameOfAdmin = usernameOfAdmin;
+    }
+
+    @Override
+    public String toString() {
+        return "ProjectDomain{" +
+                "title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", dueDate='" + dueDate + '\'' +
+                ", usernameOfAdmin='" + usernameOfAdmin + '\'' +
+                '}';
     }
 }

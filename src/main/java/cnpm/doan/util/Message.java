@@ -10,7 +10,9 @@ public enum Message {
     MISSING_UNAUTHORIZED("missing authorized to access this URL"),
     EMPTY_RESULT("Empty result"),
     DATA_NOT_EXIST("Data not exist"),
-    SUCCESSFUlLY("Successfully");
+    INVALID_DATE("Invalid date. Please choose another date"),
+    SUCCESSFUlLY("Successfully"),
+    INVALID_MANGER("Invalid manager's username");
     private String detail;
 
     Message(String detail) {

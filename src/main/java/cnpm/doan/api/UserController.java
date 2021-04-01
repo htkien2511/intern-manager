@@ -1,6 +1,5 @@
 package cnpm.doan.api;
 
-import cnpm.doan.domain.Account;
 import cnpm.doan.domain.RegisterAccount;
 import cnpm.doan.domain.ResponeDomain;
 import cnpm.doan.domain.UserDomain;
@@ -38,7 +37,7 @@ public class UserController {
     public ResponseEntity<?> register(@ModelAttribute RegisterAccount account) {
         User user = userService.findUserByEmail(account.getEmail());
         if (user != null) {
-            return ResponseEntity.ok(Message.EMAIL_EXISTED.getDetail());
+            return ResponseEntity.ok(new ResponeDomain(Message.EMAIL_EXISTED.getDetail(), false));
         }
         User newUser = new User();
         newUser.setName(account.getName());

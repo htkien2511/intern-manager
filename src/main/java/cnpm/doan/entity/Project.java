@@ -1,7 +1,6 @@
 package cnpm.doan.entity;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -19,8 +18,8 @@ public class Project {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dueDate;
     @ManyToOne
-    @JoinColumn(name = "admin_id")
-    private User admin;
+    @JoinColumn(name = "manager_id")
+    private User manager;
 
     public int getId() {
         return id;
@@ -54,11 +53,11 @@ public class Project {
         this.dueDate = dueDate;
     }
 
-    public User getAdmin() {
-        return admin;
+    public User getManager() {
+        return manager;
     }
 
-    public void setAdmin(User admin) {
-        this.admin = admin;
+    public void setManager(User admin) {
+        this.manager = admin;
     }
 }
