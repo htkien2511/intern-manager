@@ -62,7 +62,7 @@ function SideBar() {
             </div>
             <div className="side-bar__inner__items--menu__item flex">
               <div className="temp"></div>
-              <i className="fi-rr-list-check"></i>
+              <i className="fi-rr-comment-alt" />
               <NavLink
                 activeClassName="side-bar__inner__items--menu__item--active border-corner"
                 to={ROUTE_MANAGE_FEEDBACK__INTERN}

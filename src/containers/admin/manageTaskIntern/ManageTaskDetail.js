@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 // import { Button, Table, ProgressBar, Spinner } from "react-bootstrap";
 import { testPlan, iconsAction } from "utils/mockData";
 import IconStar from "assets/icons/TTM_Icon-Star.svg";
 import IconStarNoFill from "assets/icons/TTM_Icon-Star-NoFill.svg";
 import { Button, Table, ProgressBar } from "react-bootstrap";
 import Spinner from "react-bootstrap/Spinner";
+import ModalAddTask from "./ModalAddTask";
 
 const Icon = ({ icon, color }) => {
   return (
@@ -113,22 +114,31 @@ const renderTable = (title, data) => {
 }
 
 const ManageTaskDetail = () => {
+  const [showModal, setShowModal] = useState(false);
+  const handleAddTask = () => {
+    setShowModal(true);
+    console.log("add task");
+  }
+
   return (
-    <div className="test-library">
-      <div className="test-library__inner">
-        <div className="test-library__inner__header">
-          <div className="button--create-new align__center">
-            <span className="button--create-new__icon--plus">+</span>
-            <Button className="button--create-new__btn--create">
-              <span>CREATE NEW</span>
-            </Button>
+    <>
+      <div className="test-library">
+        <div className="test-library__inner">
+          <div className="test-library__inner__header">
+            <div className="button--create-new align__center">
+              <span className="button--create-new__icon--plus">+</span>
+              <Button className="button--create-new__btn--create" onClick={handleAddTask}>
+                <span>CREATE NEW</span>
+              </Button>
+            </div>
+          </div>
+          <div className="test-library__inner__content">
+            {renderTable("Project Name", testPlan)}
           </div>
         </div>
-        <div className="test-library__inner__content">
-          {renderTable("Project Name", testPlan)}
-        </div>
       </div>
-    </div>
+      { showModal && <ModalAddTask />}
+    </>
   );
 };
 export default ManageTaskDetail;
