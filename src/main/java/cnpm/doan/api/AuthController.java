@@ -38,4 +38,8 @@ public class AuthController {
         return ResponseEntity.ok(new ResponeDomain(userWithToken, Message.SUCCESSFUlLY.getDetail(), true));
     }
 
+    @GetMapping(value = "/")
+    public String home() {
+        return "/";
+    }
 }
