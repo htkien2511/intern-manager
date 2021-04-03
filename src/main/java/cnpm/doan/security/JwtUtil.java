@@ -34,6 +34,7 @@ public class JwtUtil {
             token = signedJWT.serialize();
         } catch (Exception e) {
             logger.error(e.getMessage());
+            e.printStackTrace();
         }
         return token;
     }
@@ -52,6 +53,7 @@ public class JwtUtil {
             }
         } catch (ParseException | JOSEException e) {
             logger.error(e.getMessage());
+            e.printStackTrace();
         }
         return claims;
     }
@@ -66,6 +68,7 @@ public class JwtUtil {
             }
         } catch (Exception e) {
             logger.error(e.getMessage());
+            e.printStackTrace();
         }
         return user;
     }

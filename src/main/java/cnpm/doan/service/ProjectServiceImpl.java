@@ -44,7 +44,7 @@ public class ProjectServiceImpl implements ProjectService {
     @Override
     public void saveProject(ProjectDomain domain) throws CustormException {
         User admin = userRepository.findByEmail(domain.getUsernameOfAdmin());
-        if (admin == null) {
+        if (admin != null) {
             if (!admin.getRoles().equals("ROLE_MANAGER")) {
                 throw new CustormException(Message.INVALID_MANGER);
             }
@@ -53,8 +53,7 @@ public class ProjectServiceImpl implements ProjectService {
         project.setManager(admin);
         project.setDescription(domain.getDescription());
         Date date = DatetimeUtils.convertStringToDateOrNull(domain.getDueDate(), DatetimeUtils.YYYYMMDD);
-        System.out.println(date);
-        if (date == null || DatetimeUtils.getDayBetweenTwoDiffDate(date, new Date()) == 0) {
+        if (date == null || date.before(date)) {
             throw new CustormException(Message.INVALID_DATE);
         }
         project.setDueDate(date);
@@ -69,7 +68,7 @@ public class ProjectServiceImpl implements ProjectService {
 
     @Override
     public void deleteProject(int idProject) {
-        
+
         projectRepository.deleteProject(idProject);
     }
 }

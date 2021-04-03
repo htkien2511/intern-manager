@@ -4,11 +4,9 @@ package cnpm.doan.api;
 import cnpm.doan.domain.Account;
 import cnpm.doan.domain.ResponeDomain;
 import cnpm.doan.domain.UserWithToken;
-import cnpm.doan.entity.Token;
 import cnpm.doan.entity.User;
 import cnpm.doan.security.JwtUtil;
 import cnpm.doan.security.UserPrincipal;
-import cnpm.doan.service.TokenService;
 import cnpm.doan.service.UserService;
 import cnpm.doan.util.HTTPStatus;
 import cnpm.doan.util.Message;
@@ -25,9 +23,6 @@ public class AuthController {
     private UserService userService;
 
     @Autowired
-    private TokenService tokenService;
-
-    @Autowired
     private JwtUtil jwtUtil;
 
     @PostMapping(value = "/login")
@@ -37,12 +32,9 @@ public class AuthController {
         if (account == null || !new BCryptPasswordEncoder().matches(account.getPassword(), userPrincipal.getPassword())) {
             return ResponseEntity.ok(new ResponeDomain(Message.USER_NOT_FOUND.getDetail(), HTTPStatus.fail));
         }
-        Token token = new Token();
-        token.setToken(jwtUtil.generateToken(userPrincipal));
-        token.setTokenExpDate(jwtUtil.generateExpirationDate());
-        tokenService.createToken(token);
+        String token = jwtUtil.generateToken(userPrincipal);
         User user = userService.findUserByEmail(account.getEmail());
-        UserWithToken userWithToken = new UserWithToken(user, token.getToken());
+        UserWithToken userWithToken = new UserWithToken(user, token);
         return ResponseEntity.ok(new ResponeDomain(userWithToken, Message.SUCCESSFUlLY.getDetail(), true));
     }
 

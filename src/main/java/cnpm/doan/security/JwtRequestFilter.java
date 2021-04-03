@@ -1,8 +1,6 @@
 package cnpm.doan.security;
 
 
-import cnpm.doan.entity.Token;
-import cnpm.doan.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -18,7 +16,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -28,23 +25,17 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Autowired
     private JwtUtil jwtUtil;
 
-    @Autowired
-    private TokenService verificationTokenService;
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         final String authorizationHeader = request.getHeader("Authorization");
-
+        String token = null;
         UserPrincipal user = null;
-        Token token = null;
-        if (StringUtils.hasText(authorizationHeader) && authorizationHeader.startsWith("Token ")) {
-            String jwt = authorizationHeader.substring(6);
-            user = jwtUtil.getUserFromToken(jwt);
-            token = verificationTokenService.findByToken(jwt);
+        if (StringUtils.hasText(authorizationHeader)) {
+            token = authorizationHeader.trim();
+            user = jwtUtil.getUserFromToken(token);
         }
-
-        if (null != user && null != token && token.getTokenExpDate().after(new Date())) {
+        if (null != user && null != token) {
             Set<GrantedAuthority> authorities = new HashSet<>();
             user.getAuthorities().forEach(p -> authorities.add(new SimpleGrantedAuthority((String) p)));
             UsernamePasswordAuthenticationToken authentication =

@@ -3,9 +3,7 @@ package cnpm.doan.api;
 import cnpm.doan.domain.ManagerInforDomain;
 import cnpm.doan.domain.ProjectDomain;
 import cnpm.doan.domain.ResponeDomain;
-import cnpm.doan.entity.MemberProject;
 import cnpm.doan.entity.Project;
-import cnpm.doan.entity.User;
 import cnpm.doan.service.ProjectService;
 import cnpm.doan.service.UserService;
 import cnpm.doan.util.CustormException;
@@ -51,6 +49,7 @@ public class ProjectController {
         return ResponseEntity.ok(projects);
     }
 
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN')")
     @PostMapping("/project/create")
     public ResponseEntity<?> createProject(@ModelAttribute ProjectDomain request) {
         System.out.println(request.toString());
