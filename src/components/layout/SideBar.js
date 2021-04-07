@@ -20,7 +20,7 @@ function SideBar() {
               <div className="temp"></div>
               <i className="fi-rr-user"></i>
               <NavLink
-                activeClassName="side-bar__inner__items--menu__item__inner border-corner"
+                activeClassName="side-bar__inner__items--menu__item--active border-corner"
                 to={ROUTE_MANAGE_LEADER}
                 onClick={() => dispatch(setTitle("Manage Leader"))}
               >

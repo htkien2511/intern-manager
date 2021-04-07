@@ -6,6 +6,7 @@ import IconStarNoFill from "assets/icons/TTM_Icon-Star-NoFill.svg";
 import { Button, Table, ProgressBar } from "react-bootstrap";
 import Spinner from "react-bootstrap/Spinner";
 import ModalAddTask from "./ModalAddTask";
+import Popup from "components/common/core/Popup";
 
 const Icon = ({ icon, color }) => {
   return (
@@ -115,9 +116,13 @@ const renderTable = (title, data) => {
 
 const ManageTaskDetail = () => {
   const [showModal, setShowModal] = useState(false);
+  const [openModalDelete, setOpenModalDelete] = useState(false);
   const handleAddTask = () => {
     setShowModal(true);
     console.log("add task");
+  }
+  const handleConfirm = () => {
+    setOpenModalDelete(false);
   }
 
   return (
@@ -137,7 +142,8 @@ const ManageTaskDetail = () => {
           </div>
         </div>
       </div>
-      { showModal && <ModalAddTask />}
+      { showModal && <ModalAddTask setOpenModal={setShowModal} title="Add task" />}
+      {openModalDelete && <Popup onCancel={setOpenModalDelete} onConfirm={handleConfirm} />}
     </>
   );
 };
