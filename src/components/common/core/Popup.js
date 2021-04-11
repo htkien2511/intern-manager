@@ -2,10 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import CustomizedModal from "./CustomizeModal";
 
-export const HeaderPopup = () => {
+export const HeaderPopup = ({ title }) => {
   return (
     <div className="header__popup__container align__center">
-      <span>Are you sure you want to delete?</span>
+      <span>{title}</span>
     </div>
   )
 }
@@ -19,13 +19,13 @@ export const ContentPopup = ({ onConfirm, onCancel }) => {
   )
 }
 
-const Popup = ({ onCancel, onConfirm }) => {
+const Popup = ({ onCancel, onConfirm, title }) => {
   return (
     <PopupContainer className="popup__container">
       <CustomizedModal>
         <CustomizedModal.Header>
           {() => (
-            <HeaderPopup />
+            <HeaderPopup title={title} />
           )}
         </CustomizedModal.Header>
         <CustomizedModal.Content>

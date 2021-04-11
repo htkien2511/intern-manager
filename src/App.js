@@ -6,7 +6,7 @@ import { withAuth, withAuthLayout } from "./HOCS";
 import {
   ROUTE_FORGOTPASSWORD, ROUTE_LOGIN, ROUTE_MANAGE_INTERN, ROUTE_REGISTER, ROUTE_RESETPASSWORD, ROUTE_ADMIN_LOGIN,
   ROUTE_MANAGE_SCHEDULE, ROUTE_MANAGE_SCHEDULE_DETAIL, ROUTE_MANAGE_LEADER, ROUTE_MANAGE_TASK, ROUTE_MANAGE_ACCOUNT_WAITING,
-  ROUTE_PROFILE, ROUTE_EDIT_PROFILE, ROUTE_CONVERSATION, ROUTE_FEEDBACKS, ROUTE_REGISTER_SCHEDULE, ROUTE_TASK_MANAGEMENT, ROUTE_SEND_FEEDBACK, ROUTE_VIEW_STATISTIC, ROUTE_MANAGE_FEEDBACK__INTERN, ROUTE_MANAGE_TASK_DETAIL
+  ROUTE_PROFILE, ROUTE_EDIT_PROFILE, ROUTE_CONVERSATION, ROUTE_FEEDBACKS, ROUTE_REGISTER_SCHEDULE, ROUTE_TASK_MANAGEMENT, ROUTE_SEND_FEEDBACK, ROUTE_VIEW_STATISTIC, ROUTE_MANAGE_FEEDBACK__INTERN, ROUTE_MANAGE_TASK_DETAIL, ROUTE_MANAGE_FEEDBACK__INTERN_DETAIL
 } from "./utils/routes";
 import { ForgotPassword } from "./containers/forgotPassword";
 import { ResetPassword } from "./containers/resetPassword";
@@ -22,6 +22,8 @@ import Conversation from "./containers/intern/feedback/Conversation";
 import Calendar from "./containers/intern/calendar/Calendar";
 import { ManageSchedule, ManageScheduleDetail } from "./containers/admin/manageScheduleIntern";
 import { ManageTask, ManageTaskDetail } from "containers/admin/manageTaskIntern";
+import { ManageAccountWaiting } from "containers/admin/manageAccountWaiting";
+import { ManageFeedback, ManageFeedbackDetail } from "containers/admin/manageFeedback";
 
 function App() {
   return (
@@ -47,8 +49,9 @@ function App() {
         <Route path={ROUTE_MANAGE_LEADER} component={withAuth(ManageIntern, false)} exact />
         <Route path={ROUTE_MANAGE_TASK} component={withAuth(ManageTask, false)} exact />
         <Route path={ROUTE_MANAGE_TASK_DETAIL} component={withAuth(ManageTaskDetail, false)} exact />
-        <Route path={ROUTE_MANAGE_FEEDBACK__INTERN} component={withAuth(ManageSchedule, false)} exact />
-        <Route path={ROUTE_MANAGE_ACCOUNT_WAITING} component={withAuth(ManageSchedule, false)} exact />
+        <Route path={ROUTE_MANAGE_FEEDBACK__INTERN} component={withAuth(ManageFeedback, false)} exact />
+        <Route path={ROUTE_MANAGE_FEEDBACK__INTERN_DETAIL} component={withAuth(ManageFeedbackDetail, false)} exact />
+        <Route path={ROUTE_MANAGE_ACCOUNT_WAITING} component={withAuth(ManageAccountWaiting, false)} exact />
         <Route path={ROUTE_VIEW_STATISTIC} component={withAuth(ManageSchedule, false)} exact />
       </Switch>
     </Router>

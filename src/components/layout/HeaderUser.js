@@ -20,7 +20,7 @@ function HeaderUser() {
                     </NavLink>
 
                     <NavLink activeClassName="--active" to={ROUTE_TASK_MANAGEMENT} exact>
-                        <span>Task Management</span>
+                        <span>Project Management</span>
                     </NavLink>
 
                     <NavLink activeClassName="--active" to={ROUTE_REGISTER_SCHEDULE} exact>
@@ -30,7 +30,7 @@ function HeaderUser() {
                     <NavLink activeClassName="--active" to={ROUTE_FEEDBACKS} exact>
                         <span>Feedback</span>
                     </NavLink>
-        
+
                     <DropdownUserMenu />
                 </div>
             </div>

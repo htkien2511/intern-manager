@@ -17,7 +17,7 @@ export function login(data, resolve = () => { }) {
   }
   formBody = formBody.join("&");
 
-  return fetch("http://192.168.31.65:8080/login", {
+  return fetch(`${process.env.REACT_APP_API_URL}login`, {
     method: "POST",
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',

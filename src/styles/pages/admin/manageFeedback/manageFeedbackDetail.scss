@@ -1,0 +1,13 @@
+.manage-feedback-detail {
+  &__inner {
+    padding: 0 50px;
+    & > div {
+      & > button {
+        width: 200px;
+        &:not(:last-child) {
+          margin-right: 80px;
+        }
+      }
+    }
+  }
+}

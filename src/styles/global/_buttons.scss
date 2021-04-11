@@ -57,6 +57,15 @@ $button-colors: (
     outline: none;
   }
 }
+.button--success {
+  background-color: green;
+  &:hover,
+  &:focus {
+    background-color: #005f28;
+    color: #fff;
+    outline: none;
+  }
+}
 .button--primary {
   &:hover,
   &:focus {
