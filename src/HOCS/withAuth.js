@@ -10,7 +10,7 @@ const withAuth = (Component, showLogo = true) => (props) => {
   const titleCurrent = useSelector(store => store.setTitle.title);
   return (
     <div className="app__admin flex flex-row">
-      {(getAuth() && getAuth().token) ? (
+      {(getAuth() && getAuth().token && getAuth().role === "ROLE_ADMIN") ? (
         <>
           <SideBar />
           <div className="app__admin__body">
