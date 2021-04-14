@@ -4,12 +4,12 @@ import { taskListData } from "utils/mockData";
 // import { NavLink } from "react-router-dom";
 
 function TaskManagement() {
-  const handleChangeCheckTask = (content) => {
-    console.log(content.id, content.checked);
-  }
+  // const handleChangeCheckTask = (content) => {
+  //   console.log(content.id, content.checked);
+  // }
   return (
     <div className="task-management">
-      <h2>Task Management</h2>
+      <h2>Project Management</h2>
       <div>
         <table>
           <thead>
@@ -35,6 +35,7 @@ function TaskManagement() {
                           <DropPanel.Trigger>
                             {({ toggle, isShowing }) => (
                               <div className="work">
+                                <input type="checkbox" checked={item.checked}/>
                                 <label style={{ marginRight: 10 }}>{item.task}</label>
                                 <i className={`fi-rr-angle-small-${isShowing ? "down" : "up"}`} onClick={toggle} style={{ cursor: "pointer" }} />
                               </div>
@@ -45,7 +46,7 @@ function TaskManagement() {
                               item.taskDetails && item.taskDetails.map((content, index) => {
                                 return (
                                   <div key={index}>
-                                    <input type="checkbox" checked={content.checked} onChange={() => handleChangeCheckTask(content)} />
+                                    {/* <input type="checkbox" checked={content.checked} onChange={() => handleChangeCheckTask(content)} /> */}
                                     {content.value}
                                   </div>
                                 );

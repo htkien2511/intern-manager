@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../../../assets/images/logo.png";
 import { isEmpty, isEmail } from "validator";
+import { getProfileIntern } from "redux/actions/intern/getProfileIntern";
+import { getAuth } from "utils/helpers";
 function FormEdit() {
   const [imageUrl, setImageUrl] = useState(logo);
   const [errorEditProfile, setErrorEditProfile] = React.useState();
@@ -15,6 +17,12 @@ function FormEdit() {
     newPass: "",
     confirmPass: "",
   });
+  useEffect( ()=> {
+    getProfileIntern(getAuth().email, (output)=> {
+        if(!output.data) return;
+        setForm(output.data);
+    })
+},[]);
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(form);
@@ -71,6 +79,7 @@ function FormEdit() {
     });
     setErrorEditProfile("");
   };
+
   return (
     <div className="form-edit">
       <h2>Edit Profile</h2>
@@ -98,8 +107,8 @@ function FormEdit() {
                 <label>Full name:</label>
                 <input
                   type="text"
-                  value={form.fullName}
-                  name="fullName"
+                  value={form.name}
+                  name="name"
                   placeholder="Full name"
                   onChange={handleChange}
                   onFocus={handleFocus}

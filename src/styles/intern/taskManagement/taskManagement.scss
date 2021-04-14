@@ -36,9 +36,13 @@
         .work {
           display: flex;
           align-items: center;
-        }
-        input {
-          margin: 0 8px;
+          label{
+            margin-left: 5px;
+            margin-bottom: 0px;
+          }
+          i{
+            display: flex;
+          }
         }
       }
     }

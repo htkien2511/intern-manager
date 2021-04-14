@@ -1,6 +1,6 @@
 import { TextareaAutosize } from '@material-ui/core';
 import React from 'react';
-import { Button, Table } from "reactstrap";
+import { Button} from "reactstrap";
 
 export default function ManageFeedbackDetail() {
   return (

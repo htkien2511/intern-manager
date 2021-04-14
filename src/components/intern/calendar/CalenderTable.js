@@ -3,7 +3,7 @@ function CalenderTable() {
   return (
     <div className="calendar">
       <h2>Sign up for a calendar</h2>
-      <div className="select-time">
+      {/* <div className="select-time">
         <label>Choose time</label>
         <select>
           <option value="January">January</option>
@@ -19,26 +19,22 @@ function CalenderTable() {
           <option value="November">November</option>
           <option value="December">December</option>
         </select>
-      </div>
+      </div> */}
       <div className="table">
         <table>
           <thead>
             <tr>
               <th>Tolal</th>
-              <th>Overtime</th>
               <th>Monday</th>
               <th>Tuesday</th>
               <th>Wednesday</th>
               <th>Thursday</th>
               <th>Friday</th>
-              <th>Saturday</th>
-              <th>Sunday</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>40</td>
-              <td>0</td>
               <td id="Monday">
                 <label>8</label>
                 <select>
@@ -76,24 +72,6 @@ function CalenderTable() {
                 </select>
               </td>
               <td id="Friday">
-                <label>8</label>
-                <select>
-                  <option value="All day">All day</option>
-                  <option value="Morning">Morning</option>
-                  <option value="Afternoon">Afternoon</option>
-                  <option value="Vacation">Vacation</option>
-                </select>
-              </td>
-              <td id="Saturday">
-                <label>8</label>
-                <select>
-                  <option value="All day">All day</option>
-                  <option value="Morning">Morning</option>
-                  <option value="Afternoon">Afternoon</option>
-                  <option value="Vacation">Vacation</option>
-                </select>
-              </td>
-              <td id="Sunday">
                 <label>8</label>
                 <select>
                   <option value="All day">All day</option>

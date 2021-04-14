@@ -1,8 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../../../assets/images/logo.png";
 import { NavLink } from "react-router-dom";
 import { ROUTE_EDIT_PROFILE } from "../../../utils/routes";
+import { getProfileIntern } from "redux/actions/intern/getProfileIntern";
+import { getAuth } from "utils/helpers";
 function FormWatch() {
+    const [form , setForm]= useState({name:"", email: "", department: "", gender: true, address: ""});
+    useEffect( ()=> {
+        getProfileIntern(getAuth().email, (output)=> {
+            if(!output.data) return;
+            setForm(output.data);
+        })
+    },[]);
     return (
         <div className="form-watch">
             <h2>Intern's Profile</h2>
@@ -14,23 +23,23 @@ function FormWatch() {
                     <form>
                         <div className="info__name">
                             <label>Full name:</label>
-                            <p>Phan Gia Sang</p>
+                            <p>{form.name}</p>
                         </div>
                         <div className="info__email">
                             <label>Email:</label>
-                            <p>sang@gmail.com</p>
+                            <p>{form.email}</p>
                         </div>
                         <div className="info__department">
                             <label>Department:</label>
-                            <p>Dev</p>
+                            <p>{form.department}</p>
                         </div>
                         <div className="info__sex">
                             <label id="sex">Gender:</label>
-                            <p>Male</p>
+                            <p>{form.gender?"Male":"Female"}</p>
                         </div>
                         <div className="info__address">
                             <label>Address:</label>
-                            <p>Hue</p>
+                            <p>{form.address}</p>
                         </div>
                         <NavLink activeClassName="--active" to={ROUTE_EDIT_PROFILE}>
                             <button className="btn-edit">Edit Profile</button>
