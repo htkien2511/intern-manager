@@ -3,6 +3,16 @@ import logo from "../../../assets/images/logo.png";
 import { isEmpty, isEmail } from "validator";
 import { getProfileIntern } from "redux/actions/intern/getProfileIntern";
 import { getAuth } from "utils/helpers";
+import PropTypes from 'prop-types';
+import { makeStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
+
+
+
 function FormEdit() {
   const [imageUrl, setImageUrl] = useState(logo);
   const [errorEditProfile, setErrorEditProfile] = React.useState();
@@ -80,16 +90,222 @@ function FormEdit() {
     setErrorEditProfile("");
   };
 
+
+
+  function TabPanel(props) {
+    const { children, value, index, ...other } = props;
+  
+    return (
+      <div
+        role="tabpanel"
+        hidden={value !== index}
+        id={`simple-tabpanel-${index}`}
+        aria-labelledby={`simple-tab-${index}`}
+        {...other}
+      >
+        {value === index && (
+          <Box p={3}>
+            <Typography>{children}</Typography>
+          </Box>
+        )}
+      </div>
+    );
+  }
+  
+  TabPanel.propTypes = {
+    children: PropTypes.node,
+    index: PropTypes.any.isRequired,
+    value: PropTypes.any.isRequired,
+  };
+  
+  function a11yProps(index) {
+    return {
+      id: `simple-tab-${index}`,
+      'aria-controls': `simple-tabpanel-${index}`,
+    };
+  }
+  
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      flexGrow: 1,
+      backgroundColor: theme.palette.background.paper,
+    },
+  }));
+  
+
+
+  const classes = useStyles();
+  const [value, setValue] = React.useState(0);
+
+  const handleChangeTab = (event, newValue) => {
+    setValue(newValue);
+  };
+
   return (
+    // <div className="form-edit">
+    //   <h2>Edit Profile</h2>
+    //   <div className="error">{errorEditProfile}</div>
+    //   <div className="form-edit__body__edit">
+    //     <div className="form-edit__body__edit__info">
+    //       <div className="edit-avatar">
+    //         <img src={imageUrl} className="avatar" alt="avatar" />
+    //         <div className="file align__center">
+    //           <input
+    //             type="file"
+    //             name="file"
+    //             id="file"
+    //             className="inputfile"
+    //             onChange={(event) => {
+    //               setImageUrl(URL.createObjectURL(event.target.files[0]));
+    //             }}
+    //           />
+    //           <label htmlFor="file">Upload Image</label>
+    //         </div>
+    //       </div>
+    //       <form className="form__edit" onSubmit={handleSubmit}>
+    //         <div className="edit_info__name">
+    //           <div>
+    //             <label>Full name:</label>
+    //             <input
+    //               type="text"
+    //               value={form.name}
+    //               name="name"
+    //               placeholder="Full name"
+    //               onChange={handleChange}
+    //               onFocus={handleFocus}
+    //             />
+    //           </div>
+    //           <span className="error__editProfile">{error.fullName}</span>
+    //         </div>
+    //         <div className="edit_info__email">
+    //           <div>
+    //             <label>Email:</label>
+    //             <input
+    //               type="text"
+    //               value={form.email}
+    //               name="email"
+    //               placeholder="Email"
+    //               onChange={handleChange}
+    //               onFocus={handleFocus}
+    //             />
+    //           </div>
+    //           <span className="error__editProfile">{error.email}</span>
+    //         </div>
+    //         <div className="edit_info__department">
+    //           <div>
+    //             <label>Department:</label>
+    //             <input
+    //               type="text"
+    //               value={form.department}
+    //               name="department"
+    //               placeholder="Department"
+    //               onChange={handleChange}
+    //               onFocus={handleFocus}
+    //             />
+    //           </div>
+    //           <span className="error__editProfile">{error.department}</span>
+    //         </div>
+    //         <div className="edit_info__sex">
+    //           <label id="title">Gender:</label>
+    //           <input
+    //             type="radio"
+    //             name="gender"
+    //             value={form.gender}
+    //             onChange={handleChangeGender}
+    //             checked={form.gender}
+    //           />
+    //           <span>Male</span>
+    //           <input
+    //             type="radio"
+    //             name="gender"
+    //             value={!form.gender}
+    //             onChange={handleChangeGender}
+    //             checked={!form.gender}
+    //           />
+    //           <span>Female</span>
+    //         </div>
+    //         <div className="edit_info__address">
+    //           <div>
+    //             <label>Address:</label>
+    //             <input
+    //               type="text"
+    //               value={form.address}
+    //               name="address"
+    //               placeholder="Address"
+    //               onChange={handleChange}
+    //               onFocus={handleFocus}
+    //             />
+    //           </div>
+    //           <span className="error__editProfile">{error.address}</span>
+    //         </div>
+    //         <p>Change Password</p>
+    //         <div className="edit_current__pass">
+    //           <div>
+    //             <label>Current Password:</label>
+    //             <input
+    //               type="password"
+    //               placeholder="*******"
+    //               value={form.currentPass}
+    //               name="currentPass"
+    //               onChange={handleChange}
+    //               onFocus={handleFocus}
+    //             />
+    //           </div>
+    //           <span className="error__editProfile">{error.currentPass}</span>
+    //         </div>
+    //         <div className="edit_new__pass">
+    //           <div>
+    //             <label>New Password:</label>
+    //             <input
+    //               type="password"
+    //               placeholder="*******"
+    //               value={form.newPass}
+    //               name="newPass"
+    //               onChange={handleChange}
+    //               onFocus={handleFocus}
+    //             />
+    //           </div>
+    //           <span className="error__editProfile">{error.newPass}</span>
+    //         </div>
+    //         <div className="edit_confirm_pass">
+    //           <div>
+    //             <label>Confirm Password:</label>
+    //             <input
+    //               type="password"
+    //               placeholder="*******"
+    //               value={form.confirmPass}
+    //               name="confirmPass"
+    //               onChange={handleChange}
+    //               onFocus={handleFocus}
+    //             />
+    //           </div>
+    //           <span className="error__editProfile">{error.confirmPass}</span>
+    //         </div>
+    //         <center>
+    //           <button className="btn-edit">Save</button>
+    //         </center>
+    //       </form>
+    //     </div>
+    //   </div>
+    // </div>
+    <div className={classes.root}>
+    <AppBar position="static">
+      <Tabs value={value} onChange={handleChangeTab} aria-label="simple tabs example">
+        <Tab label="Item One" {...a11yProps(0)} />
+        <Tab label="Item Two" {...a11yProps(1)} />
+        <Tab label="Item Three" {...a11yProps(2)} />
+      </Tabs>
+    </AppBar>
+    <TabPanel value={value} index={0}>
     <div className="form-edit">
-      <h2>Edit Profile</h2>
-      <div className="error">{errorEditProfile}</div>
+     <h2>Edit Profile</h2>
+     <div className="error">{errorEditProfile}</div>
       <div className="form-edit__body__edit">
-        <div className="form-edit__body__edit__info">
+       <div className="form-edit__body__edit__info">
           <div className="edit-avatar">
-            <img src={imageUrl} className="avatar" alt="avatar" />
-            <div className="file align__center">
-              <input
+         <img src={imageUrl} className="avatar" alt="avatar" />
+           <div className="file align__center">
+             <input
                 type="file"
                 name="file"
                 id="file"
@@ -177,6 +393,36 @@ function FormEdit() {
               </div>
               <span className="error__editProfile">{error.address}</span>
             </div>
+            <center>
+              <button className="btn-edit">Save</button>
+            </center>
+          </form>
+        </div>
+      </div>
+    </div>
+    </TabPanel>
+    <TabPanel value={value} index={1}>
+     <div className="form-edit">
+      <h2>Edit Profile</h2>
+      <div className="error">{errorEditProfile}</div>
+      <div className="form-edit__body__edit">
+       <div className="form-edit__body__edit__info">
+         <div className="edit-avatar">
+           <img src={imageUrl} className="avatar" alt="avatar" />
+            <div className="file align__center">
+            <input
+                type="file"
+                name="file"
+                id="file"
+                className="inputfile"
+                onChange={(event) => {
+                  setImageUrl(URL.createObjectURL(event.target.files[0]));
+                }}
+              />
+              <label htmlFor="file">Upload Image</label>
+            </div>
+          </div>
+          <form className="form__edit" onSubmit={handleSubmit}>
             <p>Change Password</p>
             <div className="edit_current__pass">
               <div>
@@ -227,6 +473,8 @@ function FormEdit() {
         </div>
       </div>
     </div>
+    </TabPanel>
+  </div>
   );
 }
 
