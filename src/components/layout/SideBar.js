@@ -2,8 +2,17 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { NavLink } from "react-router-dom";
 import { setTitle } from "redux/actions/admin/setTitle";
-import { ROUTE_MANAGE_ACCOUNT_WAITING, ROUTE_MANAGE_FEEDBACK__INTERN, ROUTE_MANAGE_INTERN, ROUTE_MANAGE_LEADER, ROUTE_MANAGE_SCHEDULE, ROUTE_MANAGE_TASK, ROUTE_VIEW_STATISTIC } from "../../utils/routes";
+import {
+  ROUTE_MANAGE_ACCOUNT_WAITING,
+  ROUTE_MANAGE_FEEDBACK__INTERN,
+  ROUTE_MANAGE_INTERN,
+  ROUTE_MANAGE_LEADER,
+  ROUTE_MANAGE_SCHEDULE,
+  ROUTE_MANAGE_TASK,
+  ROUTE_VIEW_STATISTIC,
+} from "../../utils/routes";
 import Logo from "assets/images/logoInternManage.png";
+import { getAuth } from "utils/helpers";
 
 function SideBar() {
   const dispatch = useDispatch();
@@ -16,17 +25,19 @@ function SideBar() {
             <img src={Logo} alt="" style={{ width: 300, height: 95 }} />
           </div>
           <div className="side-bar__inner__items--menu">
-            <div className="side-bar__inner__items--menu__item flex" >
-              <div className="temp"></div>
-              <i className="fi-rr-user"></i>
-              <NavLink
-                activeClassName="side-bar__inner__items--menu__item--active border-corner"
-                to={ROUTE_MANAGE_LEADER}
-                onClick={() => dispatch(setTitle("Manage Leader"))}
-              >
-                Manage Leader
-              </NavLink>
-            </div>
+            {getAuth().role === "ROLE_ADMIN" && (
+              <div className="side-bar__inner__items--menu__item flex">
+                <div className="temp"></div>
+                <i className="fi-rr-user"></i>
+                <NavLink
+                  activeClassName="side-bar__inner__items--menu__item--active border-corner"
+                  to={ROUTE_MANAGE_LEADER}
+                  onClick={() => dispatch(setTitle("Manage Leader"))}
+                >
+                  Manage Leader
+                </NavLink>
+              </div>
+            )}
             <div className="side-bar__inner__items--menu__item flex">
               <div className="temp"></div>
               <i className="fi-rr-user"></i>

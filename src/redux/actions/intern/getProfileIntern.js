@@ -19,7 +19,7 @@ export function getProfileIntern(email, resolve = () => { }) {
         method: "POST",
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
-            'Authorization': 'Bearer' + getAuth().token
+            'Authorization': 'Bearer ' + getAuth().token
         },
         body: formBody
     })

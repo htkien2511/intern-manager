@@ -11,7 +11,7 @@ import TableRow from "@material-ui/core/TableRow";
 import { Button, Input } from "reactstrap";
 import ModalCUUser from "./ModalCUUser";
 import Popup from "components/common/core/Popup";
-import { getAllUser } from "redux/actions/admin/getAllUser";
+import { getAllManager } from "redux/actions/admin/getAllManager";
 import Skeleton from "@material-ui/lab/Skeleton";
 import { useSelector } from "react-redux";
 
@@ -57,7 +57,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function ManageIntern() {
+export default function ManageLeader() {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -83,7 +83,7 @@ export default function ManageIntern() {
     department: "",
     address: "",
   });
-  const storeGetAllUser = useSelector((store) => store.getAllUser);
+  const storeGetAllManager = useSelector((store) => store.getAllManager);
   const [openModalDelete, setOpenModalDelete] = useState(false);
   const handleAction = (item, row) => {
     switch (item) {
@@ -120,7 +120,7 @@ export default function ManageIntern() {
 
   useEffect(() => {
     let arr = [];
-    getAllUser((data) => {
+    getAllManager((data) => {
       if (data.data) {
         data.data.forEach((item) => {
           arr.push(
@@ -128,7 +128,7 @@ export default function ManageIntern() {
               item.id,
               item.name,
               item.email,
-              item.department,
+              item.department.name,
               item.address,
               "Edit|Delete"
             )
@@ -233,7 +233,7 @@ export default function ManageIntern() {
                         </TableRow>
                       );
                     })}
-                {storeGetAllUser.loading && (
+                {storeGetAllManager.loading && (
                   <TableRow>
                     {[1, 2, 3, 4, 5, 6].map((item) => {
                       return (

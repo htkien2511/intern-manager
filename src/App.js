@@ -24,6 +24,7 @@ import { ManageSchedule, ManageScheduleDetail } from "./containers/admin/manageS
 import { ManageTask, ManageTaskDetail } from "containers/admin/manageTaskIntern";
 import { ManageAccountWaiting } from "containers/admin/manageAccountWaiting";
 import { ManageFeedback, ManageFeedbackDetail } from "containers/admin/manageFeedback";
+import {ManageLeader} from "containers/admin/manageAccountLeader";
 
 function App() {
   return (
@@ -46,7 +47,7 @@ function App() {
         <Route path={ROUTE_MANAGE_INTERN} component={withAuth(ManageIntern, false)} exact />
         <Route path={ROUTE_MANAGE_SCHEDULE} component={withAuth(ManageSchedule, false)} exact />
         <Route path={ROUTE_MANAGE_SCHEDULE_DETAIL} component={withAuth(ManageScheduleDetail, false)} exact />
-        <Route path={ROUTE_MANAGE_LEADER} component={withAuth(ManageIntern, false)} exact />
+        <Route path={ROUTE_MANAGE_LEADER} component={withAuth(ManageLeader, false)} exact />
         <Route path={ROUTE_MANAGE_TASK} component={withAuth(ManageTask, false)} exact />
         <Route path={ROUTE_MANAGE_TASK_DETAIL} component={withAuth(ManageTaskDetail, false)} exact />
         <Route path={ROUTE_MANAGE_FEEDBACK__INTERN} component={withAuth(ManageFeedback, false)} exact />
