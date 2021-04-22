@@ -1,12 +1,8 @@
 import DropPanel from "components/common/core/DropPanel";
 import React from "react";
 import { taskListData } from "utils/mockData";
-// import { NavLink } from "react-router-dom";
 
 function TaskManagement() {
-  // const handleChangeCheckTask = (content) => {
-  //   console.log(content.id, content.checked);
-  // }
   return (
     <div className="task-management">
       <h2>Project Management</h2>

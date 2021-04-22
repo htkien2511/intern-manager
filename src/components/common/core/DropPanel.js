@@ -17,8 +17,13 @@ const DropPanel = ({ children }) => {
         children = [children]
     }
 
-    const trigger = children.find((child) => child.type.name === 'Trigger')
-    const content = children.find((child) => child.type.name === 'Content')
+    // const trigger = children.find((child) => child.type.name === 'Trigger')
+    // const content = children.find((child) => child.type.name === 'Content')
+
+
+  const trigger = children[0] || {}
+  const content = children[1] || {}
+  
 
     return (
         <DropContainer className="drop__container">

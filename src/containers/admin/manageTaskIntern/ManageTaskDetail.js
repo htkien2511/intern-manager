@@ -119,7 +119,6 @@ const ManageTaskDetail = () => {
   const [openModalDelete, setOpenModalDelete] = useState(false);
   const handleAddTask = () => {
     setShowModal(true);
-    console.log("add task");
   }
   const handleConfirm = () => {
     setOpenModalDelete(false);
@@ -143,7 +142,7 @@ const ManageTaskDetail = () => {
         </div>
       </div>
       { showModal && <ModalAddTask setOpenModal={setShowModal} title="Add task" />}
-      {openModalDelete && <Popup onCancel={setOpenModalDelete} onConfirm={handleConfirm} />}
+      {openModalDelete && <Popup onCancel={setOpenModalDelete} onConfirm={handleConfirm} title="Are you delete this task?"/>}
     </>
   );
 };

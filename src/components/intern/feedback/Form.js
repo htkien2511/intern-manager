@@ -9,7 +9,6 @@ function Form() {
   });
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(form);
     const errorState = validate();
     if (Object.keys(errorState).length > 0) {
       return setError(errorState);

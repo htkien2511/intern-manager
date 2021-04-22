@@ -75,8 +75,6 @@ export default function ManageAccountWaiting() {
         setPage(0);
     };
     const handleConfirm = () => {
-        console.log("deleted");
-        console.log({ infoRow });
         // handle delete api
         setOpenModalDelete(false);
     }

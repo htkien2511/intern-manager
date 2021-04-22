@@ -76,8 +76,6 @@ export default function ManageIntern() {
         setPage(0);
     };
     const handleConfirm = () => {
-        console.log("deleted");
-        console.log({ infoRow });
         // handle delete api
         setOpenModalDelete(false);
     }
@@ -186,7 +184,7 @@ export default function ManageIntern() {
             </div>
             {openModalAdd && <ModalCUUser setOpenModal={setOpenModalAdd} title="Add account user" />}
             {openModalEdit && <ModalCUUser setOpenModal={setOpenModalEdit} title="Edit account user" infoUser={infoRow} />}
-            {openModalDelete && <Popup onCancel={setOpenModalDelete} onConfirm={handleConfirm} />}
+            {openModalDelete && <Popup onCancel={setOpenModalDelete} onConfirm={handleConfirm} title="Are you delete this user?"/>}
         </div>
     );
 }

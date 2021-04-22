@@ -41,7 +41,7 @@ function App() {
         <Route path={ROUTE_FEEDBACKS} component={withAuthUser(Feedback)} exact />
         <Route path={ROUTE_SEND_FEEDBACK} component={withAuthUser(SendFeedback)} exact />
         <Route path={ROUTE_CONVERSATION} component={withAuthUser(Conversation)} exact />
-        <Route path={ROUTE_REGISTER_SCHEDULE} component={withAuthUser(Calendar)} exact />\
+        <Route path={ROUTE_REGISTER_SCHEDULE} component={withAuthUser(Calendar)} exact />
         {/* Admin */}
         <Route path={ROUTE_MANAGE_INTERN} component={withAuth(ManageIntern, false)} exact />
         <Route path={ROUTE_MANAGE_SCHEDULE} component={withAuth(ManageSchedule, false)} exact />

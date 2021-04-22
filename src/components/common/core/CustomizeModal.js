@@ -14,8 +14,13 @@ const CustomizedModal = ({ open, children }) => {
     children = [children]
   }
 
-  const header = children?.find((child) => child.type.name === 'Header') || {}
-  const content = children?.find((child) => child.type.name === 'Content') || {}
+  // const header = children?.find((child) => child.type.name === 'Header') || {}
+  // const content = children?.find((child) => child.type.name === 'Content') || {}
+
+
+  const header = children[0] || {}
+  const content = children[1] || {}
+  
 
   return (
     <>
