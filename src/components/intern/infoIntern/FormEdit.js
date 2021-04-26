@@ -26,7 +26,9 @@ function FormEdit() {
     confirmPass: "",
   });
   useEffect(() => {
-    getProfileIntern(getAuth().email, (output) => {
+    console.log("aaaa");
+    console.log(getAuth().id);
+    getProfileIntern(getAuth().id, (output) => {
       if (!output.data) return;
       setForm(output.data);
     });
@@ -162,7 +164,7 @@ function FormEdit() {
                 onChange={handleChangeTab}
                 aria-label="simple tabs example"
               >
-                <Tab label="Profile Intern" {...a11yProps(0)}/>
+                <Tab label="Profile Intern" {...a11yProps(0)} />
                 <Tab label="Password" {...a11yProps(1)} />
               </Tabs>
             </AppBar>
