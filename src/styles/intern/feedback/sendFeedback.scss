@@ -29,9 +29,6 @@
                     margin-right: 20px;
                     color: chocolate;
                 }
-                span{
-
-                }
             }
         }
         .form-feedback{
@@ -45,7 +42,7 @@
                     }
                     input{
                         border-radius: 8px;
-                        height: 30px;
+                        height: 40px;
                         width: 98%;
                         padding: 10px;
                         margin-top: 15px;
@@ -69,6 +66,7 @@
                         margin-top: 15px;
                         box-shadow: 1px 1px 1px #999;
                         margin-bottom: 10px;
+                        height: 250px;
                     }
                     .error__editProfile{
                         color: red !important;
@@ -78,7 +76,7 @@
                     background-color: #008CBA;
                     border: none;
                     color: white;
-                    padding: 15px;
+                    padding: 10px;
                     text-align: center;
                     text-decoration: none;
                     display: inline-block;
@@ -87,7 +85,7 @@
                     text-justify: auto;
                     width: 100px;
                     font-weight: bold;
-                    margin-top: 30px;
+                    margin-top: 20px;
                     outline: none;
                 }
             }
