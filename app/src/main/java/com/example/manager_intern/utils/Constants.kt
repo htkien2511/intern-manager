@@ -2,7 +2,7 @@ package com.example.manager_intern.utils
 
 class Constants {
     companion object {
-        const val BASE_URL = "http://192.168.1.7:8080/"
+        const val BASE_URL = "http://intern-managerment.herokuapp.com/"
         const val ADS_TYPE = 1
         const val CONTENT_TYPE = 0
         const val ADS_ID = "ca-app-pub-3940256099942544~3347511713"
@@ -10,5 +10,6 @@ class Constants {
         const val ITEMS_PER_ID = 5
         const val USERNAME = "username"
         const val PASSWORD = "password"
+        const val NAME = "name"
     }
 }

@@ -1,6 +1,7 @@
 package com.example.manager_intern.data.remote
 
 import com.example.manager_intern.utils.Constants
+import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -19,7 +20,13 @@ class RetrofitClient {
                 retrofit = Retrofit.Builder()
                     .baseUrl(Constants.BASE_URL)
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    .addConverterFactory(GsonConverterFactory.create())
+                    .addConverterFactory(
+                        GsonConverterFactory.create(
+                            GsonBuilder()
+                                .setLenient()
+                                .create()
+                        )
+                    )
                     .client(
                         OkHttpClient
                             .Builder()

@@ -9,6 +9,7 @@
     <string name="slogan_app">Stay hungry, stay foolish</string>
     <string name="enter_email">Enter email</string>
     <string name="enter_password">Enter password</string>
+    <string name="enter_password_again">Enter password again</string>
     <string name="enter_user_name">Enter user name</string>
     <string name="user">User</string>
     <string name="dont_have_account">If you don\'t account, please sign up</string>
@@ -23,4 +24,5 @@
     <string name="forgot_password">Forgot password</string>
     <string name="tasks">Tasks</string>
     <string name="attachment">Attachment</string>
+    <string name="logout">Logout</string>
 </resources>

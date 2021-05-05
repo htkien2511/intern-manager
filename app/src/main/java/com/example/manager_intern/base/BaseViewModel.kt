@@ -11,14 +11,24 @@ open class BaseViewModel : ViewModel() {
 
     val repository = RetrofitClient.getApiService()
     val onError = MutableLiveData<String>()
+    val loader = MutableLiveData<Boolean>()
+
     private val compositeDisposable = CompositeDisposable()
 
     companion object {
         val userResponsive = MutableLiveData<UserResponsive>()
     }
 
-    fun addDisposable(disposable: Disposable) {
+    protected fun addDisposable(disposable: Disposable) {
         compositeDisposable.add(disposable)
+    }
+
+    protected fun showLoading() {
+        loader.value = true
+    }
+
+    protected fun closeLoading() {
+        loader.value = false
     }
 
     override fun onCleared() {

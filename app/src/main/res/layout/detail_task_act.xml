@@ -134,40 +134,40 @@
                     android:textSize="@dimen/text_14" />
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/llAttachment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_8"
-                android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@id/llDuedate">
+            <!--            <LinearLayout-->
+            <!--                android:id="@+id/llAttachment"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="@dimen/dimen_8"-->
+            <!--                android:orientation="horizontal"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/llDuedate">-->
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_baseline_attach_file_24" />
+            <!--                <ImageView-->
+            <!--                    android:layout_width="30dp"-->
+            <!--                    android:layout_height="30dp"-->
+            <!--                    android:src="@drawable/ic_baseline_attach_file_24" />-->
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="@dimen/dimen_8"
-                    android:text="@string/attachment"
-                    android:textColor="@color/textPrimary"
-                    android:textSize="@dimen/text_14"
-                    android:textStyle="bold" />
-            </LinearLayout>
+            <!--                <TextView-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:layout_gravity="center"-->
+            <!--                    android:layout_marginStart="@dimen/dimen_8"-->
+            <!--                    android:text="@string/attachment"-->
+            <!--                    android:textColor="@color/textPrimary"-->
+            <!--                    android:textSize="@dimen/text_14"-->
+            <!--                    android:textStyle="bold" />-->
+            <!--            </LinearLayout>-->
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewAttach"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="38dp"
-                android:layout_marginTop="@dimen/dimen_8"
-                android:orientation="vertical"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintTop_toBottomOf="@+id/llAttachment"
-                tools:listitem="@layout/item_attachment" />
+            <!--            <androidx.recyclerview.widget.RecyclerView-->
+            <!--                android:id="@+id/recyclerViewAttach"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginStart="38dp"-->
+            <!--                android:layout_marginTop="@dimen/dimen_8"-->
+            <!--                android:orientation="vertical"-->
+            <!--                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"-->
+            <!--                app:layout_constraintTop_toBottomOf="@+id/llAttachment"-->
+            <!--                tools:listitem="@layout/item_attachment" />-->
 
             <LinearLayout
                 android:id="@+id/llTask"
@@ -175,7 +175,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_8"
                 android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@id/recyclerViewAttach">
+                app:layout_constraintTop_toBottomOf="@+id/llDuedate">
 
                 <ImageView
                     android:layout_width="30dp"
@@ -202,6 +202,7 @@
                 app:layout_constraintTop_toBottomOf="@id/llTask">
 
                 <TextView
+                    android:id="@+id/tvProgress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="0%"
@@ -214,6 +215,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dimen_8"
+                    android:max="100"
                     android:progressTint="@color/green" />
             </LinearLayout>
 

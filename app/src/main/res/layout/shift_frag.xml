@@ -1,202 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSpinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:spanCount="3"
+        tools:listitem="@layout/item_spinner" />
+
+    <TextView
+        android:id="@+id/tvMorning"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_16"
+        android:layout_marginTop="@dimen/dimen_16"
+        android:text="Morning: 8h - 12h"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rvSpinner" />
+
+    <TextView
+        android:id="@+id/tvAfternoon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_16"
+        android:layout_marginTop="@dimen/dimen_16"
+        android:text="Morning: 13h - 17h"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvMorning" />
+
+    <Button
+        android:id="@+id/btnSubmitShift"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_16"
+        android:layout_marginTop="@dimen/dimen_16"
+        android:background="@drawable/bg_department"
+        android:text="Submit"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAfternoon" />
 
-        <TableLayout
-            android:id="@+id/tabla_cuerpo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/dimen_16"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TableRow
-                android:id="@+id/tableRow1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingVertical="@dimen/dimen_8">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/cell_shape"
-                    android:gravity="center"
-                    android:padding="5dp"
-                    android:text="Time"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/textPrimary"
-                    android:textSize="@dimen/text_17" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/cell_shape"
-                    android:gravity="center"
-                    android:padding="5dp"
-                    android:text="21/3/2020"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/textPrimary"
-                    android:textSize="@dimen/text_17" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/cell_shape"
-                    android:gravity="center"
-                    android:padding="5dp"
-                    android:text="21/3/2020"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/textPrimary"
-                    android:textSize="@dimen/text_17" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/cell_shape"
-                    android:gravity="center"
-                    android:padding="5dp"
-                    android:text="21/3/2020"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/textPrimary"
-                    android:textSize="@dimen/text_17" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/cell_shape"
-                    android:gravity="center"
-                    android:padding="5dp"
-                    android:text="21/3/2020"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/textPrimary"
-                    android:textSize="@dimen/text_17" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/cell_shape"
-                    android:gravity="center"
-                    android:padding="5dp"
-                    android:text="21/3/2020"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/textPrimary"
-                    android:textSize="@dimen/text_17" />
-
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/tableRow2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_option"
-                    android:padding="5dp"
-                    android:text="Shift"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                <Spinner
-                    android:id="@+id/spinner"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:padding="5dp"
-                    android:paddingHorizontal="@dimen/dimen_8"
-                    android:spinnerMode="dropdown" />
-
-                <Spinner
-                    android:id="@+id/spinner1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:padding="5dp"
-                    android:paddingHorizontal="@dimen/dimen_8"
-                    android:spinnerMode="dropdown" />
-
-                <Spinner
-                    android:id="@+id/spinner2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:padding="5dp"
-                    android:paddingHorizontal="@dimen/dimen_8"
-                    android:spinnerMode="dropdown" />
-
-                <Spinner
-                    android:id="@+id/spinner3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:padding="5dp"
-                    android:paddingHorizontal="@dimen/dimen_8"
-                    android:spinnerMode="dropdown" />
-
-                <Spinner
-                    android:id="@+id/spinner4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:padding="5dp"
-                    android:paddingHorizontal="@dimen/dimen_8"
-                    android:spinnerMode="dropdown" />
-
-            </TableRow>
-
-        </TableLayout>
-
-        <TextView
-            android:id="@+id/tvMorning"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dimen_16"
-            android:layout_marginTop="@dimen/dimen_16"
-            android:text="Morning: 8h - 12h"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tabla_cuerpo" />
-
-        <TextView
-            android:id="@+id/tvAfternoon"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dimen_16"
-            android:layout_marginTop="@dimen/dimen_16"
-            android:text="Morning: 13h - 17h"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvMorning" />
-
-
-        <TextView
-            android:id="@+id/tvTotal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dimen_16"
-            android:layout_marginTop="@dimen/dimen_16"
-            android:text="Total: 120"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvAfternoon" />
-
-        <Button
-            android:id="@+id/btnSubmitShift"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/dimen_16"
-            android:layout_marginTop="@dimen/dimen_16"
-            android:background="@drawable/bg_department"
-            android:text="Submit"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvTotal" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</HorizontalScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

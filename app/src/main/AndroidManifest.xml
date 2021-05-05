@@ -32,8 +32,13 @@
         <activity
             android:name=".ui.register.RegisterActivity"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".ui.task.TaskActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.forgot.ForgotActivity"
             android:screenOrientation="portrait" />
     </application>
 

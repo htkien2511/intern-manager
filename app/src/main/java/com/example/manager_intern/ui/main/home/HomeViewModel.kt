@@ -1,25 +1,28 @@
-package com.example.manager_intern.ui.task
+package com.example.manager_intern.ui.main.home
 
 import androidx.lifecycle.MutableLiveData
 import com.example.manager_intern.base.BaseViewModel
-import com.example.manager_intern.data.remote.responsive.TaskResponsive
+import com.example.manager_intern.data.remote.responsive.ProjectResponsive
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class TaskViewModel : BaseViewModel() {
+class HomeViewModel : BaseViewModel() {
 
-    val taskResponsive = MutableLiveData<TaskResponsive>()
+    val projectResponsive = MutableLiveData<ProjectResponsive>()
 
-    fun getTasksOfProject(projectId: Int) {
+    fun getProjectByUserId(auth: String, userId: Int) {
         showLoading()
         addDisposable(
-            repository.getTasksOfProject(projectId)
-                .subscribeOn(Schedulers.io())
+            repository
+                .getProjects(auth, userId)
                 .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
                 .subscribe({
                     closeLoading()
                     if (it.isSuccess) {
-                        taskResponsive.value = it
+                        if (it.data != null) {
+                            projectResponsive.value = it
+                        }
                     } else {
                         onError.value = it.message
                     }

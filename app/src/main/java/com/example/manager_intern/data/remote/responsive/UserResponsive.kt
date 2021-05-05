@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class UserResponsive(
     @SerializedName("data")
     val userData: UserData,
-    @SerializedName("messsage")
+    @SerializedName("message")
     val message: String,
     @SerializedName("success")
     val isSuccess: Boolean,
@@ -13,6 +13,8 @@ data class UserResponsive(
 )
 
 data class UserData(
+    @SerializedName("id")
+    val id: Int,
     @SerializedName("name")
     val name: String,
     @SerializedName("email")
@@ -21,6 +23,8 @@ data class UserData(
     val department: String,
     @SerializedName("address")
     val address: String,
+    @SerializedName("gender")
+    val gender: String,
     @SerializedName("role")
     val role: String,
     @SerializedName("token")

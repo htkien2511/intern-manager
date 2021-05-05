@@ -1,6 +1,7 @@
 package com.example.manager_intern.base
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.WindowManager
@@ -9,12 +10,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
+import com.example.manager_intern.extensions.closeProgress
+import com.example.manager_intern.extensions.showProgress
 
 abstract class BaseActivity<T : BaseViewModel> : AppCompatActivity() {
 
     var viewModel: T? = null
 
     abstract var viewModelFactory: Class<T>
+
+    private var alertDialog: AlertDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +31,15 @@ abstract class BaseActivity<T : BaseViewModel> : AppCompatActivity() {
             showError(it)
         })
 
+        viewModel?.loader?.observe(this, {
+            if (it) {
+                showLoading()
+            } else {
+                closeLoading()
+            }
+        })
+
+        //setStatusBar()
         initView()
         initListener()
     }
@@ -36,11 +50,11 @@ abstract class BaseActivity<T : BaseViewModel> : AppCompatActivity() {
 
     protected abstract fun initListener()
 
-    protected fun setStatusBarColor(colorCode: Int) {
-        window.apply {
-            addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-            statusBarColor = ContextCompat.getColor(this@BaseActivity, colorCode)
-        }
+    protected fun setStatusBar() {
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
     }
 
     private fun obtainViewModel() {
@@ -56,5 +70,13 @@ abstract class BaseActivity<T : BaseViewModel> : AppCompatActivity() {
 
     private fun showError(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun showLoading() {
+        showProgress()
+    }
+
+    private fun closeLoading() {
+        closeProgress()
     }
 }

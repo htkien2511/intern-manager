@@ -6,7 +6,7 @@ import com.example.manager_intern.base.BaseActivity
 import com.example.manager_intern.databinding.MainActBinding
 import com.example.manager_intern.ui.main.home.HomeFragment
 import com.example.manager_intern.ui.main.message.MessageFragment
-import com.example.manager_intern.ui.main.schedule.ScheduleFrag
+import com.example.manager_intern.ui.main.schedule.ScheduleFragment
 import com.example.manager_intern.ui.main.user.UserFragment
 
 class MainActivity : BaseActivity<MainViewModel>() {
@@ -15,7 +15,6 @@ class MainActivity : BaseActivity<MainViewModel>() {
     override val binding by viewBinding(MainActBinding::inflate)
 
     override fun initView() {
-        setStatusBarColor(R.color.white)
         loadFragment(HomeFragment())
     }
 
@@ -27,7 +26,7 @@ class MainActivity : BaseActivity<MainViewModel>() {
                     true
                 }
                 R.id.bottomNavScheduler -> {
-                    loadFragment(ScheduleFrag())
+                    loadFragment(ScheduleFragment())
                     true
                 }
                 R.id.bottomNavMessage -> {
