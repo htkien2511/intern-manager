@@ -8,6 +8,9 @@ import setTitle from "./admin/setTitle";
 import getProfileIntern from "./intern/getProfileIntern";
 import getAllManager from "./admin/getAllManager";
 import deleteUser from "./admin/deleteUser";
+import getAllAccountWaiting from "./admin/getAllAccountWaiting";
+import acceptUserRegister from "./admin/acceptUserRegister";
+import deniedUserRegister from "./admin/deniedUserRegister";
 
 export default combineReducers({
   login,
@@ -19,4 +22,7 @@ export default combineReducers({
   getProfileIntern,
   getAllManager,
   deleteUser,
+  getAllAccountWaiting,
+  acceptUserRegister,
+  deniedUserRegister,
 });
