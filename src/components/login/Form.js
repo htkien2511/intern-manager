@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { ROUTE_FORGOTPASSWORD, ROUTE_REGISTER } from "../../utils/routes";
 import image from "../../assets/images/logo_bg.png";
 import Notification from "components/common/core/Notification";
+import SpinLoading from "components/common/core/SpinLoading";
 
 const Form = ({ handleSubmit }) => {
   const [error, setError] = React.useState({});
@@ -67,6 +68,7 @@ const Form = ({ handleSubmit }) => {
 
   return (
     <section onSubmit={handleSubmitForm} className="login">
+      {loading && <SpinLoading />}
       {storeLogin.data.message && (
         <Notification
           status={storeLogin.data.success}
