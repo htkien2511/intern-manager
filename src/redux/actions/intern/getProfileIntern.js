@@ -1,4 +1,4 @@
-// import { getAuth } from "../../../utils/helpers";
+import { getAuth } from "../../../utils/helpers";
 import * as types from "../../constants";
 import store from "../../store";
 export function getProfileIntern(user_id, resolve = () => {}) {
@@ -11,7 +11,7 @@ export function getProfileIntern(user_id, resolve = () => {}) {
       method: "GET",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-        // Authorization: "Bearer " + getAuth().token,
+        Authorization: getAuth().token,
       },
     }
   )

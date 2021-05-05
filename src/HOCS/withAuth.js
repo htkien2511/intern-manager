@@ -5,12 +5,13 @@ import { Header, SideBar } from "../components/layout";
 import { getAuth } from "../utils/helpers";
 import { ROUTE_ADMIN_LOGIN } from "../utils/routes";
 
-
 const withAuth = (Component, showLogo = true) => (props) => {
-  const titleCurrent = useSelector(store => store.setTitle.title);
+  const titleCurrent = useSelector((store) => store.setTitle.title);
   return (
     <div className="app__admin flex flex-row">
-      {(getAuth() && getAuth().token && (getAuth().role === "ROLE_ADMIN" || getAuth().role === "ROLE_MANAGER")) ? (
+      {getAuth() &&
+      getAuth().token &&
+      (getAuth().role === "ROLE_ADMIN" || getAuth().role === "ROLE_MANAGER") ? (
         <>
           <SideBar />
           <div className="app__admin__body">

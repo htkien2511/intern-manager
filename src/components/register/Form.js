@@ -3,13 +3,21 @@ import { FormBox } from "../common";
 import { Form as ReForm } from "reactstrap";
 import { isEmpty, isEmail } from "validator";
 import { useSelector } from "react-redux";
+import Notification from "components/common/core/Notification";
 
 const Form = ({ handleSubmit }) => {
   const [error, setError] = React.useState({});
-  const [form, setForm] = React.useState({ name: "", email: "", password: "", confirmPassword: "" });
+  const [form, setForm] = React.useState({
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
   const [errorRegister, setErrorRegister] = React.useState();
   const storeRegister = useSelector((store) => store.register);
   const loading = storeRegister.loading;
+  let errMessage = storeRegister.data.message;
+
   const validate = () => {
     const errorState = {};
     // check validate
@@ -30,7 +38,8 @@ const Form = ({ handleSubmit }) => {
       errorState.confirmPassword = "Please enter confirm password";
     } else {
       if (form.confirmPassword !== form.password) {
-        errorState.confirmPassword = "Please enter confirm password match with password";
+        errorState.confirmPassword =
+          "Please enter confirm password match with password";
       }
     }
 
@@ -44,10 +53,9 @@ const Form = ({ handleSubmit }) => {
     }
 
     const formData = {
-      name: form.name,
       email: form.email,
       password: form.password,
-      confirmPassword: form.confirmPassword
+      name: form.name,
     };
     handleSubmit(formData);
   };
@@ -65,6 +73,12 @@ const Form = ({ handleSubmit }) => {
 
   return (
     <section onSubmit={handleSubmitForm} className="register">
+      {errMessage && (
+        <Notification
+          status={storeRegister.data.success}
+          description={errMessage}
+        />
+      )}
       <div className="register__inner">
         <ReForm className="radius-l login__inner__form">
           <div className="login__inner__form__text">
@@ -108,6 +122,7 @@ const Form = ({ handleSubmit }) => {
           />
           <FormBox
             propsInput={{
+              type: "password",
               name: "confirmPassword",
               placeholder: "Confirm password",
               onChange: handleChange,

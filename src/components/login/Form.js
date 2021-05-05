@@ -1,15 +1,20 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useHistory } from "react-router-dom";
 import { FormBox } from "../common";
 import { Form as ReForm } from "reactstrap";
 import { isEmpty, isEmail } from "validator";
 import { useSelector } from "react-redux";
 import { ROUTE_FORGOTPASSWORD, ROUTE_REGISTER } from "../../utils/routes";
 import image from "../../assets/images/logo_bg.png";
+import Notification from "components/common/core/Notification";
 
 const Form = ({ handleSubmit }) => {
   const [error, setError] = React.useState({});
-  const [form, setForm] = React.useState({ email: "", password: "" });
+  const history = useHistory();
+  const [form, setForm] = React.useState({
+    email: "",
+    password: "",
+  });
   const [errorLogin, setErrorLogin] = React.useState();
   const storeLogin = useSelector((store) => store.login);
   const loading = storeLogin.loading;
@@ -28,6 +33,13 @@ const Form = ({ handleSubmit }) => {
     }
     return errorState;
   };
+
+  useEffect(() => {
+    if (!(history.location.state && history.location.state.email)) return;
+    setForm({ ...form, email: history.location.state.email });
+    setError({ ...error, email: "" });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [history]);
   const handleSubmitForm = (event) => {
     event.preventDefault();
     const errorState = validate();
@@ -55,6 +67,12 @@ const Form = ({ handleSubmit }) => {
 
   return (
     <section onSubmit={handleSubmitForm} className="login">
+      {storeLogin.data.message && (
+        <Notification
+          status={storeLogin.data.success}
+          description={storeLogin.data.message}
+        />
+      )}
       <div className="login__inner flex items-center contents-center">
         <img src={image} alt="" />
         <ReForm className="radius-l login__inner__form">
