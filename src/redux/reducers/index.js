@@ -7,8 +7,16 @@ import getAllUser from "./admin/getAllUser";
 import setTitle from "./admin/setTitle";
 import getProfileIntern from "./intern/getProfileIntern";
 import getAllManager from "./admin/getAllManager";
-
+import deleteUser from "./admin/deleteUser";
 
 export default combineReducers({
-  login, register, forgotPassword, resetPassword, getAllUser, setTitle, getProfileIntern,getAllManager
+  login,
+  register,
+  forgotPassword,
+  resetPassword,
+  getAllUser,
+  setTitle,
+  getProfileIntern,
+  getAllManager,
+  deleteUser,
 });

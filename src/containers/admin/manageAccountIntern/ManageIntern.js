@@ -14,6 +14,8 @@ import Popup from "components/common/core/Popup";
 import { getAllUser } from "redux/actions/admin/getAllUser";
 import Skeleton from "@material-ui/lab/Skeleton";
 import { useSelector } from "react-redux";
+import { deleteUser } from "redux/actions/admin/deleteUser";
+import Notification from "components/common/core/Notification";
 
 const columns = [
   { id: "id", label: "Id", minWidth: 170 },
@@ -71,7 +73,12 @@ export default function ManageIntern() {
     setPage(0);
   };
   const handleConfirm = () => {
-    // handle delete api
+    deleteUser(infoRow.id, (res) => {
+      if (res.success) {
+        const usersRemain = data.filter((item) => item.id !== infoRow.id);
+        setData(usersRemain);
+      }
+    });
     setOpenModalDelete(false);
   };
   const [openModalAdd, setOpenModalAdd] = useState(false);
@@ -174,9 +181,16 @@ export default function ManageIntern() {
         );
     }
   };
+  const storeDelete = useSelector((store) => store.deleteUser);
 
   return (
     <div className="manage-intern">
+      {storeDelete.data.message && (
+        <Notification
+          status={storeDelete.data.success}
+          description={storeDelete.data.message}
+        />
+      )}
       <div className="manage-intern__inner">
         <div className="manage-intern__inner__top">
           <div
@@ -238,7 +252,7 @@ export default function ManageIntern() {
                     {[1, 2, 3, 4, 5, 6].map((item) => {
                       return (
                         <TableCell key={item}>
-                          <Skeleton style={{height: 40}}/>
+                          <Skeleton style={{ height: 40 }} />
                         </TableCell>
                       );
                     })}
