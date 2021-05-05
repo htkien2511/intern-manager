@@ -1,20 +1,31 @@
 import React from "react";
+import { Redirect } from "react-router";
+import { getAuth } from "utils/helpers";
+import { ROUTE_MANAGE_LEADER, ROUTE_PROFILE } from "utils/routes";
 import { Header, Footer } from "../components/layout";
 
 const withAuthLayout = (Component, showLogo = true) => (props) => {
-    return (
-        <div className="app">
-            <Header showLogo={showLogo} />
-            <div className="app__body">
-                <div className="app__content">
-                    <div className="app__content__inner">
-                        <Component {...props} />
-                    </div>
-                </div>
+  return (
+    <div className="app">
+      {!(getAuth() && getAuth().token) ? (
+        <>
+          <Header showLogo={showLogo} />
+          <div className="app__body">
+            <div className="app__content">
+              <div className="app__content__inner">
+                <Component {...props} />
+              </div>
             </div>
-            <Footer />
-        </div>
-    );
+          </div>
+          <Footer />
+        </>
+      ) : getAuth().role === "ROLE_USER" ? (
+        <Redirect to={ROUTE_PROFILE} />
+      ) : (
+        <Redirect to={ROUTE_MANAGE_LEADER} />
+      )}
+    </div>
+  );
 };
 
 export default withAuthLayout;
