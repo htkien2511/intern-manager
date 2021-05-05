@@ -6,7 +6,6 @@ import { isEmpty, isEmail } from "validator";
 import { useSelector } from "react-redux";
 import { ROUTE_FORGOTPASSWORD, ROUTE_REGISTER } from "../../utils/routes";
 import image from "../../assets/images/logo_bg.png";
-import Notification from "components/common/core/Notification";
 import SpinLoading from "components/common/core/SpinLoading";
 
 const Form = ({ handleSubmit }) => {
@@ -69,12 +68,6 @@ const Form = ({ handleSubmit }) => {
   return (
     <section onSubmit={handleSubmitForm} className="login">
       {loading && <SpinLoading />}
-      {storeLogin.data.message && (
-        <Notification
-          status={storeLogin.data.success}
-          description={storeLogin.data.message}
-        />
-      )}
       <div className="login__inner flex items-center contents-center">
         <img src={image} alt="" />
         <ReForm className="radius-l login__inner__form">

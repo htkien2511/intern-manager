@@ -3,7 +3,6 @@ import { FormBox } from "../common";
 import { Form as ReForm } from "reactstrap";
 import { isEmpty } from "validator";
 import { useSelector } from "react-redux";
-import Notification from "components/common/core/Notification";
 
 const Form = ({ handleSubmit }) => {
   const [error, setError] = React.useState({});
@@ -61,12 +60,6 @@ const Form = ({ handleSubmit }) => {
 
   return (
     <section onSubmit={handleSubmitForm} className="forgot-password">
-      {storeResetPassword.data.message && (
-        <Notification
-          status={storeResetPassword.data.success}
-          description={storeResetPassword.data.message}
-        />
-      )}
       <div className="forgot-password__inner">
         <ReForm className="radius-l login__inner__form">
           <div className="login__inner__form__text">

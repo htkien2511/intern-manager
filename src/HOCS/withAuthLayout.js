@@ -3,6 +3,7 @@ import { Redirect } from "react-router";
 import { getAuth } from "utils/helpers";
 import { ROUTE_MANAGE_LEADER, ROUTE_PROFILE } from "utils/routes";
 import { Header, Footer } from "../components/layout";
+import { ToastContainer } from "react-toastify";
 
 const withAuthLayout = (Component, showLogo = true) => (props) => {
   return (
@@ -13,6 +14,7 @@ const withAuthLayout = (Component, showLogo = true) => (props) => {
           <div className="app__body">
             <div className="app__content">
               <div className="app__content__inner">
+                <ToastContainer />
                 <Component {...props} />
               </div>
             </div>

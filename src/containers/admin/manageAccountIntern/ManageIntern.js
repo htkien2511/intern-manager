@@ -15,7 +15,6 @@ import { getAllUser } from "redux/actions/admin/getAllUser";
 import Skeleton from "@material-ui/lab/Skeleton";
 import { useSelector } from "react-redux";
 import { deleteUser } from "redux/actions/admin/deleteUser";
-import Notification from "components/common/core/Notification";
 
 const columns = [
   { id: "id", label: "Id", minWidth: 170 },
@@ -181,16 +180,9 @@ export default function ManageIntern() {
         );
     }
   };
-  const storeDelete = useSelector((store) => store.deleteUser);
 
   return (
     <div className="manage-intern">
-      {storeDelete.data.message && (
-        <Notification
-          status={storeDelete.data.success}
-          description={storeDelete.data.message}
-        />
-      )}
       <div className="manage-intern__inner">
         <div className="manage-intern__inner__top">
           <div

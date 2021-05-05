@@ -3,7 +3,6 @@ import { FormBox } from "../common";
 import { Form as ReForm } from "reactstrap";
 import { isEmpty, isEmail } from "validator";
 import { useSelector } from "react-redux";
-import Notification from "components/common/core/Notification";
 
 const Form = ({ handleSubmit }) => {
   const [error, setError] = React.useState({});
@@ -73,12 +72,6 @@ const Form = ({ handleSubmit }) => {
 
   return (
     <section onSubmit={handleSubmitForm} className="register">
-      {errMessage && (
-        <Notification
-          status={storeRegister.data.success}
-          description={errMessage}
-        />
-      )}
       <div className="register__inner">
         <ReForm className="radius-l login__inner__form">
           <div className="login__inner__form__text">
