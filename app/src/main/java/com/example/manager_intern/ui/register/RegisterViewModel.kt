@@ -20,17 +20,20 @@ class RegisterViewModel : BaseViewModel() {
             .addFormDataPart(Constants.NAME, username)
             .build()
 
+        showLoading()
         addDisposable(
             repository.postRegister(requestBody)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
+                    closeLoading()
                     if (!it.success) {
                         onError.value = it.message
                     } else {
                         registerResponsive.value = it
                     }
                 }, {
+                    closeLoading()
                     onError.value = it.message
                 }
                 )

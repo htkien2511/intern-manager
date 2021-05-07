@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.manager_intern.extensions.closeProgress
 import com.example.manager_intern.extensions.showProgress
+import es.dmoral.toasty.Toasty
 
 abstract class BaseFragment<T : BaseViewModel>(layoutId: Int) : Fragment(layoutId) {
 
@@ -23,7 +24,7 @@ abstract class BaseFragment<T : BaseViewModel>(layoutId: Int) : Fragment(layoutI
             showError(it)
         })
 
-        viewModel?.loader?.observe(this, {
+        viewModel?.loader?.observe(viewLifecycleOwner, {
             if (it) {
                 showLoading()
             } else {
@@ -43,7 +44,7 @@ abstract class BaseFragment<T : BaseViewModel>(layoutId: Int) : Fragment(layoutI
     }
 
     private fun showError(message: String) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+        Toasty.error(requireContext(), message, Toast.LENGTH_SHORT, true).show()
     }
 
     private fun showLoading() {

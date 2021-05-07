@@ -3,6 +3,7 @@ package com.example.manager_intern.ui.task
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.manager_intern.R
 import com.example.manager_intern.base.BaseActivity
+import com.example.manager_intern.base.BaseViewModel
 import com.example.manager_intern.data.remote.responsive.ProjectData
 import com.example.manager_intern.data.remote.responsive.TaskData
 import com.example.manager_intern.databinding.DetailTaskActBinding
@@ -37,11 +38,15 @@ class TaskActivity : BaseActivity<TaskViewModel>() {
         }
 
         projectData = intent.getSerializableExtra("project") as ProjectData?
-        projectData?.let {
-            binding.tvTitle.text = it.title
-            binding.tvDescription.text = it.description
-            binding.tvDuedate.text = it.dueDate 
-            viewModel?.getTasksOfProject(it.id)
+        BaseViewModel.userResponsive.observe(this) {
+            if (it != null) {
+                projectData?.let { projectData ->
+                    binding.tvTitle.text = projectData.title
+                    binding.tvDescription.text = projectData.description
+                    binding.tvDuedate.text = projectData.dueDate
+                    viewModel?.getTasksOfProject(projectData.id, it.userData.token)
+                }
+            }
         }
     }
 

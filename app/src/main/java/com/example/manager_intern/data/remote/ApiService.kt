@@ -2,6 +2,7 @@ package com.example.manager_intern.data.remote
 
 import com.example.manager_intern.data.remote.responsive.*
 import io.reactivex.Observable
+import io.reactivex.Single
 import okhttp3.RequestBody
 import retrofit2.http.*
 
@@ -26,5 +27,11 @@ interface ApiService {
     fun postForgotPassword(@Body body: RequestBody): Observable<ForgotResponsive>
 
     @GET("task/project")
-    fun getTasksOfProject(@Query("project_id") projectId: Int): Observable<TaskResponsive>
+    fun getTasksOfProject(
+        @Query("project_id") projectId: Int,
+        @Header("Authorization") auth: String
+    ): Observable<TaskResponsive>
+
+    @POST("reset_password")
+    fun postResetPassword(@Body body: RequestBody): Single<ForgotResponsive>
 }

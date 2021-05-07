@@ -10,16 +10,20 @@ class TaskViewModel : BaseViewModel() {
 
     val taskResponsive = MutableLiveData<TaskResponsive>()
 
-    fun getTasksOfProject(projectId: Int) {
+    fun getTasksOfProject(projectId: Int, auth: String) {
         showLoading()
         addDisposable(
-            repository.getTasksOfProject(projectId)
+            repository.getTasksOfProject(projectId, auth)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     closeLoading()
                     if (it.isSuccess) {
-                        taskResponsive.value = it
+                        if (it.data != null) {
+                            taskResponsive.value = it
+                        } else {
+                            onError.value = it.message
+                        }
                     } else {
                         onError.value = it.message
                     }

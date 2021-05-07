@@ -9,6 +9,7 @@ import io.reactivex.schedulers.Schedulers
 class HomeViewModel : BaseViewModel() {
 
     val projectResponsive = MutableLiveData<ProjectResponsive>()
+    val projectEmpty = MutableLiveData<Boolean>()
 
     fun getProjectByUserId(auth: String, userId: Int) {
         showLoading()
@@ -21,7 +22,10 @@ class HomeViewModel : BaseViewModel() {
                     closeLoading()
                     if (it.isSuccess) {
                         if (it.data != null) {
+                            projectEmpty.value = false
                             projectResponsive.value = it
+                        } else {
+                            projectEmpty.value = true
                         }
                     } else {
                         onError.value = it.message

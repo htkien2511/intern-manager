@@ -3,6 +3,7 @@ package com.example.manager_intern.ui.main.home
 import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.manager_intern.R
 import com.example.manager_intern.base.BaseFragment
@@ -41,17 +42,28 @@ class HomeFragment : BaseFragment<HomeViewModel>(R.layout.home_frag) {
             }
         }
 
-        viewModel?.projectResponsive?.observe(this) {
-            it.data?.let { data ->
-                list.clear()
-                list.addAll(data)
-                adapter.initData()
-                adapter.notifyDataSetChanged()
+        viewModel?.run {
+            projectResponsive.observe(this@HomeFragment) {
+                it.data?.let { data ->
+                    list.clear()
+                    list.addAll(data)
+                    adapter.initData()
+                    adapter.notifyDataSetChanged()
+                }
+            }
+
+            projectEmpty.observe(this@HomeFragment) {
+                binding.tvEmpty.visibility = if (it) View.VISIBLE else View.GONE
             }
         }
 
         binding.searchTask.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            override fun beforeTextChanged(
+                s: CharSequence?,
+                start: Int,
+                count: Int,
+                after: Int
+            ) {
 
             }
 

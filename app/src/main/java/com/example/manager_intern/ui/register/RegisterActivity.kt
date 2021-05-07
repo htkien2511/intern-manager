@@ -2,10 +2,10 @@ package com.example.manager_intern.ui.register
 
 import android.content.Intent
 import android.widget.Toast
-import com.example.manager_intern.R
 import com.example.manager_intern.base.BaseActivity
 import com.example.manager_intern.databinding.RegisterActBinding
 import com.example.manager_intern.ui.login.LoginActivity
+import es.dmoral.toasty.Toasty
 
 class RegisterActivity : BaseActivity<RegisterViewModel>() {
 
@@ -29,16 +29,18 @@ class RegisterActivity : BaseActivity<RegisterViewModel>() {
                 val rePassword = passwordAgain.text.toString()
 
                 if (email.isEmpty() || username.isEmpty() || password.isEmpty() || rePassword.isEmpty()) {
-                    Toast.makeText(
+                    Toasty.error(
                         this@RegisterActivity,
                         "Please enter enough fields",
-                        Toast.LENGTH_SHORT
+                        Toast.LENGTH_SHORT,
+                        true
                     ).show()
                 } else if (password != rePassword) {
-                    Toast.makeText(
+                    Toasty.error(
                         this@RegisterActivity,
                         "Re password is wrong",
-                        Toast.LENGTH_SHORT
+                        Toast.LENGTH_SHORT,
+                        true
                     ).show()
                 } else {
                     viewModel?.register(email, username, password)
@@ -47,7 +49,7 @@ class RegisterActivity : BaseActivity<RegisterViewModel>() {
         }
 
         viewModel?.registerResponsive?.observe(this, {
-            Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+            Toasty.success(this, it.message, Toast.LENGTH_SHORT, true).show()
             startActivity(Intent(this, LoginActivity::class.java))
         })
     }

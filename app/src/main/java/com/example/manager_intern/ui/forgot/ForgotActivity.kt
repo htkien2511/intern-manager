@@ -5,6 +5,7 @@ import android.widget.Toast
 import com.example.manager_intern.base.BaseActivity
 import com.example.manager_intern.databinding.ForgotPasswordActBinding
 import com.example.manager_intern.ui.login.LoginActivity
+import es.dmoral.toasty.Toasty
 
 class ForgotActivity : BaseActivity<ForgotViewModel>() {
 
@@ -25,8 +26,8 @@ class ForgotActivity : BaseActivity<ForgotViewModel>() {
         }
 
         viewModel?.forgotResponsive?.observe(this) {
-            Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
-            startActivity(Intent(this, LoginActivity::class.java))
+            Toasty.success(this, it.message, Toast.LENGTH_SHORT, true).show()
+            startActivity(Intent(this, ResetActivity::class.java))
         }
     }
 }

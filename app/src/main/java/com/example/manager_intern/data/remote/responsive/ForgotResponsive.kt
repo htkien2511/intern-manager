@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 
 data class ForgotResponsive(
-    @SerializedName("messsage")
+    @SerializedName("message")
     val message: String,
     @SerializedName("success")
     val isSuccess: Boolean

@@ -7,11 +7,11 @@ import android.view.LayoutInflater
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.viewbinding.ViewBinding
 import com.example.manager_intern.extensions.closeProgress
 import com.example.manager_intern.extensions.showProgress
+import es.dmoral.toasty.Toasty
 
 abstract class BaseActivity<T : BaseViewModel> : AppCompatActivity() {
 
@@ -69,7 +69,7 @@ abstract class BaseActivity<T : BaseViewModel> : AppCompatActivity() {
         }
 
     private fun showError(message: String) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        Toasty.error(this, message, Toast.LENGTH_SHORT, true).show()
     }
 
     private fun showLoading() {
