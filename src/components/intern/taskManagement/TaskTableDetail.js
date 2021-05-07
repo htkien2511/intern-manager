@@ -3,15 +3,15 @@ import React from "react";
 import { taskListData } from "utils/mockData";
 import { NavLink } from "react-router-dom";
 import { ROUTE_TASK_MANAGEMENT_DETAIL } from "../../../utils/routes";
-function TaskManagement() {
+function TaskManagementDetail() {
   return (
     <div className="task-management">
-      <h2>Project Management</h2>
+      <h2>Project</h2>
       <div>
         <table>
           <thead>
             <tr>
-              {["STT", "Project", "Start day", "End Date","Actions"].map(
+              {["STT", "Task","Descrition","Create at","Assign by","Status"].map(
                 (item, index) => {
                   return <th key={index}>{item}</th>;
                 }
@@ -24,17 +24,30 @@ function TaskManagement() {
               return (
                 <tr key={index}>
                   <td>{item.id}</td>
-                  <td>Làm Web Thực tập</td>
-                  <td>21/1/2021</td>
-                  <td>3/2/2021</td>
+                  <td>Create ForgotPassword Page</td>
+                  <td>Create ForgotPassword Page Create ForgotPassword Page</td>
+                  <td>28/07/2020</td>
+                  <td>John Doe</td>
                   <td>
                   <NavLink activeClassName="--active" to={ROUTE_TASK_MANAGEMENT_DETAIL}>
-                    <p>Detail</p>
+                    <p>In Progress</p>
                   </NavLink>
                   </td>
                 </tr>
               );
             })}
+            <tr>
+                  <td>2</td>
+                  <td>Create Form Login</td>
+                  <td>Create ForgotPassword Page Create ForgotPassword Page</td>
+                  <td>28/07/2020</td>
+                  <td>John Doe</td>
+                  <td>
+                  <NavLink activeClassName="--active" to={ROUTE_TASK_MANAGEMENT_DETAIL}>
+                    <p>Progressed</p>
+                  </NavLink>
+                  </td>
+                </tr>
           </tbody>
         </table>
       </div>
@@ -42,4 +55,4 @@ function TaskManagement() {
   );
 }
 
-export default TaskManagement;
+export default TaskManagementDetail;

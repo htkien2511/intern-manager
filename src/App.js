@@ -26,6 +26,7 @@ import {
   ROUTE_MANAGE_FEEDBACK__INTERN,
   ROUTE_MANAGE_TASK_DETAIL,
   ROUTE_MANAGE_FEEDBACK__INTERN_DETAIL,
+  ROUTE_TASK_MANAGEMENT_DETAIL,
 } from "./utils/routes";
 import { ForgotPassword } from "./containers/forgotPassword";
 import { ResetPassword } from "./containers/resetPassword";
@@ -35,6 +36,7 @@ import { Login } from "./containers/login";
 import InfoIntern from "./containers/intern/infoIntern/InfoIntern";
 import EditProfile from "./containers/intern/infoIntern/EditProfile";
 import TaskManagement from "./containers/intern/taskManagement/TaskManagement";
+import TaskManagementDetail from "./containers/intern/taskManagement/TaskManagementDetail";
 import Feedback from "./containers/intern/feedback/Feedback";
 import SendFeedback from "./containers/intern/feedback/SendFeedback";
 import Conversation from "./containers/intern/feedback/Conversation";
@@ -94,6 +96,66 @@ function App() {
         <Route
           path={ROUTE_TASK_MANAGEMENT}
           component={withAuthUser(TaskManagement)}
+          exact
+        />
+        <Route
+          path={ROUTE_FEEDBACKS}
+          component={withAuthUser(Feedback)}
+          exact
+        />
+        <Route
+          path={ROUTE_SEND_FEEDBACK}
+          component={withAuthUser(SendFeedback)}
+          exact
+        />
+        <Route
+          path={ROUTE_CONVERSATION}
+          component={withAuthUser(Conversation)}
+          exact
+        />
+        <Route
+          path={ROUTE_REGISTER_SCHEDULE}
+          component={withAuthUser(Calendar)}
+          exact
+        />
+        <Route
+          path={ROUTE_ADMIN_LOGIN}
+          component={withAuthLayout(Login)}
+          exact
+        />
+        <Route
+          path={ROUTE_REGISTER}
+          component={withAuthLayout(Register)}
+          exact
+        />
+        <Route
+          path={ROUTE_FORGOTPASSWORD}
+          component={withAuthLayout(ForgotPassword)}
+          exact
+        />
+        <Route
+          path={ROUTE_RESETPASSWORD}
+          component={withAuthLayout(ResetPassword)}
+          exact
+        />
+        <Route
+          path={ROUTE_PROFILE}
+          component={withAuthUser(InfoIntern)}
+          exact
+        />
+        <Route
+          path={ROUTE_EDIT_PROFILE}
+          component={withAuthUser(EditProfile)}
+          exact
+        />
+        <Route
+          path={ROUTE_TASK_MANAGEMENT}
+          component={withAuthUser(TaskManagement)}
+          exact
+        />
+        <Route
+          path={ROUTE_TASK_MANAGEMENT_DETAIL}
+          component={withAuthUser(TaskManagementDetail)}
           exact
         />
         <Route
