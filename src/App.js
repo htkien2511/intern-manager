@@ -6,7 +6,7 @@ import { withAuth, withAuthLayout } from "./HOCS";
 import {
   ROUTE_FORGOTPASSWORD, ROUTE_LOGIN, ROUTE_MANAGE_INTERN, ROUTE_REGISTER, ROUTE_RESETPASSWORD, ROUTE_ADMIN_LOGIN,
   ROUTE_MANAGE_SCHEDULE, ROUTE_MANAGE_SCHEDULE_DETAIL, ROUTE_MANAGE_LEADER, ROUTE_MANAGE_TASK, ROUTE_MANAGE_ACCOUNT_WAITING,
-  ROUTE_PROFILE, ROUTE_EDIT_PROFILE, ROUTE_CONVERSATION, ROUTE_FEEDBACKS, ROUTE_REGISTER_SCHEDULE, ROUTE_TASK_MANAGEMENT, ROUTE_SEND_FEEDBACK, ROUTE_VIEW_STATISTIC, ROUTE_MANAGE_FEEDBACK__INTERN, ROUTE_MANAGE_TASK_DETAIL, ROUTE_MANAGE_FEEDBACK__INTERN_DETAIL
+  ROUTE_PROFILE, ROUTE_EDIT_PROFILE, ROUTE_CONVERSATION, ROUTE_FEEDBACKS, ROUTE_REGISTER_SCHEDULE, ROUTE_TASK_MANAGEMENT,ROUTE_TASK_MANAGEMENT_DETAIL, ROUTE_SEND_FEEDBACK, ROUTE_VIEW_STATISTIC, ROUTE_MANAGE_FEEDBACK__INTERN, ROUTE_MANAGE_TASK_DETAIL, ROUTE_MANAGE_FEEDBACK__INTERN_DETAIL
 } from "./utils/routes";
 import { ForgotPassword } from "./containers/forgotPassword";
 import { ResetPassword } from "./containers/resetPassword";
@@ -16,6 +16,7 @@ import { Login } from "./containers/login";
 import InfoIntern from "./containers/intern/infoIntern/InfoIntern";
 import EditProfile from "./containers/intern/infoIntern/EditProfile";
 import TaskManagement from "./containers/intern/taskManagement/TaskManagement";
+import TaskManagementDetail from "./containers/intern/taskManagement/TaskManagementDetail";
 import Feedback from "./containers/intern/feedback/Feedback";
 import SendFeedback from "./containers/intern/feedback/SendFeedback";
 import Conversation from "./containers/intern/feedback/Conversation";
@@ -39,6 +40,7 @@ function App() {
         <Route path={ROUTE_PROFILE} component={withAuthUser(InfoIntern)} exact />
         <Route path={ROUTE_EDIT_PROFILE} component={withAuthUser(EditProfile)} exact />
         <Route path={ROUTE_TASK_MANAGEMENT} component={withAuthUser(TaskManagement)} exact />
+        <Route path={ROUTE_TASK_MANAGEMENT_DETAIL} component={withAuthUser(TaskManagementDetail)} exact />
         <Route path={ROUTE_FEEDBACKS} component={withAuthUser(Feedback)} exact />
         <Route path={ROUTE_SEND_FEEDBACK} component={withAuthUser(SendFeedback)} exact />
         <Route path={ROUTE_CONVERSATION} component={withAuthUser(Conversation)} exact />

@@ -1,17 +1,17 @@
-import { getAuth } from "../../../utils/helpers";
+// import { getAuth } from "../../../utils/helpers";
 import * as types from "../../constants";
 import store from "../../store";
-export function getProfileIntern(user_id, resolve = () => {}) {
+export function getTaskProjectIntern(project_id, resolve = () => {}) {
   store.dispatch({
-    type: types.GET_PROFILE_INTERN,
+    type: types.GET_TASK_PROJECT_INTERN,
   });
   return fetch(
-    `${process.env.REACT_APP_API_URL}user_profile?id_user=${user_id}`,
+    `${process.env.REACT_APP_API_URL}task/project?project_id=${project_id}`,
     {
       method: "GET",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-        Authorization: "Bearer " + getAuth().token,
+        // Authorization: "Bearer " + getAuth().token,
       },
     }
   )
@@ -20,13 +20,13 @@ export function getProfileIntern(user_id, resolve = () => {}) {
       resolve(data);
       store.dispatch({
         payload: data,
-        type: types.GET_PROFILE_INTERN_SUCCEED,
+        type: types.GET_TASK_PROJECT_INTERN_SUCCEED,
       });
     })
     .catch((error) => {
       store.dispatch({
         payload: error,
-        type: types.GET_PROFILE_INTERN_FAILED,
+        type: types.GET_TASK_PROJECT_INTERN_FAILED,
       });
     });
 }

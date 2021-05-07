@@ -10,6 +10,8 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
+import { FormBox } from "../../common";
+
 
 function FormEdit() {
   const [imageUrl, setImageUrl] = useState(logo);
@@ -195,6 +197,17 @@ function FormEdit() {
                       onChange={handleChange}
                       onFocus={handleFocus}
                     />
+                     <FormBox
+                        propsInput={{
+                          name: "email",
+                          placeholder: "Email",
+                          onChange: handleChange,
+                          onFocus: handleFocus,
+                          value: form.email,
+                        
+                        }}
+                        error={error.email}
+                      />
                   </div>
                   <span className="error__editProfile">{error.email}</span>
                 </div>
