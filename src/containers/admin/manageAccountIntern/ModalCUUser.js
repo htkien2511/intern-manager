@@ -1,10 +1,10 @@
 import { FormBox } from "components/common";
 import CustomizedModal from "components/common/core/CustomizeModal";
 import React from "react";
-import styled from "styled-components"
+import styled from "styled-components";
 import { Form as ReForm } from "reactstrap";
 import { isEmpty, isEmail } from "validator";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
 
 export const HeaderModal = ({ close, title }) => {
   return (
@@ -12,17 +12,30 @@ export const HeaderModal = ({ close, title }) => {
       <div className="header__inner align__center">
         <span className="title">{title}</span>
         <div className="block__actions align__center">
-          <span className="btn--cancel align__center" onClick={() => { close(false) }}>&#x2715;</span>
+          <span
+            className="btn--cancel align__center"
+            onClick={() => {
+              close(false);
+            }}
+          >
+            &#x2715;
+          </span>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export const ContentModal = ({ data, setOpenModal, setDataFull }) => {
   const info = data || {};
   const [error, setError] = React.useState({});
-  const [form, setForm] = React.useState({ id: info.id || uuidv4(), name: info.name || "", email: info.email || "", department: info.department || "", address: info.address || "" });
+  const [form, setForm] = React.useState({
+    id: info.id || uuidv4(),
+    name: info.name || "",
+    email: info.email || "",
+    department: info.department || "",
+    address: info.address || "",
+  });
   const validate = () => {
     const errorState = {};
     // check validate
@@ -63,7 +76,7 @@ export const ContentModal = ({ data, setOpenModal, setDataFull }) => {
     setOpenModal(false);
   };
   const handleChange = (event) => {
-    setForm({ ...form, [event.target.name]: event.target.value.trim() });
+    setForm({ ...form, [event.target.name]: event.target.value });
   };
 
   const handleFocus = (event) => {
@@ -72,7 +85,6 @@ export const ContentModal = ({ data, setOpenModal, setDataFull }) => {
       [event.target.name]: "",
     });
   };
-
 
   return (
     <div className="content__container" onSubmit={handleSubmitForm}>
@@ -118,7 +130,7 @@ export const ContentModal = ({ data, setOpenModal, setDataFull }) => {
                 onChange: handleChange,
                 onFocus: handleFocus,
                 value: form.email,
-                disabled: false,
+                disabled: true,
               }}
               error={error.email}
             />
@@ -156,52 +168,53 @@ export const ContentModal = ({ data, setOpenModal, setDataFull }) => {
           <button className="btn--save align__center">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
               <g id="Layer_2" data-name="Layer 2">
-                <path d="M14,0H2A2,2,0,0,0,0,2V16a2,2,0,0,0,2,2H16a2,2,0,0,0,2-2V4ZM9,16a3,3,0,1,1,3-3A3,3,0,0,1,9,16ZM12,6H2V2H12Z" fill="#ffff" />
+                <path
+                  d="M14,0H2A2,2,0,0,0,0,2V16a2,2,0,0,0,2,2H16a2,2,0,0,0,2-2V4ZM9,16a3,3,0,1,1,3-3A3,3,0,0,1,9,16ZM12,6H2V2H12Z"
+                  fill="#ffff"
+                />
               </g>
             </svg>
           </button>
         </ReForm>
       </div>
     </div>
-  )
-}
+  );
+};
 
 const ModalCUUser = ({ setOpenModal, title, infoUser }) => {
   return (
     <ModalAddAccountUserContainer className="modal__add__user__container">
       <CustomizedModal>
         <CustomizedModal.Header>
-          {() => (
-            <HeaderModal close={setOpenModal} title={title} />
-          )}
+          {() => <HeaderModal close={setOpenModal} title={title} />}
         </CustomizedModal.Header>
         <CustomizedModal.Content>
           <ContentModal data={infoUser} setOpenModal={setOpenModal} />
         </CustomizedModal.Content>
       </CustomizedModal>
     </ModalAddAccountUserContainer>
-  )
-}
+  );
+};
 
 const ModalAddAccountUserContainer = styled.div`
-  .modal__inner{
-    .modal__header{
-      .header__container{
-        .header__inner{
+  .modal__inner {
+    .modal__header {
+      .header__container {
+        .header__inner {
           padding: 10px 15px;
           justify-content: space-between;
-          .title{
+          .title {
             font-size: 22px;
             color: brown;
           }
-          .block__actions{
-            .btn--cancel{
+          .block__actions {
+            .btn--cancel {
               width: 30px;
               height: 30px;
               background: red;
               color: white;
               border-radius: 5px;
-              &:hover{
+              &:hover {
                 cursor: pointer;
                 background: #ff5a5a;
               }
@@ -210,16 +223,16 @@ const ModalAddAccountUserContainer = styled.div`
         }
       }
     }
-    .modal__content{
-      .content__inner{
+    .modal__content {
+      .content__inner {
         padding: 10px 15px;
-        .re__form{
-          &>div{
-            &>label{
+        .re__form {
+          & > div {
+            & > label {
               font-size: 16px;
               color: rebeccapurple;
             }
-            &>div>input{
+            & > div > input {
               height: 50px;
             }
           }

@@ -16,7 +16,7 @@ const Register = () => {
             pathname: ROUTE_LOGIN,
             state: { email: res.data },
           });
-        }, 5000);
+        }, 3500);
       } else {
         toast.error(res.message);
       }

@@ -3,6 +3,7 @@ import { FormBox } from "../common";
 import { Form as ReForm } from "reactstrap";
 import { isEmpty } from "validator";
 import { useSelector } from "react-redux";
+import SpinLoading from "components/common/core/SpinLoading";
 
 const Form = ({ handleSubmit }) => {
   const [error, setError] = React.useState({});
@@ -60,6 +61,7 @@ const Form = ({ handleSubmit }) => {
 
   return (
     <section onSubmit={handleSubmitForm} className="forgot-password">
+      {loading && <SpinLoading />}
       <div className="forgot-password__inner">
         <ReForm className="radius-l login__inner__form">
           <div className="login__inner__form__text">

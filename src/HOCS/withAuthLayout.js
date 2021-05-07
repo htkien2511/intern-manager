@@ -14,7 +14,7 @@ const withAuthLayout = (Component, showLogo = true) => (props) => {
           <div className="app__body">
             <div className="app__content">
               <div className="app__content__inner">
-                <ToastContainer />
+                <ToastContainer position="top-center" autoClose={3500} />
                 <Component {...props} />
               </div>
             </div>

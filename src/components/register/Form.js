@@ -3,6 +3,7 @@ import { FormBox } from "../common";
 import { Form as ReForm } from "reactstrap";
 import { isEmpty, isEmail } from "validator";
 import { useSelector } from "react-redux";
+import SpinLoading from "components/common/core/SpinLoading";
 
 const Form = ({ handleSubmit }) => {
   const [error, setError] = React.useState({});
@@ -15,8 +16,6 @@ const Form = ({ handleSubmit }) => {
   const [errorRegister, setErrorRegister] = React.useState();
   const storeRegister = useSelector((store) => store.register);
   const loading = storeRegister.loading;
-  let errMessage = storeRegister.data.message;
-
   const validate = () => {
     const errorState = {};
     // check validate
@@ -72,6 +71,7 @@ const Form = ({ handleSubmit }) => {
 
   return (
     <section onSubmit={handleSubmitForm} className="register">
+      {loading && <SpinLoading />}
       <div className="register__inner">
         <ReForm className="radius-l login__inner__form">
           <div className="login__inner__form__text">
