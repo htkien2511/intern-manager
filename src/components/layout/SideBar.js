@@ -66,9 +66,9 @@ function SideBar() {
               <NavLink
                 activeClassName="side-bar__inner__items--menu__item--active border-corner"
                 to={ROUTE_MANAGE_TASK}
-                onClick={() => dispatch(setTitle("Manage Task Intern"))}
+                onClick={() => dispatch(setTitle("Manage Project Intern"))}
               >
-                Manage Task Intern
+                Manage Project Intern
               </NavLink>
             </div>
             <div className="side-bar__inner__items--menu__item flex">

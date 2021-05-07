@@ -1,10 +1,12 @@
 import { FormBox } from "components/common";
 import CustomizedModal from "components/common/core/CustomizeModal";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Form as ReForm } from "reactstrap";
+import { Form as ReForm, Input } from "reactstrap";
 import { isEmpty, isEmail } from "validator";
 import { v4 as uuidv4 } from "uuid";
+import { getAllDepartments } from "redux/actions/getAllDepartments";
+import { useSelector } from "react-redux";
 
 export const HeaderModal = ({ close, title }) => {
   return (
@@ -26,7 +28,7 @@ export const HeaderModal = ({ close, title }) => {
   );
 };
 
-export const ContentModal = ({ data, setOpenModal, setDataFull }) => {
+export const ContentModal = ({ data, setOpenModal, title }) => {
   const info = data || {};
   const [error, setError] = React.useState({});
   const [form, setForm] = React.useState({
@@ -46,15 +48,15 @@ export const ContentModal = ({ data, setOpenModal, setDataFull }) => {
         errorState.email = "Email not valid";
       }
     }
-    if (isEmpty(form.name)) {
-      errorState.name = "Please enter name";
-    }
+    // if (isEmpty(form.name)) {
+    //   errorState.name = "Please enter name";
+    // }
     if (isEmpty(form.department)) {
-      errorState.department = "Please enter department";
+      errorState.department = "Please waiting get all departments";
     }
-    if (isEmpty(form.address)) {
-      errorState.address = "Please enter address";
-    }
+    // if (isEmpty(form.address)) {
+    //   errorState.address = "Please enter address";
+    // }
     return errorState;
   };
   const handleSubmitForm = (event) => {
@@ -71,7 +73,7 @@ export const ContentModal = ({ data, setOpenModal, setDataFull }) => {
       department: form.department,
       address: form.address,
     };
-    // input for api update and add user
+    // input for api edit user
     console.log({ formData });
     setOpenModal(false);
   };
@@ -85,7 +87,25 @@ export const ContentModal = ({ data, setOpenModal, setDataFull }) => {
       [event.target.name]: "",
     });
   };
+  const [departments, setDepartments] = useState([]);
+  const storeGetAllDepartments = useSelector(
+    (store) => store.getAllDepartments
+  );
+  const loading = storeGetAllDepartments.data.loading;
 
+  useEffect(() => {
+    getAllDepartments((res) => {
+      if (res.success) {
+        setDepartments(res.data.map((item) => item.name));
+        setForm({
+          ...form,
+          department: res.data.find((item, index) => index === 0).name,
+        });
+        setError({ ...error, department: "" });
+      }
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <div className="content__container" onSubmit={handleSubmitForm}>
       <div className="content__inner">
@@ -115,7 +135,7 @@ export const ContentModal = ({ data, setOpenModal, setDataFull }) => {
                 onChange: handleChange,
                 onFocus: handleFocus,
                 value: form.name,
-                disabled: false,
+                disabled: true,
               }}
               error={error.name}
             />
@@ -130,25 +150,33 @@ export const ContentModal = ({ data, setOpenModal, setDataFull }) => {
                 onChange: handleChange,
                 onFocus: handleFocus,
                 value: form.email,
-                disabled: true,
+                disabled: false,
               }}
               error={error.email}
             />
           </div>
           <div>
             <label>Department</label>
-            <FormBox
-              propsInput={{
-                type: "text",
-                name: "department",
-                placeholder: "Department",
-                onChange: handleChange,
-                onFocus: handleFocus,
-                value: form.department,
-                disabled: false,
-              }}
-              error={error.department}
-            />
+            <Input
+              type="select"
+              name="department"
+              id="department"
+              placeholder="Department"
+              onChange={handleChange}
+              onFocus={handleFocus}
+              value={form.department}
+              disabled={loading}
+            >
+              {departments.map((item, index) => (
+                <option key={index}>{item}</option>
+              ))}
+            </Input>
+            <span
+              className="invalid-feedback"
+              style={{ display: "block", marginLeft: 15 }}
+            >
+              {error.department}
+            </span>
           </div>
           <div>
             <label>Address</label>
@@ -160,7 +188,7 @@ export const ContentModal = ({ data, setOpenModal, setDataFull }) => {
                 onChange: handleChange,
                 onFocus: handleFocus,
                 value: form.address,
-                disabled: false,
+                disabled: true,
               }}
               error={error.address}
             />
@@ -189,7 +217,11 @@ const ModalCUUser = ({ setOpenModal, title, infoUser }) => {
           {() => <HeaderModal close={setOpenModal} title={title} />}
         </CustomizedModal.Header>
         <CustomizedModal.Content>
-          <ContentModal data={infoUser} setOpenModal={setOpenModal} />
+          <ContentModal
+            data={infoUser}
+            setOpenModal={setOpenModal}
+            title={title}
+          />
         </CustomizedModal.Content>
       </CustomizedModal>
     </ModalAddAccountUserContainer>

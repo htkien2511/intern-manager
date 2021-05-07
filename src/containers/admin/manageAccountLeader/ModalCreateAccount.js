@@ -1,12 +1,13 @@
 import { FormBox } from "components/common";
 import CustomizedModal from "components/common/core/CustomizeModal";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { Form as ReForm, Input } from "reactstrap";
+import { Form as ReForm } from "reactstrap";
 import { isEmpty, isEmail } from "validator";
-import { v4 as uuidv4 } from "uuid";
-import { getAllDepartments } from "redux/actions/getAllDepartments";
-import { useSelector } from "react-redux";
+import { register } from "redux/actions/register";
+// import { acceptUserRegister } from "redux/actions/admin/acceptUserRegister";
+import { toast } from "react-toastify";
+// import { getAllUser } from "redux/actions/admin/getAllUser";
 
 export const HeaderModal = ({ close, title }) => {
   return (
@@ -28,19 +29,20 @@ export const HeaderModal = ({ close, title }) => {
   );
 };
 
-export const ContentModal = ({ data, setOpenModal, title }) => {
-  const info = data || {};
+export const ContentModal = ({ setOpenModal, title, setData }) => {
   const [error, setError] = React.useState({});
   const [form, setForm] = React.useState({
-    id: info.id || uuidv4(),
-    name: info.name || "",
-    email: info.email || "",
-    department: info.department || "",
-    address: info.address || "",
+    name: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
   });
   const validate = () => {
     const errorState = {};
     // check validate
+    if (isEmpty(form.name)) {
+      errorState.name = "Please enter name";
+    }
     if (isEmpty(form.email)) {
       errorState.email = "Please enter email";
     } else {
@@ -48,15 +50,18 @@ export const ContentModal = ({ data, setOpenModal, title }) => {
         errorState.email = "Email not valid";
       }
     }
-    // if (isEmpty(form.name)) {
-    //   errorState.name = "Please enter name";
-    // }
-    if (isEmpty(form.department)) {
-      errorState.department = "Please waiting get all departments";
+    if (isEmpty(form.password)) {
+      errorState.password = "Please enter password";
     }
-    // if (isEmpty(form.address)) {
-    //   errorState.address = "Please enter address";
-    // }
+    if (isEmpty(form.confirmPassword)) {
+      errorState.confirmPassword = "Please enter confirm password";
+    } else {
+      if (form.confirmPassword !== form.password) {
+        errorState.confirmPassword =
+          "Please enter confirm password match with password";
+      }
+    }
+
     return errorState;
   };
   const handleSubmitForm = (event) => {
@@ -67,15 +72,28 @@ export const ContentModal = ({ data, setOpenModal, title }) => {
     }
 
     const formData = {
-      id: form.id,
       name: form.name,
       email: form.email,
-      department: form.department,
-      address: form.address,
+      password: form.password,
     };
-    // input for api edit user
-    console.log({ formData });
     setOpenModal(false);
+
+    register(formData, (res) => {
+      if (res.success) {
+        // run api accept user waiting
+        // acceptUserRegister(res.data.id);
+        // getAllUser((response) => {
+        //   if (response.success) {
+        //     setData(response.data);
+        //   } else {
+        //     toast.error(response.message);
+        //   }
+        // });
+        toast.success(`General account ${res.data} successfully!`);
+      } else {
+        toast.error(res.message);
+      }
+    });
   };
   const handleChange = (event) => {
     setForm({ ...form, [event.target.name]: event.target.value });
@@ -87,45 +105,11 @@ export const ContentModal = ({ data, setOpenModal, title }) => {
       [event.target.name]: "",
     });
   };
-  const [departments, setDepartments] = useState([]);
-  const storeGetAllDepartments = useSelector(
-    (store) => store.getAllDepartments
-  );
-  const loading = storeGetAllDepartments.data.loading;
-
-  useEffect(() => {
-    getAllDepartments((res) => {
-      if (res.success) {
-        setDepartments(res.data.map((item) => item.name));
-        setForm({
-          ...form,
-          department: res.data.find((item, index) => index === 0).name,
-        });
-        setError({ ...error, department: "" });
-      }
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <div className="content__container" onSubmit={handleSubmitForm}>
       <div className="content__inner">
         <ReForm className="re__form">
-          {info.id && (
-            <div>
-              <label>Id</label>
-              <FormBox
-                propsInput={{
-                  type: "text",
-                  name: "id",
-                  placeholder: "Id",
-                  value: form.id,
-                  disabled: true,
-                }}
-                error={error.password}
-              />
-            </div>
-          )}
           <div>
             <label>Name</label>
             <FormBox
@@ -136,7 +120,7 @@ export const ContentModal = ({ data, setOpenModal, title }) => {
                 onChange: handleChange,
                 onFocus: handleFocus,
                 value: form.name,
-                disabled: true,
+                disabled: false,
               }}
               error={error.name}
             />
@@ -151,51 +135,35 @@ export const ContentModal = ({ data, setOpenModal, title }) => {
                 onChange: handleChange,
                 onFocus: handleFocus,
                 value: form.email,
-                disabled: false,
+                disabled: title !== "Add account user",
               }}
               error={error.email}
             />
           </div>
-          <div>
-            <label>Department</label>
-            <Input
-              type="select"
-              name="department"
-              id="department"
-              placeholder="Department"
-              onChange={handleChange}
-              onFocus={handleFocus}
-              value={
-                form.department || departments.findIndex((item) => item === 0)
-              }
-              disabled={loading}
-            >
-              {departments.map((item, index) => (
-                <option key={index}>{item}</option>
-              ))}
-            </Input>
-            <span
-              className="invalid-feedback"
-              style={{ display: "block", marginLeft: 15 }}
-            >
-              {error.department}
-            </span>
-          </div>
-          <div>
-            <label>Address</label>
-            <FormBox
-              propsInput={{
-                type: "text",
-                name: "address",
-                placeholder: "Address",
-                onChange: handleChange,
-                onFocus: handleFocus,
-                value: form.address,
-                disabled: true,
-              }}
-              error={error.address}
-            />
-          </div>
+          <FormBox
+            propsInput={{
+              type: "password",
+              name: "password",
+              placeholder: "Password",
+              onChange: handleChange,
+              onFocus: handleFocus,
+              value: form.password,
+              disabled: false,
+            }}
+            error={error.password}
+          />
+          <FormBox
+            propsInput={{
+              type: "password",
+              name: "confirmPassword",
+              placeholder: "Confirm password",
+              onChange: handleChange,
+              onFocus: handleFocus,
+              value: form.confirmPassword,
+              disabled: false,
+            }}
+            error={error.confirmPassword}
+          />
           <button className="btn--save align__center">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
               <g id="Layer_2" data-name="Layer 2">
@@ -212,7 +180,7 @@ export const ContentModal = ({ data, setOpenModal, title }) => {
   );
 };
 
-const ModalCUUser = ({ setOpenModal, title, infoUser }) => {
+const ModalCreateAccount = ({ setOpenModal, title, setData }) => {
   return (
     <ModalAddAccountUserContainer className="modal__add__user__container">
       <CustomizedModal>
@@ -221,9 +189,9 @@ const ModalCUUser = ({ setOpenModal, title, infoUser }) => {
         </CustomizedModal.Header>
         <CustomizedModal.Content>
           <ContentModal
-            data={infoUser}
             setOpenModal={setOpenModal}
             title={title}
+            setData={setData}
           />
         </CustomizedModal.Content>
       </CustomizedModal>
@@ -276,4 +244,4 @@ const ModalAddAccountUserContainer = styled.div`
     }
   }
 `;
-export default ModalCUUser;
+export default ModalCreateAccount;

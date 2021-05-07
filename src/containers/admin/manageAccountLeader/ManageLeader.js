@@ -10,10 +10,14 @@ import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import { Button, Input } from "reactstrap";
 import ModalCUUser from "./ModalCUUser";
+import ModalCreateAccount from "./ModalCreateAccount";
 import Popup from "components/common/core/Popup";
 import { getAllManager } from "redux/actions/admin/getAllManager";
 import Skeleton from "@material-ui/lab/Skeleton";
 import { useSelector } from "react-redux";
+import SpinLoading from "components/common/core/SpinLoading";
+import { deleteUser } from "redux/actions/admin/deleteUser";
+import { toast } from "react-toastify";
 
 const columns = [
   { id: "id", label: "Id", minWidth: 170 },
@@ -61,6 +65,7 @@ export default function ManageLeader() {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [data, setData] = useState([]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -71,8 +76,16 @@ export default function ManageLeader() {
     setPage(0);
   };
   const handleConfirm = () => {
-    // handle delete api
     setOpenModalDelete(false);
+    deleteUser(infoRow.id, (res) => {
+      if (res.success) {
+        const usersRemain = data.filter((item) => item.id !== infoRow.id);
+        setData(usersRemain);
+        toast.success(`Deleted user ${infoRow.name}`);
+      } else {
+        toast.error(res.message);
+      }
+    });
   };
   const [openModalAdd, setOpenModalAdd] = useState(false);
   const [openModalEdit, setOpenModalEdit] = useState(false);
@@ -115,8 +128,6 @@ export default function ManageLeader() {
         break;
     }
   };
-
-  const [data, setData] = useState([]);
 
   useEffect(() => {
     let arr = [];
@@ -175,8 +186,12 @@ export default function ManageLeader() {
     }
   };
 
+  const loadingCreate = useSelector((store) => store.register).loading;
+  const loadingDelete = useSelector((store) => store.deleteUser).loading;
+
   return (
     <div className="manage-intern">
+      {(loadingCreate || loadingDelete) && <SpinLoading />}
       <div className="manage-intern__inner">
         <div className="manage-intern__inner__top">
           <div
@@ -238,7 +253,7 @@ export default function ManageLeader() {
                     {[1, 2, 3, 4, 5, 6].map((item) => {
                       return (
                         <TableCell key={item}>
-                          <Skeleton style={{height: 40}}/>
+                          <Skeleton style={{ height: 40 }} />
                         </TableCell>
                       );
                     })}
@@ -259,7 +274,10 @@ export default function ManageLeader() {
         </Paper>
       </div>
       {openModalAdd && (
-        <ModalCUUser setOpenModal={setOpenModalAdd} title="Add account user" />
+        <ModalCreateAccount
+          setOpenModal={setOpenModalAdd}
+          title="Add account user"
+        />
       )}
       {openModalEdit && (
         <ModalCUUser

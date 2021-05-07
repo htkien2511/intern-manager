@@ -10,11 +10,14 @@ import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import { Button, Input } from "reactstrap";
 import ModalCUUser from "./ModalCUUser";
+import ModalCreateAccount from "./ModalCreateAccount";
 import Popup from "components/common/core/Popup";
 import { getAllUser } from "redux/actions/admin/getAllUser";
 import Skeleton from "@material-ui/lab/Skeleton";
 import { useSelector } from "react-redux";
 import { deleteUser } from "redux/actions/admin/deleteUser";
+import { toast } from "react-toastify";
+import SpinLoading from "components/common/core/SpinLoading";
 
 const columns = [
   { id: "id", label: "Id", minWidth: 170 },
@@ -76,6 +79,9 @@ export default function ManageIntern() {
       if (res.success) {
         const usersRemain = data.filter((item) => item.id !== infoRow.id);
         setData(usersRemain);
+        toast.success(`Deleted user ${infoRow.name}`);
+      } else {
+        toast.error(res.message);
       }
     });
     setOpenModalDelete(false);
@@ -148,7 +154,7 @@ export default function ManageIntern() {
   const renderCell = (column, value, indexRow, row) => {
     switch (column.id) {
       case "actions": {
-        const actions = value.split("|");
+        const actions = value.length && value.split("|");
         return (
           <TableCell key={column.id + " - " + indexRow} align={column.align}>
             <div>
@@ -181,8 +187,12 @@ export default function ManageIntern() {
     }
   };
 
+  const loadingCreate = useSelector((store) => store.register).loading;
+  const loadingDelete = useSelector((store) => store.deleteUser).loading;
+
   return (
     <div className="manage-intern">
+      {(loadingCreate || loadingDelete) && <SpinLoading />}
       <div className="manage-intern__inner">
         <div className="manage-intern__inner__top">
           <div
@@ -265,13 +275,18 @@ export default function ManageIntern() {
         </Paper>
       </div>
       {openModalAdd && (
-        <ModalCUUser setOpenModal={setOpenModalAdd} title="Add account user" />
+        <ModalCreateAccount
+          setOpenModal={setOpenModalAdd}
+          title="Add account user"
+          setData={setData}
+        />
       )}
       {openModalEdit && (
         <ModalCUUser
           setOpenModal={setOpenModalEdit}
           title="Edit account user"
           infoUser={infoRow}
+          setData={setData}
         />
       )}
       {openModalDelete && (

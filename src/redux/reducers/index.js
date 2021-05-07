@@ -11,6 +11,8 @@ import deleteUser from "./admin/deleteUser";
 import getAllAccountWaiting from "./admin/getAllAccountWaiting";
 import acceptUserRegister from "./admin/acceptUserRegister";
 import deniedUserRegister from "./admin/deniedUserRegister";
+import getAllDepartments from "./getAllDepartments";
+import updateAccount from "./updateAccount";
 
 export default combineReducers({
   login,
@@ -25,4 +27,6 @@ export default combineReducers({
   getAllAccountWaiting,
   acceptUserRegister,
   deniedUserRegister,
+  getAllDepartments,
+  updateAccount,
 });

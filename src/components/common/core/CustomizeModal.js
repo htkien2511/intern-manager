@@ -1,45 +1,41 @@
-import React from 'react'
-import styled from 'styled-components'
+import React from "react";
+import styled from "styled-components";
 
 const Header = () => {
-  return null
-}
+  return null;
+};
 
 const Content = () => {
-  return null
-}
+  return null;
+};
 
 const CustomizedModal = ({ open, children }) => {
   if (!Array.isArray(children)) {
-    children = [children]
+    children = [children];
   }
 
   // const header = children?.find((child) => child.type.name === 'Header') || {}
   // const content = children?.find((child) => child.type.name === 'Content') || {}
 
-
-  const header = children[0] || {}
-  const content = children[1] || {}
-  
+  const header = children[0] || {};
+  const content = children[1] || {};
 
   return (
     <>
       <ModalContainer className="modal__container align__center">
         <div className="modal__inner">
           <div className="modal__header">
-            {header
-              ? header.props?.children({ open })
-              : null}
+            {header ? header.props?.children({ open }) : null}
           </div>
           <div className="modal__content">{content.props?.children}</div>
         </div>
       </ModalContainer>
     </>
-  )
-}
+  );
+};
 
-CustomizedModal.Header = Header
-CustomizedModal.Content = Content
+CustomizedModal.Header = Header;
+CustomizedModal.Content = Content;
 
 const ModalContainer = styled.div`
   width: 100%;
@@ -48,7 +44,7 @@ const ModalContainer = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  z-index:9999;
+  z-index: 9999;
 
   background: #00000043 0% 0% no-repeat padding-box;
   opacity: 1;
@@ -64,10 +60,10 @@ const ModalContainer = styled.div`
     background: #eaeaea 0% 0% no-repeat padding-box;
     box-shadow: 0px 3px 12px #0000004d;
     opacity: 1;
-    .modal__content{
+    .modal__content {
       background: white;
     }
   }
-`
+`;
 
-export default CustomizedModal
+export default CustomizedModal;
