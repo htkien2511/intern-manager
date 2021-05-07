@@ -18,6 +18,7 @@ import { useSelector } from "react-redux";
 import SpinLoading from "components/common/core/SpinLoading";
 import { deleteUser } from "redux/actions/admin/deleteUser";
 import { toast } from "react-toastify";
+import { Empty } from "antd";
 
 const columns = [
   { id: "id", label: "Id", minWidth: 170 },
@@ -66,7 +67,11 @@ export default function ManageLeader() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
 
+  useEffect(() => {
+    setFilteredData(data);
+  }, [data]);
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
@@ -189,6 +194,24 @@ export default function ManageLeader() {
   const loadingCreate = useSelector((store) => store.register).loading;
   const loadingDelete = useSelector((store) => store.deleteUser).loading;
 
+  const handleSearch = (event) => {
+    const lowercasedValue = event.target.value.toLowerCase().trim();
+    if (lowercasedValue === "") setFilteredData(data);
+    else {
+      const filteredData = data.filter((item) => {
+        return Object.keys(item).some((key) =>
+          columns.filter((ele) => ele !== "actions").includes(key)
+            ? false
+            : (item[key] + "")
+                .toString()
+                .toLowerCase()
+                .includes(lowercasedValue)
+        );
+      });
+      setFilteredData(filteredData);
+    }
+  };
+
   return (
     <div className="manage-intern">
       {(loadingCreate || loadingDelete) && <SpinLoading />}
@@ -209,6 +232,7 @@ export default function ManageLeader() {
               type="text"
               name="search"
               id="searchKey"
+              onChange={handleSearch}
               placeholder="Search account(s)"
             />
           </div>
@@ -230,8 +254,8 @@ export default function ManageLeader() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {data &&
-                  data
+                {filteredData.length > 0 ? (
+                  filteredData
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row, indexRow) => {
                       return (
@@ -247,13 +271,17 @@ export default function ManageLeader() {
                           })}
                         </TableRow>
                       );
-                    })}
-                {storeGetAllManager.loading && (
+                    })
+                ) : (
                   <TableRow>
                     {[1, 2, 3, 4, 5, 6].map((item) => {
                       return (
                         <TableCell key={item}>
-                          <Skeleton style={{ height: 40 }} />
+                          {storeGetAllManager.loading ? (
+                            <Skeleton style={{ height: 40 }} />
+                          ) : (
+                            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                          )}
                         </TableCell>
                       );
                     })}
@@ -265,7 +293,7 @@ export default function ManageLeader() {
           <TablePagination
             rowsPerPageOptions={[10, 25, 100]}
             component="div"
-            count={data && data.length}
+            count={filteredData && filteredData.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onChangePage={handleChangePage}

@@ -15,6 +15,9 @@ import { useSelector } from "react-redux";
 import Skeleton from "@material-ui/lab/Skeleton";
 import { acceptUserRegister } from "redux/actions/admin/acceptUserRegister";
 import { denyUserRegister } from "redux/actions/admin/deniedUserRegister";
+import { Empty } from "antd";
+import SpinLoading from "components/common/core/SpinLoading";
+import { toast } from "react-toastify";
 
 const columns = [
   { id: "id", label: "Id", minWidth: 170 },
@@ -63,6 +66,7 @@ export default function ManageAccountWaiting() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
   const storeGetAllAccountWaiting = useSelector(
     (store) => store.getAllAccountWaiting
   );
@@ -102,6 +106,9 @@ export default function ManageAccountWaiting() {
     acceptUserRegister(arr_user_id, (res) => {
       if (res.success) {
         setData(data.filter((item) => item.id !== infoRow.id));
+        toast.success(`Accepted user ${infoRow.name}`);
+      } else {
+        toast.error(res.message);
       }
     });
     setOpenModalAccept(false);
@@ -113,10 +120,36 @@ export default function ManageAccountWaiting() {
     denyUserRegister(arr_user_id, (res) => {
       if (res.success) {
         setData(data.filter((item) => item.id !== infoRow.id));
+        toast.success(`Denied user ${infoRow.name}`);
+      } else {
+        toast.error(res.message);
       }
     });
     setOpenModalDelete(false);
   };
+
+  useEffect(() => {
+    setFilteredData(data);
+  }, [data]);
+
+  const handleSearch = (event) => {
+    const lowercasedValue = event.target.value.toLowerCase().trim();
+    if (lowercasedValue === "") setFilteredData(data);
+    else {
+      const filteredData = data.filter((item) => {
+        return Object.keys(item).some((key) =>
+          columns.includes(key)
+            ? false
+            : (item[key] + "")
+                .toString()
+                .toLowerCase()
+                .includes(lowercasedValue)
+        );
+      });
+      setFilteredData(filteredData);
+    }
+  };
+
   const [openModalAccept, setOpenModalAccept] = useState(false);
   const [infoRow, setInfoRow] = useState({
     id: "",
@@ -193,8 +226,13 @@ export default function ManageAccountWaiting() {
     }
   };
 
+  const storeAccepted = useSelector((store) => store.acceptUserRegister);
+  const storeDenied = useSelector((store) => store.deniedUserRegister);
+
   return (
     <div className="manage-intern">
+      {((storeAccepted && storeAccepted.loading) ||
+        (storeDenied && storeDenied.loading)) && <SpinLoading />}
       <div className="manage-intern__inner">
         <div className="manage-intern__inner__top">
           <div className="button manage-intern__inner__top__search">
@@ -202,6 +240,7 @@ export default function ManageAccountWaiting() {
             <Input
               type="text"
               name="search"
+              onChange={handleSearch}
               id="searchKey"
               placeholder="Search account(s)"
             />
@@ -224,29 +263,34 @@ export default function ManageAccountWaiting() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {data
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row, indexRow) => {
-                    return (
-                      <TableRow
-                        hover
-                        role="checkbox"
-                        tabIndex={-1}
-                        key={indexRow}
-                      >
-                        {columns.map((column) => {
-                          const value = row[column.id];
-                          return renderCell(column, value, indexRow, row);
-                        })}
-                      </TableRow>
-                    );
-                  })}
-                {storeGetAllAccountWaiting.loading && (
+                {filteredData.length > 0 ? (
+                  filteredData
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row, indexRow) => {
+                      return (
+                        <TableRow
+                          hover
+                          role="checkbox"
+                          tabIndex={-1}
+                          key={indexRow}
+                        >
+                          {columns.map((column) => {
+                            const value = row[column.id];
+                            return renderCell(column, value, indexRow, row);
+                          })}
+                        </TableRow>
+                      );
+                    })
+                ) : (
                   <TableRow>
                     {[1, 2, 3, 4, 5, 6].map((item) => {
                       return (
                         <TableCell key={item}>
-                          <Skeleton style={{ height: 40 }} />
+                          {storeGetAllAccountWaiting.loading ? (
+                            <Skeleton style={{ height: 40 }} />
+                          ) : (
+                            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                          )}
                         </TableCell>
                       );
                     })}
@@ -258,7 +302,7 @@ export default function ManageAccountWaiting() {
           <TablePagination
             rowsPerPageOptions={[10, 25, 100]}
             component="div"
-            count={data.length}
+            count={filteredData.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onChangePage={handleChangePage}

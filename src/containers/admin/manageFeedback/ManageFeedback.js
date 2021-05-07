@@ -1,37 +1,38 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
-import TableRow from '@material-ui/core/TableRow';
-import { useHistory } from 'react-router';
-import { ROUTE_MANAGE_FEEDBACK__INTERN_DETAIL } from '../../../utils/routes';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableContainer from "@material-ui/core/TableContainer";
+import TableHead from "@material-ui/core/TableHead";
+import TablePagination from "@material-ui/core/TablePagination";
+import TableRow from "@material-ui/core/TableRow";
+import { useHistory } from "react-router";
+import { ROUTE_MANAGE_FEEDBACK__INTERN_DETAIL } from "../../../utils/routes";
 import { Input } from "reactstrap";
+// import { Empty, Skeleton } from "antd";
 
 const columns = [
-  { id: 'id', label: 'Id', minWidth: 170 },
-  { id: 'name', label: 'Name', minWidth: 100 },
+  { id: "id", label: "Id", minWidth: 170 },
+  { id: "name", label: "Name", minWidth: 100 },
   {
-    id: 'email',
-    label: 'Email',
+    id: "email",
+    label: "Email",
     minWidth: 170,
-    align: 'left',
+    align: "left",
   },
   {
-    id: 'department',
-    label: 'Department',
+    id: "department",
+    label: "Department",
     minWidth: 170,
-    align: 'left',
+    align: "left",
   },
   {
-    id: 'address',
-    label: 'Address',
+    id: "address",
+    label: "Address",
     minWidth: 170,
-    align: 'left',
+    align: "left",
   },
 ];
 
@@ -40,25 +41,109 @@ function createData(id, name, email, department, address) {
 }
 
 const rows = [
-  createData(0, "Phan Trong Duc", "trongduc.iter@gmail.com", "Frontend Dev", "La Hai Dong Xuan Phu Yen"),
-  createData(1, "Phan Trong Duc", "trongduc.iter@gmail.com", "Frontend Dev", "La Hai Dong Xuan Phu Yen"),
-  createData(2, "Phan Trong Duc", "trongduc.iter@gmail.com", "Frontend Dev", "La Hai Dong Xuan Phu Yen"),
-  createData(3, "Phan Trong Duc", "trongduc.iter@gmail.com", "Frontend Dev", "La Hai Dong Xuan Phu Yen"),
-  createData(4, "Phan Trong Duc", "trongduc.iter@gmail.com", "Frontend Dev", "La Hai Dong Xuan Phu Yen"),
-  createData(5, "Phan Trong Duc", "trongduc.iter@gmail.com", "Frontend Dev", "La Hai Dong Xuan Phu Yen"),
-  createData(6, "Phan Trong Duc", "trongduc.iter@gmail.com", "Frontend Dev", "La Hai Dong Xuan Phu Yen"),
-  createData(7, "Phan Trong Duc", "trongduc.iter@gmail.com", "Frontend Dev", "La Hai Dong Xuan Phu Yen"),
-  createData(8, "Phan Trong Duc", "trongduc.iter@gmail.com", "Frontend Dev", "La Hai Dong Xuan Phu Yen"),
-  createData(9, "Phan Trong Duc", "trongduc.iter@gmail.com", "Frontend Dev", "La Hai Dong Xuan Phu Yen"),
-  createData(10, "Phan Trong Duc", "trongduc.iter@gmail.com", "Frontend Dev", "La Hai Dong Xuan Phu Yen"),
-  createData(11, "Phan Trong Duc", "trongduc.iter@gmail.com", "Frontend Dev", "La Hai Dong Xuan Phu Yen"),
-  createData(12, "Phan Trong Duc", "trongduc.iter@gmail.com", "Frontend Dev", "La Hai Dong Xuan Phu Yen"),
-  createData(13, "Phan Trong Duc", "trongduc.iter@gmail.com", "Frontend Dev", "La Hai Dong Xuan Phu Yen"),
+  createData(
+    0,
+    "Phan Trong Duc",
+    "trongduc.iter@gmail.com",
+    "Frontend Dev",
+    "La Hai Dong Xuan Phu Yen"
+  ),
+  createData(
+    1,
+    "Phan Trong Duc",
+    "trongduc.iter@gmail.com",
+    "Frontend Dev",
+    "La Hai Dong Xuan Phu Yen"
+  ),
+  createData(
+    2,
+    "Phan Trong Duc",
+    "trongduc.iter@gmail.com",
+    "Frontend Dev",
+    "La Hai Dong Xuan Phu Yen"
+  ),
+  createData(
+    3,
+    "Phan Trong Duc",
+    "trongduc.iter@gmail.com",
+    "Frontend Dev",
+    "La Hai Dong Xuan Phu Yen"
+  ),
+  createData(
+    4,
+    "Phan Trong Duc",
+    "trongduc.iter@gmail.com",
+    "Frontend Dev",
+    "La Hai Dong Xuan Phu Yen"
+  ),
+  createData(
+    5,
+    "Phan Trong Duc",
+    "trongduc.iter@gmail.com",
+    "Frontend Dev",
+    "La Hai Dong Xuan Phu Yen"
+  ),
+  createData(
+    6,
+    "Phan Trong Duc",
+    "trongduc.iter@gmail.com",
+    "Frontend Dev",
+    "La Hai Dong Xuan Phu Yen"
+  ),
+  createData(
+    7,
+    "Phan Trong Duc",
+    "trongduc.iter@gmail.com",
+    "Frontend Dev",
+    "La Hai Dong Xuan Phu Yen"
+  ),
+  createData(
+    8,
+    "Phan Trong Duc",
+    "trongduc.iter@gmail.com",
+    "Frontend Dev",
+    "La Hai Dong Xuan Phu Yen"
+  ),
+  createData(
+    9,
+    "Phan Trong Duc",
+    "trongduc.iter@gmail.com",
+    "Frontend Dev",
+    "La Hai Dong Xuan Phu Yen"
+  ),
+  createData(
+    10,
+    "Phan Trong Duc",
+    "trongduc.iter@gmail.com",
+    "Frontend Dev",
+    "La Hai Dong Xuan Phu Yen"
+  ),
+  createData(
+    11,
+    "Phan Trong Duc",
+    "trongduc.iter@gmail.com",
+    "Frontend Dev",
+    "La Hai Dong Xuan Phu Yen"
+  ),
+  createData(
+    12,
+    "Phan Trong Duc",
+    "trongduc.iter@gmail.com",
+    "Frontend Dev",
+    "La Hai Dong Xuan Phu Yen"
+  ),
+  createData(
+    13,
+    "Phan Trong Duc",
+    "trongduc.iter@gmail.com",
+    "Frontend Dev",
+    "La Hai Dong Xuan Phu Yen"
+  ),
 ];
 
 const useStyles = makeStyles({
   root: {
-    width: '100%',
+    width: "100%",
   },
   container: {
     maxHeight: 440,
@@ -86,7 +171,12 @@ export default function ManageFeedback() {
         <div className="manage-intern__inner__top">
           <div className="button manage-intern__inner__top__search">
             <i className="fi-rr-search"></i>
-            <Input type="text" name="search" id="searchKey" placeholder="Search intern(s)" />
+            <Input
+              type="text"
+              name="search"
+              id="searchKey"
+              placeholder="Search intern(s)"
+            />
           </div>
         </div>
         <Paper className={classes.root}>
@@ -106,20 +196,48 @@ export default function ManageFeedback() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, indexRow) => {
-                  return (
-                    <TableRow hover role="checkbox" tabIndex={-1} key={indexRow} onClick={() => { history.push(ROUTE_MANAGE_FEEDBACK__INTERN_DETAIL) }}>
-                      {columns.map((column) => {
-                        const value = row[column.id];
-                        return (
-                          <TableCell key={column.id} align={column.align}>
-                            {column.format && typeof value === 'number' ? column.format(value) : value}
-                          </TableCell>
-                        );
-                      })}
-                    </TableRow>
-                  );
-                })}
+                {rows.length > 0 ? (
+                  rows
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row, indexRow) => {
+                      return (
+                        <TableRow
+                          hover
+                          role="checkbox"
+                          tabIndex={-1}
+                          key={indexRow}
+                          onClick={() => {
+                            history.push(ROUTE_MANAGE_FEEDBACK__INTERN_DETAIL);
+                          }}
+                        >
+                          {columns.map((column) => {
+                            const value = row[column.id];
+                            return (
+                              <TableCell key={column.id} align={column.align}>
+                                {column.format && typeof value === "number"
+                                  ? column.format(value)
+                                  : value}
+                              </TableCell>
+                            );
+                          })}
+                        </TableRow>
+                      );
+                    })
+                ) : (
+                  <TableRow>
+                    {[1, 2, 3, 4, 5, 6].map((item) => {
+                      return (
+                        <TableCell key={item}>
+                          {/* {storeGetAllFeedback.loading ? (
+                            <Skeleton style={{ height: 40 }} />
+                          ) : (
+                            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                          )} */}
+                        </TableCell>
+                      );
+                    })}
+                  </TableRow>
+                )}
               </TableBody>
             </Table>
           </TableContainer>
