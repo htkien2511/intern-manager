@@ -137,14 +137,16 @@ export default function ManageAccountWaiting() {
     if (lowercasedValue === "") setFilteredData(data);
     else {
       const filteredData = data.filter((item) => {
-        return Object.keys(item).some((key) =>
-          columns.includes(key)
-            ? false
-            : (item[key] + "")
-                .toString()
-                .toLowerCase()
-                .includes(lowercasedValue)
-        );
+        return Object.keys(item)
+          .filter((i) => i !== "actions")
+          .some((key) =>
+            columns.includes(key)
+              ? false
+              : (item[key] + "")
+                  .toString()
+                  .toLowerCase()
+                  .includes(lowercasedValue)
+          );
       });
       setFilteredData(filteredData);
     }
