@@ -1331,6 +1331,14 @@
   dependencies:
     tslib "^2.0.3"
 
+"@fullcalendar/daygrid@^5.6.0":
+  version "5.6.0"
+  resolved "https://registry.yarnpkg.com/@fullcalendar/daygrid/-/daygrid-5.6.0.tgz#705508a7e7c5d560d01877485283f370c3c70780"
+  integrity sha512-UaNn6/vKQ3zI4/sDhrMACkIHOSZb/MA0JGlvvw3OTYFULqE5TISuYYnDbo9S1Wdz3AbTBvCzYy5Qk1vZQFsGwg==
+  dependencies:
+    "@fullcalendar/common" "~5.6.0"
+    tslib "^2.0.3"
+
 "@fullcalendar/react@^5.6.0":
   version "5.6.0"
   resolved "https://registry.yarnpkg.com/@fullcalendar/react/-/react-5.6.0.tgz#3ca8afe0284581f870fa29d44e178102103a4e25"

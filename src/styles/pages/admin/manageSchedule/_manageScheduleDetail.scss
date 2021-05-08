@@ -2,6 +2,21 @@
   margin: 80px auto;
   &__inner {
     position: relative;
+    margin: 0 80px;
+    .block__info_shift {
+      & > div {
+        margin-left: 15px;
+        align-items: center;
+        & > span {
+          margin: 5px;
+        }
+        & > div {
+          width: 16px;
+          height: 16px;
+          border-radius: 5px;
+        }
+      }
+    }
     & > button {
       width: 200px;
       height: 40px;
