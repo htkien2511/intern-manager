@@ -4,9 +4,10 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Form as ReForm, Input } from "reactstrap";
 import { isEmpty, isEmail } from "validator";
-import { v4 as uuidv4 } from "uuid";
 import { getAllDepartments } from "redux/actions/getAllDepartments";
-import { useSelector } from "react-redux";
+import { updateAccount } from "redux/actions/updateAccount";
+import { getAllUser } from "redux/actions/admin/getAllUser";
+import { toast } from "react-toastify";
 
 export const HeaderModal = ({ close, title }) => {
   return (
@@ -28,19 +29,22 @@ export const HeaderModal = ({ close, title }) => {
   );
 };
 
-export const ContentModal = ({ data, setOpenModal, title }) => {
+export const ContentModal = ({ data, setOpenModal, setData }) => {
   const info = data || {};
   const [error, setError] = React.useState({});
   const [form, setForm] = React.useState({
-    id: info.id || uuidv4(),
+    id: info.id,
     name: info.name || "",
     email: info.email || "",
+    gender: info.gender || "",
     department: info.department || "",
     address: info.address || "",
   });
+
+  const [departObject, setDepartObject] = useState([]);
+
   const validate = () => {
     const errorState = {};
-    // check validate
     if (isEmpty(form.email)) {
       errorState.email = "Please enter email";
     } else {
@@ -48,17 +52,16 @@ export const ContentModal = ({ data, setOpenModal, title }) => {
         errorState.email = "Email not valid";
       }
     }
-    // if (isEmpty(form.name)) {
-    //   errorState.name = "Please enter name";
-    // }
-    if (isEmpty(form.department)) {
+    if (!(departments.length > 0)) {
       errorState.department = "Please waiting get all departments";
     }
-    // if (isEmpty(form.address)) {
-    //   errorState.address = "Please enter address";
-    // }
     return errorState;
   };
+
+  function createData(id, name, email, gender, department, address, actions) {
+    return { id, name, email, gender, department, address, actions };
+  }
+
   const handleSubmitForm = (event) => {
     event.preventDefault();
     const errorState = validate();
@@ -70,11 +73,46 @@ export const ContentModal = ({ data, setOpenModal, title }) => {
       id: form.id,
       name: form.name,
       email: form.email,
-      department: form.department,
+      gender: !isEmpty(form.gender) ? form.gender : "Male",
+      department: form.department
+        ? departObject
+            .filter((item) => item.name === form.department)
+            .find((item, index) => index === 0).id
+        : departObject
+            .filter((item) => item.name === departments[0])
+            .find((item, index) => index === 0).id,
       address: form.address,
     };
-    // input for api edit user
+
     console.log({ formData });
+    updateAccount(formData, (res) => {
+      if (res.success) {
+        getAllUser((r) => {
+          if (r.success) {
+            let arr = [];
+            r.data.forEach((item) => {
+              arr.push(
+                createData(
+                  item.id,
+                  item.name,
+                  item.email,
+                  item.gender,
+                  item.department,
+                  item.address,
+                  "Edit|Delete"
+                )
+              );
+            });
+            setData(arr);
+            toast.success(`Updated account ${res.data.name} successfully!`);
+          } else {
+            toast.error(r.message);
+          }
+        });
+      } else {
+        toast.error(res.message);
+      }
+    });
     setOpenModal(false);
   };
   const handleChange = (event) => {
@@ -88,19 +126,12 @@ export const ContentModal = ({ data, setOpenModal, title }) => {
     });
   };
   const [departments, setDepartments] = useState([]);
-  const storeGetAllDepartments = useSelector(
-    (store) => store.getAllDepartments
-  );
-  const loading = storeGetAllDepartments.data.loading;
 
   useEffect(() => {
     getAllDepartments((res) => {
       if (res.success) {
         setDepartments(res.data.map((item) => item.name));
-        setForm({
-          ...form,
-          department: res.data.find((item, index) => index === 0).name,
-        });
+        setDepartObject(res.data);
         setError({ ...error, department: "" });
       }
     });
@@ -155,6 +186,31 @@ export const ContentModal = ({ data, setOpenModal, title }) => {
               error={error.email}
             />
           </div>
+
+          <div>
+            <label>Gender</label>
+            <Input
+              type="select"
+              name="gender"
+              id="gender"
+              placeholder="Gender"
+              onChange={handleChange}
+              onFocus={handleFocus}
+              value={form.gender}
+              disabled
+            >
+              {["Male", "Female"].map((item, index) => (
+                <option key={index}>{item}</option>
+              ))}
+            </Input>
+            <span
+              className="invalid-feedback"
+              style={{ display: "block", marginLeft: 15 }}
+            >
+              {error.gender}
+            </span>
+          </div>
+
           <div>
             <label>Department</label>
             <Input
@@ -165,7 +221,7 @@ export const ContentModal = ({ data, setOpenModal, title }) => {
               onChange={handleChange}
               onFocus={handleFocus}
               value={form.department}
-              disabled={loading}
+              disabled={false}
             >
               {departments.map((item, index) => (
                 <option key={index}>{item}</option>
@@ -209,7 +265,7 @@ export const ContentModal = ({ data, setOpenModal, title }) => {
   );
 };
 
-const ModalCUUser = ({ setOpenModal, title, infoUser }) => {
+const ModalCUUser = ({ setOpenModal, title, infoUser, setData }) => {
   return (
     <ModalAddAccountUserContainer className="modal__add__user__container">
       <CustomizedModal>
@@ -220,7 +276,7 @@ const ModalCUUser = ({ setOpenModal, title, infoUser }) => {
           <ContentModal
             data={infoUser}
             setOpenModal={setOpenModal}
-            title={title}
+            setData={setData}
           />
         </CustomizedModal.Content>
       </CustomizedModal>

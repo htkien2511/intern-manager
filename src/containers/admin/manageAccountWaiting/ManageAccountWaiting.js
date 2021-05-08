@@ -18,6 +18,7 @@ import { denyUserRegister } from "redux/actions/admin/deniedUserRegister";
 import { Empty } from "antd";
 import SpinLoading from "components/common/core/SpinLoading";
 import { toast } from "react-toastify";
+import { Checkbox } from "@material-ui/core";
 
 const columns = [
   { id: "id", label: "Id", minWidth: 170 },
@@ -43,8 +44,8 @@ const columns = [
   {
     id: "actions",
     label: "Actions",
-    minWidth: 170,
-    align: "left",
+    minWidth: 160,
+    align: "center",
   },
 ];
 
@@ -83,7 +84,7 @@ export default function ManageAccountWaiting() {
               item.email,
               item.department,
               item.address,
-              "Accepted|Denied"
+              "Accepted|Denied|Selected"
             )
           );
         });
@@ -114,6 +115,20 @@ export default function ManageAccountWaiting() {
     setOpenModalAccept(false);
   };
 
+  const handleConfirmAcceptedAll = () => {
+    if (!userSelected.length) return;
+    acceptUserRegister(userSelected, (res) => {
+      if (res.success) {
+        setData(data.filter((item) => !userSelected.includes(item.id)));
+        toast.success(`Accepted all user selected`);
+        setUserSelected([]);
+      } else {
+        toast.error(res.message);
+      }
+    });
+    setOpenModalAcceptAll(false);
+  };
+
   const handleConfirmDenied = () => {
     const arr_user_id = [];
     arr_user_id.push(infoRow.id);
@@ -126,6 +141,20 @@ export default function ManageAccountWaiting() {
       }
     });
     setOpenModalDelete(false);
+  };
+
+  const handleConfirmDeniedAll = () => {
+    if (!userSelected.length) return;
+    denyUserRegister(userSelected, (res) => {
+      if (res.success) {
+        setData(data.filter((item) => !userSelected.includes(item.id)));
+        setUserSelected([]);
+        toast.success(`Denied all user selected`);
+      } else {
+        toast.error(res.message);
+      }
+    });
+    setOpenModalDeleteAll(false);
   };
 
   useEffect(() => {
@@ -153,6 +182,7 @@ export default function ManageAccountWaiting() {
   };
 
   const [openModalAccept, setOpenModalAccept] = useState(false);
+  const [openModalAcceptAll, setOpenModalAcceptAll] = useState(false);
   const [infoRow, setInfoRow] = useState({
     id: "",
     name: "",
@@ -160,7 +190,11 @@ export default function ManageAccountWaiting() {
     department: "",
     address: "",
   });
+
+  const [userSelected, setUserSelected] = useState([]);
+
   const [openModalDelete, setOpenModalDelete] = useState(false);
+  const [openModalDeleteAll, setOpenModalDeleteAll] = useState(false);
   const handleAction = (item, row) => {
     switch (item) {
       case "Accepted": {
@@ -192,6 +226,14 @@ export default function ManageAccountWaiting() {
     }
   };
 
+  const handleChangeCheckbox = (e, item) => {
+    if (e.target.checked) {
+      setUserSelected([...userSelected, item]);
+    } else {
+      setUserSelected(userSelected.filter((ele) => ele !== item));
+    }
+  };
+
   const renderCell = (column, value, indexRow, row) => {
     switch (column.id) {
       case "actions": {
@@ -200,6 +242,13 @@ export default function ManageAccountWaiting() {
           <TableCell key={column.id + " - " + indexRow} align={column.align}>
             <div>
               {actions.map((item, index) => {
+                if (item === "Selected")
+                  return (
+                    <Checkbox
+                      key={index}
+                      onChange={(e) => handleChangeCheckbox(e, row.id)}
+                    />
+                  );
                 return (
                   <button
                     key={index}
@@ -247,6 +296,38 @@ export default function ManageAccountWaiting() {
               placeholder="Search account(s)"
             />
           </div>
+          {userSelected.length > 0 && (
+            <div>
+              <button
+                style={{
+                  margin: 5,
+                  color: "black",
+                  background: "gray",
+                  borderRadius: 5,
+                  width: "140px",
+                  height: 40,
+                }}
+                className="button"
+                onClick={() => setOpenModalAcceptAll(true)}
+              >
+                Accepted All
+              </button>
+              <button
+                style={{
+                  margin: 5,
+                  color: "black",
+                  background: "gray",
+                  borderRadius: 5,
+                  width: "140px",
+                  height: 40,
+                }}
+                className="button"
+                onClick={() => setOpenModalDeleteAll(true)}
+              >
+                Denied All
+              </button>
+            </div>
+          )}
         </div>
         <Paper className={classes.root}>
           <TableContainer className={classes.container}>
@@ -324,6 +405,20 @@ export default function ManageAccountWaiting() {
           onCancel={setOpenModalDelete}
           onConfirm={handleConfirmDenied}
           title="Are you sure you want to deny?"
+        />
+      )}
+      {openModalAcceptAll && (
+        <Popup
+          onCancel={setOpenModalAcceptAll}
+          onConfirm={handleConfirmAcceptedAll}
+          title="Are you sure you want to accept all user?"
+        />
+      )}
+      {openModalDeleteAll && (
+        <Popup
+          onCancel={setOpenModalDeleteAll}
+          onConfirm={handleConfirmDeniedAll}
+          title="Are you sure you want to deny all user?"
         />
       )}
     </div>

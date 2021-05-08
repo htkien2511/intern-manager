@@ -14,7 +14,7 @@ const Register = () => {
         setTimeout(() => {
           history.push({
             pathname: ROUTE_LOGIN,
-            state: { email: res.data },
+            state: { email: res.data.email },
           });
         }, 3500);
       } else {

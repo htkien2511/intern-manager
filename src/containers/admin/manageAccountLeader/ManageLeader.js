@@ -30,6 +30,12 @@ const columns = [
     align: "left",
   },
   {
+    id: "gender",
+    label: "Gender",
+    minWidth: 170,
+    align: "left",
+  },
+  {
     id: "department",
     label: "Department",
     minWidth: 170,
@@ -44,13 +50,13 @@ const columns = [
   {
     id: "actions",
     label: "Actions",
-    minWidth: 170,
-    align: "left",
+    minWidth: 160,
+    align: "center",
   },
 ];
 
-function createData(id, name, email, department, address, actions) {
-  return { id, name, email, department, address, actions };
+function createData(id, name, email, gender, department, address, actions) {
+  return { id, name, email, gender, department, address, actions };
 }
 
 const useStyles = makeStyles({
@@ -98,6 +104,7 @@ export default function ManageLeader() {
     id: "",
     name: "",
     email: "",
+    gender: "",
     department: "",
     address: "",
   });
@@ -111,6 +118,7 @@ export default function ManageLeader() {
           id: row.id,
           name: row.name,
           email: row.email,
+          gender: row.gender || "Male",
           department: row.department,
           address: row.address,
         });
@@ -124,6 +132,7 @@ export default function ManageLeader() {
           id: row.id,
           name: row.name,
           email: row.email,
+          gender: row.gender,
           department: row.department,
           address: row.address,
         });
@@ -144,7 +153,8 @@ export default function ManageLeader() {
               item.id,
               item.name,
               item.email,
-              item.department.name,
+              item.gender,
+              item.department,
               item.address,
               "Edit|Delete"
             )
@@ -158,24 +168,25 @@ export default function ManageLeader() {
   const renderCell = (column, value, indexRow, row) => {
     switch (column.id) {
       case "actions": {
-        const actions = value.split("|");
+        const actions = value && value.split("|");
         return (
           <TableCell key={column.id + " - " + indexRow} align={column.align}>
             <div>
-              {actions.map((item, index) => {
-                return (
-                  <button
-                    key={index}
-                    style={{ margin: 5, color: "white" }}
-                    className={`button ${
-                      item === "Edit" ? "button--secondary" : "button--danger"
-                    }`}
-                    onClick={() => handleAction(item, row)}
-                  >
-                    {item}
-                  </button>
-                );
-              })}
+              {actions &&
+                actions.map((item, index) => {
+                  return (
+                    <button
+                      key={index}
+                      style={{ margin: 5, color: "white" }}
+                      className={`button ${
+                        item === "Edit" ? "button--secondary" : "button--danger"
+                      }`}
+                      onClick={() => handleAction(item, row)}
+                    >
+                      {item}
+                    </button>
+                  );
+                })}
             </div>
           </TableCell>
         );
@@ -191,8 +202,9 @@ export default function ManageLeader() {
     }
   };
 
-  const loadingCreate = useSelector((store) => store.register).loading;
   const loadingDelete = useSelector((store) => store.deleteUser).loading;
+  const loadingAdd = useSelector((store) => store.addManager).loading;
+  const loadingEdit = useSelector((store) => store.updateAccount).loading;
 
   const handleSearch = (event) => {
     const lowercasedValue = event.target.value.toLowerCase().trim();
@@ -216,7 +228,7 @@ export default function ManageLeader() {
 
   return (
     <div className="manage-intern">
-      {(loadingCreate || loadingDelete) && <SpinLoading />}
+      {(loadingDelete || loadingAdd || loadingEdit) && <SpinLoading />}
       <div className="manage-intern__inner">
         <div className="manage-intern__inner__top">
           <div
@@ -306,21 +318,23 @@ export default function ManageLeader() {
       {openModalAdd && (
         <ModalCreateAccount
           setOpenModal={setOpenModalAdd}
-          title="Add account user"
+          title="Add account leader"
+          setData={setData}
         />
       )}
       {openModalEdit && (
         <ModalCUUser
           setOpenModal={setOpenModalEdit}
-          title="Edit account user"
+          title="Edit account leader"
           infoUser={infoRow}
+          setData={setData}
         />
       )}
       {openModalDelete && (
         <Popup
           onCancel={setOpenModalDelete}
           onConfirm={handleConfirm}
-          title="Are you delete this user?"
+          title="Are you delete this leader?"
         />
       )}
     </div>

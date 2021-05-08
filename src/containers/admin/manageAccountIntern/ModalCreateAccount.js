@@ -5,9 +5,9 @@ import styled from "styled-components";
 import { Form as ReForm } from "reactstrap";
 import { isEmpty, isEmail } from "validator";
 import { register } from "redux/actions/register";
-// import { acceptUserRegister } from "redux/actions/admin/acceptUserRegister";
+import { acceptUserRegister } from "redux/actions/admin/acceptUserRegister";
 import { toast } from "react-toastify";
-// import { getAllUser } from "redux/actions/admin/getAllUser";
+import { getAllUser } from "redux/actions/admin/getAllUser";
 
 export const HeaderModal = ({ close, title }) => {
   return (
@@ -64,6 +64,11 @@ export const ContentModal = ({ setOpenModal, title, setData }) => {
 
     return errorState;
   };
+
+  function createData(id, name, email, gender, department, address, actions) {
+    return { id, name, email, gender, department, address, actions };
+  }
+
   const handleSubmitForm = (event) => {
     event.preventDefault();
     const errorState = validate();
@@ -80,16 +85,36 @@ export const ContentModal = ({ setOpenModal, title, setData }) => {
 
     register(formData, (res) => {
       if (res.success) {
-        // run api accept user waiting
-        // acceptUserRegister(res.data.id);
-        // getAllUser((response) => {
-        //   if (response.success) {
-        //     setData(response.data);
-        //   } else {
-        //     toast.error(response.message);
-        //   }
-        // });
-        toast.success(`General account ${res.data} successfully!`);
+        const arr_user_id = [];
+        arr_user_id.push(res.data.id);
+        acceptUserRegister(arr_user_id, (r) => {
+          if (r.success) {
+            getAllUser((response) => {
+              if (response.success) {
+                let arr = [];
+                response.data.forEach((item) => {
+                  arr.push(
+                    createData(
+                      item.id,
+                      item.name,
+                      item.email,
+                      item.gender,
+                      item.department,
+                      item.address,
+                      "Edit|Delete"
+                    )
+                  );
+                });
+                setData(arr);
+                toast.success(`General account ${res.data.name} successfully!`);
+              } else {
+                toast.error(response.message);
+              }
+            });
+          } else {
+            toast.error(r.message);
+          }
+        });
       } else {
         toast.error(res.message);
       }
@@ -140,30 +165,37 @@ export const ContentModal = ({ setOpenModal, title, setData }) => {
               error={error.email}
             />
           </div>
-          <FormBox
-            propsInput={{
-              type: "password",
-              name: "password",
-              placeholder: "Password",
-              onChange: handleChange,
-              onFocus: handleFocus,
-              value: form.password,
-              disabled: false,
-            }}
-            error={error.password}
-          />
-          <FormBox
-            propsInput={{
-              type: "password",
-              name: "confirmPassword",
-              placeholder: "Confirm password",
-              onChange: handleChange,
-              onFocus: handleFocus,
-              value: form.confirmPassword,
-              disabled: false,
-            }}
-            error={error.confirmPassword}
-          />
+          <div>
+            <label>Password</label>
+            <FormBox
+              propsInput={{
+                type: "password",
+                name: "password",
+                placeholder: "Password",
+                onChange: handleChange,
+                onFocus: handleFocus,
+                value: form.password,
+                disabled: false,
+              }}
+              error={error.password}
+            />
+          </div>
+          <div>
+            <label>Confirm password</label>
+            <FormBox
+              propsInput={{
+                type: "password",
+                name: "confirmPassword",
+                placeholder: "Confirm password",
+                onChange: handleChange,
+                onFocus: handleFocus,
+                value: form.confirmPassword,
+                disabled: false,
+              }}
+              error={error.confirmPassword}
+            />
+          </div>
+
           <button className="btn--save align__center">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
               <g id="Layer_2" data-name="Layer 2">

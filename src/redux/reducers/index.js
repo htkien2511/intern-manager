@@ -13,6 +13,7 @@ import acceptUserRegister from "./admin/acceptUserRegister";
 import deniedUserRegister from "./admin/deniedUserRegister";
 import getAllDepartments from "./getAllDepartments";
 import updateAccount from "./updateAccount";
+import addManager from "./admin/addManager";
 
 export default combineReducers({
   login,
@@ -29,4 +30,5 @@ export default combineReducers({
   deniedUserRegister,
   getAllDepartments,
   updateAccount,
+  addManager,
 });

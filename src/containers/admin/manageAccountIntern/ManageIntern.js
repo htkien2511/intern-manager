@@ -30,6 +30,12 @@ const columns = [
     align: "left",
   },
   {
+    id: "gender",
+    label: "Gender",
+    minWidth: 170,
+    align: "left",
+  },
+  {
     id: "department",
     label: "Department",
     minWidth: 170,
@@ -44,13 +50,13 @@ const columns = [
   {
     id: "actions",
     label: "Actions",
-    minWidth: 170,
-    align: "left",
+    minWidth: 160,
+    align: "center",
   },
 ];
 
-function createData(id, name, email, department, address, actions) {
-  return { id, name, email, department, address, actions };
+function createData(id, name, email, gender, department, address, actions) {
+  return { id, name, email, gender, department, address, actions };
 }
 
 const useStyles = makeStyles({
@@ -100,6 +106,7 @@ export default function ManageIntern() {
     id: "",
     name: "",
     email: "",
+    gender: "",
     department: "",
     address: "",
   });
@@ -113,6 +120,7 @@ export default function ManageIntern() {
           id: row.id,
           name: row.name,
           email: row.email,
+          gender: row.gender,
           department: row.department,
           address: row.address,
         });
@@ -126,6 +134,7 @@ export default function ManageIntern() {
           id: row.id,
           name: row.name,
           email: row.email,
+          gender: row.gender,
           department: row.department,
           address: row.address,
         });
@@ -146,6 +155,7 @@ export default function ManageIntern() {
               item.id,
               item.name,
               item.email,
+              item.gender,
               item.department,
               item.address,
               "Edit|Delete"
@@ -160,24 +170,25 @@ export default function ManageIntern() {
   const renderCell = (column, value, indexRow, row) => {
     switch (column.id) {
       case "actions": {
-        const actions = value.length && value.split("|");
+        const actions = value && value.split("|");
         return (
           <TableCell key={column.id + " - " + indexRow} align={column.align}>
             <div>
-              {actions.map((item, index) => {
-                return (
-                  <button
-                    key={index}
-                    style={{ margin: 5, color: "white" }}
-                    className={`button ${
-                      item === "Edit" ? "button--secondary" : "button--danger"
-                    }`}
-                    onClick={() => handleAction(item, row)}
-                  >
-                    {item}
-                  </button>
-                );
-              })}
+              {actions &&
+                actions.map((item, index) => {
+                  return (
+                    <button
+                      key={index}
+                      style={{ margin: 5, color: "white" }}
+                      className={`button ${
+                        item === "Edit" ? "button--secondary" : "button--danger"
+                      }`}
+                      onClick={() => handleAction(item, row)}
+                    >
+                      {item}
+                    </button>
+                  );
+                })}
             </div>
           </TableCell>
         );
@@ -195,6 +206,7 @@ export default function ManageIntern() {
 
   const loadingCreate = useSelector((store) => store.register).loading;
   const loadingDelete = useSelector((store) => store.deleteUser).loading;
+  const loadingEdit = useSelector((store) => store.updateAccount).loading;
 
   const handleSearch = (event) => {
     const lowercasedValue = event.target.value.toLowerCase().trim();
@@ -218,7 +230,7 @@ export default function ManageIntern() {
 
   return (
     <div className="manage-intern">
-      {(loadingCreate || loadingDelete) && <SpinLoading />}
+      {(loadingCreate || loadingDelete || loadingEdit) && <SpinLoading />}
       <div className="manage-intern__inner">
         <div className="manage-intern__inner__top">
           <div

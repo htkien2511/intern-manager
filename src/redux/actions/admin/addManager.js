@@ -1,17 +1,14 @@
-import { getAuth } from "utils/helpers";
-import * as types from "../constants";
-import store from "../store";
-export function updateAccount(data, resolve = () => {}) {
+import { getAuth } from "../../../utils/helpers";
+import * as types from "../../constants";
+import store from "../../store";
+export function addManager(input, resolve = () => {}) {
   store.dispatch({
-    type: types.UPDATE_ACCOUNT,
+    type: types.ADD_MANAGER,
   });
   var details = {
-    id: data.id,
-    email: data.email,
-    name: data.name,
-    address: data.address,
-    department: data.department,
-    gender: data.gender,
+    name: input.name,
+    username: input.email,
+    password: input.password,
   };
 
   var formBody = [];
@@ -22,7 +19,7 @@ export function updateAccount(data, resolve = () => {}) {
   }
   formBody = formBody.join("&");
 
-  return fetch(`${process.env.REACT_APP_API_URL}user_profile/edit`, {
+  return fetch(`${process.env.REACT_APP_API_URL}manager/add`, {
     method: "POST",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
@@ -35,13 +32,13 @@ export function updateAccount(data, resolve = () => {}) {
       resolve(data);
       store.dispatch({
         payload: data,
-        type: types.UPDATE_ACCOUNT_SUCCEED,
+        type: types.ADD_MANAGER_SUCCEED,
       });
     })
     .catch((error) => {
       store.dispatch({
         payload: error,
-        type: types.UPDATE_ACCOUNT_FAILED,
+        type: types.ADD_MANAGER_FAILED,
       });
     });
 }
