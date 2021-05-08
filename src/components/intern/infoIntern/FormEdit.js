@@ -3,56 +3,104 @@ import logo from "../../../assets/images/logo.png";
 import { isEmpty, isEmail } from "validator";
 import { getProfileIntern } from "redux/actions/intern/getProfileIntern";
 import { getAuth } from "utils/helpers";
-import PropTypes from "prop-types";
-import { makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
-import { FormBox } from "../../common";
-
+import { Tabs } from "antd";
+import { getAllDepartments } from "redux/actions/getAllDepartments";
+import { Input } from "reactstrap";
 
 function FormEdit() {
+  const { TabPane } = Tabs;
   const [imageUrl, setImageUrl] = useState(logo);
-  const [errorEditProfile, setErrorEditProfile] = React.useState();
   const [error, setError] = React.useState({});
   const [form, setForm] = React.useState({
-    fullName: "",
+    id: "",
+    name: "",
     email: "",
     department: "",
-    gender: true,
+    gender: "",
     address: "",
-    currentPass: "",
-    newPass: "",
-    confirmPass: "",
   });
+  const [formChangePass, setFormChangePass] = React.useState({
+    oldPassword: "",
+    newPassword: "",
+    confirmNewPassword: "",
+  });
+
   useEffect(() => {
-    console.log("aaaa");
-    console.log(getAuth().id);
     getProfileIntern(getAuth().id, (output) => {
       if (!output.data) return;
       setForm(output.data);
     });
   }, []);
+
+  const [departments, setDepartments] = useState([]);
+  const [departObject, setDepartObject] = useState([]);
+
+  useEffect(() => {
+    getAllDepartments((res) => {
+      if (res.success) {
+        setDepartments(res.data.map((item) => item.name));
+        setDepartObject(res.data);
+        setError({ ...error, department: "" });
+      }
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const errorState = validate();
     if (Object.keys(errorState).length > 0) {
       return setError(errorState);
     }
+
+    const formData = {
+      id: form.id,
+      name: form.name,
+      email: form.email,
+      gender: !isEmpty(form.gender) ? form.gender : "Male",
+      department: form.department
+        ? departObject
+            .filter((item) => item.name === form.department)
+            .find((item, index) => index === 0).id
+        : departObject
+            .filter((item) => item.name === departments[0])
+            .find((item, index) => index === 0).id,
+      address: form.address,
+    };
+    console.log({ formData });
+    // run api update account
   };
+
+  const handleSubmitChangePassword = (event) => {
+    event.preventDefault();
+    const errorState = validateFormChangePass();
+    if (Object.keys(errorState).length > 0) {
+      return setError(errorState);
+    }
+
+    const formData = {
+      oldPassword: formChangePass.oldPassword,
+      newPassword: formChangePass.newPassword,
+    };
+    console.log({ formData });
+    // run api change password
+  };
+
   const handleChange = (event) => {
-    setForm({ ...form, [event.target.name]: event.target.value.trim() });
+    setForm({ ...form, [event.target.name]: event.target.value });
   };
-  const handleChangeGender = () => {
-    setForm({ ...form, gender: !form.gender });
+  const handleChangePassword = (event) => {
+    setFormChangePass({
+      ...formChangePass,
+      [event.target.name]: event.target.value,
+    });
   };
+
   const validate = () => {
     const errorState = {};
     // check validate
-    if (isEmpty(form.fullName)) {
-      errorState.fullName = "Please enter fullname";
+    if (isEmpty(form.name)) {
+      errorState.name = "Please enter name";
     }
     if (isEmpty(form.email)) {
       errorState.email = "Please enter email";
@@ -61,23 +109,28 @@ function FormEdit() {
         errorState.email = "Email not valid";
       }
     }
-    if (isEmpty(form.department)) {
-      errorState.department = "Please enter department";
+    if (!(departments.length > 0)) {
+      errorState.department = "Please waiting get all departments";
     }
     if (isEmpty(form.address)) {
       errorState.address = "Please enter address";
     }
-    if (isEmpty(form.currentPass)) {
-      errorState.currentPass = "Please enter current password";
+    return errorState;
+  };
+
+  const validateFormChangePass = () => {
+    const errorState = {};
+    if (isEmpty(formChangePass.oldPassword)) {
+      errorState.oldPassword = "Please enter current password";
     }
-    if (isEmpty(form.newPass)) {
-      errorState.newPass = "Please enter new password";
+    if (isEmpty(formChangePass.newPassword)) {
+      errorState.newPassword = "Please enter new password";
     }
-    if (isEmpty(form.confirmPass)) {
-      errorState.confirmPass = "Please enter confirm password";
+    if (isEmpty(formChangePass.confirmNewPassword)) {
+      errorState.confirmNewPassword = "Please enter confirm password";
     } else {
-      if (form.confirmPass !== form.newPass) {
-        errorState.confirmPass =
+      if (formChangePass.confirmNewPassword !== formChangePass.newPassword) {
+        errorState.confirmNewPassword =
           "Please enter confirm password match with password";
       }
     }
@@ -88,90 +141,35 @@ function FormEdit() {
       ...error,
       [event.target.name]: "",
     });
-    setErrorEditProfile("");
   };
-
-  function TabPanel(props) {
-    const { children, value, index, ...other } = props;
-
-    return (
-      <div
-        role="tabpanel"
-        hidden={value !== index}
-        id={`simple-tabpanel-${index}`}
-        aria-labelledby={`simple-tab-${index}`}
-        {...other}
-      >
-        {value === index && (
-          <Box p={3}>
-            <Typography>{children}</Typography>
-          </Box>
-        )}
-      </div>
-    );
+  function callback(key) {
+    console.log(key);
   }
-
-  TabPanel.propTypes = {
-    children: PropTypes.node,
-    index: PropTypes.any.isRequired,
-    value: PropTypes.any.isRequired,
-  };
-
-  function a11yProps(index) {
-    return {
-      id: `simple-tab-${index}`,
-      "aria-controls": `simple-tabpanel-${index}`,
-    };
-  }
-
-  const useStyles = makeStyles((theme) => ({
-    root: {
-      flexGrow: 1,
-      backgroundColor: theme.palette.background.paper,
-    },
-  }));
-
-  const classes = useStyles();
-  const [value, setValue] = React.useState(0);
-
-  const handleChangeTab = (event, newValue) => {
-    setValue(newValue);
-  };
 
   return (
-    <div className="form-edit">
-      <h2>Edit Profile</h2>
-      <div className="error">{errorEditProfile}</div>
-      <div className="form-edit__body__edit">
-        <div className="form-edit__body__edit__info">
-          <div className="edit-avatar">
-            <img src={imageUrl} className="avatar" alt="avatar" />
-            <div className="file align__center">
-              <input
-                type="file"
-                name="file"
-                id="file"
-                className="inputfile"
-                onChange={(event) => {
-                  setImageUrl(URL.createObjectURL(event.target.files[0]));
-                }}
-              />
-              <label htmlFor="file">Upload Image</label>
-            </div>
+    <div className="form-edit flex flex-row align__center">
+      <div className="form-edit__body__edit__info">
+        <div className="edit-avatar">
+          <img src={imageUrl} className="avatar" alt="avatar" />
+          <div className="file align__center">
+            <input
+              type="file"
+              name="file"
+              id="file"
+              className="inputfile"
+              onChange={(event) => {
+                setImageUrl(URL.createObjectURL(event.target.files[0]));
+              }}
+            />
+            <label htmlFor="file" style={{ marginBottom: 0 }}>
+              Upload Image
+            </label>
           </div>
-          <div className={classes.root}>
-            <AppBar position="static">
-              <Tabs
-                value={value}
-                onChange={handleChangeTab}
-                aria-label="simple tabs example"
-              >
-                <Tab label="Profile Intern" {...a11yProps(0)} />
-                <Tab label="Password" {...a11yProps(1)} />
-              </Tabs>
-            </AppBar>
-            <TabPanel value={value} index={0}>
-              <form className="form__edit" onSubmit={handleSubmit}>
+        </div>
+        <div className="form__edit">
+          <Tabs defaultActiveKey="1" onChange={callback}>
+            <TabPane tab="Edit Profile" key="1">
+              <form className="" onSubmit={handleSubmit}>
                 <div className="edit_info__name">
                   <div>
                     <label>Full name:</label>
@@ -184,65 +182,73 @@ function FormEdit() {
                       onFocus={handleFocus}
                     />
                   </div>
-                  <span className="error__editProfile">{error.fullName}</span>
+                  <span className="error__editProfile">{error.name}</span>
                 </div>
                 <div className="edit_info__email">
                   <div>
                     <label>Email:</label>
                     <input
+                      style={{ background: "#e9ecef" }}
                       type="text"
                       value={form.email}
                       name="email"
                       placeholder="Email"
                       onChange={handleChange}
                       onFocus={handleFocus}
+                      disabled
                     />
-                     <FormBox
-                        propsInput={{
-                          name: "email",
-                          placeholder: "Email",
-                          onChange: handleChange,
-                          onFocus: handleFocus,
-                          value: form.email,
-                        
-                        }}
-                        error={error.email}
-                      />
                   </div>
                   <span className="error__editProfile">{error.email}</span>
                 </div>
-                <div className="edit_info__department">
+                <div className="edit_info__email">
                   <div>
-                    <label>Department:</label>
-                    <input
-                      type="text"
-                      value={form.department}
+                    <label>Gender</label>
+                    <Input
+                      type="select"
+                      name="gender"
+                      id="gender"
+                      placeholder="Gender"
+                      onChange={handleChange}
+                      onFocus={handleFocus}
+                      value={form.gender}
+                    >
+                      {["Male", "Female"].map((item, index) => (
+                        <option key={index}>{item}</option>
+                      ))}
+                    </Input>
+                  </div>
+                  <span
+                    className="invalid-feedback"
+                    style={{ display: "block", marginLeft: 15 }}
+                  >
+                    {error.gender}
+                  </span>
+                </div>
+
+                <div className="edit_info__email">
+                  <div>
+                    <label>Department</label>
+                    <Input
+                      type="select"
                       name="department"
+                      id="department"
                       placeholder="Department"
                       onChange={handleChange}
                       onFocus={handleFocus}
-                    />
+                      value={form.department}
+                      disabled
+                    >
+                      {departments.map((item, index) => (
+                        <option key={index}>{item}</option>
+                      ))}
+                    </Input>
                   </div>
-                  <span className="error__editProfile">{error.department}</span>
-                </div>
-                <div className="edit_info__sex">
-                  <label id="title">Gender:</label>
-                  <input
-                    type="radio"
-                    name="gender"
-                    value={form.gender}
-                    onChange={handleChangeGender}
-                    checked={form.gender}
-                  />
-                  <span>Male</span>
-                  <input
-                    type="radio"
-                    name="gender"
-                    value={!form.gender}
-                    onChange={handleChangeGender}
-                    checked={!form.gender}
-                  />
-                  <span>Female</span>
+                  <span
+                    className="invalid-feedback"
+                    style={{ display: "block", marginLeft: 15 }}
+                  >
+                    {error.department}
+                  </span>
                 </div>
                 <div className="edit_info__address">
                   <div>
@@ -262,23 +268,23 @@ function FormEdit() {
                   <button className="btn-edit">Save</button>
                 </center>
               </form>
-            </TabPanel>
-            <TabPanel value={value} index={1}>
-              <form className="form__edit" onSubmit={handleSubmit}>
+            </TabPane>
+            <TabPane tab="Change password" key="2">
+              <form className="" onSubmit={handleSubmitChangePassword}>
                 <div className="edit_current__pass">
                   <div>
                     <label>Current Password:</label>
                     <input
                       type="password"
-                      placeholder="*******"
-                      value={form.currentPass}
-                      name="currentPass"
-                      onChange={handleChange}
+                      value={formChangePass.oldPassword}
+                      name="oldPassword"
+                      placeholder="Current password"
+                      onChange={handleChangePassword}
                       onFocus={handleFocus}
                     />
                   </div>
                   <span className="error__editProfile">
-                    {error.currentPass}
+                    {error.oldPassword}
                   </span>
                 </div>
                 <div className="edit_new__pass">
@@ -286,37 +292,39 @@ function FormEdit() {
                     <label>New Password:</label>
                     <input
                       type="password"
-                      placeholder="*******"
-                      value={form.newPass}
-                      name="newPass"
-                      onChange={handleChange}
+                      value={formChangePass.newPassword}
+                      name="newPassword"
+                      placeholder="New password"
+                      onChange={handleChangePassword}
                       onFocus={handleFocus}
                     />
                   </div>
-                  <span className="error__editProfile">{error.newPass}</span>
+                  <span className="error__editProfile">
+                    {error.newPassword}
+                  </span>
                 </div>
                 <div className="edit_confirm_pass">
                   <div>
                     <label>Confirm Password:</label>
                     <input
                       type="password"
-                      placeholder="*******"
-                      value={form.confirmPass}
-                      name="confirmPass"
-                      onChange={handleChange}
+                      placeholder="Confirm new password"
+                      value={form.confirmNewPassword}
+                      name="confirmNewPassword"
+                      onChange={handleChangePassword}
                       onFocus={handleFocus}
                     />
                   </div>
                   <span className="error__editProfile">
-                    {error.confirmPass}
+                    {error.confirmNewPassword}
                   </span>
                 </div>
                 <center>
                   <button className="btn-edit">Save</button>
                 </center>
               </form>
-            </TabPanel>
-          </div>
+            </TabPane>
+          </Tabs>
         </div>
       </div>
     </div>
