@@ -226,6 +226,15 @@ export default function ManageAccountWaiting() {
     }
   };
 
+  useEffect(() => {
+    setUserSelected(
+      userSelected.filter((item) =>
+        filteredData.map((i) => i.id).includes(item)
+      )
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filteredData]);
+
   const handleChangeCheckbox = (e, item) => {
     if (e.target.checked) {
       setUserSelected([...userSelected, item]);
@@ -246,6 +255,7 @@ export default function ManageAccountWaiting() {
                   return (
                     <Checkbox
                       key={index}
+                      checked={userSelected.includes(row.id)}
                       onChange={(e) => handleChangeCheckbox(e, row.id)}
                     />
                   );
@@ -280,6 +290,14 @@ export default function ManageAccountWaiting() {
   const storeAccepted = useSelector((store) => store.acceptUserRegister);
   const storeDenied = useSelector((store) => store.deniedUserRegister);
 
+  const handleChangeSelectedAll = (e) => {
+    if (e.target.checked) {
+      setUserSelected(data.map((item) => item.id));
+    } else {
+      setUserSelected([]);
+    }
+  };
+
   return (
     <div className="manage-intern">
       {((storeAccepted && storeAccepted.loading) ||
@@ -296,38 +314,46 @@ export default function ManageAccountWaiting() {
               placeholder="Search account(s)"
             />
           </div>
-          {userSelected.length > 0 && (
-            <div>
-              <button
-                style={{
-                  margin: 5,
-                  color: "black",
-                  background: "gray",
-                  borderRadius: 5,
-                  width: "140px",
-                  height: 40,
-                }}
-                className="button"
-                onClick={() => setOpenModalAcceptAll(true)}
-              >
-                Accepted All
-              </button>
-              <button
-                style={{
-                  margin: 5,
-                  color: "black",
-                  background: "gray",
-                  borderRadius: 5,
-                  width: "140px",
-                  height: 40,
-                }}
-                className="button"
-                onClick={() => setOpenModalDeleteAll(true)}
-              >
-                Denied All
-              </button>
-            </div>
-          )}
+          <div className="flex">
+            {userSelected.length > 0 && (
+              <div>
+                <button
+                  style={{
+                    margin: 5,
+                    color: "black",
+                    background: "gray",
+                    borderRadius: 5,
+                    width: "140px",
+                    height: 40,
+                  }}
+                  className="button"
+                  onClick={() => setOpenModalAcceptAll(true)}
+                >
+                  Accepted All
+                </button>
+                <button
+                  style={{
+                    margin: 5,
+                    color: "black",
+                    background: "gray",
+                    borderRadius: 5,
+                    width: "140px",
+                    height: 40,
+                  }}
+                  className="button"
+                  onClick={() => setOpenModalDeleteAll(true)}
+                >
+                  Denied All
+                </button>
+              </div>
+            )}
+            {filteredData.length > 0 && (
+              <Checkbox
+                onChange={handleChangeSelectedAll}
+                checked={userSelected.length === filteredData.length}
+              />
+            )}
+          </div>
         </div>
         <Paper className={classes.root}>
           <TableContainer className={classes.container}>
