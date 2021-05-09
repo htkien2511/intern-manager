@@ -14,6 +14,8 @@ import deniedUserRegister from "./admin/deniedUserRegister";
 import getAllDepartments from "./getAllDepartments";
 import updateAccount from "./updateAccount";
 import addManager from "./admin/addManager";
+import getProjectIntern from "./intern/getProjectIntern";
+import getTaskProjectIntern from "./intern/getTaskProjectIntern";
 
 export default combineReducers({
   login,
@@ -31,4 +33,6 @@ export default combineReducers({
   getAllDepartments,
   updateAccount,
   addManager,
+  getProjectIntern,
+  getTaskProjectIntern,
 });

@@ -5,6 +5,8 @@ import { NavLink } from "react-router-dom";
 // import { ROUTE_TASK_MANAGEMENT } from "../../../utils/routes";
 import { getProjectIntern } from "redux/actions/intern/getProjectIntern";
 import moment from "moment";
+import { useSelector } from "react-redux";
+import SpinLoading from "components/common/core/SpinLoading";
 
 function TaskManagement() {
   const [form, setForm] = React.useState(null);
@@ -14,43 +16,62 @@ function TaskManagement() {
       setForm(output.data);
     });
   }, []);
+
+  const storeGetProjectIntern = useSelector((store) => store.getProjectIntern);
   return (
     <>
-    {form&&(<div className="task-management">
-      <h2>Project Management</h2>
-      <div>
-        <table>
-          <thead>
-            <tr>
-              {["STT", "Project","abc", "Created Date", "Due Date","Actions"].map(
-                (item, index) => {
-                  return <th key={index}>{item}</th>;
-                }
-              )}
-            </tr>
-          </thead>
-
-          <tbody>
-            {form.map((item, index) => {
-              return (
-                <tr key={index}>
-                  <td>{item.projectId}</td>
-                  <td>{item.title}</td>
-                  <td>2/5</td>
-                  <td>{moment(new Date(item.startDate)).format("DD-MM-YYYY")}</td>
-                  <td>{moment(new Date(item.dueDate)).format("DD-MM-YYYY")}</td>
-                  <td>
-                  <NavLink activeClassName="--active" to={`/taskManagement/project${item.projectId}`}>
-                    <p>Detail</p>
-                  </NavLink>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+      <div className="task-management">
+        <h2>Project Management</h2>
       </div>
-    </div>)}
+      {storeGetProjectIntern.loading && <SpinLoading />}
+      {form && (
+        <div className="task-management">
+          <div>
+            <table>
+              <thead>
+                <tr>
+                  {[
+                    "STT",
+                    "Project",
+                    "abc",
+                    "Created Date",
+                    "Due Date",
+                    "Actions",
+                  ].map((item, index) => {
+                    return <th key={index}>{item}</th>;
+                  })}
+                </tr>
+              </thead>
+
+              <tbody>
+                {form.map((item, index) => {
+                  return (
+                    <tr key={index}>
+                      <td>{item.projectId}</td>
+                      <td>{item.title}</td>
+                      <td>2/5</td>
+                      <td>
+                        {moment(new Date(item.startDate)).format("DD-MM-YYYY")}
+                      </td>
+                      <td>
+                        {moment(new Date(item.dueDate)).format("DD-MM-YYYY")}
+                      </td>
+                      <td>
+                        <NavLink
+                          activeClassName="--active"
+                          to={`/taskManagement/project${item.projectId}`}
+                        >
+                          <p>Detail</p>
+                        </NavLink>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      )}
     </>
   );
 }
