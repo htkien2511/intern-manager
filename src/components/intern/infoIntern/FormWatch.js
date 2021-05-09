@@ -9,7 +9,7 @@ function FormWatch() {
     name: "",
     email: "",
     department: "",
-    gender: true,
+    gender: "",
     address: "",
   });
   useEffect(() => {
@@ -37,15 +37,15 @@ function FormWatch() {
             </div>
             <div className="info__department">
               <label>Department:</label>
-              <p>{form.department ? form.department : "No department"}</p>
+              <p>{form.department ? form.department : "No fill department"}</p>
             </div>
             <div className="info__sex">
               <label id="sex">Gender:</label>
-              <p>{form.gender ? "Male" : "Female"}</p>
+              <p>{form.gender ? form.gender : "No fill gender"}</p>
             </div>
             <div className="info__address">
               <label>Address:</label>
-              <p>{form.address ? form.address : "No address"}</p>
+              <p>{form.address ? form.address : "No fill address"}</p>
             </div>
             <NavLink activeClassName="--active" to={ROUTE_EDIT_PROFILE}>
               <button className="btn-edit">Edit Profile</button>

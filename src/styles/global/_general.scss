@@ -200,3 +200,10 @@ body {
 .fc-daygrid-event {
   border: none;
 }
+.ant-tabs-tab {
+  font-size: 24px;
+}
+.ant-tabs-tab-active,
+.ant-tabs-tab-btn {
+  color: rgb(190, 52, 2) !important;
+}

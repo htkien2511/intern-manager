@@ -9,6 +9,8 @@ import { Input } from "reactstrap";
 import { updateAccount } from "redux/actions/updateAccount";
 import { toast } from "react-toastify";
 import { changePassword } from "redux/actions/changePassword";
+import { useSelector } from "react-redux";
+import SpinLoading from "components/common/core/SpinLoading";
 
 function FormEdit() {
   const { TabPane } = Tabs;
@@ -70,13 +72,12 @@ function FormEdit() {
             .find((item, index) => index === 0).id,
       address: form.address,
     };
-    console.log({ formData });
     // run api update account
-    updateAccount(formData, res => {
-      if (res.success){
-        setForm(res.data)
+    updateAccount(formData, (res) => {
+      if (res.success) {
+        setForm(res.data);
         console.log(res);
-        toast.success("Updated sucessfully");
+        toast.success("Updated successfully");
       } else {
         toast.error(res.message);
       }
@@ -94,12 +95,9 @@ function FormEdit() {
       oldPassword: formChangePass.oldPassword,
       newPassword: formChangePass.newPassword,
     };
-    console.log({ formData });
-    changePassword(formData, res => {
-      if (res.success){
-        setForm(res.data)
-        console.log(res);
-        toast.success("Changed password sucessfully");
+    changePassword(formData, (res) => {
+      if (res.success) {
+        toast.success("Changed password successfully");
       } else {
         toast.error(res.message);
       }
@@ -166,8 +164,14 @@ function FormEdit() {
     console.log(key);
   }
 
+  const storeUpdateProfile = useSelector((store) => store.updateAccount);
+  const storeChangePassword = useSelector((store) => store.changePassword);
+
   return (
     <div className="form-edit flex flex-row align__center">
+      {(storeUpdateProfile.loading || storeChangePassword.loading) && (
+        <SpinLoading />
+      )}
       <div className="form-edit__body__edit__info">
         <div className="edit-avatar">
           <img src={imageUrl} className="avatar" alt="avatar" />
