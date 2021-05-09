@@ -31,9 +31,9 @@ function TaskManagement() {
               <thead>
                 <tr>
                   {[
-                    "STT",
+                    "Project ID",
                     "Project",
-                    "abc",
+                    "In Progress",
                     "Created Date",
                     "Due Date",
                     "Actions",

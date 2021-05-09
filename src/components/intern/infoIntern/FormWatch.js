@@ -37,7 +37,7 @@ function FormWatch() {
             </div>
             <div className="info__department">
               <label>Department:</label>
-              <p>{form.department}</p>
+              <p>{form.department ? form.department : "No department"}</p>
             </div>
             <div className="info__sex">
               <label id="sex">Gender:</label>
@@ -45,7 +45,7 @@ function FormWatch() {
             </div>
             <div className="info__address">
               <label>Address:</label>
-              <p>{form.address}</p>
+              <p>{form.address ? form.address : "No address"}</p>
             </div>
             <NavLink activeClassName="--active" to={ROUTE_EDIT_PROFILE}>
               <button className="btn-edit">Edit Profile</button>

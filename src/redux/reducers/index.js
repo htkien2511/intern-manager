@@ -3,6 +3,7 @@ import login from "./login";
 import register from "./register";
 import forgotPassword from "./forgotPassword";
 import resetPassword from "./resetPassword";
+import changePassword from "./changePassword";
 import getAllUser from "./admin/getAllUser";
 import setTitle from "./admin/setTitle";
 import getProfileIntern from "./intern/getProfileIntern";
@@ -22,6 +23,7 @@ export default combineReducers({
   register,
   forgotPassword,
   resetPassword,
+  changePassword,
   getAllUser,
   setTitle,
   getProfileIntern,

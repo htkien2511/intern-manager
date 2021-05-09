@@ -6,6 +6,9 @@ import { getAuth } from "utils/helpers";
 import { Tabs } from "antd";
 import { getAllDepartments } from "redux/actions/getAllDepartments";
 import { Input } from "reactstrap";
+import { updateAccount } from "redux/actions/updateAccount";
+import { toast } from "react-toastify";
+import { changePassword } from "redux/actions/changePassword";
 
 function FormEdit() {
   const { TabPane } = Tabs;
@@ -69,6 +72,15 @@ function FormEdit() {
     };
     console.log({ formData });
     // run api update account
+    updateAccount(formData, res => {
+      if (res.success){
+        setForm(res.data)
+        console.log(res);
+        toast.success("Updated sucessfully");
+      } else {
+        toast.error(res.message);
+      }
+    });
   };
 
   const handleSubmitChangePassword = (event) => {
@@ -83,7 +95,15 @@ function FormEdit() {
       newPassword: formChangePass.newPassword,
     };
     console.log({ formData });
-    // run api change password
+    changePassword(formData, res => {
+      if (res.success){
+        setForm(res.data)
+        console.log(res);
+        toast.success("Changed password sucessfully");
+      } else {
+        toast.error(res.message);
+      }
+    });
   };
 
   const handleChange = (event) => {

@@ -35,7 +35,7 @@ function TaskManagementDetail() {
               <thead>
                 <tr>
                   {[
-                    "STT",
+                    "Task ID",
                     "Task",
                     "Descrition",
                     "Create at",
@@ -67,12 +67,14 @@ function TaskManagementDetail() {
                           <p>{item.isDone ? "Done" : "In Progess"}</p>
                         </NavLink>
                       </td>
-                      <NavLink
+                     <td>
+                     <NavLink
                         activeClassName="--active"
                         to={ROUTE_TASK_MANAGEMENT_DETAIL}
                       >
                         <p>Feedback</p>
                       </NavLink>
+                     </td>
                     </tr>
                   );
                 })}
