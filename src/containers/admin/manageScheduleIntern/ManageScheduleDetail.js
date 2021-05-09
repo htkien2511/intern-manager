@@ -11,7 +11,6 @@ export default function ManageScheduleDetail() {
   ];
 
   const renderEventContent = (eventInfo) => {
-    console.log(eventInfo.event.lesson);
     const renderColorByShift = () => {
       switch (eventInfo.event._def.extendedProps.shift) {
         case 0:
@@ -25,17 +24,15 @@ export default function ManageScheduleDetail() {
       }
     };
     return (
-      <div style={{ background: renderColorByShift() }}>
-        <span style={{ color: "black" }}>
-          {eventInfo.event._def.extendedProps.reason}
-        </span>
-      </div>
+      <div style={{ background: renderColorByShift(), height: 100 }}></div>
     );
   };
 
   const handleEventClick = (eventInfo) => {
-    console.log(eventInfo.event._def.extendedProps);
+    console.log(eventInfo.event && eventInfo.event._def.extendedProps);
+    alert(`The reason off:  ${eventInfo.event._def.extendedProps.reason}`);
   };
+
   return (
     <div className="manage-schedule-detail">
       <div className="manage-schedule-detail__inner">
