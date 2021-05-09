@@ -15,7 +15,7 @@ export function getProfileIntern(user_id, resolve = () => {}) {
       },
     }
   )
-    .then((response) => response.json())
+    .then((response) => response.json())  
     .then((data) => {
       resolve(data);
       store.dispatch({

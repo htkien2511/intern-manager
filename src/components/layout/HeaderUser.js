@@ -27,9 +27,9 @@ function HeaderUser() {
                         <span>Register Schedule</span>
                     </NavLink>
 
-                    <NavLink activeClassName="--active" to={ROUTE_FEEDBACKS} exact>
+                    {/* <NavLink activeClassName="--active" to={ROUTE_FEEDBACKS} exact>
                         <span>Feedback</span>
-                    </NavLink>
+                    </NavLink> */}
 
                     <DropdownUserMenu />
                 </div>

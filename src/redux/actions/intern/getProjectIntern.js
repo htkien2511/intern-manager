@@ -1,4 +1,4 @@
-// import { getAuth } from "../../../utils/helpers";
+import { getAuth } from "../../../utils/helpers";
 import * as types from "../../constants";
 import store from "../../store";
 export function getProjectIntern(user_id, resolve = () => {}) {
@@ -6,12 +6,12 @@ export function getProjectIntern(user_id, resolve = () => {}) {
     type: types.GET_PROJECT_INTERN,
   });
   return fetch(
-    `${process.env.REACT_APP_API_URL}project?id_user=${user_id}`,
+    `${process.env.REACT_APP_API_URL}project?user_id=${user_id}`,
     {
       method: "GET",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-        // Authorization: "Bearer " + getAuth().token,
+        Authorization: getAuth().token,
       },
     }
   )
