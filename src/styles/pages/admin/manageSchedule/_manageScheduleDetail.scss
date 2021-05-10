@@ -3,25 +3,38 @@
   &__inner {
     position: relative;
     margin: 0 80px;
-    .block__info_shift {
-      & > div {
-        margin-left: 15px;
-        align-items: center;
-        & > span {
-          margin: 5px;
-        }
+    .block__calendar {
+      box-shadow: rgb(192, 192, 192) 0px 2px 2px;
+      margin-right: 10px;
+      width: 60%;
+      .block__info_shift {
         & > div {
-          width: 16px;
-          height: 16px;
-          border-radius: 5px;
+          margin-left: 15px;
+          align-items: center;
+          & > span {
+            margin: 5px;
+          }
+          & > div {
+            width: 16px;
+            height: 16px;
+            border-radius: 5px;
+          }
         }
       }
+      & > button {
+        width: 200px;
+        height: 40px;
+        position: absolute;
+        right: 50%;
+      }
     }
-    & > button {
-      width: 200px;
-      height: 40px;
-      position: absolute;
-      right: 50%;
+    .block__info_details {
+      margin-left: 10px;
+      width: 40%;
+      height: 600px;
+      background: rgb(255, 255, 255);
+      box-shadow: rgb(192, 192, 192) 0px 5px 25px;
+      border-radius: 4px;
     }
   }
 }

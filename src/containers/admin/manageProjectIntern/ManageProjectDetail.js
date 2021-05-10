@@ -7,7 +7,9 @@ import Spinner from "react-bootstrap/Spinner";
 import ModalAddTask from "./ModalAddProject";
 import { Input } from "reactstrap";
 import Popup from "components/common/core/Popup";
-import { RollbackOutlined } from "@ant-design/icons";
+import { CommentOutlined, RollbackOutlined } from "@ant-design/icons";
+import { Tooltip } from "antd";
+import { IconButton } from "@material-ui/core";
 
 const Icon = ({ icon, color }) => {
   return (
@@ -37,12 +39,12 @@ const renderTable = (title, data) => {
       <Table>
         <thead>
           <tr>
-            <th>{title}</th>
-            <th>Task</th>
+            <th>Task ID</th>
+            <th>Task name</th>
             <th>CREATED AT</th>
             <th>COMPLETED AT</th>
             <th>ASSIGN BY</th>
-            <th>PRIORITY</th>
+            <th>Level</th>
             <th>ACTIONS</th>
           </tr>
         </thead>
@@ -115,9 +117,20 @@ const renderTable = (title, data) => {
                   <div className="test-plan__content test-plan__content--actions">
                     {iconsAction.map((item, index) => {
                       return (
-                        <Icon key={index} icon={item.name} color={item.color} />
+                        <Tooltip placement="top" title={item.name}>
+                          <Icon
+                            key={index}
+                            icon={item.name}
+                            color={item.color}
+                          />
+                        </Tooltip>
                       );
                     })}
+                    <Tooltip placement="top" title="Feedback">
+                      <IconButton>
+                        <CommentOutlined />
+                      </IconButton>
+                    </Tooltip>
                   </div>
                 </td>
               </tr>

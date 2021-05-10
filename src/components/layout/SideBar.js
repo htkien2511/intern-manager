@@ -71,7 +71,7 @@ function SideBar() {
                 Manage Project Intern
               </NavLink>
             </div>
-            <div className="side-bar__inner__items--menu__item flex">
+            {/* <div className="side-bar__inner__items--menu__item flex">
               <div className="temp"></div>
               <i className="fi-rr-comment-alt" />
               <NavLink
@@ -81,7 +81,7 @@ function SideBar() {
               >
                 Manage Feedback Intern
               </NavLink>
-            </div>
+            </div> */}
             <div className="side-bar__inner__items--menu__item flex">
               <div className="temp"></div>
               <i className="fi-rr-hourglass-end"></i>

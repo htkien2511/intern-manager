@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import Calendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
+import moment from "moment";
 
 export default function ManageScheduleDetail() {
   const dataEvents = [
@@ -27,54 +28,79 @@ export default function ManageScheduleDetail() {
       <div style={{ background: renderColorByShift(), height: 100 }}></div>
     );
   };
+  const [infoDetailsOffDay, setInfoDetailsOffDay] = useState({});
 
   const handleEventClick = (eventInfo) => {
-    console.log(eventInfo.event && eventInfo.event._def.extendedProps);
-    alert(`The reason off:  ${eventInfo.event._def.extendedProps.reason}`);
+    setInfoDetailsOffDay(eventInfo.event._def.extendedProps.reason);
+    setInfoDetailsOffDay(eventInfo);
   };
 
   return (
     <div className="manage-schedule-detail">
-      <div className="manage-schedule-detail__inner">
-        <div
-          className="flex block__info_shift"
-          style={{ justifyContent: "flex-end" }}
-        >
-          <div className="flex">
-            <span>Off the morning</span>
-            <div
-              style={{
-                background: "yellow",
-              }}
-            ></div>
+      <div className="manage-schedule-detail__inner flex items-center">
+        <div className="block__calendar">
+          <div
+            className="flex block__info_shift"
+            style={{ justifyContent: "flex-end" }}
+          >
+            <div className="flex">
+              <span>Off the morning</span>
+              <div
+                style={{
+                  background: "yellow",
+                }}
+              ></div>
+            </div>
+            <div className="flex">
+              <span>Off the afternoon</span>
+              <div
+                style={{
+                  background: "chocolate",
+                }}
+              ></div>
+            </div>
+            <div className="flex">
+              <span>Off all day</span>
+              <div
+                style={{
+                  background: "red",
+                }}
+              ></div>
+            </div>
           </div>
-          <div className="flex">
-            <span>Off the afternoon</span>
-            <div
-              style={{
-                background: "chocolate",
-              }}
-            ></div>
+          <Calendar
+            eventClick={handleEventClick}
+            plugins={[dayGridPlugin]}
+            events={dataEvents}
+            eventContent={renderEventContent}
+            headerToolbar={{
+              right: "prev,next",
+              left: "title",
+            }}
+          />
+        </div>
+        <div className="block__info_details">
+          <span>Information details of the off day</span>
+          <div>
+            {infoDetailsOffDay.event &&
+              infoDetailsOffDay.event._def.extendedProps.reason}
           </div>
-          <div className="flex">
-            <span>Off all day</span>
-            <div
-              style={{
-                background: "red",
-              }}
-            ></div>
+          <div>
+            {moment(
+              infoDetailsOffDay.event &&
+                infoDetailsOffDay.event._instance.range.start
+            ).format("YYYY/MM/DD")}
+          </div>
+          <div>
+            {infoDetailsOffDay.event &&
+            infoDetailsOffDay.event._def.extendedProps.shift === 0
+              ? "All day"
+              : infoDetailsOffDay.event &&
+                infoDetailsOffDay.event._def.extendedProps.shift === 1
+              ? "The morning"
+              : "The afternoon"}
           </div>
         </div>
-        <Calendar
-          eventClick={handleEventClick}
-          plugins={[dayGridPlugin]}
-          events={dataEvents}
-          eventContent={renderEventContent}
-          headerToolbar={{
-            right: "prev,next",
-            left: "title",
-          }}
-        />
       </div>
     </div>
   );
