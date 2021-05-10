@@ -9,7 +9,7 @@ import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import { useHistory } from "react-router";
-import { ROUTE_MANAGE_TASK_DETAIL } from "../../../utils/routes";
+import { ROUTE_MANAGE_PROJECT_DETAIL } from "../../../utils/routes";
 import { Input } from "reactstrap";
 // import { Empty, Skeleton } from "antd";
 
@@ -150,7 +150,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function ManageTask() {
+export default function ManageProject() {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -175,7 +175,7 @@ export default function ManageTask() {
               type="text"
               name="search"
               id="searchKey"
-              placeholder="Search intern(s)"
+              placeholder="Search project(s)"
             />
           </div>
         </div>
@@ -207,7 +207,7 @@ export default function ManageTask() {
                           tabIndex={-1}
                           key={indexRow}
                           onClick={() => {
-                            history.push(ROUTE_MANAGE_TASK_DETAIL);
+                            history.push(ROUTE_MANAGE_PROJECT_DETAIL);
                           }}
                         >
                           {columns.map((column) => {

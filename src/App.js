@@ -13,7 +13,7 @@ import {
   ROUTE_MANAGE_SCHEDULE,
   ROUTE_MANAGE_SCHEDULE_DETAIL,
   ROUTE_MANAGE_LEADER,
-  ROUTE_MANAGE_TASK,
+  ROUTE_MANAGE_PROJECT,
   ROUTE_MANAGE_ACCOUNT_WAITING,
   ROUTE_PROFILE,
   ROUTE_EDIT_PROFILE,
@@ -24,9 +24,9 @@ import {
   ROUTE_SEND_FEEDBACK,
   ROUTE_VIEW_STATISTIC,
   ROUTE_MANAGE_FEEDBACK__INTERN,
-  ROUTE_MANAGE_TASK_DETAIL,
   ROUTE_MANAGE_FEEDBACK__INTERN_DETAIL,
   ROUTE_TASK_MANAGEMENT_DETAIL,
+  ROUTE_MANAGE_PROJECT_DETAIL,
 } from "./utils/routes";
 import { ForgotPassword } from "./containers/forgotPassword";
 import { ResetPassword } from "./containers/resetPassword";
@@ -46,9 +46,9 @@ import {
   ManageScheduleDetail,
 } from "./containers/admin/manageScheduleIntern";
 import {
-  ManageTask,
-  ManageTaskDetail,
-} from "containers/admin/manageTaskIntern";
+  ManageProject,
+  ManageProjectDetail,
+} from "containers/admin/manageProjectIntern";
 import { ManageAccountWaiting } from "containers/admin/manageAccountWaiting";
 import {
   ManageFeedback,
@@ -200,13 +200,13 @@ function App() {
           exact
         />
         <Route
-          path={ROUTE_MANAGE_TASK}
-          component={withAuth(ManageTask, false)}
+          path={ROUTE_MANAGE_PROJECT}
+          component={withAuth(ManageProject, false)}
           exact
         />
         <Route
-          path={ROUTE_MANAGE_TASK_DETAIL}
-          component={withAuth(ManageTaskDetail, false)}
+          path={ROUTE_MANAGE_PROJECT_DETAIL}
+          component={withAuth(ManageProjectDetail, false)}
           exact
         />
         <Route

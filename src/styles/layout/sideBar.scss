@@ -1,11 +1,14 @@
 .side-bar {
   height: 100vh;
   position: fixed;
-  // background-color: $white;
   background-color: #f3f3f3;
-  // box-shadow: 1px 1px 15px $light-grey;
+  z-index: 999;
+  display: block;
+  @media only screen and (max-width: 1390px) {
+    display: none;
+    transition: 0.5s;
+  }
   &__inner {
-    width: 300px;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;

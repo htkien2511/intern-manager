@@ -21,8 +21,8 @@ import { toast } from "react-toastify";
 import { Empty } from "antd";
 
 const columns = [
-  { id: "id", label: "Id", minWidth: 170 },
-  { id: "name", label: "Name", minWidth: 100 },
+  { id: "id", label: "Id", minWidth: 80 },
+  { id: "name", label: "Name", minWidth: 170 },
   {
     id: "email",
     label: "Email",
@@ -32,20 +32,20 @@ const columns = [
   {
     id: "gender",
     label: "Gender",
-    minWidth: 170,
-    align: "left",
+    minWidth: 100,
+    align: "center",
   },
   {
     id: "department",
     label: "Department",
-    minWidth: 170,
-    align: "left",
+    minWidth: 100,
+    align: "center",
   },
   {
     id: "address",
     label: "Address",
     minWidth: 170,
-    align: "left",
+    align: "center",
   },
   {
     id: "actions",
@@ -194,9 +194,18 @@ export default function ManageLeader() {
       default:
         return (
           <TableCell key={column.id + " - " + indexRow} align={column.align}>
-            {column.format && typeof value === "number"
-              ? column.format(value)
-              : value}
+            {value ? (
+              column.format && typeof value === "number" ? (
+                column.format(value)
+              ) : (
+                value
+              )
+            ) : (
+              <Empty
+                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                style={{ padding: 0 }}
+              />
+            )}
           </TableCell>
         );
     }
@@ -288,7 +297,7 @@ export default function ManageLeader() {
                     })
                 ) : (
                   <TableRow>
-                    {[1, 2, 3, 4, 5, 6].map((item) => {
+                    {[1, 2, 3, 4, 5, 6, 7].map((item) => {
                       return (
                         <TableCell key={item}>
                           {storeGetAllManager.loading ? (

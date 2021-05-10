@@ -8,7 +8,7 @@ import {
   ROUTE_MANAGE_INTERN,
   ROUTE_MANAGE_LEADER,
   ROUTE_MANAGE_SCHEDULE,
-  ROUTE_MANAGE_TASK,
+  ROUTE_MANAGE_PROJECT,
   ROUTE_VIEW_STATISTIC,
 } from "../../utils/routes";
 import Logo from "assets/images/logoInternManage.png";
@@ -65,7 +65,7 @@ function SideBar() {
               <i className="fi-rr-list-check"></i>
               <NavLink
                 activeClassName="side-bar__inner__items--menu__item--active border-corner"
-                to={ROUTE_MANAGE_TASK}
+                to={ROUTE_MANAGE_PROJECT}
                 onClick={() => dispatch(setTitle("Manage Project Intern"))}
               >
                 Manage Project Intern

@@ -81,6 +81,8 @@ export const ContentModal = ({ data, setOpenModal, setData }) => {
             .find((item, index) => index === 0).id,
       address: form.address,
     };
+
+    console.log({ formData });
     updateAccount(formData, (res) => {
       if (res.success) {
         getAllManager((r) => {

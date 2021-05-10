@@ -48,6 +48,10 @@
 .app__admin {
   &__body {
     width: 100%;
+    @media only screen and (max-width: 1390px) {
+      transition: margin-left 0.5s; /* If you want a transition effect */
+      margin-left: 0;
+    }
     margin-left: 300px;
     min-height: 100vh;
   }
@@ -206,4 +210,7 @@ body {
 .ant-tabs-tab-active,
 .ant-tabs-tab-btn {
   color: rgb(190, 52, 2) !important;
+}
+.ant-empty-normal {
+  margin: 0;
 }

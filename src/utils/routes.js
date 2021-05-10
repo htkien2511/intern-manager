@@ -22,8 +22,8 @@ export const ROUTE_MANAGE_INTERN = "/admin/manage-intern";
 export const ROUTE_MANAGE_SCHEDULE = "/admin/manage-schedule";
 export const ROUTE_MANAGE_SCHEDULE_DETAIL = "/admin/manage-schedule:userId";
 export const ROUTE_MANAGE_LEADER = "/admin/manage-leader";
-export const ROUTE_MANAGE_TASK = "/admin/manage-project";
-export const ROUTE_MANAGE_TASK_DETAIL = "/admin/manage-project:projectId";
+export const ROUTE_MANAGE_PROJECT = "/admin/manage-project";
+export const ROUTE_MANAGE_PROJECT_DETAIL = "/admin/manage-project:projectId";
 export const ROUTE_MANAGE_FEEDBACK__INTERN = "/admin/manage-feedback";
 export const ROUTE_MANAGE_FEEDBACK__INTERN_DETAIL =
   "/admin/manage-feedback:userId";

@@ -21,25 +21,31 @@ import { toast } from "react-toastify";
 import { Checkbox } from "@material-ui/core";
 
 const columns = [
-  { id: "id", label: "Id", minWidth: 170 },
-  { id: "name", label: "Name", minWidth: 100 },
+  { id: "id", label: "Id", minWidth: 80 },
+  { id: "name", label: "Name", minWidth: 170 },
   {
     id: "email",
     label: "Email",
-    minWidth: 170,
+    minWidth: 180,
     align: "left",
+  },
+  {
+    id: "gender",
+    label: "Gender",
+    minWidth: 100,
+    align: "center",
   },
   {
     id: "department",
     label: "Department",
-    minWidth: 170,
-    align: "left",
+    minWidth: 100,
+    align: "center",
   },
   {
     id: "address",
     label: "Address",
     minWidth: 170,
-    align: "left",
+    align: "center",
   },
   {
     id: "actions",
@@ -49,8 +55,8 @@ const columns = [
   },
 ];
 
-function createData(id, name, email, department, address, actions) {
-  return { id, name, email, department, address, actions };
+function createData(id, name, email, gender, department, address, actions) {
+  return { id, name, email, gender, department, address, actions };
 }
 
 const useStyles = makeStyles({
@@ -82,6 +88,7 @@ export default function ManageAccountWaiting() {
               item.id,
               item.name,
               item.email,
+              item.gender,
               item.department,
               item.address,
               "Accepted|Denied|Selected"
@@ -279,9 +286,18 @@ export default function ManageAccountWaiting() {
       default:
         return (
           <TableCell key={column.id + " - " + indexRow} align={column.align}>
-            {column.format && typeof value === "number"
-              ? column.format(value)
-              : value}
+            {value ? (
+              column.format && typeof value === "number" ? (
+                column.format(value)
+              ) : (
+                value
+              )
+            ) : (
+              <Empty
+                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                style={{ padding: 0 }}
+              />
+            )}
           </TableCell>
         );
     }
@@ -321,12 +337,11 @@ export default function ManageAccountWaiting() {
                   style={{
                     margin: 5,
                     color: "black",
-                    background: "gray",
                     borderRadius: 5,
                     width: "140px",
                     height: 40,
                   }}
-                  className="button"
+                  className="button button--success"
                   onClick={() => setOpenModalAcceptAll(true)}
                 >
                   Accepted All
@@ -335,12 +350,11 @@ export default function ManageAccountWaiting() {
                   style={{
                     margin: 5,
                     color: "black",
-                    background: "gray",
                     borderRadius: 5,
                     width: "140px",
                     height: 40,
                   }}
-                  className="button"
+                  className="button button--danger"
                   onClick={() => setOpenModalDeleteAll(true)}
                 >
                   Denied All
@@ -392,7 +406,7 @@ export default function ManageAccountWaiting() {
                     })
                 ) : (
                   <TableRow>
-                    {[1, 2, 3, 4, 5, 6].map((item) => {
+                    {[1, 2, 3, 4, 5, 6, 7].map((item) => {
                       return (
                         <TableCell key={item}>
                           {storeGetAllAccountWaiting.loading ? (

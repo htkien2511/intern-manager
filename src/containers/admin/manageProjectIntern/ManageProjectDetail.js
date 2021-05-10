@@ -5,16 +5,19 @@ import IconStar from "assets/icons/TTM_Icon-Star.svg";
 import IconStarNoFill from "assets/icons/TTM_Icon-Star-NoFill.svg";
 import { Button, Table, ProgressBar } from "react-bootstrap";
 import Spinner from "react-bootstrap/Spinner";
-import ModalAddTask from "./ModalAddTask";
+import ModalAddTask from "./ModalAddProject";
 import Popup from "components/common/core/Popup";
 
 const Icon = ({ icon, color }) => {
   return (
-    <div className="block--icon align__center" style={{ backgroundColor: color }}>
+    <div
+      className="block--icon align__center"
+      style={{ backgroundColor: color }}
+    >
       <img src={icon} alt="" />
     </div>
-  )
-}
+  );
+};
 const renderStars = (amount) => {
   const stars = [];
   let i = 0;
@@ -26,7 +29,7 @@ const renderStars = (amount) => {
     }
   }
   return stars;
-}
+};
 const renderTable = (title, data) => {
   return (
     <div className="test-library__inner__content__test-plan">
@@ -56,14 +59,16 @@ const renderTable = (title, data) => {
                 <td>
                   <div className="test-plan__content">
                     <div className="test-plan__content__inner test-plan__content__inner--test__plan">
-                      <span>
-                        {item.test_plan.value}
-                      </span>
-                      {item.test_plan.progress ?
+                      <span>{item.test_plan.value}</span>
+                      {item.test_plan.progress ? (
                         <div className="block__progress">
                           <ProgressBar now={item.test_plan.progress} />
-                          <Spinner animation="border" className="block__progress__spinner" />
-                        </div> : null}
+                          <Spinner
+                            animation="border"
+                            className="block__progress__spinner"
+                          />
+                        </div>
+                      ) : null}
                     </div>
                   </div>
                 </td>
@@ -93,7 +98,14 @@ const renderTable = (title, data) => {
                   <div className="test-plan__content">
                     <div className="test-plan__content__inner">
                       {renderStars(item.priority).map((item, index) => {
-                        return <img src={item} alt="" key={index} className="icon--star" />;
+                        return (
+                          <img
+                            src={item}
+                            alt=""
+                            key={index}
+                            className="icon--star"
+                          />
+                        );
                       })}
                     </div>
                   </div>
@@ -101,28 +113,30 @@ const renderTable = (title, data) => {
                 <td>
                   <div className="test-plan__content test-plan__content--actions">
                     {iconsAction.map((item, index) => {
-                      return <Icon key={index} icon={item.name} color={item.color} />
+                      return (
+                        <Icon key={index} icon={item.name} color={item.color} />
+                      );
                     })}
                   </div>
                 </td>
               </tr>
-            )
+            );
           })}
         </tbody>
       </Table>
     </div>
-  )
-}
+  );
+};
 
-const ManageTaskDetail = () => {
+const ManageProjectDetail = () => {
   const [showModal, setShowModal] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
   const handleAddTask = () => {
     setShowModal(true);
-  }
+  };
   const handleConfirm = () => {
     setOpenModalDelete(false);
-  }
+  };
 
   return (
     <>
@@ -131,7 +145,10 @@ const ManageTaskDetail = () => {
           <div className="test-library__inner__header">
             <div className="button--create-new align__center">
               <span className="button--create-new__icon--plus">+</span>
-              <Button className="button--create-new__btn--create" onClick={handleAddTask}>
+              <Button
+                className="button--create-new__btn--create"
+                onClick={handleAddTask}
+              >
                 <span>CREATE NEW</span>
               </Button>
             </div>
@@ -141,9 +158,17 @@ const ManageTaskDetail = () => {
           </div>
         </div>
       </div>
-      { showModal && <ModalAddTask setOpenModal={setShowModal} title="Add task" />}
-      {openModalDelete && <Popup onCancel={setOpenModalDelete} onConfirm={handleConfirm} title="Are you delete this task?"/>}
+      {showModal && (
+        <ModalAddTask setOpenModal={setShowModal} title="Add task" />
+      )}
+      {openModalDelete && (
+        <Popup
+          onCancel={setOpenModalDelete}
+          onConfirm={handleConfirm}
+          title="Are you delete this task?"
+        />
+      )}
     </>
   );
 };
-export default ManageTaskDetail;
+export default ManageProjectDetail;
