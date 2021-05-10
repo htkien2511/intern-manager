@@ -22,6 +22,10 @@ import { toast } from "react-toastify";
 import SpinLoading from "components/common/core/SpinLoading";
 // import { getAllUserAssignedProject } from "redux/actions/admin/getAllUserAssignedProject";
 import AvatarBlock from "components/common/core/AvatarBlock";
+import { getAuth } from "utils/helpers";
+import Popup from "components/common/core/Popup";
+import ModalEditProject from "./ModalEditProject";
+import { deleteProject } from "redux/actions/admin/deleteProject";
 
 const columns = [
   { id: "projectID", label: "Project ID", minWidth: 60 },
@@ -148,46 +152,15 @@ export default function ManageProject() {
     setFilteredData(data);
   }, [data]);
 
-  // const [openModalAccept, setOpenModalAccept] = useState(false);
-  // const [openModalDelete, setOpenModalDelete] = useState(false);
-  // const [infoRow, setInfoRow] = useState({
-  //   id: "",
-  //   name: "",
-  //   email: "",
-  //   department: "",
-  //   address: "",
-  // });
-
-  // const handleAction = (item, row) => {
-  //   switch (item) {
-  //     case "Edit": {
-  //       setInfoRow({
-  //         ...infoRow,
-  //         id: row.id,
-  //         name: row.name,
-  //         email: row.email,
-  //         department: row.department,
-  //         address: row.address,
-  //       });
-  //       setOpenModalAccept(true);
-  //       break;
-  //     }
-  //     case "Denied": {
-  //       setOpenModalDelete(true);
-  //       setInfoRow({
-  //         ...infoRow,
-  //         id: row.id,
-  //         name: row.name,
-  //         email: row.email,
-  //         department: row.department,
-  //         address: row.address,
-  //       });
-  //       break;
-  //     }
-  //     default:
-  //       break;
-  //   }
-  // };
+  const [openModalEdit, setOpenModalEdit] = useState(false);
+  const [openModalDelete, setOpenModalDelete] = useState(false);
+  const [infoSelected, setInfoSelected] = React.useState({
+    title: "",
+    description: "",
+    dueDate: "",
+    idOfAdmin: getAuth().id,
+    projectId: "",
+  });
 
   const handleSearch = (event) => {
     const lowercasedValue = event.target.value.toLowerCase().trim();
@@ -207,6 +180,31 @@ export default function ManageProject() {
       });
       setFilteredData(filteredData);
     }
+  };
+
+  const handleEditProject = (item) => {
+    setInfoSelected({
+      ...infoSelected,
+      title: item.title,
+      description: item.description,
+      dueDate: item.dueDate,
+      idOfAdmin: getAuth().id,
+      projectId: item.projectID,
+    });
+    setOpenModalEdit(true);
+  };
+  const handleDeleteProject = () => {
+    setOpenModalDelete(false);
+    deleteProject(infoSelected.projectId, (res) => {
+      if (res.success) {
+        toast.success("Deleted successfully");
+        setData(
+          data.filter((item) => item.projectID !== infoSelected.projectId)
+        );
+      } else {
+        toast.error(res.message);
+      }
+    });
   };
 
   const renderCell = (column, value, indexRow, row) => {
@@ -236,8 +234,24 @@ export default function ManageProject() {
                         >
                           See tasks
                         </div>
-                        <div>Edit project</div>
-                        <div>Delete project</div>
+                        <div onClick={() => handleEditProject(row)}>
+                          Edit project
+                        </div>
+                        <div
+                          onClick={() => {
+                            setOpenModalDelete(true);
+                            setInfoSelected({
+                              ...infoSelected,
+                              title: row.title,
+                              description: row.description,
+                              dueDate: moment(row.dueDate).format("YYYY/MM/DD"),
+                              idOfAdmin: getAuth().id,
+                              projectId: row.projectID,
+                            });
+                          }}
+                        >
+                          Delete project
+                        </div>
                       </div>
                     </div>
                   )}
@@ -257,7 +271,7 @@ export default function ManageProject() {
       case "usersAssigned": {
         return (
           <TableCell key={column.id + " - " + indexRow}>
-            <AvatarBlock users_list={value.split(",")} />
+            <AvatarBlock users_list={value && value.split(",")} />
           </TableCell>
         );
       }
@@ -296,10 +310,14 @@ export default function ManageProject() {
   };
 
   const storeCreateProject = useSelector((store) => store.createProject);
+  const storeEditProject = useSelector((store) => store.updateProject);
+  const storeDeleteProject = useSelector((store) => store.deleteProject);
 
   return (
     <div className="manage-intern">
-      {storeCreateProject.loading && <SpinLoading />}
+      {(storeCreateProject.loading ||
+        storeDeleteProject.loading ||
+        storeEditProject.loading) && <SpinLoading />}
       <div className="manage-intern__inner">
         <div className="manage-intern__inner__top">
           <div className="button manage-intern__inner__top__search">
@@ -349,9 +367,6 @@ export default function ManageProject() {
                           role="checkbox"
                           tabIndex={-1}
                           key={indexRow}
-                          // onClick={() => {
-                          //   history.push(ROUTE_MANAGE_PROJECT_DETAIL);
-                          // }}
                         >
                           {columns.map((column) => {
                             const value = row[column.id];
@@ -392,8 +407,23 @@ export default function ManageProject() {
       {openModalAdd && (
         <ModalAddProject
           setOpenModal={setOpenModalAdd}
-          title="Form create project"
+          title="General project"
           setData={setData}
+        />
+      )}
+      {openModalDelete && (
+        <Popup
+          onCancel={setOpenModalDelete}
+          onConfirm={handleDeleteProject}
+          title="Are you sure delete this project?"
+        />
+      )}
+      {openModalEdit && (
+        <ModalEditProject
+          setOpenModal={setOpenModalEdit}
+          title="Edit project"
+          setData={setData}
+          infoSelected={infoSelected}
         />
       )}
     </div>
