@@ -1,58 +1,56 @@
-import React from 'react'
-import styled from 'styled-components'
-import useToggle from 'hooks/useToggle'
+import React from "react";
+import styled from "styled-components";
+import useToggle from "hooks/useToggle";
+import { useDetectClickOutside } from "react-detect-click-outside";
 
 const Trigger = () => {
-    return null
-}
+  return null;
+};
 
 const Content = () => {
-    return null
-}
+  return null;
+};
 
 const DropPanel = ({ children }) => {
-    const { isShowing, show, hide, toggle } = useToggle()
-    
-    if (!Array.isArray(children)) {
-        children = [children]
-    }
+  const { isShowing, show, hide, toggle } = useToggle();
 
-    // const trigger = children.find((child) => child.type.name === 'Trigger')
-    // const content = children.find((child) => child.type.name === 'Content')
+  if (!Array.isArray(children)) {
+    children = [children];
+  }
 
+  const trigger = children[0] || {};
+  const content = children[1] || {};
 
-  const trigger = children[0] || {}
-  const content = children[1] || {}
-  
+  const ref = useDetectClickOutside({ onTriggered: hide });
 
-    return (
-        <DropContainer className="drop__container">
-            <div className="drop__trigger">
-                {trigger
-                    ? trigger.props.children({ isShowing, show, hide, toggle })
-                    : null}
-            </div>
-            {
-                isShowing ?
-                <div className="drop__content">
-                {content
-                    ? content.props.children({ isShowing, show, hide, toggle })
-                    : null}
-                </div>
-                : null }
-        </DropContainer>
-    )
-}
-DropPanel.Trigger = Trigger
-DropPanel.Content = Content
+  return (
+    <DropContainer className="drop__container" ref={ref}>
+      <div className="drop__trigger">
+        {trigger
+          ? trigger.props.children({ isShowing, show, hide, toggle })
+          : null}
+      </div>
+      {isShowing ? (
+        <div className="drop__content">
+          {content
+            ? content.props.children({ isShowing, show, hide, toggle })
+            : null}
+        </div>
+      ) : null}
+    </DropContainer>
+  );
+};
+DropPanel.Trigger = Trigger;
+DropPanel.Content = Content;
 
 const DropContainer = styled.div`
-    
+  position: relative;
 
-    .drop__content {
-        width: 100%;
-        padding: 5px 25px;
-        text-align: left;
-    }
-`
-export default DropPanel
+  .drop__content {
+    position: absolute;
+    z-index: 1;
+    top: -2px;
+    left: -90px;
+  }
+`;
+export default DropPanel;

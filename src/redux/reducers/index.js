@@ -17,6 +17,12 @@ import updateAccount from "./updateAccount";
 import addManager from "./admin/addManager";
 import getProjectIntern from "./intern/getProjectIntern";
 import getTaskProjectIntern from "./intern/getTaskProjectIntern";
+import createProject from "./admin/createProject";
+import updateProject from "./admin/updateProject";
+import deleteProject from "./admin/deleteProject";
+import getAllProject from "./admin/getAllProject";
+import getAllUsersAssignedProject from "./admin/getAllUsersAssignedProject";
+import assignUsersIntoProject from "./admin/assignUsersIntoProject";
 
 export default combineReducers({
   login,
@@ -37,4 +43,10 @@ export default combineReducers({
   addManager,
   getProjectIntern,
   getTaskProjectIntern,
+  createProject,
+  updateProject,
+  deleteProject,
+  assignUsersIntoProject,
+  getAllUsersAssignedProject,
+  getAllProject,
 });

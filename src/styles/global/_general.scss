@@ -214,3 +214,9 @@ body {
 .ant-empty-normal {
   margin: 0;
 }
+
+// toast
+.Toastify__toast--error {
+  background: #ffbfb8 !important;
+  color: red;
+}

@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-// import { Button, Table, ProgressBar, Spinner } from "react-bootstrap";
 import { testPlan, iconsAction } from "utils/mockData";
 import IconStar from "assets/icons/TTM_Icon-Star.svg";
 import IconStarNoFill from "assets/icons/TTM_Icon-Star-NoFill.svg";
 import { Button, Table, ProgressBar } from "react-bootstrap";
 import Spinner from "react-bootstrap/Spinner";
 import ModalAddTask from "./ModalAddProject";
+import { Input } from "reactstrap";
 import Popup from "components/common/core/Popup";
+import { RollbackOutlined } from "@ant-design/icons";
 
 const Icon = ({ icon, color }) => {
   return (
@@ -141,6 +142,10 @@ const ManageProjectDetail = () => {
   return (
     <>
       <div className="test-library">
+        <div className="block__back-previous-page">
+          <RollbackOutlined onClick={() => window.history.back()} />
+          <div onClick={() => window.history.back()}>Back to previous page</div>
+        </div>
         <div className="test-library__inner">
           <div className="test-library__inner__header">
             <div className="button--create-new align__center">
@@ -151,6 +156,15 @@ const ManageProjectDetail = () => {
               >
                 <span>CREATE NEW</span>
               </Button>
+            </div>
+            <div className="button manage-intern__inner__top__search">
+              <i className="fi-rr-search"></i>
+              <Input
+                type="text"
+                name="search"
+                id="searchKey"
+                placeholder="Search project(s)"
+              />
             </div>
           </div>
           <div className="test-library__inner__content">
