@@ -6,6 +6,7 @@ import com.example.manager_intern.base.BaseFragment
 import com.example.manager_intern.base.BaseViewModel
 import com.example.manager_intern.base.viewBinding
 import com.example.manager_intern.databinding.UserFragBinding
+import com.example.manager_intern.ui.edit_profile.EditProfileActivity
 import com.example.manager_intern.ui.login.LoginActivity
 import com.example.manager_intern.utils.Pref
 
@@ -24,6 +25,7 @@ class UserFragment : BaseFragment<UserViewModel>(R.layout.user_frag) {
             if (it != null) {
                 binding.username.text = it.userData.name
                 binding.department.text = it.userData.department
+                binding.tvGender.text = it.userData.gender
             }
         }
 
@@ -32,5 +34,7 @@ class UserFragment : BaseFragment<UserViewModel>(R.layout.user_frag) {
             BaseViewModel.userResponsive.value = null
             startActivity(Intent(requireActivity(), LoginActivity::class.java))
         }
+
+        binding.edit.setOnClickListener { startActivity(Intent(requireContext(), EditProfileActivity::class.java)) }
     }
 }

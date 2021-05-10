@@ -44,6 +44,10 @@
         <activity
             android:name=".ui.forgot.ResetActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.edit_profile.EditProfileActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

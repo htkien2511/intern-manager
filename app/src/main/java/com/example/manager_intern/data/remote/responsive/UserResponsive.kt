@@ -28,5 +28,5 @@ data class UserData(
     @SerializedName("role")
     val role: String,
     @SerializedName("token")
-    val token: String,
+    var token: String,
 )

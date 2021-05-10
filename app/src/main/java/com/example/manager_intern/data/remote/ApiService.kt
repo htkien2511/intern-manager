@@ -34,4 +34,13 @@ interface ApiService {
 
     @POST("reset_password")
     fun postResetPassword(@Body body: RequestBody): Single<ForgotResponsive>
+
+    @GET("departments")
+    fun getAllDepartments(@Header("Authorization") auth: String): Single<DepartmentResponsive>
+
+    @POST("user_profile/edit")
+    fun postUpdateProfile(
+        @Header("Authorization") auth: String,
+        @Body body: RequestBody
+    ): Single<UserResponsive>
 }
