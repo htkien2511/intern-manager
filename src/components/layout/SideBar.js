@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import { setTitle } from "redux/actions/admin/setTitle";
 import {
   ROUTE_MANAGE_ACCOUNT_WAITING,
-  ROUTE_MANAGE_FEEDBACK__INTERN,
+  // ROUTE_MANAGE_FEEDBACK__INTERN,
   ROUTE_MANAGE_INTERN,
   ROUTE_MANAGE_LEADER,
   ROUTE_MANAGE_SCHEDULE,

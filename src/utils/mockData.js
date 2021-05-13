@@ -58,7 +58,7 @@ export const testPlan = [
 ];
 
 export const iconsAction = [
-  { name: IconEye, color: "blue" },
-  { name: IconEdit, color: "green" },
-  { name: IconDelete, color: "red" },
+  { name: IconEye, color: "blue", action: "See" },
+  { name: IconEdit, color: "green", action: "Edit" },
+  { name: IconDelete, color: "red", action: "Delete" },
 ];

@@ -1,14 +1,14 @@
 import { FormBox } from "components/common";
 import CustomizedModal from "components/common/core/CustomizeModal";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { Form as ReForm } from "reactstrap";
+import { Form as ReForm, Input } from "reactstrap";
 import { isEmpty } from "validator";
-import { getAuth } from "utils/helpers";
 import moment from "moment";
 import { createProject } from "redux/actions/admin/createProject";
 import { toast } from "react-toastify";
 import { getAllProject } from "redux/actions/admin/getAllProject";
+import { getAllManager } from "redux/actions/admin/getAllManager";
 
 export const HeaderModal = ({ close, title }) => {
   return (
@@ -35,6 +35,7 @@ function createData(
   title,
   description,
   managerName,
+  usersAssigned,
   startDate,
   dueDate,
   actions
@@ -44,6 +45,7 @@ function createData(
     title,
     description,
     managerName,
+    usersAssigned,
     startDate,
     dueDate,
     actions,
@@ -56,8 +58,23 @@ export const ContentModal = ({ setOpenModal, setData }) => {
     title: "",
     description: "",
     dueDate: "",
-    idOfAdmin: getAuth().id,
+    idOfAdmin: "",
   });
+
+  const [leaders, setLeaders] = useState([]);
+
+  useEffect(() => {
+    getAllManager((res) => {
+      if (res.success) {
+        setLeaders(res.data);
+        setForm({ ...form, idOfAdmin: res.data.map((item) => item.id)[0] });
+      } else {
+        toast.error(res.message);
+      }
+    });
+    // eslint-disable-next-line
+  }, []);
+
   const validate = () => {
     const errorState = {};
     // check validate
@@ -69,6 +86,9 @@ export const ContentModal = ({ setOpenModal, setData }) => {
     }
     if (isEmpty(form.dueDate)) {
       errorState.dueDate = "Please enter due date";
+    }
+    if (isEmpty(form.idOfAdmin + "")) {
+      errorState.idOfAdmin = "Please enter leader";
     }
     return errorState;
   };
@@ -98,7 +118,8 @@ export const ContentModal = ({ setOpenModal, setData }) => {
                   item.projectId,
                   item.title,
                   item.description,
-                  item.managerName,
+                  item.managerName.name,
+                  item.userAssignee.map((i) => i.name).join(","),
                   item.startDate,
                   item.dueDate,
                   "More"
@@ -117,6 +138,15 @@ export const ContentModal = ({ setOpenModal, setData }) => {
     setOpenModal(false);
   };
   const handleChange = (event) => {
+    if (event.target.name === "idOfAdmin") {
+      setForm({
+        ...form,
+        [event.target.name]: Number(
+          (event.target.value + "").split(" - ")[0].toString().match(/\d+/g)[0]
+        ),
+      });
+      return;
+    }
     setForm({ ...form, [event.target.name]: event.target.value });
   };
 
@@ -171,11 +201,48 @@ export const ContentModal = ({ setOpenModal, setData }) => {
                 onChange: handleChange,
                 onFocus: handleFocus,
                 value: form.dueDate,
+                min: moment(Date.now()).format("YYYY-MM-DD"),
                 disabled: false,
               }}
               error={error.dueDate}
             />
           </div>
+
+          <div>
+            <label>Select leader for project</label>
+            <Input
+              type="select"
+              name="idOfAdmin"
+              id="leader"
+              placeholder="Leader"
+              onChange={handleChange}
+              onFocus={handleFocus}
+              value={
+                leaders
+                  .filter((item) => item.id === form.idOfAdmin)
+                  .find((e, idx) => idx === 0) &&
+                `Id: ${form.idOfAdmin} - Name: ${
+                  leaders
+                    .filter((item) => item.id === form.idOfAdmin)
+                    .find((e, idx) => idx === 0).name
+                }`
+              }
+              disabled={false}
+            >
+              {leaders.map((item, index) => (
+                <option
+                  key={index}
+                >{`Id: ${item.id} - Name: ${item.name}`}</option>
+              ))}
+            </Input>
+            <span
+              className="invalid-feedback"
+              style={{ display: "block", marginLeft: 15 }}
+            >
+              {error.idOfAdmin}
+            </span>
+          </div>
+
           <button className="btn--save align__center" style={{ marginTop: 20 }}>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
               <g id="Layer_2" data-name="Layer 2">

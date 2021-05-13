@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Form as ReForm, Input } from "reactstrap";
 import { isEmpty } from "validator";
-import { getAuth } from "utils/helpers";
 import moment from "moment";
 import { toast } from "react-toastify";
 import { getAllProject } from "redux/actions/admin/getAllProject";
@@ -58,7 +57,7 @@ export const ContentModal = ({ setOpenModal, setData, data }) => {
     title: data.title,
     description: data.description,
     dueDate: moment(data.dueDate).format("YYYY-MM-DD"),
-    idOfAdmin: getAuth().id,
+    idOfAdmin: data.idOfAdmin,
     projectId: data.projectId,
   });
   const validate = () => {
@@ -189,6 +188,7 @@ export const ContentModal = ({ setOpenModal, setData, data }) => {
                 placeholder: "Due date",
                 onChange: handleChange,
                 onFocus: handleFocus,
+                min: moment(Date.now()).format("YYYY-MM-DD"),
                 value: form.dueDate,
                 disabled: false,
               }}

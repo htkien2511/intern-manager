@@ -20,12 +20,14 @@ import DropPanel from "components/common/core/DropPanel";
 import { MoreOutlined } from "@ant-design/icons";
 import { toast } from "react-toastify";
 import SpinLoading from "components/common/core/SpinLoading";
-// import { getAllUserAssignedProject } from "redux/actions/admin/getAllUserAssignedProject";
 import AvatarBlock from "components/common/core/AvatarBlock";
-import { getAuth } from "utils/helpers";
 import Popup from "components/common/core/Popup";
 import ModalEditProject from "./ModalEditProject";
 import { deleteProject } from "redux/actions/admin/deleteProject";
+import { Collapse } from "antd";
+import { CaretRightOutlined } from "@ant-design/icons";
+
+const { Panel } = Collapse;
 
 const columns = [
   { id: "projectID", label: "Project ID", minWidth: 60 },
@@ -45,8 +47,8 @@ const columns = [
   {
     id: "usersAssigned",
     label: "Users assigned",
-    minWidth: 160,
-    align: "left",
+    minWidth: 140,
+    align: "center",
   },
   {
     id: "startDate",
@@ -118,29 +120,26 @@ export default function ManageProject() {
     setPage(0);
   };
 
+  // const [managerRowSelected, setManageRowSelected] = useState();
+
   useEffect(() => {
     let arr = [];
     getAllProject((res) => {
       if (res.success) {
         res.data.forEach((item) => {
-          // getAllUserAssignedProject(Number(item.projectId), (r) => {
-          // if (r.success) {
           arr.push(
             createData(
               item.projectId,
               item.title,
               item.description,
-              item.managerName,
-              "PhanTrongDuc,NguyenHong,PhanThanhBinh,Kien,Sang",
-              // r.data.map((i) => i.name).join(","),
+              item.managerName.name,
+              item.userAssignee.map((i) => i.name).join(","),
               item.startDate,
               item.dueDate,
               "More"
             )
           );
           setData(arr);
-          // }
-          // });
         });
       } else {
         toast.error(res.message);
@@ -158,7 +157,7 @@ export default function ManageProject() {
     title: "",
     description: "",
     dueDate: "",
-    idOfAdmin: getAuth().id,
+    idOfAdmin: "",
     projectId: "",
   });
 
@@ -188,7 +187,7 @@ export default function ManageProject() {
       title: item.title,
       description: item.description,
       dueDate: item.dueDate,
-      idOfAdmin: getAuth().id,
+      idOfAdmin: item.idOfAdmin,
       projectId: item.projectID,
     });
     setOpenModalEdit(true);
@@ -245,7 +244,7 @@ export default function ManageProject() {
                               title: row.title,
                               description: row.description,
                               dueDate: moment(row.dueDate).format("YYYY/MM/DD"),
-                              idOfAdmin: getAuth().id,
+                              idOfAdmin: row.idOfAdmin,
                               projectId: row.projectID,
                             });
                           }}
@@ -271,7 +270,14 @@ export default function ManageProject() {
       case "usersAssigned": {
         return (
           <TableCell key={column.id + " - " + indexRow}>
-            <AvatarBlock users_list={value && value.split(",")} />
+            {!value.length ? (
+              <Empty
+                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                style={{ padding: 0 }}
+              />
+            ) : (
+              <AvatarBlock users_list={value.split(",")} />
+            )}
           </TableCell>
         );
       }
@@ -285,7 +291,24 @@ export default function ManageProject() {
       case "description": {
         return (
           <TableCell key={column.id + " - " + indexRow}>
-            {value.split(";").join(",")}
+            {/* {value.split(";").join(",")} */}
+            <Collapse
+              bordered={false}
+              defaultActiveKey={["1"]}
+              expandIcon={({ isActive }) => (
+                <CaretRightOutlined rotate={isActive ? 90 : 0} />
+              )}
+              className="site-collapse-custom-collapse"
+            >
+              <Panel
+                header="Show details"
+                className="site-collapse-custom-panel"
+              >
+                {value.split(";").map((item, index) => (
+                  <div key={index}>{item}</div>
+                ))}
+              </Panel>
+            </Collapse>
           </TableCell>
         );
       }
@@ -377,7 +400,7 @@ export default function ManageProject() {
                     })
                 ) : (
                   <TableRow>
-                    {[1, 2, 3, 4, 5, 6, 7].map((item) => {
+                    {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => {
                       return (
                         <TableCell key={item}>
                           {storeGetAllProject.loading ? (

@@ -50,7 +50,7 @@
     width: 100%;
     @media only screen and (max-width: 1390px) {
       transition: margin-left 0.5s; /* If you want a transition effect */
-      margin-left: 0;
+      // margin-left: 0;
     }
     margin-left: 300px;
     min-height: 100vh;
@@ -219,4 +219,10 @@ body {
 .Toastify__toast--error {
   background: #ffbfb8 !important;
   color: red;
+}
+.site-collapse-custom-collapse .site-collapse-custom-panel {
+  margin-bottom: 24px;
+  overflow: hidden;
+  border: 0px;
+  border-radius: 2px;
 }
