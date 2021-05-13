@@ -14,11 +14,12 @@ import ModalCreateAccount from "./ModalCreateAccount";
 import Popup from "components/common/core/Popup";
 import { getAllManager } from "redux/actions/admin/getAllManager";
 import Skeleton from "@material-ui/lab/Skeleton";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import SpinLoading from "components/common/core/SpinLoading";
 import { deleteUser } from "redux/actions/admin/deleteUser";
 import { toast } from "react-toastify";
 import { Empty } from "antd";
+import { setTitle } from "redux/actions/admin/setTitle";
 
 const columns = [
   { id: "id", label: "Id", minWidth: 80 },
@@ -74,6 +75,11 @@ export default function ManageLeader() {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setTitle("Manage Leader"));
+  }, [dispatch]);
 
   useEffect(() => {
     setFilteredData(data);

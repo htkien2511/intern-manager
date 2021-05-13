@@ -1,12 +1,15 @@
 .side-bar {
   height: 100vh;
   position: fixed;
-  background-color: #f3f3f3;
+  background-color: #02052b;
+  color: white;
   z-index: 999;
-  display: block;
-  @media only screen and (max-width: 1390px) {
-    // display: none;
-    transition: 0.5s;
+  max-width: 300px;
+  width: 100%;
+  transition: max-width 0.5s;
+  &--hide {
+    transition: max-width 0.5s;
+    max-width: 80px;
   }
   &__inner {
     box-sizing: border-box;
@@ -38,7 +41,7 @@
           box-sizing: border-box;
           align-items: center;
           &--active {
-            color: rgb(0, 3, 204) !important;
+            color: rgb(233, 77, 16) !important;
           }
           .temp {
             width: 5px;
@@ -47,7 +50,7 @@
             cursor: pointer;
             border-left: 5px solid rgb(245, 163, 40);
             a {
-              color: rgb(0, 3, 204) !important;
+              color: rgb(233, 77, 16) !important;
             }
             & > .temp {
               display: none;
@@ -60,7 +63,8 @@
             margin-right: 5px;
           }
           a {
-            color: rgb(78, 71, 71);
+            // color: rgb(78, 71, 71);
+            color: white;
             margin-left: 15px;
           }
           &:not(:last-child) {

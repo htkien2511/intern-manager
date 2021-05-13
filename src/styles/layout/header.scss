@@ -10,9 +10,10 @@
   &__inner {
     padding: 10px 50px;
     &__title {
-      color: white;
       font-size: 24px;
       text-transform: capitalize;
+      margin-top: 18px;
+      color: rgb(255, 135, 50);
     }
     &__logo {
       &__admin {

@@ -12,7 +12,7 @@ import { useHistory } from "react-router";
 import { ROUTE_MANAGE_PROJECT_DETAIL } from "../../../utils/routes";
 import { Input, Button } from "reactstrap";
 import ModalAddProject from "./ModalAddProject";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Empty, Skeleton } from "antd";
 import { getAllProject } from "redux/actions/admin/getAllProject";
 import moment from "moment";
@@ -26,6 +26,7 @@ import ModalEditProject from "./ModalEditProject";
 import { deleteProject } from "redux/actions/admin/deleteProject";
 import { Collapse } from "antd";
 import { CaretRightOutlined } from "@ant-design/icons";
+import { setTitle } from "redux/actions/admin/setTitle";
 
 const { Panel } = Collapse;
 
@@ -110,6 +111,11 @@ export default function ManageProject() {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const storeGetAllProject = useSelector((store) => store.getAllProject);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setTitle("Manage Project"));
+  }, [dispatch]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -227,9 +233,10 @@ export default function ManageProject() {
                     <div className="manager-project__menu-more" onClick={hide}>
                       <div className="manager-project__menu-more__inner">
                         <div
-                          onClick={() =>
-                            history.push(ROUTE_MANAGE_PROJECT_DETAIL)
-                          }
+                          onClick={() => {
+                            history.push(ROUTE_MANAGE_PROJECT_DETAIL);
+                            dispatch(setTitle("Manage list tasks"));
+                          }}
                         >
                           See tasks
                         </div>
@@ -291,7 +298,6 @@ export default function ManageProject() {
       case "description": {
         return (
           <TableCell key={column.id + " - " + indexRow}>
-            {/* {value.split(";").join(",")} */}
             <Collapse
               bordered={false}
               defaultActiveKey={["1"]}

@@ -14,11 +14,12 @@ import ModalCreateAccount from "./ModalCreateAccount";
 import Popup from "components/common/core/Popup";
 import { getAllUser } from "redux/actions/admin/getAllUser";
 import Skeleton from "@material-ui/lab/Skeleton";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { deleteUser } from "redux/actions/admin/deleteUser";
 import { toast } from "react-toastify";
 import SpinLoading from "components/common/core/SpinLoading";
 import { Empty } from "antd";
+import { setTitle } from "redux/actions/admin/setTitle";
 
 const columns = [
   { id: "id", label: "Id", minWidth: 80 },
@@ -74,6 +75,12 @@ export default function ManageIntern() {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setTitle("Manage Intern"));
+  }, [dispatch]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);

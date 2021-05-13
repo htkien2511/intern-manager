@@ -48,10 +48,11 @@
 .app__admin {
   &__body {
     width: 100%;
-    @media only screen and (max-width: 1390px) {
-      transition: margin-left 0.5s; /* If you want a transition effect */
-      // margin-left: 0;
+    &--no-sidebar {
+      transition: margin-left 0.5s;
+      margin-left: 80px;
     }
+    transition: margin-left 0.5s;
     margin-left: 300px;
     min-height: 100vh;
   }
@@ -225,4 +226,7 @@ body {
   overflow: hidden;
   border: 0px;
   border-radius: 2px;
+}
+.hide {
+  display: none !important;
 }

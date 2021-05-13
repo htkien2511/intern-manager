@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { testPlan, iconsAction } from "utils/mockData";
 import IconStar from "assets/icons/TTM_Icon-Star.svg";
 import IconStarNoFill from "assets/icons/TTM_Icon-Star-NoFill.svg";
@@ -10,6 +10,8 @@ import Popup from "components/common/core/Popup";
 import { CommentOutlined, RollbackOutlined } from "@ant-design/icons";
 import { Tooltip } from "antd";
 import { IconButton } from "@material-ui/core";
+import { useDispatch } from "react-redux";
+import { setTitle } from "redux/actions/admin/setTitle";
 
 const Icon = ({ icon, color }) => {
   return (
@@ -40,6 +42,12 @@ const ManageProjectDetail = () => {
   const handleAddTask = () => {
     setShowModal(true);
   };
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setTitle("Manage List Tasks"));
+  }, [dispatch]);
 
   const renderTable = (title, data) => {
     return (

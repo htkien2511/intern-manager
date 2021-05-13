@@ -11,7 +11,7 @@ import TableRow from "@material-ui/core/TableRow";
 import { Input } from "reactstrap";
 import Popup from "components/common/core/Popup";
 import { getAllAccountWaiting } from "redux/actions/admin/getAllAccountWaiting";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Skeleton from "@material-ui/lab/Skeleton";
 import { acceptUserRegister } from "redux/actions/admin/acceptUserRegister";
 import { denyUserRegister } from "redux/actions/admin/deniedUserRegister";
@@ -19,6 +19,7 @@ import { Empty } from "antd";
 import SpinLoading from "components/common/core/SpinLoading";
 import { toast } from "react-toastify";
 import { Checkbox } from "@material-ui/core";
+import { setTitle } from "redux/actions/admin/setTitle";
 
 const columns = [
   { id: "id", label: "Id", minWidth: 80 },
@@ -77,6 +78,12 @@ export default function ManageAccountWaiting() {
   const storeGetAllAccountWaiting = useSelector(
     (store) => store.getAllAccountWaiting
   );
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setTitle("Manage Account Waiting"));
+  }, [dispatch]);
 
   useEffect(() => {
     let arr = [];

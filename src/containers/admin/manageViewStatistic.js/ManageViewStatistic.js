@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Bar } from "react-chartjs-2";
+import { useDispatch } from "react-redux";
+import { setTitle } from "redux/actions/admin/setTitle";
 
 const data = {
   labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
@@ -40,10 +42,17 @@ const options = {
   },
 };
 
-const ManageViewStatistic = () => (
-  <>
-    <Bar data={data} options={options} />
-  </>
-);
+const ManageViewStatistic = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setTitle("View Statistics"));
+  }, [dispatch]);
+
+  return (
+    <>
+      <Bar data={data} options={options} />
+    </>
+  );
+};
 
 export default ManageViewStatistic;

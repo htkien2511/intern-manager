@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
@@ -11,6 +11,8 @@ import TableRow from "@material-ui/core/TableRow";
 import { useHistory } from "react-router";
 import { ROUTE_MANAGE_SCHEDULE_DETAIL } from "../../../utils/routes";
 import { Input } from "reactstrap";
+import { useDispatch } from "react-redux";
+import { setTitle } from "redux/actions/admin/setTitle";
 // import { Empty, Skeleton } from "antd";
 
 const columns = [
@@ -155,6 +157,12 @@ export default function ManageSchedule() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const history = useHistory();
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setTitle("Manage Schedule"));
+  }, [dispatch]);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);

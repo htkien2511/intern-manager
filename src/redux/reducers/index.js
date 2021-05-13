@@ -6,6 +6,7 @@ import resetPassword from "./resetPassword";
 import changePassword from "./changePassword";
 import getAllUser from "./admin/getAllUser";
 import setTitle from "./admin/setTitle";
+import setShowSidebar from "./admin/setShowSidebar";
 import getProfileIntern from "./intern/getProfileIntern";
 import getAllManager from "./admin/getAllManager";
 import deleteUser from "./admin/deleteUser";
@@ -49,4 +50,5 @@ export default combineReducers({
   assignUsersIntoProject,
   getAllUsersAssignedProject,
   getAllProject,
+  setShowSidebar,
 });
