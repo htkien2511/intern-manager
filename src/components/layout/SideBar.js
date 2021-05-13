@@ -9,17 +9,17 @@ import {
   ROUTE_MANAGE_SCHEDULE,
   ROUTE_MANAGE_PROJECT,
   ROUTE_VIEW_STATISTIC,
+  ROUTE_MANAGE_PERMISSION_LEADER,
 } from "../../utils/routes";
 import Logo from "assets/images/logo.png";
 import { getAuth } from "utils/helpers";
 import { Tooltip } from "antd";
-import { UserOutlined } from "@ant-design/icons";
+import { ChromeOutlined, UserOutlined } from "@ant-design/icons";
 
 function SideBar() {
   const dispatch = useDispatch();
   const storeSetShowSidebar = useSelector((store) => store.setShowSidebar);
   const history = useHistory();
-
   return (
     <div
       className={`side-bar ${
@@ -66,6 +66,41 @@ function SideBar() {
                 )}
               </div>
             )}
+
+            <div className="side-bar__inner__items--menu__item flex">
+              {storeSetShowSidebar.showSidebar ? (
+                <>
+                  <div className="temp"></div>
+                  <ChromeOutlined
+                    onClick={() => {
+                      history.push(ROUTE_MANAGE_PERMISSION_LEADER);
+                      dispatch(setTitle("Manage Permission Leader"));
+                    }}
+                  />
+                  <NavLink
+                    activeClassName="side-bar__inner__items--menu__item--active border-corner"
+                    to={ROUTE_MANAGE_PERMISSION_LEADER}
+                    onClick={() =>
+                      dispatch(setTitle("Manage Permission Leader"))
+                    }
+                  >
+                    Manage Permission Leader
+                  </NavLink>
+                </>
+              ) : (
+                <>
+                  <div className="temp"></div>
+                  <Tooltip placement="top" title="Manage Permission Leader">
+                    <ChromeOutlined
+                      onClick={() => {
+                        history.push(ROUTE_MANAGE_PERMISSION_LEADER);
+                        dispatch(setTitle("Manage Permission Leader"));
+                      }}
+                    />
+                  </Tooltip>
+                </>
+              )}
+            </div>
             <div className="side-bar__inner__items--menu__item flex">
               {storeSetShowSidebar.showSidebar ? (
                 <>

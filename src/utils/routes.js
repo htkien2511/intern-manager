@@ -30,3 +30,4 @@ export const ROUTE_MANAGE_FEEDBACK__INTERN_DETAIL =
 export const ROUTE_MANAGE_ACCOUNT_WAITING = "/admin/manage-account-waiting";
 export const ROUTE_VIEW_STATISTIC = "/admin/view-statistic";
 export const ROUTE_VIEW_STATISTIC_DETAIL = "/admin/view-statistic:userId";
+export const ROUTE_MANAGE_PERMISSION_LEADER = "/admin/manage-permission-leader";

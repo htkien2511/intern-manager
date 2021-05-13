@@ -27,6 +27,7 @@ import {
   ROUTE_MANAGE_FEEDBACK__INTERN_DETAIL,
   ROUTE_TASK_MANAGEMENT_DETAIL,
   ROUTE_MANAGE_PROJECT_DETAIL,
+  ROUTE_MANAGE_PERMISSION_LEADER,
 } from "./utils/routes";
 import { ForgotPassword } from "./containers/forgotPassword";
 import { ResetPassword } from "./containers/resetPassword";
@@ -56,6 +57,7 @@ import {
 } from "containers/admin/manageFeedback";
 import { ManageLeader } from "containers/admin/manageAccountLeader";
 import { ManageViewStatistic } from "containers/admin/manageViewStatistic.js";
+import ManagePermissionLeader from "containers/admin/managePermissionLeader.js/ManagePermissionLeader";
 
 function App() {
   return (
@@ -197,6 +199,11 @@ function App() {
         <Route
           path={ROUTE_MANAGE_LEADER}
           component={withAuth(ManageLeader, false)}
+          exact
+        />
+        <Route
+          path={ROUTE_MANAGE_PERMISSION_LEADER}
+          component={withAuth(ManagePermissionLeader, false)}
           exact
         />
         <Route
