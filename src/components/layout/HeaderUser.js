@@ -16,7 +16,7 @@ function HeaderUser() {
           <img src={logo} alt="Logo" />
         </NavLink>
 
-        <div className="header__inner__menu flex items-center">
+        <div className="header__inner__menu flex items-center space-between">
           <NavLink activeClassName="--active" to={ROUTE_PROFILE} exact>
             <span>Profile</span>
           </NavLink>
@@ -32,11 +32,6 @@ function HeaderUser() {
           >
             <span>Register Schedule</span>
           </NavLink>
-
-          {/* <NavLink activeClassName="--active" to={ROUTE_FEEDBACKS} exact>
-                        <span>Feedback</span>
-                    </NavLink> */}
-
           <DropdownUserMenu />
         </div>
       </div>

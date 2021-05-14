@@ -25,14 +25,15 @@ const DropdownUserMenu = () => {
   const history = useHistory();
   return (
     <div ref={logoutWrapper} className="style-userContainer">
-      <div className="style-userInfor" onClick={() => setIsShown(!isShown)}>
-        <img
-          src="https://picsum.photos/200"
-          alt=""
-          className="style-avatarContainer"
-        />
-        <i className="fi-rr-caret-down"></i>
-      </div>
+      {/* <div className="style-userInfor"> */}
+      <img
+        src="https://picsum.photos/200"
+        alt=""
+        className="style-avatarContainer"
+        onClick={() => setIsShown(!isShown)}
+      />
+      {/* <i className="fi-rr-caret-down"></i> */}
+      {/* </div> */}
       {isShown && (
         <div className="style-dropdownContainer">
           <div

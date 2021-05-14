@@ -52,6 +52,10 @@
       transition: margin-left 0.5s;
       margin-left: 80px;
     }
+    @media screen and (max-width: 1390px) {
+      transition: margin-left 0.5s;
+      margin-left: 80px;
+    }
     transition: margin-left 0.5s;
     margin-left: 300px;
     min-height: 100vh;

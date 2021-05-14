@@ -21,12 +21,14 @@
   width: 55px;
   border: 2px solid rgb(206, 206, 206);
   height: 55px;
-  margin-top: -10px;
+  margin-top: 10px;
+  margin-left: 10px;
+  // margin-top: -10px;
 }
 .style-dropdownContainer {
   position: absolute;
-  top: 90px;
-  right: 8px;
+  top: 95px;
+  right: 14px;
   border-radius: 10px;
   padding: 8px 20px;
   background-color: rgb(233, 233, 233);
