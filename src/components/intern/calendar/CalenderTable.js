@@ -1,30 +1,34 @@
-import React from "react";
+import moment from "moment";
+import React, { useEffect, useState } from "react";
 function CalenderTable() {
+  const [schedules, setSchedules] = useState([]);
+  const MAP = [
+    "Leave", // shitf = 0
+    "Afternoon", // shitf = 1
+    "Morning", // shitf = 2
+    "All day", // shitf = 3  
+  ];
+  useEffect(() => {
+    let curr = new Date(); 
+    let first = curr.getDate() - curr.getDay();
+    let array = [];
+    [1,2,3,4,5].forEach(item => {
+      let date = moment(new Date(curr.setDate(first+item))).format("DD-MM-YYYY");
+      array.push({
+        leave_date: date,
+        shitf: 3, 
+      });
+    })
+    setSchedules(array);
+  },[]);
+  console.log(schedules);
   return (
     <div className="calendar">
       <h2>Sign up for a calendar</h2>
-      {/* <div className="select-time">
-        <label>Choose time</label>
-        <select>
-          <option value="January">January</option>
-          <option value="February">February</option>
-          <option value="March">March</option>
-          <option value="April">April</option>
-          <option value="May">May</option>
-          <option value="June">June</option>
-          <option value="July">July</option>
-          <option value="August">August</option>
-          <option value="September">September</option>
-          <option value="October">October</option>
-          <option value="November">November</option>
-          <option value="December">December</option>
-        </select>
-      </div> */}
       <div className="table">
         <table>
           <thead>
             <tr>
-              <th>Tolal</th>
               <th>Monday</th>
               <th>Tuesday</th>
               <th>Wednesday</th>
@@ -34,52 +38,17 @@ function CalenderTable() {
           </thead>
           <tbody>
             <tr>
-              <td>40</td>
-              <td id="Monday">
-                <label>8</label>
+            {schedules.map((item, index) => (
+              <td key={index}>
+                <label>{item}</label>
                 <select>
-                  <option value="All day">All day</option>
-                  <option value="Morning">Morning</option>
-                  <option value="Afternoon">Afternoon</option>
-                  <option value="Vacation">Vacation</option>
+                  <option value={MAP[3]}>All day</option>
+                  <option value={MAP[2]}>Morning</option>
+                  <option value={MAP[1]}>Afternoon</option>
+                  <option value={MAP[0]}>Leave</option>
                 </select>
               </td>
-              <td id="Tuesday">
-                <label>8</label>
-                <select>
-                  <option value="All day">All day</option>
-                  <option value="Morning">Morning</option>
-                  <option value="Afternoon">Afternoon</option>
-                  <option value="Vacation">Vacation</option>
-                </select>
-              </td>
-              <td id="Wednesday">
-                <label>8</label>
-                <select>
-                  <option value="All day">All day</option>
-                  <option value="Morning">Morning</option>
-                  <option value="Afternoon">Afternoon</option>
-                  <option value="Vacation">Vacation</option>
-                </select>
-              </td>
-              <td id="Thursday">
-                <label>8</label>
-                <select>
-                  <option value="All day">All day</option>
-                  <option value="Morning">Morning</option>
-                  <option value="Afternoon">Afternoon</option>
-                  <option value="Vacation">Vacation</option>
-                </select>
-              </td>
-              <td id="Friday">
-                <label>8</label>
-                <select>
-                  <option value="All day">All day</option>
-                  <option value="Morning">Morning</option>
-                  <option value="Afternoon">Afternoon</option>
-                  <option value="Vacation">Vacation</option>
-                </select>
-              </td>
+            ))}
             </tr>
           </tbody>
         </table>
