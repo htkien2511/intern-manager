@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import logo from "../../../assets/images/logo.png";
+import logo from "../../../assets/images/logoGuess.png";
 import { isEmpty, isEmail } from "validator";
 import { getProfileIntern } from "redux/actions/intern/getProfileIntern";
 import { getAuth } from "utils/helpers";

@@ -11,7 +11,7 @@ import {
   ROUTE_VIEW_STATISTIC,
   ROUTE_MANAGE_PERMISSION_LEADER,
 } from "../../utils/routes";
-import Logo from "assets/images/logo.png";
+import Logo from "assets/images/logoGuess.png";
 import { getAuth } from "utils/helpers";
 import { Tooltip } from "antd";
 import { ChromeOutlined, UserOutlined } from "@ant-design/icons";

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import logo from "../../../assets/images/logo.png";
+import logo from "../../../assets/images/logoGuess.png";
 import { NavLink } from "react-router-dom";
 import { ROUTE_EDIT_PROFILE } from "../../../utils/routes";
 import { getProfileIntern } from "redux/actions/intern/getProfileIntern";

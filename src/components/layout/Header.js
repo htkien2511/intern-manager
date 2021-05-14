@@ -1,6 +1,6 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
-import LogoOfficial from "assets/images/logoInternManage.png";
+import LogoOfficial from "assets/images/logoGuess.png";
 import { getAuth } from "../../utils/helpers";
 import { ROUTE_LOGIN } from "../../utils/routes";
 import DropdownUserMenu from "../common/DropdownUserMenu";
