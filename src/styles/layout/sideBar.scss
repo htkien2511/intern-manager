@@ -11,10 +11,6 @@
     transition: max-width 0.5s;
     max-width: 80px;
   }
-  @media screen and (max-width: 1390px) {
-    transition: max-width 0.5s;
-    max-width: 80px;
-  }
   &__inner {
     box-sizing: border-box;
     display: flex;

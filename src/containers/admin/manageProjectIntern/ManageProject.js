@@ -138,7 +138,7 @@ export default function ManageProject() {
               item.projectId,
               item.title,
               item.description,
-              item.managerName.name,
+              item.managerName,
               item.userAssignee.map((i) => i.name).join(","),
               item.startDate,
               item.dueDate,
@@ -152,10 +152,24 @@ export default function ManageProject() {
       }
     });
   }, []);
+  const [searchText, setSearchText] = useState("");
 
   useEffect(() => {
-    setFilteredData(data);
-  }, [data]);
+    if (searchText === "") setFilteredData(data);
+    else {
+      const filteredData = data.filter((item) => {
+        return Object.keys(item)
+          .filter((i) => i !== "actions")
+          .some((key) =>
+            columns.includes(key)
+              ? false
+              : (item[key] + "").toString().toLowerCase().includes(searchText)
+          );
+      });
+      setFilteredData(filteredData);
+    }
+    // setFilteredData(data);
+  }, [searchText, data]);
 
   const [openModalEdit, setOpenModalEdit] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
@@ -169,23 +183,12 @@ export default function ManageProject() {
 
   const handleSearch = (event) => {
     const lowercasedValue = event.target.value.toLowerCase().trim();
-    if (lowercasedValue === "") setFilteredData(data);
-    else {
-      const filteredData = data.filter((item) => {
-        return Object.keys(item)
-          .filter((i) => i !== "actions")
-          .some((key) =>
-            columns.includes(key)
-              ? false
-              : (item[key] + "")
-                  .toString()
-                  .toLowerCase()
-                  .includes(lowercasedValue)
-          );
-      });
-      setFilteredData(filteredData);
-    }
+    setSearchText(lowercasedValue);
   };
+
+  // useEffect(() => {
+
+  // }, [searchText, data]);
 
   const handleEditProject = (item) => {
     setInfoSelected({
@@ -193,7 +196,7 @@ export default function ManageProject() {
       title: item.title,
       description: item.description,
       dueDate: item.dueDate,
-      idOfAdmin: item.idOfAdmin,
+      idOfAdmin: item.managerName.managerId,
       projectId: item.projectID,
     });
     setOpenModalEdit(true);
@@ -240,7 +243,12 @@ export default function ManageProject() {
                         >
                           See tasks
                         </div>
-                        <div onClick={() => handleEditProject(row)}>
+                        <div
+                          onClick={() => {
+                            handleEditProject(row);
+                            console.log(row.managerName.managerId);
+                          }}
+                        >
                           Edit project
                         </div>
                         <div
@@ -251,7 +259,7 @@ export default function ManageProject() {
                               title: row.title,
                               description: row.description,
                               dueDate: moment(row.dueDate).format("YYYY/MM/DD"),
-                              idOfAdmin: row.idOfAdmin,
+                              idOfAdmin: row.managerName.managerId,
                               projectId: row.projectID,
                             });
                           }}
@@ -277,7 +285,7 @@ export default function ManageProject() {
       case "usersAssigned": {
         return (
           <TableCell key={column.id + " - " + indexRow}>
-            {!value.length ? (
+            {!(value && value.length) ? (
               <Empty
                 image={Empty.PRESENTED_IMAGE_SIMPLE}
                 style={{ padding: 0 }}
@@ -293,6 +301,11 @@ export default function ManageProject() {
           <TableCell key={column.id + " - " + indexRow}>
             {moment(value).format("YYYY-MM-DD")}
           </TableCell>
+        );
+      }
+      case "managerName": {
+        return (
+          <TableCell key={column.id + " - " + indexRow}>{value.name}</TableCell>
         );
       }
       case "description": {

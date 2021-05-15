@@ -9,6 +9,10 @@ import { toast } from "react-toastify";
 import { getAllProject } from "redux/actions/admin/getAllProject";
 import { updateProject } from "redux/actions/admin/updateProject";
 import { getAllUserAssignedProject } from "redux/actions/admin/getAllUserAssignedProject";
+import { getAllUser } from "redux/actions/admin/getAllUser";
+import { Select, Tag } from "antd";
+import { assignUsersIntoProject } from "redux/actions/admin/assignUsersIntoProject";
+import { getAllManager } from "redux/actions/admin/getAllManager";
 
 export const HeaderModal = ({ close, title }) => {
   return (
@@ -35,6 +39,7 @@ function createData(
   title,
   description,
   managerName,
+  usersAssigned,
   startDate,
   dueDate,
   actions
@@ -44,6 +49,7 @@ function createData(
     title,
     description,
     managerName,
+    usersAssigned,
     startDate,
     dueDate,
     actions,
@@ -52,7 +58,6 @@ function createData(
 
 export const ContentModal = ({ setOpenModal, setData, data }) => {
   const [error, setError] = React.useState({});
-  console.log({ data });
   const [form, setForm] = React.useState({
     title: data.title,
     description: data.description,
@@ -72,6 +77,12 @@ export const ContentModal = ({ setOpenModal, setData, data }) => {
     if (isEmpty(form.dueDate)) {
       errorState.dueDate = "Please enter due date";
     }
+    if (isEmpty(form.idOfAdmin + "")) {
+      errorState.idOfAdmin = "Please enter leader";
+    }
+    if (!usersSelected.length) {
+      errorState.assignedUsers = "Please assigned intern";
+    }
     return errorState;
   };
   const handleSubmitForm = (event) => {
@@ -89,33 +100,43 @@ export const ContentModal = ({ setOpenModal, setData, data }) => {
       id_project: form.projectId,
     };
 
-    console.log({ formData });
-
     updateProject(formData, (res) => {
       if (res.success) {
         toast.success("Edit project successfully");
         let arr = [];
-        getAllProject((response) => {
-          if (response.success) {
-            response.data.forEach((item) => {
-              arr.push(
-                createData(
-                  item.projectId,
-                  item.title,
-                  item.description,
-                  item.managerName,
-                  "PhanTrongDuc,NguyenHong,PhanThanhBinh,Kien,Sang",
-                  item.startDate,
-                  item.dueDate,
-                  "More"
-                )
-              );
-            });
-            setData(arr);
-          } else {
-            toast.error(response.message);
+        assignUsersIntoProject(
+          {
+            id_project: form.projectId,
+            id_user: usersSelected,
+          },
+          (r) => {
+            if (r.success) {
+              getAllProject((response) => {
+                if (response.success) {
+                  response.data.forEach((item) => {
+                    arr.push(
+                      createData(
+                        item.projectId,
+                        item.title,
+                        item.description,
+                        item.managerName,
+                        item.userAssignee.map((i) => i.name).join(","),
+                        item.startDate,
+                        item.dueDate,
+                        "More"
+                      )
+                    );
+                  });
+                  setData(arr);
+                } else {
+                  toast.error(response.message);
+                }
+              });
+            } else {
+              toast.error(r.message);
+            }
           }
-        });
+        );
       } else {
         toast.error(res.message);
       }
@@ -123,6 +144,15 @@ export const ContentModal = ({ setOpenModal, setData, data }) => {
     setOpenModal(false);
   };
   const handleChange = (event) => {
+    if (event.target.name === "idOfAdmin") {
+      setForm({
+        ...form,
+        [event.target.name]: Number(
+          (event.target.value + "").split(" - ")[0].toString().match(/\d+/g)[0]
+        ),
+      });
+      return;
+    }
     setForm({ ...form, [event.target.name]: event.target.value });
   };
 
@@ -131,7 +161,22 @@ export const ContentModal = ({ setOpenModal, setData, data }) => {
       ...error,
       [event.target.name]: "",
     });
+    setError({ ...error, assignedUsers: "" });
   };
+
+  const [leaders, setLeaders] = useState([]);
+
+  useEffect(() => {
+    getAllManager((res) => {
+      if (res.success) {
+        setLeaders(res.data);
+        setForm({ ...form, idOfAdmin: res.data.map((item) => item.id)[0] });
+      } else {
+        toast.error(res.message);
+      }
+    });
+    // eslint-disable-next-line
+  }, []);
 
   const [interns, setInterns] = useState([]);
 
@@ -144,6 +189,57 @@ export const ContentModal = ({ setOpenModal, setData, data }) => {
       }
     });
   }, [data]);
+
+  useEffect(() => {
+    getAllUser((res) => {
+      if (res.success) {
+        setInterns(res.data);
+      } else {
+        toast.error(res.message);
+      }
+    });
+  }, []);
+
+  const [options, setOptions] = useState([]);
+  useEffect(() => {
+    if (!interns.length) return;
+    let arr = [];
+    interns.forEach((item) => {
+      let option = {
+        value: `Id: ${item.id} - Name: ${item.name}`,
+      };
+      arr.push(option);
+    });
+    setOptions(arr);
+  }, [interns]);
+
+  function tagRender(props) {
+    const { label, closable, onClose } = props;
+    const onPreventMouseDown = (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+    };
+    return (
+      <Tag
+        onMouseDown={onPreventMouseDown}
+        closable={closable}
+        onClose={onClose}
+        style={{ marginRight: 3 }}
+      >
+        {label}
+      </Tag>
+    );
+  }
+
+  const [usersSelected, setUsersSelected] = useState([]);
+
+  const handleChangeUsersAssignee = (value, options) => {
+    let arr = [];
+    options.forEach((o) => {
+      arr.push((o.value + "").split(" - ")[0].toString().match(/\d+/g)[0]);
+    });
+    setUsersSelected(arr.join(","));
+  };
 
   return (
     <div className="content__container" onSubmit={handleSubmitForm}>
@@ -197,21 +293,55 @@ export const ContentModal = ({ setOpenModal, setData, data }) => {
           </div>
 
           <div>
-            <label>Assigned users</label>
+            <label>Select leader for project</label>
             <Input
               type="select"
-              name="assignedUsers"
-              id="assignedUsers"
-              placeholder="Assigned users"
+              name="idOfAdmin"
+              id="leader"
+              placeholder="Leader"
               onChange={handleChange}
               onFocus={handleFocus}
-              value={interns[0]}
+              value={
+                leaders
+                  .filter((item) => item.id === form.idOfAdmin)
+                  .find((e, idx) => idx === 0) &&
+                `Id: ${form.idOfAdmin} - Name: ${
+                  leaders
+                    .filter((item) => item.id === form.idOfAdmin)
+                    .find((e, idx) => idx === 0).name
+                }`
+              }
               disabled={false}
             >
-              {interns.map((item, index) => (
-                <option key={index}>{item}</option>
+              {leaders.map((item, index) => (
+                <option
+                  key={index}
+                >{`Id: ${item.id} - Name: ${item.name}`}</option>
               ))}
             </Input>
+            <span
+              className="invalid-feedback"
+              style={{ display: "block", marginLeft: 15 }}
+            >
+              {error.idOfAdmin}
+            </span>
+          </div>
+
+          <div>
+            <label>Assigned users</label>
+            <Select
+              mode="multiple"
+              showArrow
+              name="assignedUsers"
+              placeholder="Users assigned"
+              tagRender={tagRender}
+              onChange={(value, options) =>
+                handleChangeUsersAssignee(value, options)
+              }
+              options={options}
+              onFocus={handleFocus}
+              maxTagCount={3}
+            />
             <span
               className="invalid-feedback"
               style={{ display: "block", marginLeft: 15 }}

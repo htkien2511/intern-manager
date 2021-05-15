@@ -52,10 +52,6 @@
       transition: margin-left 0.5s;
       margin-left: 80px;
     }
-    @media screen and (max-width: 1390px) {
-      transition: margin-left 0.5s;
-      margin-left: 80px;
-    }
     transition: margin-left 0.5s;
     margin-left: 300px;
     min-height: 100vh;
@@ -151,7 +147,7 @@ a {
 .makeStyles-container-8,
 .makeStyles-container-10,
 .MuiTableContainer-root {
-  max-height: 590px !important;
+  max-height: 660px !important;
 }
 body {
   font-family: "GT-Walsheim" !important;

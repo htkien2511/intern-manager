@@ -44,7 +44,7 @@ const ModalContainer = styled.div`
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 9999;
+  z-index: 999;
 
   background: #00000043 0% 0% no-repeat padding-box;
   opacity: 1;
