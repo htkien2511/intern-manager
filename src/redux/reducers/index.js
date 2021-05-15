@@ -24,6 +24,7 @@ import deleteProject from "./admin/deleteProject";
 import getAllProject from "./admin/getAllProject";
 import getAllUsersAssignedProject from "./admin/getAllUsersAssignedProject";
 import assignUsersIntoProject from "./admin/assignUsersIntoProject";
+import getAllTasksByProjectID from "./admin/getAllTasksByProjectID";
 
 export default combineReducers({
   login,
@@ -51,4 +52,5 @@ export default combineReducers({
   getAllUsersAssignedProject,
   getAllProject,
   setShowSidebar,
+  getAllTasksByProjectID,
 });

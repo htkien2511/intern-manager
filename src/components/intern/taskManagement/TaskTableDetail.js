@@ -6,7 +6,6 @@ import { getTaskProjectIntern } from "redux/actions/intern/getTaskProjectIntern"
 import moment from "moment";
 import { useSelector } from "react-redux";
 import SpinLoading from "components/common/core/SpinLoading";
-import { toast } from "react-toastify";
 function TaskManagementDetail() {
   const { projectId } = useParams();
   const [form, setForm] = React.useState(null);
@@ -22,7 +21,7 @@ function TaskManagementDetail() {
   const storeGetTaskProjectIntern = useSelector(
     (store) => store.getTaskProjectIntern
   );
-  
+
   // const handleChangeStatus = (event) => {
   //   console.log("abc");
   //   // const formData = {
@@ -75,7 +74,9 @@ function TaskManagementDetail() {
                       </td>
                       <td>{item.difficulty}</td>
                       <td>
-                        <button className="button button--secondary"><p>{item.isDone ? "Done" : "In Progess"}</p></button>
+                        <button className="button button--secondary">
+                          <p>{item.isDone ? "Done" : "In Progess"}</p>
+                        </button>
                         {/* <NavLink
                           activeClassName="--active"
                           to={ROUTE_TASK_MANAGEMENT_DETAIL}
@@ -83,15 +84,15 @@ function TaskManagementDetail() {
                           <p>{item.isDone ? "Done" : "In Progess"}</p>
                         </NavLink> */}
                       </td>
-                     <td>
-                     <NavLink
-                        activeClassName="--active"
-                        // onClick={handleChangeStatus}
-                        to={ROUTE_TASK_MANAGEMENT_DETAIL}
-                      >
-                        <p>Feedback</p>
-                      </NavLink>
-                     </td>
+                      <td>
+                        <NavLink
+                          activeClassName="--active"
+                          // onClick={handleChangeStatus}
+                          to={ROUTE_TASK_MANAGEMENT_DETAIL}
+                        >
+                          <p>Feedback</p>
+                        </NavLink>
+                      </td>
                     </tr>
                   );
                 })}

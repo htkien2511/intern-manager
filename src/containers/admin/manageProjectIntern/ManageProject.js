@@ -9,7 +9,6 @@ import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
 import { useHistory } from "react-router";
-import { ROUTE_MANAGE_PROJECT_DETAIL } from "../../../utils/routes";
 import { Input, Button } from "reactstrap";
 import ModalAddProject from "./ModalAddProject";
 import { useDispatch, useSelector } from "react-redux";
@@ -238,7 +237,9 @@ export default function ManageProject() {
                       <div className="manager-project__menu-more__inner">
                         <div
                           onClick={() => {
-                            history.push(ROUTE_MANAGE_PROJECT_DETAIL);
+                            history.push(
+                              `/admin/manage-project/projectID=${row.projectID}`
+                            );
                             dispatch(setTitle("Manage list tasks"));
                           }}
                         >

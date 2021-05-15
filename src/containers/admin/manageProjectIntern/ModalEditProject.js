@@ -8,7 +8,6 @@ import moment from "moment";
 import { toast } from "react-toastify";
 import { getAllProject } from "redux/actions/admin/getAllProject";
 import { updateProject } from "redux/actions/admin/updateProject";
-import { getAllUserAssignedProject } from "redux/actions/admin/getAllUserAssignedProject";
 import { getAllUser } from "redux/actions/admin/getAllUser";
 import { Select, Tag } from "antd";
 import { assignUsersIntoProject } from "redux/actions/admin/assignUsersIntoProject";

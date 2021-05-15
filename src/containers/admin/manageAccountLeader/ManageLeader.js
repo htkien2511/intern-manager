@@ -251,7 +251,7 @@ export default function ManageLeader() {
             onClick={() => setOpenModalAdd(true)}
           >
             <Button className="button manage-intern__inner__top__button--add__btn">
-              General Account
+              General Account Leader
             </Button>
             <i className="fi-rr-plus"></i>
           </div>
@@ -262,7 +262,7 @@ export default function ManageLeader() {
               name="search"
               id="searchKey"
               onChange={handleSearch}
-              placeholder="Search account(s)"
+              placeholder="Search leader(s)"
             />
           </div>
         </div>

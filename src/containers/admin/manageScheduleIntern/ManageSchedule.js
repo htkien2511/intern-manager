@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Table from "@material-ui/core/Table";
@@ -8,15 +8,16 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TablePagination from "@material-ui/core/TablePagination";
 import TableRow from "@material-ui/core/TableRow";
-import { useHistory } from "react-router";
-import { ROUTE_MANAGE_SCHEDULE_DETAIL } from "../../../utils/routes";
 import { Input } from "reactstrap";
-import { useDispatch } from "react-redux";
+import { getAllUser } from "redux/actions/admin/getAllUser";
+import Skeleton from "@material-ui/lab/Skeleton";
+import { useDispatch, useSelector } from "react-redux";
+import { Empty } from "antd";
 import { setTitle } from "redux/actions/admin/setTitle";
-// import { Empty, Skeleton } from "antd";
+import { useHistory } from "react-router";
 
 const columns = [
-  { id: "id", label: "Id", minWidth: 170 },
+  { id: "id", label: "Id", minWidth: 80 },
   { id: "name", label: "Name", minWidth: 100 },
   {
     id: "email",
@@ -27,121 +28,20 @@ const columns = [
   {
     id: "department",
     label: "Department",
-    minWidth: 170,
-    align: "left",
+    minWidth: 100,
+    align: "center",
   },
   {
-    id: "address",
-    label: "Address",
-    minWidth: 170,
-    align: "left",
+    id: "actions",
+    label: "Actions",
+    minWidth: 160,
+    align: "center",
   },
 ];
 
-function createData(id, name, email, department, address) {
-  return { id, name, email, department, address };
+function createData(id, name, email, department, actions) {
+  return { id, name, email, department, actions };
 }
-
-const rows = [
-  createData(
-    0,
-    "Phan Trong Duc",
-    "trongduc.iter@gmail.com",
-    "Frontend Dev",
-    "La Hai Dong Xuan Phu Yen"
-  ),
-  createData(
-    1,
-    "Phan Trong Duc",
-    "trongduc.iter@gmail.com",
-    "Frontend Dev",
-    "La Hai Dong Xuan Phu Yen"
-  ),
-  createData(
-    2,
-    "Phan Trong Duc",
-    "trongduc.iter@gmail.com",
-    "Frontend Dev",
-    "La Hai Dong Xuan Phu Yen"
-  ),
-  createData(
-    3,
-    "Phan Trong Duc",
-    "trongduc.iter@gmail.com",
-    "Frontend Dev",
-    "La Hai Dong Xuan Phu Yen"
-  ),
-  createData(
-    4,
-    "Phan Trong Duc",
-    "trongduc.iter@gmail.com",
-    "Frontend Dev",
-    "La Hai Dong Xuan Phu Yen"
-  ),
-  createData(
-    5,
-    "Phan Trong Duc",
-    "trongduc.iter@gmail.com",
-    "Frontend Dev",
-    "La Hai Dong Xuan Phu Yen"
-  ),
-  createData(
-    6,
-    "Phan Trong Duc",
-    "trongduc.iter@gmail.com",
-    "Frontend Dev",
-    "La Hai Dong Xuan Phu Yen"
-  ),
-  createData(
-    7,
-    "Phan Trong Duc",
-    "trongduc.iter@gmail.com",
-    "Frontend Dev",
-    "La Hai Dong Xuan Phu Yen"
-  ),
-  createData(
-    8,
-    "Phan Trong Duc",
-    "trongduc.iter@gmail.com",
-    "Frontend Dev",
-    "La Hai Dong Xuan Phu Yen"
-  ),
-  createData(
-    9,
-    "Phan Trong Duc",
-    "trongduc.iter@gmail.com",
-    "Frontend Dev",
-    "La Hai Dong Xuan Phu Yen"
-  ),
-  createData(
-    10,
-    "Phan Trong Duc",
-    "trongduc.iter@gmail.com",
-    "Frontend Dev",
-    "La Hai Dong Xuan Phu Yen"
-  ),
-  createData(
-    11,
-    "Phan Trong Duc",
-    "trongduc.iter@gmail.com",
-    "Frontend Dev",
-    "La Hai Dong Xuan Phu Yen"
-  ),
-  createData(
-    12,
-    "Phan Trong Duc",
-    "trongduc.iter@gmail.com",
-    "Frontend Dev",
-    "La Hai Dong Xuan Phu Yen"
-  ),
-  createData(
-    13,
-    "Phan Trong Duc",
-    "trongduc.iter@gmail.com",
-    "Frontend Dev",
-    "La Hai Dong Xuan Phu Yen"
-  ),
-];
 
 const useStyles = makeStyles({
   root: {
@@ -156,7 +56,8 @@ export default function ManageSchedule() {
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  const history = useHistory();
+  const [data, setData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
 
   const dispatch = useDispatch();
 
@@ -172,17 +73,112 @@ export default function ManageSchedule() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+  useEffect(() => {
+    setFilteredData(data);
+  }, [data]);
+
+  const storeGetAllUser = useSelector((store) => store.getAllUser);
+
+  useEffect(() => {
+    let arr = [];
+    getAllUser((data) => {
+      if (data.data) {
+        data.data.forEach((item) => {
+          arr.push(
+            createData(
+              item.id,
+              item.name,
+              item.email,
+              item.department,
+              "See details"
+            )
+          );
+        });
+        setData(arr);
+      }
+    });
+  }, []);
+  const history = useHistory();
+
+  const renderCell = (column, value, indexRow, row) => {
+    switch (column.id) {
+      case "actions": {
+        const actions = value && value.split("|");
+        return (
+          <TableCell key={column.id + " - " + indexRow} align={column.align}>
+            <div>
+              {actions &&
+                actions.map((item, index) => {
+                  return (
+                    <button
+                      key={index}
+                      style={{ margin: 5, color: "white" }}
+                      className="button button--secondary"
+                      onClick={() =>
+                        history.push(
+                          `/admin/manage-schedule/internID=${row.id}`
+                        )
+                      }
+                    >
+                      {item}
+                    </button>
+                  );
+                })}
+            </div>
+          </TableCell>
+        );
+      }
+      default:
+        return (
+          <TableCell key={column.id + " - " + indexRow} align={column.align}>
+            {value ? (
+              column.format && typeof value === "number" ? (
+                column.format(value)
+              ) : (
+                value
+              )
+            ) : (
+              <Empty
+                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                style={{ padding: 0 }}
+              />
+            )}
+          </TableCell>
+        );
+    }
+  };
+
+  const handleSearch = (event) => {
+    const lowercasedValue = event.target.value.toLowerCase().trim();
+    if (lowercasedValue === "") setFilteredData(data);
+    else {
+      const filteredData = data.filter((item) => {
+        return Object.keys(item)
+          .filter((i) => i !== "actions")
+          .some((key) =>
+            columns.filter((ele) => ele !== "actions").includes(key)
+              ? false
+              : (item[key] + "")
+                  .toString()
+                  .toLowerCase()
+                  .includes(lowercasedValue)
+          );
+      });
+      setFilteredData(filteredData);
+    }
+  };
 
   return (
     <div className="manage-intern">
       <div className="manage-intern__inner">
         <div className="manage-intern__inner__top">
           <div className="button manage-intern__inner__top__search">
-            <i className="fi-rr-search"></i>
+            <i className="fi-rr-search pointer"></i>
             <Input
               type="text"
               name="search"
               id="searchKey"
+              onChange={handleSearch}
               placeholder="Search intern(s)"
             />
           </div>
@@ -204,8 +200,8 @@ export default function ManageSchedule() {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows.length > 0 ? (
-                  rows
+                {filteredData.length > 0 ? (
+                  filteredData
                     .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                     .map((row, indexRow) => {
                       return (
@@ -214,33 +210,24 @@ export default function ManageSchedule() {
                           role="checkbox"
                           tabIndex={-1}
                           key={indexRow}
-                          onClick={() => {
-                            history.push(ROUTE_MANAGE_SCHEDULE_DETAIL);
-                          }}
                         >
                           {columns.map((column) => {
                             const value = row[column.id];
-                            return (
-                              <TableCell key={column.id} align={column.align}>
-                                {column.format && typeof value === "number"
-                                  ? column.format(value)
-                                  : value}
-                              </TableCell>
-                            );
+                            return renderCell(column, value, indexRow, row);
                           })}
                         </TableRow>
                       );
                     })
                 ) : (
                   <TableRow>
-                    {[1, 2, 3, 4, 5, 6].map((item) => {
+                    {[1, 2, 3, 4, 5].map((item) => {
                       return (
                         <TableCell key={item}>
-                          {/* {storeGetAllSchedule.loading ? (
+                          {storeGetAllUser.loading ? (
                             <Skeleton style={{ height: 40 }} />
                           ) : (
                             <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-                          )} */}
+                          )}
                         </TableCell>
                       );
                     })}
@@ -252,7 +239,7 @@ export default function ManageSchedule() {
           <TablePagination
             rowsPerPageOptions={[10, 25, 100]}
             component="div"
-            count={rows.length}
+            count={filteredData && filteredData.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onChangePage={handleChangePage}

@@ -254,7 +254,7 @@ export default function ManageIntern() {
             onClick={() => setOpenModalAdd(true)}
           >
             <Button className="button manage-intern__inner__top__button--add__btn">
-              General Account
+              General Account Intern
             </Button>
             <i className="fi-rr-plus"></i>
           </div>
@@ -265,7 +265,7 @@ export default function ManageIntern() {
               name="search"
               id="searchKey"
               onChange={handleSearch}
-              placeholder="Search account(s)"
+              placeholder="Search intern(s)"
             />
           </div>
         </div>

@@ -1,9 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Calendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import moment from "moment";
+import { RollbackOutlined } from "@ant-design/icons";
+import { setTitle } from "redux/actions/admin/setTitle";
+import { useDispatch } from "react-redux";
 
 export default function ManageScheduleDetail() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setTitle("Manage Schedule Detail"));
+  }, [dispatch]);
+
   const dataEvents = [
     { shift: 1, reason: "Busy", date: "2021-05-09", id: 1 },
     { shift: 2, reason: "Busy", date: "2021-05-08", id: 2 },
@@ -37,6 +46,10 @@ export default function ManageScheduleDetail() {
 
   return (
     <div className="manage-schedule-detail">
+      <div className="block__back-previous-page">
+        <RollbackOutlined onClick={() => window.history.back()} />
+        <div onClick={() => window.history.back()}>Back to previous page</div>
+      </div>
       <div className="manage-schedule-detail__inner flex items-center">
         <div className="block__calendar">
           <div

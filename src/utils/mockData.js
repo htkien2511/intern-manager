@@ -32,33 +32,20 @@ export const taskListData = [
 
 export const testPlan = [
   {
-    projectName: "A",
-    test_plan: { value: "Create ForgotPassword Page", progress: 60 },
-    created: "28/07/2020",
-    last_run: "In Progress",
-    owner: "John Doe",
-    priority: 2,
-  },
-  {
-    projectName: "B",
-    test_plan: { value: "Create Form Login", progress: 20 },
-    created: "28/07/2020",
-    last_run: "In Progress",
-    owner: "John Doe",
-    priority: 2,
-  },
-  {
-    projectName: "C",
-    test_plan: { value: "Create Form Register", progress: 0 },
-    created: "28/07/2020",
-    last_run: "22/05/2020",
-    owner: "John Doe",
-    priority: 2,
+    taskId: "A",
+    title: { value: "Create ForgotPassword Page", progress: 60 },
+    createDate: "28/07/2020",
+    dueDate: "28/07/2020",
+    description: "Implement function : create, get all, update, delete project",
+    usersAssignee: "Phan Trong Duc",
+    difficulty: "Hard",
+    isDone: false,
+    point: 7.0,
   },
 ];
 
 export const iconsAction = [
-  { name: IconEye, color: "blue", action: "See" },
-  { name: IconEdit, color: "green", action: "Edit" },
-  { name: IconDelete, color: "red", action: "Delete" },
+  { name: IconEye, color: "blue", action: "See", title: "See details" },
+  { name: IconEdit, color: "green", action: "Edit", title: "Edit task" },
+  { name: IconDelete, color: "red", action: "Delete", title: "Delete task" },
 ];
