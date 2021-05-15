@@ -64,6 +64,7 @@ export const ContentModal = ({ setOpenModal, setData, data }) => {
     dueDate: moment(data.dueDate).format("YYYY-MM-DD"),
     idOfAdmin: data.idOfAdmin,
     projectId: data.projectId,
+    usersAssigned: data.usersAssigned,
   });
   const validate = () => {
     const errorState = {};
@@ -120,7 +121,7 @@ export const ContentModal = ({ setOpenModal, setData, data }) => {
                         item.title,
                         item.description,
                         item.managerName,
-                        item.userAssignee.map((i) => i.name).join(","),
+                        item.userAssignee,
                         item.startDate,
                         item.dueDate,
                         "More"
@@ -181,16 +182,6 @@ export const ContentModal = ({ setOpenModal, setData, data }) => {
   const [interns, setInterns] = useState([]);
 
   useEffect(() => {
-    getAllUserAssignedProject(data.projectId.toString(), (res) => {
-      if (res.success) {
-        setInterns(res.data.map((item) => item.name));
-      } else {
-        toast.error(res.message);
-      }
-    });
-  }, [data]);
-
-  useEffect(() => {
     getAllUser((res) => {
       if (res.success) {
         setInterns(res.data);
@@ -231,7 +222,9 @@ export const ContentModal = ({ setOpenModal, setData, data }) => {
     );
   }
 
-  const [usersSelected, setUsersSelected] = useState([]);
+  const [usersSelected, setUsersSelected] = useState(
+    data.usersAssigned.map((item) => item.id.toString())
+  );
 
   const handleChangeUsersAssignee = (value, options) => {
     let arr = [];
@@ -333,7 +326,11 @@ export const ContentModal = ({ setOpenModal, setData, data }) => {
               mode="multiple"
               showArrow
               name="assignedUsers"
+              dropdownClassName="dropdown__selection"
               placeholder="Users assigned"
+              defaultValue={data.usersAssigned.map(
+                (item) => `Id: ${item.id} - Name: ${item.name}`
+              )}
               tagRender={tagRender}
               onChange={(value, options) =>
                 handleChangeUsersAssignee(value, options)

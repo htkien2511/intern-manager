@@ -48,6 +48,8 @@
 .app__admin {
   &__body {
     width: 100%;
+    height: 100vh;
+    overflow-y: hidden;
     &--no-sidebar {
       transition: margin-left 0.5s;
       margin-left: 80px;
@@ -233,4 +235,9 @@ body {
 .ant-select-multiple {
   max-width: 500px;
   width: 100%;
+}
+.dropdown__selection {
+  max-height: 200px;
+  z-index: 99999;
+  overflow-y: scroll;
 }

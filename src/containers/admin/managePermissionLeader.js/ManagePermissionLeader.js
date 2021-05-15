@@ -184,6 +184,7 @@ export default function ManagePermissionLeader() {
             <Select
               mode="multiple"
               showArrow
+              placeholder="Choice permissions"
               tagRender={tagRender}
               onChange={(value, options) =>
                 handleChangePermission(value, options, row.id)

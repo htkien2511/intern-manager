@@ -139,7 +139,7 @@ export default function ManageProject() {
               item.title,
               item.description,
               item.managerName,
-              item.userAssignee.map((i) => i.name).join(","),
+              item.userAssignee,
               item.startDate,
               item.dueDate,
               "More"
@@ -198,6 +198,7 @@ export default function ManageProject() {
       dueDate: item.dueDate,
       idOfAdmin: item.managerName.managerId,
       projectId: item.projectID,
+      usersAssigned: item.usersAssigned,
     });
     setOpenModalEdit(true);
   };
@@ -261,6 +262,7 @@ export default function ManageProject() {
                               dueDate: moment(row.dueDate).format("YYYY/MM/DD"),
                               idOfAdmin: row.managerName.managerId,
                               projectId: row.projectID,
+                              usersAssigned: row.usersAssigned,
                             });
                           }}
                         >
@@ -283,15 +285,16 @@ export default function ManageProject() {
         );
       }
       case "usersAssigned": {
+        const input = value && value.map((i) => i.name).join(",");
         return (
           <TableCell key={column.id + " - " + indexRow}>
-            {!(value && value.length) ? (
+            {!(input && input.length) ? (
               <Empty
                 image={Empty.PRESENTED_IMAGE_SIMPLE}
                 style={{ padding: 0 }}
               />
             ) : (
-              <AvatarBlock users_list={value.split(",")} />
+              <AvatarBlock users_list={input.split(",")} />
             )}
           </TableCell>
         );
@@ -354,11 +357,15 @@ export default function ManageProject() {
   const storeCreateProject = useSelector((store) => store.createProject);
   const storeEditProject = useSelector((store) => store.updateProject);
   const storeDeleteProject = useSelector((store) => store.deleteProject);
+  const storeAssignedUsersInProject = useSelector(
+    (store) => store.assignUsersIntoProject
+  );
 
   return (
     <div className="manage-intern">
       {(storeCreateProject.loading ||
         storeDeleteProject.loading ||
+        storeAssignedUsersInProject.loading ||
         storeEditProject.loading) && <SpinLoading />}
       <div className="manage-intern__inner">
         <div className="manage-intern__inner__top">

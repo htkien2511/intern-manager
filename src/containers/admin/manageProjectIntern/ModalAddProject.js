@@ -119,7 +119,7 @@ export const ContentModal = ({ setOpenModal, setData }) => {
                   item.title,
                   item.description,
                   item.managerName,
-                  item.userAssignee.map((i) => i.name).join(","),
+                  item.userAssignee,
                   item.startDate,
                   item.dueDate,
                   "More"
