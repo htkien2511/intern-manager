@@ -18,6 +18,8 @@ import updateAccount from "./updateAccount";
 import addManager from "./admin/addManager";
 import getProjectIntern from "./intern/getProjectIntern";
 import getTaskProjectIntern from "./intern/getTaskProjectIntern";
+import changeStatusTask from "./intern/changeStatusTask";
+import addLeaveSchedule from "./intern/addLeaveSchedule";
 import createProject from "./admin/createProject";
 import updateProject from "./admin/updateProject";
 import deleteProject from "./admin/deleteProject";
@@ -44,6 +46,8 @@ export default combineReducers({
   addManager,
   getProjectIntern,
   getTaskProjectIntern,
+  changeStatusTask,
+  addLeaveSchedule,
   createProject,
   updateProject,
   deleteProject,

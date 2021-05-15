@@ -1,6 +1,7 @@
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { addLeaveSchedule } from "redux/actions/intern/addLeaveSchedule";
 function CalenderTable() {
   const [schedules, setSchedules] = useState([]);
   const MAP = [
@@ -19,11 +20,11 @@ function CalenderTable() {
     let array = [];
     [1, 2, 3, 4, 5].forEach((item) => {
       let date = moment(new Date(curr.setDate(firstDateWeek + item))).format(
-        "DD-MM-YYYY"
+        "YYYY/MM/DD"
       );
       array.push({
         leave_date: date,
-        shitf: 3,
+        shitf_date: 3,
       });
     });
     setSchedules(array);
@@ -31,7 +32,7 @@ function CalenderTable() {
   }, [firstDateWeek]);
 
   useEffect(() => {
-    if (curr.getTime() > new Date(curr.setDate(firstDateWeek + 5)).getTime()) {
+    if ((new Date()).getTime() > new Date(curr.setDate(firstDateWeek + 5)).getTime()) {
       setFirstDateWeek(firstDateWeek + 7);
     }
     // eslint-disable-next-line
@@ -39,14 +40,30 @@ function CalenderTable() {
 
   const handleSubmit = () => {
     if (
-      new Date(curr.setDate(firstDateWeek + 6)).getTime() === curr.getTime() ||
-      new Date(curr.setDate(firstDateWeek + 7)).getTime() === curr.getTime()
+      new Date(curr.setDate(firstDateWeek + 6)).getTime() === (new Date()).getTime() ||
+      new Date(curr.setDate(firstDateWeek + 7)).getTime() === (new Date()).getTime()
     ) {
       toast.error("Today you can not edit your schedule!");
+      console.log(schedules);
       return;
     }
+    console.log(schedules);
+    schedules.forEach((element, index) => {
+      const formData = {
+        shift_date: element.shitf_date,
+        leave_date: element.leave_date,
+        reason_content: "abc",
+      };
+      addLeaveSchedule(formData, (res) => {
+        // if (res.success) {
+        //   toast.success("Send schedule successfully");
+        // } else {
+        //   toast.error(res.message);
+        // }
+      });
+    });
     //call api create schedule
-    toast.success("Call API");
+    toast.success("Send schedule successfully");
   };
 
   function handleChange(event, item) {
@@ -54,7 +71,7 @@ function CalenderTable() {
 
     arr.forEach((element, index) => {
       if (element.leave_date === item.leave_date) {
-        arr[index].shitf = MAP.findIndex((e) => e === event.target.value);
+        arr[index].shitf_date = MAP.findIndex((e) => e === event.target.value);
       }
     });
     setSchedules(arr);

@@ -1,12 +1,12 @@
 // import DropPanel from "components/common/core/DropPanel";
 import React, { useEffect } from "react";
-import { NavLink, useParams } from "react-router-dom";
-import { ROUTE_TASK_MANAGEMENT_DETAIL } from "../../../utils/routes";
+import { useParams } from "react-router-dom";
 import { getTaskProjectIntern } from "redux/actions/intern/getTaskProjectIntern";
 import moment from "moment";
 import { useSelector } from "react-redux";
 import SpinLoading from "components/common/core/SpinLoading";
 import { toast } from "react-toastify";
+import { changeStatusTask } from "redux/actions/intern/changeStatusTask";
 function TaskManagementDetail() {
   const { projectId } = useParams();
   const [form, setForm] = React.useState(null);
@@ -23,20 +23,26 @@ function TaskManagementDetail() {
     (store) => store.getTaskProjectIntern
   );
   
-  // const handleChangeStatus = (event) => {
-  //   console.log("abc");
-  //   // const formData = {
-  //   //   oldPassword: formChangePass.oldPassword,
-  //   //   newPassword: formChangePass.newPassword,
-  //   // };
-  //   // changePassword(formData, (res) => {
-  //   //   if (res.success) {
-  //   //     toast.success("Changed password successfully");
-  //   //   } else {
-  //   //     toast.error(res.message);
-  //   //   }
-  //   // });
-  // };
+  const handleChangeStatus = (event, item) => {
+    const formData = {
+      task_id: item.taskId,
+      description: item.description,
+      title: item.title,
+      difficulty: item.difficulty,
+      is_done: item.isDone,
+      point: item.point,
+      due_date: item.dueDate,
+      users_assignee: item.usersAssignee,
+    };
+    console.log(formData);
+    changeStatusTask(formData, (res) => {
+      if (res.success) {
+        toast.success("Changed status successfully");
+      } else {
+        toast.error(res.message);
+      }
+    });
+  };
   return (
     <>
       <div className="task-management">
@@ -71,26 +77,14 @@ function TaskManagementDetail() {
                       <td>{item.title}</td>
                       <td>{item.description}</td>
                       <td>
-                        {moment(new Date(item.createDate)).format("DD-MM-YYYY")}
+                        {moment(new Date(item.createDate)).format("YYYY/MM/DD")}
                       </td>
                       <td>{item.difficulty}</td>
                       <td>
-                        <button className="button button--secondary"><p>{item.isDone ? "Done" : "In Progess"}</p></button>
-                        {/* <NavLink
-                          activeClassName="--active"
-                          to={ROUTE_TASK_MANAGEMENT_DETAIL}
-                        >
-                          <p>{item.isDone ? "Done" : "In Progess"}</p>
-                        </NavLink> */}
+                        <button className="button button--secondary" onClick={(event) => handleChangeStatus(event, item)}>{item.isDone ? "Done" : "In Progess"}</button>
                       </td>
                      <td>
-                     <NavLink
-                        activeClassName="--active"
-                        // onClick={handleChangeStatus}
-                        to={ROUTE_TASK_MANAGEMENT_DETAIL}
-                      >
-                        <p>Feedback</p>
-                      </NavLink>
+                      <button className="button button--secondary">Feedback</button>
                      </td>
                     </tr>
                   );
