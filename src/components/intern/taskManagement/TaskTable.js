@@ -51,10 +51,10 @@ function TaskManagement() {
                       <td>{item.title}</td>
                       <td>2/5</td>
                       <td>
-                        {moment(new Date(item.startDate)).format("DD-MM-YYYY")}
+                        {moment(new Date(item.startDate)).format("YYYY/MM/DD")}
                       </td>
                       <td>
-                        {moment(new Date(item.dueDate)).format("DD-MM-YYYY")}
+                        {moment(new Date(item.dueDate)).format("YYYY/MM/DD")}
                       </td>
                       <td>
                         <NavLink
