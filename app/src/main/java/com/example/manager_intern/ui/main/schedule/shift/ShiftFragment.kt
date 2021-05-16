@@ -1,5 +1,6 @@
 package com.example.manager_intern.ui.main.schedule.shift
 
+import android.view.View
 import com.example.manager_intern.R
 import com.example.manager_intern.base.BaseFragment
 import com.example.manager_intern.base.BaseViewModel
@@ -40,10 +41,10 @@ class ShiftFragment : BaseFragment<ScheduleViewModel>(R.layout.shift_frag) {
         calendar.firstDayOfWeek = Calendar.MONDAY
         calendar.add(Calendar.DAY_OF_WEEK, 7)
 
-//        if (calendar.get(Calendar.DAY_OF_WEEK) == 7 || calendar.get(Calendar.DAY_OF_WEEK) == 1) {
-//            calendar.add(Calendar.DAY_OF_WEEK, 7)
-//            binding.btnSubmitShift.visibility = View.VISIBLE
-//        }
+        if (calendar.get(Calendar.DAY_OF_WEEK) == 7 || calendar.get(Calendar.DAY_OF_WEEK) == 1) {
+            calendar.add(Calendar.DAY_OF_WEEK, 7)
+            binding.btnSubmitShift.visibility = View.VISIBLE
+        }
 
         calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY)
 

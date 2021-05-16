@@ -1,5 +1,6 @@
 package com.example.manager_intern.ui.task
 
+import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.manager_intern.R
 import com.example.manager_intern.base.BaseActivity
@@ -30,8 +31,8 @@ class TaskActivity : BaseActivity<TaskViewModel>() {
                 progress -= 100 / data.size
             }
 
-            binding.tvProgress.text = "$progress %"
             binding.progressBar.progress = progress
+            binding.tvProgress.text = binding.progressBar.progress.toString() + " %"
 
             val taskRequest = TaskRequest(task.taskId, task.description, task.title, task.difficulty, isChecked, task.point, task.dueDate ?: "", task.usersAssignee)
             if (userData != null) {
