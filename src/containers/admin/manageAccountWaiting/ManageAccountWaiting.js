@@ -174,10 +174,10 @@ export default function ManageAccountWaiting() {
   useEffect(() => {
     setFilteredData(data);
   }, [data]);
+  const [searchText, setSearchText] = useState("");
 
-  const handleSearch = (event) => {
-    const lowercasedValue = event.target.value.toLowerCase().trim();
-    if (lowercasedValue === "") setFilteredData(data);
+  useEffect(() => {
+    if (searchText === "") setFilteredData(data);
     else {
       const filteredData = data.filter((item) => {
         return Object.keys(item)
@@ -185,14 +185,17 @@ export default function ManageAccountWaiting() {
           .some((key) =>
             columns.includes(key)
               ? false
-              : (item[key] + "")
-                  .toString()
-                  .toLowerCase()
-                  .includes(lowercasedValue)
+              : (item[key] + "").toString().toLowerCase().includes(searchText)
           );
       });
       setFilteredData(filteredData);
     }
+    // setFilteredData(data);
+  }, [searchText, data]);
+
+  const handleSearch = (event) => {
+    const lowercasedValue = event.target.value.toLowerCase().trim();
+    setSearchText(lowercasedValue);
   };
 
   const [openModalAccept, setOpenModalAccept] = useState(false);

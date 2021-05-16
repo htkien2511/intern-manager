@@ -29,9 +29,26 @@
       }
     }
     .block__info_details {
+      padding: 15px 20px;
+      margin-top: 35px;
+      &__title {
+        color: #0f0072;
+        margin: 20px 0px;
+        font-size: 22px;
+      }
+      .block__info {
+        margin-top: 20px;
+        & > div {
+          color: rgb(255, 104, 16);
+          & > span {
+            color: rgb(26, 65, 21);
+            margin-right: 10px;
+          }
+        }
+      }
       margin-left: 10px;
       width: 50%;
-      height: 450px;
+      height: 200px;
       background: rgb(255, 255, 255);
       box-shadow: rgb(192, 192, 192) 0px 5px 25px;
       border-radius: 4px;

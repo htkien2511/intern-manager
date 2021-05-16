@@ -224,24 +224,28 @@ export default function ManageIntern() {
   const loadingDelete = useSelector((store) => store.deleteUser).loading;
   const loadingEdit = useSelector((store) => store.updateAccount).loading;
 
-  const handleSearch = (event) => {
-    const lowercasedValue = event.target.value.toLowerCase().trim();
-    if (lowercasedValue === "") setFilteredData(data);
+  const [searchText, setSearchText] = useState("");
+
+  useEffect(() => {
+    if (searchText === "") setFilteredData(data);
     else {
       const filteredData = data.filter((item) => {
         return Object.keys(item)
           .filter((i) => i !== "actions")
           .some((key) =>
-            columns.filter((ele) => ele !== "actions").includes(key)
+            columns.includes(key)
               ? false
-              : (item[key] + "")
-                  .toString()
-                  .toLowerCase()
-                  .includes(lowercasedValue)
+              : (item[key] + "").toString().toLowerCase().includes(searchText)
           );
       });
       setFilteredData(filteredData);
     }
+    // setFilteredData(data);
+  }, [searchText, data]);
+
+  const handleSearch = (event) => {
+    const lowercasedValue = event.target.value.toLowerCase().trim();
+    setSearchText(lowercasedValue);
   };
 
   return (

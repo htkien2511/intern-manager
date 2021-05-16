@@ -383,7 +383,7 @@ const ManageProjectDetail = () => {
       {showModalSeeDetails && (
         <ModalShowDetail
           setOpenModal={setShowModalSeeDetails}
-          title="Edit task"
+          title="Information details task"
           setData={setData}
           input={taskSelected}
           projectId={projectId}

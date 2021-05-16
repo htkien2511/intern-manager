@@ -1,15 +1,14 @@
 import { FormBox } from "components/common";
 import CustomizedModal from "components/common/core/CustomizeModal";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import { Form as ReForm, Input } from "reactstrap";
+import { Form as ReForm } from "reactstrap";
 import { isEmpty } from "validator";
 import moment from "moment";
-import { getAllUserAssignedProject } from "redux/actions/admin/getAllUserAssignedProject";
-import { Select, Tag } from "antd";
 import { updateTask } from "redux/actions/admin/updateTask";
 import { toast } from "react-toastify";
 import { getAllTasksByProjectID } from "redux/actions/admin/getAllTaskByProjectID";
+import AvatarBlock from "components/common/core/AvatarBlock";
 
 export const HeaderModal = ({ close, title }) => {
   return (
@@ -44,34 +43,6 @@ export const ContentModal = ({ setOpenModal, projectId, setData, input }) => {
     point: "" || Number(input.point),
     users_assignee: "" || input.usersAssignee,
   });
-
-  const [usersAssignedInProject, setUsersAssignedInProject] = useState([]);
-
-  function tagRender(props) {
-    const { label, closable, onClose } = props;
-    const onPreventMouseDown = (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-    };
-    return (
-      <Tag
-        onMouseDown={onPreventMouseDown}
-        closable={closable}
-        onClose={onClose}
-        style={{ marginRight: 3 }}
-      >
-        {label}
-      </Tag>
-    );
-  }
-
-  useEffect(() => {
-    getAllUserAssignedProject(projectId, (res) => {
-      if (res.success) {
-        setUsersAssignedInProject(res.data);
-      }
-    });
-  }, [projectId]);
 
   const validate = () => {
     const errorState = {};
@@ -137,55 +108,12 @@ export const ContentModal = ({ setOpenModal, projectId, setData, input }) => {
     });
   };
 
-  const [options, setOptions] = useState([]);
-  useEffect(() => {
-    if (!usersAssignedInProject.length) return;
-    let arr = [];
-    usersAssignedInProject.forEach((item) => {
-      let option = {
-        value: `Id: ${item.id} - Name: ${item.name}`,
-      };
-      arr.push(option);
-    });
-    setOptions(arr);
-  }, [usersAssignedInProject]);
-
-  const handleChangeUsersAssignee = (value, options) => {
-    let arr = [];
-    options.forEach((o) => {
-      let id = Number(
-        (o.value + "").split(" - ")[0].toString().match(/\d+/g)[0]
-      );
-      let name = usersAssignedInProject.find((item) => item.id === id).name;
-      arr.push({
-        id: id,
-        name: name,
-      });
-    });
-    setForm({ ...form, users_assignee: arr });
-  };
-
   return (
     <div className="content__container" onSubmit={handleSubmitForm}>
       <div className="content__inner">
         <ReForm className="re__form">
           <div>
-            <label>Task Name</label>
-            <FormBox
-              propsInput={{
-                type: "text",
-                name: "title",
-                placeholder: "Task Name",
-                onChange: handleChange,
-                onFocus: handleFocus,
-                value: form.title,
-                disabled: false,
-              }}
-              error={error.title}
-            />
-          </div>
-          <div>
-            <label>Descriptions</label>
+            <label>Descriptions: </label>
             <FormBox
               propsInput={{
                 type: "textarea",
@@ -194,135 +122,31 @@ export const ContentModal = ({ setOpenModal, projectId, setData, input }) => {
                 onChange: handleChange,
                 onFocus: handleFocus,
                 value: form.description,
-                disabled: false,
+                disabled: true,
               }}
               error={error.description}
             />
           </div>
           <div>
-            <label>Due date</label>
-            <FormBox
-              propsInput={{
-                type: "date",
-                name: "dueDate",
-                placeholder: "Due date",
-                onChange: handleChange,
-                onFocus: handleFocus,
-                value: form.dueDate || "",
-                min: moment(Date.now()).format("YYYY-MM-DD"),
-                disabled: false,
-              }}
-              error={error.dueDate}
-            />
+            <label>Point: </label>
+            <span> {form.point}</span>
           </div>
 
-          <div>
-            <label>Level</label>
-            <Input
-              type="select"
-              name="difficultId"
-              id="difficultId"
-              placeholder="Level"
-              onChange={handleChange}
-              onFocus={handleFocus}
-              value={form.difficultId}
-              disabled={false}
-            >
-              {["Easy", "Normal", "Hard"].map((item, index) => (
-                <option key={index}>{item}</option>
-              ))}
-            </Input>
-            <span
-              className="invalid-feedback"
-              style={{ display: "block", marginLeft: 15 }}
-            >
-              {error.difficultId}
-            </span>
-          </div>
-
-          <div>
-            <label>Point</label>
-            <FormBox
-              propsInput={{
-                type: "number",
-                name: "point",
-                min: "0",
-                max: "10",
-                step: "0.5",
-                placeholder: "Point",
-                onChange: handleChange,
-                onFocus: handleFocus,
-                value: form.point || 0,
-                disabled: false,
-              }}
-              error={error.point}
-            />
-          </div>
-
-          <div>
-            <label>Status</label>
-            <Input
-              type="select"
-              name="status"
-              id="status"
-              placeholder="Status"
-              onChange={handleChange}
-              onFocus={handleFocus}
-              value={form.isDone ? "Done" : "Progressing"}
-              disabled={false}
-            >
-              {["Done", "Progressing"].map((item, index) => (
-                <option key={index}>{item}</option>
-              ))}
-            </Input>
-            <span
-              className="invalid-feedback"
-              style={{ display: "block", marginLeft: 15 }}
-            >
-              {error.isDone}
-            </span>
-          </div>
-
-          <div>
-            <label>Assigned users</label>
-            <Select
-              mode="multiple"
-              showArrow
-              name="assignedUsers"
-              dropdownClassName="dropdown__selection"
-              placeholder="Users assigned"
-              defaultValue={
-                input.usersAssignee &&
-                input.usersAssignee.map(
-                  (item) => `Id: ${item.id} - Name: ${item.name}`
-                )
-              }
-              tagRender={tagRender}
-              onChange={(value, options) =>
-                handleChangeUsersAssignee(value, options)
-              }
-              options={options}
-              onFocus={handleFocus}
-              maxTagCount={3}
-            />
-            <span
-              className="invalid-feedback"
-              style={{ display: "block", marginLeft: 15 }}
-            >
-              {error.assignedUsers}
-            </span>
-          </div>
-
-          <button className="btn--save align__center" style={{ marginTop: 20 }}>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
-              <g id="Layer_2" data-name="Layer 2">
-                <path
-                  d="M14,0H2A2,2,0,0,0,0,2V16a2,2,0,0,0,2,2H16a2,2,0,0,0,2-2V4ZM9,16a3,3,0,1,1,3-3A3,3,0,0,1,9,16ZM12,6H2V2H12Z"
-                  fill="#ffff"
+          <div style={{ marginTop: 10 }} className="flex items-center">
+            <label style={{ marginRight: 5 }}>Assigned users: </label>
+            {input.usersAssignee.length ? (
+              <span>
+                <AvatarBlock
+                  users_list={input.usersAssignee.map((i) => i.name)}
+                  maxCount={4}
                 />
-              </g>
-            </svg>
-          </button>
+              </span>
+            ) : (
+              <div style={{ color: "gray", marginBottom: 8 }}>
+                No user assigned
+              </div>
+            )}
+          </div>
         </ReForm>
       </div>
     </div>
@@ -358,6 +182,7 @@ const ModalShowDetail = ({
 const ModalAddAccountUserContainer = styled.div`
   .modal__inner {
     .modal__header {
+      background: #c9d7ff;
       .header__container {
         .header__inner {
           padding: 10px 15px;

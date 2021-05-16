@@ -34,7 +34,15 @@ export default function ManageScheduleDetail() {
       }
     };
     return (
-      <div style={{ background: renderColorByShift(), height: 100 }}></div>
+      <div
+        style={{
+          background: renderColorByShift(),
+          height: 60,
+          width: 60,
+          borderRadius: 5,
+          textAlign: "center",
+        }}
+      ></div>
     );
   };
   const [infoDetailsOffDay, setInfoDetailsOffDay] = useState({});
@@ -50,7 +58,7 @@ export default function ManageScheduleDetail() {
         <RollbackOutlined onClick={() => window.history.back()} />
         <div onClick={() => window.history.back()}>Back to previous page</div>
       </div>
-      <div className="manage-schedule-detail__inner flex items-center">
+      <div className="manage-schedule-detail__inner flex">
         <div className="block__calendar">
           <div
             className="flex block__info_shift"
@@ -93,25 +101,34 @@ export default function ManageScheduleDetail() {
           />
         </div>
         <div className="block__info_details">
-          <span>Information details of the off day</span>
-          <div>
-            {infoDetailsOffDay.event &&
-              infoDetailsOffDay.event._def.extendedProps.reason}
-          </div>
-          <div>
-            {moment(
-              infoDetailsOffDay.event &&
-                infoDetailsOffDay.event._instance.range.start
-            ).format("YYYY/MM/DD")}
-          </div>
-          <div>
-            {infoDetailsOffDay.event &&
-            infoDetailsOffDay.event._def.extendedProps.shift === 0
-              ? "All day"
-              : infoDetailsOffDay.event &&
-                infoDetailsOffDay.event._def.extendedProps.shift === 1
-              ? "The morning"
-              : "The afternoon"}
+          <span className="block__info_details__title">
+            Information details of the off day
+          </span>
+          <div className="block__info">
+            <div>
+              <span>Reason: </span>
+              {infoDetailsOffDay.event &&
+              infoDetailsOffDay.event._def.extendedProps.reason
+                ? infoDetailsOffDay.event._def.extendedProps.reason
+                : "Empty"}
+            </div>
+            <div>
+              <span>Off date: </span>
+              {moment(
+                infoDetailsOffDay.event &&
+                  infoDetailsOffDay.event._instance.range.start
+              ).format("YYYY/MM/DD")}
+            </div>
+            <div>
+              <span>Absence: </span>
+              {infoDetailsOffDay.event &&
+              infoDetailsOffDay.event._def.extendedProps.shift === 0
+                ? "All day"
+                : infoDetailsOffDay.event &&
+                  infoDetailsOffDay.event._def.extendedProps.shift === 1
+                ? "The morning"
+                : "The afternoon"}
+            </div>
           </div>
         </div>
       </div>
