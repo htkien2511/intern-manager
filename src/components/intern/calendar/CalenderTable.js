@@ -24,7 +24,7 @@ function CalenderTable() {
       );
       array.push({
         leave_date: date,
-        shitf_date: 3,
+        shift_date: 3,
       });
     });
     setSchedules(array);
@@ -50,10 +50,11 @@ function CalenderTable() {
     console.log(schedules);
     schedules.forEach((element, index) => {
       const formData = {
-        shift_date: element.shitf_date,
+        shift_date: element.shift_date,
         leave_date: element.leave_date,
-        reason_content: "abc",
+        reason_content: "",
       };
+      console.log(formData);
       addLeaveSchedule(formData, (res) => {
         // if (res.success) {
         //   toast.success("Send schedule successfully");
@@ -71,7 +72,7 @@ function CalenderTable() {
 
     arr.forEach((element, index) => {
       if (element.leave_date === item.leave_date) {
-        arr[index].shitf_date = MAP.findIndex((e) => e === event.target.value);
+        arr[index].shift_date = MAP.findIndex((e) => e === event.target.value);
       }
     });
     setSchedules(arr);
