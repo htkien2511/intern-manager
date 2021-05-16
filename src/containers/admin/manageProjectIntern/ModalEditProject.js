@@ -256,7 +256,7 @@ export const ContentModal = ({ setOpenModal, setData, data }) => {
             <label>Descriptions</label>
             <FormBox
               propsInput={{
-                type: "text",
+                type: "textarea",
                 name: "description",
                 placeholder: "Descriptions",
                 onChange: handleChange,
