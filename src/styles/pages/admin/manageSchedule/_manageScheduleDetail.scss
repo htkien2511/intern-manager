@@ -1,12 +1,12 @@
 .manage-schedule-detail {
-  margin: 80px auto;
+  margin: 0px auto;
   &__inner {
     position: relative;
-    margin: 0 80px;
+    margin: 0 40px;
     .block__calendar {
-      box-shadow: rgb(192, 192, 192) 0px 2px 2px;
+      // box-shadow: rgb(192, 192, 192) 0px 2px 2px;
       margin-right: 10px;
-      width: 60%;
+      width: 50%;
       .block__info_shift {
         & > div {
           margin-left: 15px;
@@ -30,8 +30,8 @@
     }
     .block__info_details {
       margin-left: 10px;
-      width: 40%;
-      height: 600px;
+      width: 50%;
+      height: 450px;
       background: rgb(255, 255, 255);
       box-shadow: rgb(192, 192, 192) 0px 5px 25px;
       border-radius: 4px;

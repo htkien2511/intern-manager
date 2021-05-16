@@ -27,6 +27,20 @@ import getAllProject from "./admin/getAllProject";
 import getAllUsersAssignedProject from "./admin/getAllUsersAssignedProject";
 import assignUsersIntoProject from "./admin/assignUsersIntoProject";
 import getAllTasksByProjectID from "./admin/getAllTasksByProjectID";
+import createTask from "./admin/createTask";
+import updateTask from "./admin/updateTask";
+import deleteTask from "./admin/deleteTask";
+import createSchedule from "./admin/createSchedule";
+import updateSchedule from "./admin/updateSchedule";
+import deleteSchedule from "./admin/deleteSchedule";
+import getScheduleUserID from "./admin/getScheduleUserID";
+import addFeedback from "./admin/addFeedback";
+import updateFeedback from "./admin/updateFeedback";
+import deleteFeedback from "./admin/deleteFeedback";
+import getAllFeedbacksByTaskID from "./admin/getAllFeedbacksByTaskID";
+import updatePermissionByLeaderID from "./admin/updatePermissionByLeaderID";
+import getPermissionLeader from "./admin/getPermissionLeader";
+import getAllPermission from "./admin/getAllPermission";
 
 export default combineReducers({
   login,
@@ -57,4 +71,18 @@ export default combineReducers({
   getAllProject,
   setShowSidebar,
   getAllTasksByProjectID,
+  createTask,
+  updateTask,
+  deleteTask,
+  createSchedule,
+  updateSchedule,
+  deleteSchedule,
+  getScheduleUserID,
+  addFeedback,
+  updateFeedback,
+  deleteFeedback,
+  getAllFeedbacksByTaskID,
+  updatePermissionByLeaderID,
+  getPermissionLeader,
+  getAllPermission,
 });

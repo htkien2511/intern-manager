@@ -3,13 +3,11 @@ import { iconsAction } from "utils/mockData";
 import IconStar from "assets/icons/TTM_Icon-Star.svg";
 import IconStarNoFill from "assets/icons/TTM_Icon-Star-NoFill.svg";
 import { Button, Table } from "react-bootstrap";
-// import {ProgressBar} from "react-bootstrap"
-// import Spinner from "react-bootstrap/Spinner";
-import ModalAddTask from "./ModalAddProject";
+import ModalAddTask from "./ModalAddTask";
 import { Input } from "reactstrap";
 import Popup from "components/common/core/Popup";
 import { CommentOutlined, RollbackOutlined } from "@ant-design/icons";
-import { Tooltip } from "antd";
+import { Empty, Spin, Tooltip } from "antd";
 import { IconButton } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { setTitle } from "redux/actions/admin/setTitle";
@@ -17,7 +15,9 @@ import { useParams } from "react-router";
 import { getAllTasksByProjectID } from "redux/actions/admin/getAllTaskByProjectID";
 import moment from "moment";
 import SpinLoading from "components/common/core/SpinLoading";
-// import AvatarBlock from "components/common/core/AvatarBlock";
+import { deleteTask } from "redux/actions/admin/deleteTask";
+import { toast } from "react-toastify";
+import ModalEditTask from "./ModalEditTask";
 
 const Icon = ({ icon, color }) => {
   return (
@@ -31,7 +31,7 @@ const Icon = ({ icon, color }) => {
 };
 const renderStars = (amount) => {
   const stars = [];
-  const map = { Hard: 3, Medium: 2, Easy: 1 };
+  const map = { Hard: 3, Normal: 2, Easy: 1 };
   let i = 0;
   for (i = 0; i < 3; i++) {
     if (i < map[amount]) {
@@ -45,8 +45,11 @@ const renderStars = (amount) => {
 
 const ManageProjectDetail = () => {
   const [showModal, setShowModal] = useState(false);
+  const [showModalEdit, setShowModalEdit] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
   const [data, setData] = useState([]);
+  const [filterData, setFilterData] = useState([]);
+  const [taskSelected, setTaskSelected] = useState({});
   const handleAddTask = () => {
     setShowModal(true);
   };
@@ -74,24 +77,28 @@ const ManageProjectDetail = () => {
         {/* <h2 style={{ textAlign: "center", color: "orangered" }}>
           Project Name
         </h2> */}
-        <Table>
-          <thead>
-            <tr>
-              <th>Task ID</th>
-              <th>Task name</th>
-              <th>CREATED AT</th>
-              <th>DUE DATE</th>
-              {/* <th>DESCRIPTIONS</th> */}
-              {/* <th>USERS ASSIGNED</th> */}
-              <th>Level</th>
-              <th>STATUS</th>
-              {/* <th>POINT</th> */}
-              <th>ACTIONS</th>
-            </tr>
-          </thead>
-          <tbody>
-            {input &&
-              input.map((item, index) => {
+        {!input ? (
+          <div style={{ position: "absolute", left: "50%" }}>
+            <Empty />
+          </div>
+        ) : (
+          <Table>
+            <thead>
+              <tr>
+                <th>Task ID</th>
+                <th>Task name</th>
+                <th>CREATED AT</th>
+                <th>DUE DATE</th>
+                {/* <th>DESCRIPTIONS</th> */}
+                {/* <th>USERS ASSIGNED</th> */}
+                <th>Level</th>
+                <th>STATUS</th>
+                {/* <th>POINT</th> */}
+                <th>ACTIONS</th>
+              </tr>
+            </thead>
+            <tbody>
+              {input.map((item, index) => {
                 return (
                   <tr key={index}>
                     <td>
@@ -120,14 +127,18 @@ const ManageProjectDetail = () => {
                     <td>
                       <div className="test-plan__content">
                         <div className="test-plan__content__inner">
-                          {moment(item.createDate).format("DD/MM/YYYY")}
+                          {item.createDate
+                            ? moment(item.createDate).format("DD/MM/YYYY")
+                            : "Empty"}
                         </div>
                       </div>
                     </td>
                     <td>
                       <div className="test-plan__content">
                         <div className="test-plan__content__inner">
-                          {moment(item.dueDate).format("DD/MM/YYYY")}
+                          {item.dueDate
+                            ? moment(item.dueDate).format("DD/MM/YYYY")
+                            : "Empty"}
                         </div>
                       </div>
                     </td>
@@ -168,7 +179,16 @@ const ManageProjectDetail = () => {
                     <td>
                       <div className="test-plan__content">
                         <div className="test-plan__content__inner">
-                          {item.isDone ? "Done" : "In Progress"}
+                          {item.isDone ? (
+                            "Done"
+                          ) : (
+                            <div className="flex align__center">
+                              <span style={{ marginRight: 15 }}>
+                                In progress
+                              </span>
+                              <Spin size="small" />
+                            </div>
+                          )}
                         </div>
                       </div>
                     </td>
@@ -181,7 +201,7 @@ const ManageProjectDetail = () => {
                   </td> */}
                     <td>
                       <div className="test-plan__content test-plan__content--actions">
-                        {iconsAction.map((item, index) => {
+                        {iconsAction.map((element, index) => {
                           return (
                             <div
                               style={{
@@ -193,17 +213,22 @@ const ManageProjectDetail = () => {
                               }}
                               className="flex align__center"
                               key={index}
-                              onClick={() => handleActions(item.action)}
+                              onClick={() =>
+                                handleActions(item, element.action)
+                              }
                             >
-                              <Tooltip placement="top" title={item.title}>
+                              <Tooltip placement="top" title={element.title}>
                                 <IconButton>
-                                  <Icon icon={item.name} color={item.color} />
+                                  <Icon
+                                    icon={element.name}
+                                    color={element.color}
+                                  />
                                 </IconButton>
                               </Tooltip>
                             </div>
                           );
                         })}
-                        <div onClick={() => handleActions(item.action)}>
+                        <div onClick={() => handleActions(item, "Feedback")}>
                           <div
                             style={{
                               width: 40,
@@ -215,7 +240,7 @@ const ManageProjectDetail = () => {
                           >
                             <Tooltip placement="top" title="Feedback">
                               <IconButton>
-                                <CommentOutlined />
+                                <CommentOutlined style={{ color: "white" }} />
                               </IconButton>
                             </Tooltip>
                           </div>
@@ -225,37 +250,58 @@ const ManageProjectDetail = () => {
                   </tr>
                 );
               })}
-          </tbody>
-        </Table>
+            </tbody>
+          </Table>
+        )}
       </div>
     );
   };
 
-  const handleActions = (action) => {
+  const handleActions = (item, action) => {
     switch (action) {
       case "See":
         console.log("See");
+        setTaskSelected(item);
         break;
       case "Edit":
         console.log("Edit");
+        setShowModalEdit(true);
+        setTaskSelected(item);
         break;
       case "Delete":
         console.log("Delete");
+        setTaskSelected(item);
         setOpenModalDelete(true);
         break;
+      case "Feedback": {
+        console.log("Feedback");
+        break;
+      }
       default:
         break;
     }
   };
 
   const handleConfirm = () => {
+    deleteTask(taskSelected.taskId, (res) => {
+      if (res.success) {
+        toast.success("Deleted successfully");
+        setData(data.filter((item) => item.taskId !== taskSelected.taskId));
+      } else {
+        toast.error(res.message || "Delete failed");
+      }
+    });
     setOpenModalDelete(false);
   };
+
+  const storeCreateTask = useSelector((store) => store.createTask);
 
   return (
     <>
       <div className="test-library">
-        {storeGetAllTasks.loading && <SpinLoading />}
+        {(storeGetAllTasks.loading || storeCreateTask.loading) && (
+          <SpinLoading />
+        )}
         <div className="block__back-previous-page">
           <RollbackOutlined onClick={() => window.history.back()} />
           <div onClick={() => window.history.back()}>Back to previous page</div>
@@ -287,7 +333,21 @@ const ManageProjectDetail = () => {
         </div>
       </div>
       {showModal && (
-        <ModalAddTask setOpenModal={setShowModal} title="Add task" />
+        <ModalAddTask
+          setOpenModal={setShowModal}
+          title="Add task"
+          setData={setData}
+          projectId={projectId}
+        />
+      )}
+      {showModalEdit && (
+        <ModalEditTask
+          setOpenModal={setShowModalEdit}
+          title="Edit task"
+          setData={setData}
+          input={taskSelected}
+          projectId={projectId}
+        />
       )}
       {openModalDelete && (
         <Popup

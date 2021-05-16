@@ -251,7 +251,7 @@ export default function ManageLeader() {
             onClick={() => setOpenModalAdd(true)}
           >
             <Button className="button manage-intern__inner__top__button--add__btn">
-              General Account Leader
+              General Leader
             </Button>
             <i className="fi-rr-plus"></i>
           </div>

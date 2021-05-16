@@ -140,7 +140,7 @@ export const ContentModal = ({ data, setOpenModal, setData }) => {
     <div className="content__container" onSubmit={handleSubmitForm}>
       <div className="content__inner">
         <ReForm className="re__form">
-          {info.id && (
+          {/* {info.id && (
             <div>
               <label>Id</label>
               <FormBox
@@ -149,12 +149,12 @@ export const ContentModal = ({ data, setOpenModal, setData }) => {
                   name: "id",
                   placeholder: "Id",
                   value: form.id,
-                  disabled: true,
+                  disabled: false,
                 }}
                 error={error.password}
               />
             </div>
-          )}
+          )} */}
           <div>
             <label>Name</label>
             <FormBox
@@ -165,7 +165,7 @@ export const ContentModal = ({ data, setOpenModal, setData }) => {
                 onChange: handleChange,
                 onFocus: handleFocus,
                 value: form.name,
-                disabled: true,
+                disabled: false,
               }}
               error={error.name}
             />
@@ -180,7 +180,7 @@ export const ContentModal = ({ data, setOpenModal, setData }) => {
                 onChange: handleChange,
                 onFocus: handleFocus,
                 value: form.email,
-                disabled: false,
+                disabled: true,
               }}
               error={error.email}
             />
@@ -196,7 +196,7 @@ export const ContentModal = ({ data, setOpenModal, setData }) => {
               onChange={handleChange}
               onFocus={handleFocus}
               value={form.gender}
-              disabled
+              disabled={false}
             >
               {["Male", "Female"].map((item, index) => (
                 <option key={index}>{item}</option>
@@ -243,7 +243,7 @@ export const ContentModal = ({ data, setOpenModal, setData }) => {
                 onChange: handleChange,
                 onFocus: handleFocus,
                 value: form.address,
-                disabled: true,
+                disabled: false,
               }}
               error={error.address}
             />

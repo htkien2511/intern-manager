@@ -3,11 +3,14 @@ import CustomizedModal from "components/common/core/CustomizeModal";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Form as ReForm, Input } from "reactstrap";
-import { isEmpty, isEmail } from "validator";
-import { getAllDepartments } from "redux/actions/getAllDepartments";
-import { updateAccount } from "redux/actions/updateAccount";
+import { isEmpty } from "validator";
+import moment from "moment";
+import { createProject } from "redux/actions/admin/createProject";
 import { toast } from "react-toastify";
+import { getAllProject } from "redux/actions/admin/getAllProject";
 import { getAllManager } from "redux/actions/admin/getAllManager";
+import { createTask } from "redux/actions/admin/createTask";
+import { getAllTasksByProjectID } from "redux/actions/admin/getAllTaskByProjectID";
 
 export const HeaderModal = ({ close, title }) => {
   return (
@@ -29,34 +32,51 @@ export const HeaderModal = ({ close, title }) => {
   );
 };
 
-export const ContentModal = ({ data, setOpenModal, setData }) => {
-  const info = data || {};
+function createData(
+  projectID,
+  title,
+  description,
+  managerName,
+  usersAssigned,
+  startDate,
+  dueDate,
+  actions
+) {
+  return {
+    projectID,
+    title,
+    description,
+    managerName,
+    usersAssigned,
+    startDate,
+    dueDate,
+    actions,
+  };
+}
+
+export const ContentModal = ({ setOpenModal, setData, projectId }) => {
+  const DIFFICULTY = { Hard: 1, Normal: 2, Easy: 3 };
+
   const [error, setError] = React.useState({});
   const [form, setForm] = React.useState({
-    id: info.id,
-    name: info.name || "",
-    email: info.email || "",
-    gender: info.gender,
-    department: info.department || "",
-    address: info.address || "",
+    title: "",
+    description: "",
+    dueDate: "",
+    difficultId: 3,
+    projectId: projectId,
   });
-
-  function createData(id, name, email, gender, department, address, actions) {
-    return { id, name, email, gender, department, address, actions };
-  }
 
   const validate = () => {
     const errorState = {};
     // check validate
-    if (isEmpty(form.email)) {
-      errorState.email = "Please enter email";
-    } else {
-      if (!isEmail(form.email)) {
-        errorState.email = "Email not valid";
-      }
+    if (isEmpty(form.title)) {
+      errorState.title = "Please enter task name";
     }
-    if (!(departments.length > 0)) {
-      errorState.department = "Please waiting get all departments";
+    if (isEmpty(form.description)) {
+      errorState.description = "Please enter descriptions";
+    }
+    if (isEmpty(form.dueDate)) {
+      errorState.dueDate = "Please enter due date";
     }
     return errorState;
   };
@@ -68,41 +88,21 @@ export const ContentModal = ({ data, setOpenModal, setData }) => {
     }
 
     const formData = {
-      id: form.id,
-      name: form.name,
-      email: form.email,
-      gender: !isEmpty(form.gender) ? form.gender : "Male",
-      department: form.department
-        ? departObject
-            .filter((item) => item.name === form.department)
-            .find((item, index) => index === 0).id
-        : departObject
-            .filter((item) => item.name === departments[0])
-            .find((item, index) => index === 0).id,
-      address: form.address,
+      title: form.title,
+      description: form.description,
+      dueDate: moment(form.dueDate).format("YYYY/MM/DD"),
+      difficultId: DIFFICULTY[form.difficultId],
+      idProject: Number(projectId),
     };
 
     console.log({ formData });
-    updateAccount(formData, (res) => {
+
+    createTask(formData, (res) => {
       if (res.success) {
-        getAllManager((r) => {
+        getAllTasksByProjectID(projectId, (r) => {
           if (r.success) {
-            let arr = [];
-            r.data.forEach((item) => {
-              arr.push(
-                createData(
-                  item.id,
-                  item.name,
-                  item.email,
-                  item.gender,
-                  item.department,
-                  item.address,
-                  "Edit|Delete"
-                )
-              );
-            });
-            setData(arr);
-            toast.success(`Updated account ${res.data.name} successfully!`);
+            toast.success("Create task successfully!");
+            setData(r.data);
           } else {
             toast.error(r.message);
           }
@@ -123,84 +123,71 @@ export const ContentModal = ({ data, setOpenModal, setData }) => {
       [event.target.name]: "",
     });
   };
-  const [departments, setDepartments] = useState([]);
-
-  const [departObject, setDepartObject] = useState([]);
-
-  useEffect(() => {
-    getAllDepartments((res) => {
-      if (res.success) {
-        setDepartments(res.data.map((item) => item.name));
-        setDepartObject(res.data);
-        setError({ ...error, department: "" });
-      }
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <div className="content__container" onSubmit={handleSubmitForm}>
       <div className="content__inner">
         <ReForm className="re__form">
-          {/* {info.id && (
-            <div>
-              <label>Id</label>
-              <FormBox
-                propsInput={{
-                  type: "text",
-                  name: "id",
-                  placeholder: "Id",
-                  value: form.id,
-                  disabled: true,
-                }}
-                error={error.password}
-              />
-            </div>
-          )} */}
           <div>
-            <label>Name</label>
+            <label>Task Name</label>
             <FormBox
               propsInput={{
                 type: "text",
-                name: "name",
-                placeholder: "Name",
+                name: "title",
+                placeholder: "Task Name",
                 onChange: handleChange,
                 onFocus: handleFocus,
-                value: form.name,
+                value: form.title,
                 disabled: false,
               }}
-              error={error.name}
+              error={error.title}
             />
           </div>
           <div>
-            <label>Email</label>
+            <label>Descriptions</label>
             <FormBox
               propsInput={{
                 type: "text",
-                name: "email",
-                placeholder: "Email",
+                name: "description",
+                placeholder: "Descriptions",
                 onChange: handleChange,
                 onFocus: handleFocus,
-                value: form.email,
-                disabled: true,
+                value: form.description,
+                disabled: false,
               }}
-              error={error.email}
+              error={error.description}
+            />
+          </div>
+          <div>
+            <label>Due date</label>
+            <FormBox
+              propsInput={{
+                type: "date",
+                name: "dueDate",
+                placeholder: "Due date",
+                onChange: handleChange,
+                onFocus: handleFocus,
+                value: form.dueDate,
+                min: moment(Date.now()).format("YYYY-MM-DD"),
+                disabled: false,
+              }}
+              error={error.dueDate}
             />
           </div>
 
           <div>
-            <label>Gender</label>
+            <label>Level</label>
             <Input
               type="select"
-              name="gender"
-              id="gender"
-              placeholder="Gender"
+              name="difficultId"
+              id="difficultId"
+              placeholder="Level"
               onChange={handleChange}
               onFocus={handleFocus}
-              value={form.gender}
+              value={form.difficultId}
               disabled={false}
             >
-              {["Male", "Female"].map((item, index) => (
+              {["Easy", "Normal", "Hard"].map((item, index) => (
                 <option key={index}>{item}</option>
               ))}
             </Input>
@@ -208,49 +195,11 @@ export const ContentModal = ({ data, setOpenModal, setData }) => {
               className="invalid-feedback"
               style={{ display: "block", marginLeft: 15 }}
             >
-              {error.gender}
+              {error.difficultId}
             </span>
           </div>
 
-          <div>
-            <label>Department</label>
-            <Input
-              type="select"
-              name="department"
-              id="department"
-              placeholder="Department"
-              onChange={handleChange}
-              onFocus={handleFocus}
-              value={form.department}
-              disabled={false}
-            >
-              {departments.map((item, index) => (
-                <option key={index}>{item}</option>
-              ))}
-            </Input>
-            <span
-              className="invalid-feedback"
-              style={{ display: "block", marginLeft: 15 }}
-            >
-              {error.department}
-            </span>
-          </div>
-          <div>
-            <label>Address</label>
-            <FormBox
-              propsInput={{
-                type: "text",
-                name: "address",
-                placeholder: "Address",
-                onChange: handleChange,
-                onFocus: handleFocus,
-                value: form.address,
-                disabled: false,
-              }}
-              error={error.address}
-            />
-          </div>
-          <button className="btn--save align__center">
+          <button className="btn--save align__center" style={{ marginTop: 20 }}>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
               <g id="Layer_2" data-name="Layer 2">
                 <path
@@ -266,7 +215,7 @@ export const ContentModal = ({ data, setOpenModal, setData }) => {
   );
 };
 
-const ModalCUUser = ({ setOpenModal, title, infoUser, setData }) => {
+const ModalAddTask = ({ setOpenModal, title, setData, projectId }) => {
   return (
     <ModalAddAccountUserContainer className="modal__add__user__container">
       <CustomizedModal>
@@ -275,9 +224,9 @@ const ModalCUUser = ({ setOpenModal, title, infoUser, setData }) => {
         </CustomizedModal.Header>
         <CustomizedModal.Content>
           <ContentModal
-            data={infoUser}
             setOpenModal={setOpenModal}
             setData={setData}
+            projectId={projectId}
           />
         </CustomizedModal.Content>
       </CustomizedModal>
@@ -330,4 +279,4 @@ const ModalAddAccountUserContainer = styled.div`
     }
   }
 `;
-export default ModalCUUser;
+export default ModalAddTask;

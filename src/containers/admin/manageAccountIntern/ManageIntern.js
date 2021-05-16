@@ -254,7 +254,7 @@ export default function ManageIntern() {
             onClick={() => setOpenModalAdd(true)}
           >
             <Button className="button manage-intern__inner__top__button--add__btn">
-              General Account Intern
+              General Intern
             </Button>
             <i className="fi-rr-plus"></i>
           </div>
