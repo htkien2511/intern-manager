@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import { changeStatusTask } from "redux/actions/intern/changeStatusTask";
 function TaskManagementDetail() {
   const { projectId } = useParams();
-  const [form, setForm] = React.useState(null);
+  const [form, setForm] = React.useState([]);
   useEffect(() => {
     getTaskProjectIntern(projectId, (output) => {
       console.log(output);
@@ -24,20 +24,25 @@ function TaskManagementDetail() {
   );
 
   const handleChangeStatus = (event, item) => {
+    console.log(item);
     const formData = {
       task_id: item.taskId,
       description: item.description,
       title: item.title,
       difficulty: item.difficulty,
-      is_done: item.isDone,
+      is_done: !item.isDone,
       point: item.point,
-      due_date: item.dueDate,
+      due_date: moment(new Date(item.dueDate)).format("YYYY/MM/DD"),
       users_assignee: item.usersAssignee,
     };
     console.log(formData);
     changeStatusTask(formData, (res) => {
       if (res.success) {
-        toast.success("Changed status successfully");
+        let arr = [...form];
+        arr.filter(i => i.taskId === item.taskId).forEach(e => {
+          e.isDone = !item.isDone
+        })
+        setForm(arr);
       } else {
         toast.error(res.message);
       }
@@ -60,6 +65,7 @@ function TaskManagementDetail() {
                     "Task",
                     "Descrition",
                     "Create at",
+                    "Due date",
                     "Level",
                     "Status",
                     "Actions",
@@ -70,7 +76,7 @@ function TaskManagementDetail() {
               </thead>
 
               <tbody>
-                {form.map((item, index) => {
+                {form.length && form.map((item, index) => {
                   return (
                     <tr key={index}>
                       <td>{item.taskId}</td>
@@ -79,10 +85,15 @@ function TaskManagementDetail() {
                       <td>
                         {moment(new Date(item.createDate)).format("YYYY/MM/DD")}
                       </td>
+                      <td>
+                        {moment(new Date(item.dueDate)).format("YYYY/MM/DD")}
+                      </td>
                       <td>{item.difficulty}</td>
                       <td>
                         <button
-                          className="button button--secondary"
+                          className={`button ${
+                            item.isDone ? "button--success" : "button--secondary"
+                          }`}
                           onClick={(event) => handleChangeStatus(event, item)}
                         >
                           {item.isDone ? "Done" : "In Progess"}
