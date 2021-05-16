@@ -2,6 +2,7 @@ import { getAuth } from "../../../utils/helpers";
 import * as types from "../../constants";
 import store from "../../store";
 export function updatePermissionByLeaderID(input, resolve = () => {}) {
+  console.log(JSON.stringify(input));
   store.dispatch({
     type: types.UPDATE_PERMISSION_LEADER_ID,
   });

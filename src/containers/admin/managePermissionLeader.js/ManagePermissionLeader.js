@@ -16,6 +16,10 @@ import SpinLoading from "components/common/core/SpinLoading";
 import { Empty } from "antd";
 import { setTitle } from "redux/actions/admin/setTitle";
 import { Select, Tag } from "antd";
+import { getAllPermission } from "redux/actions/admin/getAllPermission";
+import { toast } from "react-toastify";
+import { getPermissionLeader } from "redux/actions/admin/getPermissionLeader";
+import { updatePermissionByLeaderID } from "redux/actions/admin/updatePermissionByLeaderID";
 
 const columns = [
   { id: "id", label: "Id", minWidth: 80 },
@@ -61,23 +65,6 @@ export default function ManagePermissionLeader() {
   const [filteredData, setFilteredData] = useState([]);
   const dispatch = useDispatch();
 
-  const options = [
-    { value: "GetAllUsers" },
-    { value: "EditUser" },
-    { value: "CreateUser" },
-    { value: "DeleteUser" },
-    { value: "GetAllProjectsByLeaderId" },
-    { value: "EditProject" },
-    { value: "CreateProject" },
-    { value: "DeleteProject" },
-    { value: "GetAllTasksByProjectId" },
-    { value: "EditTask" },
-    { value: "CreateTask" },
-    { value: "DeleteTask" },
-    { value: "GetScheduleOfUser" },
-    { value: "EditSchedule" },
-  ];
-
   useEffect(() => {
     dispatch(setTitle("Manage Permission Leader"));
   }, [dispatch]);
@@ -94,21 +81,47 @@ export default function ManagePermissionLeader() {
     setPage(0);
   };
 
-  // const [permissions, setPermissions] = useState([]);
+  const [permissions, setPermissions] = useState([]);
+  const [options, setOptions] = useState([]);
 
   const storeGetAllManager = useSelector((store) => store.getAllManager);
+  const [leaders, setLeaders] = useState([]);
 
   useEffect(() => {
     let arr = [];
     getAllManager((data) => {
-      if (data.data) {
+      if (data.success) {
+        let temp = [];
         data.data.forEach((item) => {
+          temp.push({
+            manager_id: item.id,
+            permission_id: [],
+          });
           arr.push(createData(item.id, item.name, item.email, "Empty", "Save"));
         });
         setData(arr);
+        setLeaders(temp);
+      } else {
+        toast.error(data.message);
+      }
+    });
+
+    getAllPermission((res) => {
+      if (res.success) {
+        let arr = [];
+        setPermissions(res.data);
+        res.data.forEach((item) => {
+          let object = {
+            value: item.name,
+          };
+          arr.push(object);
+        });
+        setOptions(arr);
       }
     });
   }, []);
+
+  useEffect(() => {}, []);
 
   function tagRender(props) {
     const { label, closable, onClose } = props;
@@ -128,14 +141,44 @@ export default function ManagePermissionLeader() {
     );
   }
 
-  const [leaderSelected, setLeaderSelected] = useState({});
+  const handleChangeSave = (idLeader) => {
+    console.log(leaders.find((item) => item.manager_id === idLeader));
+    if (
+      !leaders.find((item) => item.manager_id === idLeader).permission_id.length
+    ) {
+      toast.warn("Please choice permissions");
+      return;
+    }
+    updatePermissionByLeaderID(
+      {
+        manager_id: leaders.find((item) => item.manager_id === idLeader)
+          .manager_id,
+        permission_id: leaders.find((item) => item.manager_id === idLeader)
+          .permission_id,
+      },
+      (res) => {
+        if (res.success) {
+          toast.error(`Update permission successfully`);
+        } else {
+          toast.error(res.message);
+        }
+      }
+    );
+  };
 
-  const handleChangePermission = (value, options, idLeader) => {
-    // setPermissions(options.map((item) => item.value));
-    setLeaderSelected({
-      id: idLeader,
-      permissions: options.map((i) => i.value),
-    });
+  const handleChangePermission = (options, idLeader) => {
+    let temp = [...leaders];
+    temp
+      .filter((item) => item.manager_id === idLeader)
+      .forEach((element) => {
+        let permissionID = [];
+        options.forEach((e) => {
+          permissionID.push(
+            permissions.find((permission) => permission.name === e).id
+          );
+        });
+        element.permission_id = permissionID;
+      });
   };
 
   const renderCell = (column, value, indexRow, row) => {
@@ -152,23 +195,7 @@ export default function ManagePermissionLeader() {
                       key={index}
                       style={{ margin: 5, color: "white" }}
                       className="button button--secondary"
-                      onClick={() => {
-                        console.log(leaderSelected);
-                        setLeaderSelected({
-                          ...leaderSelected,
-                          id: row.id,
-                          permissions: [],
-                        });
-                        alert(
-                          `Update permission success, permission of IDLeader: ${
-                            row.id
-                          } are ${
-                            leaderSelected.permissions
-                              ? leaderSelected.permissions.join(", ")
-                              : "Empty"
-                          } `
-                        );
-                      }}
+                      onClick={() => handleChangeSave(row.id)}
                     >
                       {item}
                     </button>
@@ -186,9 +213,7 @@ export default function ManagePermissionLeader() {
               showArrow
               placeholder="Choice permissions"
               tagRender={tagRender}
-              onChange={(value, options) =>
-                handleChangePermission(value, options, row.id)
-              }
+              onChange={(options) => handleChangePermission(options, row.id)}
               options={options}
               maxTagCount={3}
             />
