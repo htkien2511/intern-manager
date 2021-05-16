@@ -22,7 +22,16 @@ data class ProjectData(
     @SerializedName("title")
     val title: String,
     @SerializedName("managerName")
-    val managerName: String,
+    val managerName: Manager,
     @SerializedName("userId")
-    val userIdL: Int
+    val userId: Int
+) : Serializable
+
+data class Manager(
+    @SerializedName("managerId")
+    val managerId: Int,
+    @SerializedName("name")
+    val name: String,
+    @SerializedName("username")
+    val username: String
 ) : Serializable

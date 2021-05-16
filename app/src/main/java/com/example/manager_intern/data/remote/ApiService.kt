@@ -1,5 +1,7 @@
 package com.example.manager_intern.data.remote
 
+import com.example.manager_intern.data.remote.request.ScheduleRequest
+import com.example.manager_intern.data.remote.request.TaskRequest
 import com.example.manager_intern.data.remote.responsive.*
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -43,4 +45,28 @@ interface ApiService {
         @Header("Authorization") auth: String,
         @Body body: RequestBody
     ): Single<UserResponsive>
+
+    @GET("task/feedback")
+    fun getFeedbacks(
+        @Header("Authorization") auth: String,
+        @Query("user_id") taskId: Int
+    ): Single<FeedbackResponsive>
+
+    @GET("schedule")
+    fun getScheduleByUserId(
+        @Header("Authorization") auth: String,
+        @Query("user_id") taskId: Int
+    ) : Single<ScheduleResponsive>
+
+    @POST("schedule/add")
+    fun postAddSchedule(
+        @Header("Authorization") auth: String,
+        @Body scheduleRequest: ScheduleRequest
+    )
+
+    @PUT("task/update")
+    fun putUpdateTask(
+        @Header("Authorization") auth: String,
+        @Body taskRequest: TaskRequest
+    ): Single<ForgotResponsive>
 }

@@ -8,14 +8,15 @@ import com.example.manager_intern.R
 import com.example.manager_intern.data.remote.responsive.TaskData
 import com.example.manager_intern.databinding.ItemTaskBinding
 
-class TaskAdapter(private val tasks: List<TaskData>, val onCheckedListener: (Boolean) -> Unit) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
+class TaskAdapter(private val tasks: List<TaskData>, val onCheckedListener: (TaskData, Boolean) -> Unit) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
     inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val binding = ItemTaskBinding.bind(itemView)
+        private lateinit var adapter: FeedbackAdapter
 
         init {
             binding.chkIsDone.setOnCheckedChangeListener { _, isChecked ->
-                onCheckedListener(isChecked)
+                onCheckedListener(tasks[adapterPosition], isChecked)
             }
         }
 

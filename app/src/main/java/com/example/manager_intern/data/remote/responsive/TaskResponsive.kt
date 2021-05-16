@@ -1,5 +1,6 @@
 package com.example.manager_intern.data.remote.responsive
 
+import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
 data class TaskResponsive(
@@ -25,5 +26,18 @@ data class TaskData(
     @SerializedName("point")
     val point: Double,
     @SerializedName("projectName")
-    val projectName: String
+    val projectName: String,
+    @SerializedName("dueDate")
+    val dueDate: String?,
+    @SerializedName("usersAssignee")
+    val usersAssignee: List<User>,
+    @Expose
+    val feedbacks: List<FeedbackData>
+)
+
+data class User(
+    @SerializedName("id")
+    val id: Int,
+    @SerializedName("name")
+    val name: String
 )
