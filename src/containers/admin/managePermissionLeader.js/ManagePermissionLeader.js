@@ -18,7 +18,7 @@ import { setTitle } from "redux/actions/admin/setTitle";
 import { Select, Tag } from "antd";
 import { getAllPermission } from "redux/actions/admin/getAllPermission";
 import { toast } from "react-toastify";
-import { getPermissionLeader } from "redux/actions/admin/getPermissionLeader";
+// import { getPermissionLeader } from "redux/actions/admin/getPermissionLeader";
 import { updatePermissionByLeaderID } from "redux/actions/admin/updatePermissionByLeaderID";
 
 const columns = [
