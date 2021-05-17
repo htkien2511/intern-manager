@@ -1,6 +1,6 @@
 package com.example.manager_intern.ui.task
 
-import android.util.Log
+import android.content.Intent
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.manager_intern.R
 import com.example.manager_intern.base.BaseActivity
@@ -10,6 +10,7 @@ import com.example.manager_intern.data.remote.responsive.ProjectData
 import com.example.manager_intern.data.remote.responsive.TaskData
 import com.example.manager_intern.data.remote.responsive.UserData
 import com.example.manager_intern.databinding.DetailTaskActBinding
+import com.example.manager_intern.ui.feedback.FeedBackActivity
 
 class TaskActivity : BaseActivity<TaskViewModel>() {
 
@@ -23,7 +24,7 @@ class TaskActivity : BaseActivity<TaskViewModel>() {
     private var userData: UserData? = null
 
     override fun initView() {
-        taskAdapter = TaskAdapter(data) { task, isChecked ->
+        taskAdapter = TaskAdapter(data, { task, isChecked ->
             var progress = binding.progressBar.progress
             if (isChecked) {
                 progress += 100 / data.size
@@ -34,11 +35,26 @@ class TaskActivity : BaseActivity<TaskViewModel>() {
             binding.progressBar.progress = progress
             binding.tvProgress.text = binding.progressBar.progress.toString() + " %"
 
-            val taskRequest = TaskRequest(task.taskId, task.description, task.title, task.difficulty, isChecked, task.point, task.dueDate ?: "", task.usersAssignee)
+            val taskRequest = TaskRequest(
+                task.taskId,
+                task.description,
+                task.title,
+                task.difficulty,
+                isChecked,
+                task.point,
+                task.dueDate ?: "",
+                task.usersAssignee
+            )
             if (userData != null) {
                 viewModel?.updateTask(userData!!.token, taskRequest)
             }
-        }
+        }, {
+            Intent(this, FeedBackActivity::class.java)
+                .putExtra("TaskId", it)
+                .apply {
+                    startActivity(this)
+                }
+        })
 
         with(binding) {
             toolbar.title = "Shappe Clound App"
@@ -68,6 +84,10 @@ class TaskActivity : BaseActivity<TaskViewModel>() {
                 data.addAll(it.data)
                 taskAdapter.itemCount
                 taskAdapter.notifyDataSetChanged()
+
+                it.data.forEach { _ ->
+
+                }
             }
 
             updateSuccess.observe(this@TaskActivity) {

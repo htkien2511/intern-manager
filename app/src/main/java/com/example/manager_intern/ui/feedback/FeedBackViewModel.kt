@@ -1,33 +1,27 @@
-package com.example.manager_intern.ui.task
+package com.example.manager_intern.ui.feedback
 
 import androidx.lifecycle.MutableLiveData
 import com.example.manager_intern.base.BaseViewModel
-import com.example.manager_intern.data.remote.request.TaskRequest
-import com.example.manager_intern.data.remote.responsive.TaskResponsive
+import com.example.manager_intern.data.remote.request.FeedBackRequest
+import com.example.manager_intern.data.remote.responsive.FeedbackData
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
-class TaskViewModel : BaseViewModel() {
+class FeedBackViewModel : BaseViewModel() {
+    val feedbackData = MutableLiveData<List<FeedbackData>>()
 
-    val taskResponsive = MutableLiveData<TaskResponsive>()
-    val updateSuccess = MutableLiveData<Boolean>()
-
-    fun getTasksOfProject(projectId: Int, auth: String) {
+    fun getFeedbacksOfTask(taskId: Int, auth: String) {
         showLoading()
         addDisposable(
-            repository.getTasksOfProject(projectId, auth)
+            repository.getFeedbacks(auth, taskId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     closeLoading()
                     if (it.isSuccess) {
-                        if (it.data != null) {
-                            taskResponsive.value = it
-                        } else {
-                            onError.value = it.message
-                        }
+                        feedbackData.value = it.data
                     } else {
-                        onError.value = it.message
+
                     }
                 }, {
                     closeLoading()
@@ -36,16 +30,15 @@ class TaskViewModel : BaseViewModel() {
         )
     }
 
-    fun updateTask(auth: String, taskRequest: TaskRequest) {
+    fun addFeedBack(auth: String, feedBackRequest: FeedBackRequest) {
         showLoading()
         addDisposable(
-            repository.putUpdateTask(auth, taskRequest)
+            repository.postAddFeedBack(auth, feedBackRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    closeLoading()
-                    updateSuccess.value = it.isSuccess
                     if (!it.isSuccess) {
+                        closeLoading()
                         onError.value = it.message
                     }
                 }, {

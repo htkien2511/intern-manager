@@ -7,8 +7,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.manager_intern.R
 import com.example.manager_intern.data.remote.responsive.TaskData
 import com.example.manager_intern.databinding.ItemTaskBinding
+import com.example.manager_intern.ui.feedback.FeedbackAdapter
 
-class TaskAdapter(private val tasks: List<TaskData>, val onCheckedListener: (TaskData, Boolean) -> Unit) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
+class TaskAdapter(
+    private val tasks: List<TaskData>,
+    val onCheckedListener: (TaskData, Boolean) -> Unit, val itemClick: (Int) -> Unit
+) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
+
 
     inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val binding = ItemTaskBinding.bind(itemView)
@@ -21,6 +26,7 @@ class TaskAdapter(private val tasks: List<TaskData>, val onCheckedListener: (Tas
         }
 
         fun onBind(item: TaskData) {
+            itemView.setOnClickListener { itemClick(item.taskId) }
             binding.tvTask.text = item.title
             binding.chkIsDone.isChecked = item.isDone
         }

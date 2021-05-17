@@ -1,5 +1,6 @@
 package com.example.manager_intern.data.remote
 
+import com.example.manager_intern.data.remote.request.FeedBackRequest
 import com.example.manager_intern.data.remote.request.ScheduleRequest
 import com.example.manager_intern.data.remote.request.TaskRequest
 import com.example.manager_intern.data.remote.responsive.*
@@ -49,24 +50,36 @@ interface ApiService {
     @GET("task/feedback")
     fun getFeedbacks(
         @Header("Authorization") auth: String,
-        @Query("user_id") taskId: Int
+        @Query("task_id") taskId: Int
     ): Single<FeedbackResponsive>
 
     @GET("schedule")
     fun getScheduleByUserId(
         @Header("Authorization") auth: String,
         @Query("user_id") taskId: Int
-    ) : Single<ScheduleResponsive>
+    ): Single<ScheduleResponsive>
 
     @POST("schedule/add")
     fun postAddSchedule(
         @Header("Authorization") auth: String,
         @Body scheduleRequest: ScheduleRequest
-    )
+    ): Single<Any>
+
+    @PUT("schedule/update")
+    fun putUpdateSchedule(
+        @Query("leave_id") leaveId: Int,
+        @Body scheduleRequest: ScheduleRequest
+    ): Single<Any>
 
     @PUT("task/update")
     fun putUpdateTask(
         @Header("Authorization") auth: String,
         @Body taskRequest: TaskRequest
+    ): Single<ForgotResponsive>
+
+    @POST("task/feedback/add")
+    fun postAddFeedBack(
+        @Header("Authorization") auth: String,
+        @Body feedBackRequest: FeedBackRequest
     ): Single<ForgotResponsive>
 }

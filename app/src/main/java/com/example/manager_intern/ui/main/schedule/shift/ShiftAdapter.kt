@@ -3,6 +3,7 @@ package com.example.manager_intern.ui.main.schedule.shift
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import com.example.manager_intern.R
 import com.example.manager_intern.base.BaseRecyclerViewAdapter
@@ -16,6 +17,8 @@ class ShiftAdapter(
     val scheduleData: List<ScheduleData>,
 ) : BaseRecyclerViewAdapter<String>(list) {
 
+    val listShift = mutableListOf(3, 3, 3, 3, 3)
+
     override fun setViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<String> {
         return ShiftViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.item_spinner, parent, false)
@@ -26,6 +29,24 @@ class ShiftAdapter(
 
         private val binding by viewBinding(ItemSpinnerBinding::bind)
 
+        init {
+            binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    listShift[adapterPosition] = position
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+
+                }
+
+            }
+        }
+
         override fun onBind(item: String) {
             val options = Shift.values().map { it.des }
             val spinnerAdapter =
@@ -35,15 +56,11 @@ class ShiftAdapter(
                 tvDate.text = item
                 spinner.adapter = spinnerAdapter
                 binding.spinner.setSelection(3)
-
-                if (adapterPosition == 5 || adapterPosition == 6) {
-                    binding.spinner.setSelection(2)
-                }
             }
 
             if (scheduleData.isNotEmpty()) {
                 (scheduleData.indices).forEach { i ->
-                    val date = scheduleData[i].time.split(" ")[0]
+                    val date = scheduleData[i].time
                     if (item == date) {
                         binding.spinner.setSelection(scheduleData[i].shift)
                     }

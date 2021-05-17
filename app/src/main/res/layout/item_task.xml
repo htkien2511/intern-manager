@@ -33,48 +33,6 @@
             android:textSize="@dimen/text_17" />
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rlFeedbacks"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/dimen_16"
-        android:layout_marginTop="@dimen/dimen_8"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toBottomOf="@id/llItemTask"
-        tools:listitem="@layout/item_feedback" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/dimen_16"
-        android:layout_marginTop="@dimen/dimen_8"
-        app:layout_constraintTop_toBottomOf="@id/rlFeedbacks">
-
-        <EditText
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginEnd="@dimen/dimen_8"
-            android:layout_marginBottom="@dimen/dimen_8"
-            android:background="@drawable/bg_send"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/btnSend"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/btnSend"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@color/primarySecond"
-            android:text="Send"
-            android:textColor="@color/white"
-            android:layout_marginBottom="@dimen/dimen_8"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
