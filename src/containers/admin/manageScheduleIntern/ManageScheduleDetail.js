@@ -65,6 +65,7 @@ export default function ManageScheduleDetail() {
     setShowModalEdit(true);
   };
 
+  // eslint-disable-next-line
   const [data, setData] = useState([]);
   const [scheduleSelected, setScheduleSelected] = useState({});
   const [showModal, setShowModal] = useState(false);

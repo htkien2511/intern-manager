@@ -174,7 +174,10 @@ const StatisticDetails = () => {
   return (
     <div className="manage-schedule-detail">
       <div className="manage-schedule-detail__inner">
-        <div className="block__back-previous-page" style={{ marginLeft: -2 }}>
+        <div
+          className="block__back-previous-page"
+          style={{ marginLeft: -2, marginTop: 15 }}
+        >
           <RollbackOutlined onClick={() => window.history.back()} />
           <div onClick={() => window.history.back()}>Back to previous page</div>
         </div>

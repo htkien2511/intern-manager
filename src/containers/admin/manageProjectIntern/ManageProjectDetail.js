@@ -328,7 +328,10 @@ const ManageProjectDetail = () => {
           storeCreateTask.loading ||
           storeEditTask.loading ||
           storeDeleteTask.loading) && <SpinLoading />}
-        <div className="block__back-previous-page">
+        <div
+          className="block__back-previous-page"
+          style={{ marginLeft: 30, marginTop: 15 }}
+        >
           <RollbackOutlined onClick={() => window.history.back()} />
           <div onClick={() => window.history.back()}>Back to previous page</div>
         </div>
