@@ -20,6 +20,8 @@ import { toast } from "react-toastify";
 import SpinLoading from "components/common/core/SpinLoading";
 import { Empty } from "antd";
 import { setTitle } from "redux/actions/admin/setTitle";
+import { getAuth } from "utils/helpers";
+import ErrorPage from "components/common/ErrorPage";
 
 const columns = [
   { id: "id", label: "Id", minWidth: 80 },
@@ -76,6 +78,11 @@ export default function ManageIntern() {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
 
+  const permissions =
+    getAuth().permissionDomains.map((item) => item.name.substring(7)) || [];
+
+  console.log(permissions);
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -122,6 +129,12 @@ export default function ManageIntern() {
   const handleAction = (item, row) => {
     switch (item) {
       case "Edit": {
+        if (
+          !(permissions.includes("EditUser") || getAuth().role === "ROLE_ADMIN")
+        ) {
+          toast.error("Sorry, you are not authorized to edit intern.");
+          return;
+        }
         setInfoRow({
           ...infoRow,
           id: row.id,
@@ -135,6 +148,15 @@ export default function ManageIntern() {
         break;
       }
       case "Delete": {
+        if (
+          !(
+            permissions.includes("DeleteUser") ||
+            getAuth().role === "ROLE_ADMIN"
+          )
+        ) {
+          toast.error("Sorry, you are not authorized to delete intern.");
+          return;
+        }
         setOpenModalDelete(true);
         setInfoRow({
           ...infoRow,
@@ -154,6 +176,10 @@ export default function ManageIntern() {
 
   useEffect(() => {
     let arr = [];
+    if (
+      !(permissions.includes("GetAllUsers") || getAuth().role === "ROLE_ADMIN")
+    )
+      return;
     getAllUser((data) => {
       if (data.data) {
         data.data.forEach((item) => {
@@ -172,6 +198,7 @@ export default function ManageIntern() {
         setData(arr);
       }
     });
+    // eslint-disable-next-line
   }, []);
 
   const renderCell = (column, value, indexRow, row) => {
@@ -251,92 +278,114 @@ export default function ManageIntern() {
   return (
     <div className="manage-intern">
       {(loadingCreate || loadingDelete || loadingEdit) && <SpinLoading />}
-      <div className="manage-intern__inner">
-        <div className="manage-intern__inner__top">
-          <div
-            className="manage-intern__inner__top__button--add"
-            onClick={() => setOpenModalAdd(true)}
-          >
-            <Button className="button manage-intern__inner__top__button--add__btn">
-              General Intern
-            </Button>
-            <i className="fi-rr-plus"></i>
+      {permissions.includes("GetAllUsers") ||
+      getAuth().role === "ROLE_ADMIN" ? (
+        <div className="manage-intern__inner">
+          <div className="manage-intern__inner__top">
+            <div
+              className="manage-intern__inner__top__button--add"
+              onClick={() => {
+                if (
+                  !(
+                    permissions.includes("CreateUser") ||
+                    getAuth().role === "ROLE_ADMIN"
+                  )
+                ) {
+                  toast.error(
+                    "Sorry, you are not authorized to create intern."
+                  );
+                  return;
+                }
+                setOpenModalAdd(true);
+              }}
+            >
+              <Button className="button manage-intern__inner__top__button--add__btn">
+                General Intern
+              </Button>
+              <i className="fi-rr-plus"></i>
+            </div>
+            <div className="button manage-intern__inner__top__search">
+              <i className="fi-rr-search pointer"></i>
+              <Input
+                type="text"
+                name="search"
+                id="searchKey"
+                onChange={handleSearch}
+                placeholder="Search intern(s)"
+              />
+            </div>
           </div>
-          <div className="button manage-intern__inner__top__search">
-            <i className="fi-rr-search pointer"></i>
-            <Input
-              type="text"
-              name="search"
-              id="searchKey"
-              onChange={handleSearch}
-              placeholder="Search intern(s)"
-            />
-          </div>
-        </div>
-        <Paper className={classes.root}>
-          <TableContainer className={classes.container}>
-            <Table stickyHeader aria-label="sticky table">
-              <TableHead>
-                <TableRow>
-                  {columns.map((column) => (
-                    <TableCell
-                      key={column.id}
-                      align={column.align}
-                      style={{ minWidth: column.minWidth }}
-                    >
-                      {column.label}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {filteredData.length > 0 ? (
-                  filteredData
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row, indexRow) => {
-                      return (
-                        <TableRow
-                          hover
-                          role="checkbox"
-                          tabIndex={-1}
-                          key={indexRow}
-                        >
-                          {columns.map((column) => {
-                            const value = row[column.id];
-                            return renderCell(column, value, indexRow, row);
-                          })}
-                        </TableRow>
-                      );
-                    })
-                ) : (
+          <Paper className={classes.root}>
+            <TableContainer className={classes.container}>
+              <Table stickyHeader aria-label="sticky table">
+                <TableHead>
                   <TableRow>
-                    {[1, 2, 3, 4, 5, 6, 7].map((item) => {
-                      return (
-                        <TableCell key={item}>
-                          {storeGetAllUser.loading ? (
-                            <Skeleton style={{ height: 40 }} />
-                          ) : (
-                            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-                          )}
-                        </TableCell>
-                      );
-                    })}
+                    {columns.map((column) => (
+                      <TableCell
+                        key={column.id}
+                        align={column.align}
+                        style={{ minWidth: column.minWidth }}
+                      >
+                        {column.label}
+                      </TableCell>
+                    ))}
                   </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={[10, 25, 100]}
-            component="div"
-            count={filteredData && filteredData.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onChangePage={handleChangePage}
-            onChangeRowsPerPage={handleChangeRowsPerPage}
-          />
-        </Paper>
-      </div>
+                </TableHead>
+                <TableBody>
+                  {filteredData.length > 0 ? (
+                    filteredData
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
+                      .map((row, indexRow) => {
+                        return (
+                          <TableRow
+                            hover
+                            role="checkbox"
+                            tabIndex={-1}
+                            key={indexRow}
+                          >
+                            {columns.map((column) => {
+                              const value = row[column.id];
+                              return renderCell(column, value, indexRow, row);
+                            })}
+                          </TableRow>
+                        );
+                      })
+                  ) : (
+                    <TableRow>
+                      {[1, 2, 3, 4, 5, 6, 7].map((item) => {
+                        return (
+                          <TableCell key={item}>
+                            {storeGetAllUser.loading ? (
+                              <Skeleton style={{ height: 40 }} />
+                            ) : (
+                              <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                            )}
+                          </TableCell>
+                        );
+                      })}
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[10, 25, 100]}
+              component="div"
+              count={filteredData && filteredData.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onChangePage={handleChangePage}
+              onChangeRowsPerPage={handleChangeRowsPerPage}
+            />
+          </Paper>
+        </div>
+      ) : (
+        <ErrorPage message="Sorry, you are not authorized to get data this page." />
+      )}
+
       {openModalAdd && (
         <ModalCreateAccount
           setOpenModal={setOpenModalAdd}
