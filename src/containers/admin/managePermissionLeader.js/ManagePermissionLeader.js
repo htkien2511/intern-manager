@@ -97,7 +97,17 @@ export default function ManagePermissionLeader() {
             manager_id: item.id,
             permission_id: [],
           });
-          arr.push(createData(item.id, item.name, item.email, "Empty", "Save"));
+          arr.push(
+            createData(
+              item.id,
+              item.name,
+              item.email,
+              item.permissionDomains.map(
+                (item) => item.name.split("Leader.")[1]
+              ) || [],
+              "Save"
+            )
+          );
         });
         setData(arr);
         setLeaders(temp);
@@ -142,13 +152,13 @@ export default function ManagePermissionLeader() {
   }
 
   const handleChangeSave = (idLeader) => {
-    console.log(leaders.find((item) => item.manager_id === idLeader));
     if (
       !leaders.find((item) => item.manager_id === idLeader).permission_id.length
     ) {
       toast.warn("Please choice permissions");
       return;
     }
+
     updatePermissionByLeaderID(
       {
         manager_id: leaders.find((item) => item.manager_id === idLeader)
@@ -158,7 +168,7 @@ export default function ManagePermissionLeader() {
       },
       (res) => {
         if (res.success) {
-          toast.error(`Update permission successfully`);
+          toast.success(`Update permission successfully`);
         } else {
           toast.error(res.message);
         }
@@ -213,6 +223,7 @@ export default function ManagePermissionLeader() {
               showArrow
               placeholder="Choice permissions"
               tagRender={tagRender}
+              defaultValue={row.permission}
               onChange={(options) => handleChangePermission(options, row.id)}
               options={options}
               maxTagCount={3}
@@ -242,6 +253,9 @@ export default function ManagePermissionLeader() {
   const loadingDelete = useSelector((store) => store.deleteUser).loading;
   const loadingAdd = useSelector((store) => store.addManager).loading;
   const loadingEdit = useSelector((store) => store.updateAccount).loading;
+  const loadingEditPermission = useSelector(
+    (store) => store.updatePermissionByLeaderID
+  ).loading;
 
   const handleSearch = (event) => {
     const lowercasedValue = event.target.value.toLowerCase().trim();
@@ -265,7 +279,10 @@ export default function ManagePermissionLeader() {
 
   return (
     <div className="manage-intern">
-      {(loadingDelete || loadingAdd || loadingEdit) && <SpinLoading />}
+      {(loadingDelete ||
+        loadingAdd ||
+        loadingEdit ||
+        loadingEditPermission) && <SpinLoading />}
       <div className="manage-intern__inner">
         <div className="manage-intern__inner__top">
           <div className="button manage-intern__inner__top__search">

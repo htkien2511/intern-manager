@@ -238,7 +238,7 @@ export default function ManageProject() {
                         <div
                           onClick={() => {
                             history.push(
-                              `/admin/manage-project/projectID=${row.projectID}`
+                              `/admin/manage-project/projectID=${row.projectID}/projectName=${row.title}`
                             );
                             dispatch(setTitle("Manage list tasks"));
                           }}

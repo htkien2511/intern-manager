@@ -6,7 +6,7 @@ export function updatePermissionByLeaderID(input, resolve = () => {}) {
   store.dispatch({
     type: types.UPDATE_PERMISSION_LEADER_ID,
   });
-  return fetch(`${process.env.REACT_APP_API_URL}permission/add`, {
+  return fetch(`${process.env.REACT_APP_API_URL}permission/edit`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

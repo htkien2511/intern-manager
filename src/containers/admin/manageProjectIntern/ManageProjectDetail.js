@@ -57,7 +57,7 @@ const ManageProjectDetail = () => {
   };
 
   const dispatch = useDispatch();
-  const { projectId } = useParams();
+  const { projectId, projectName } = useParams();
 
   useEffect(() => {
     getAllTasksByProjectID(Number(projectId), (res) => {
@@ -96,9 +96,11 @@ const ManageProjectDetail = () => {
   const renderTable = (title, input) => {
     return (
       <div className="test-library__inner__content__test-plan">
-        {/* <h2 style={{ textAlign: "center", color: "orangered" }}>
-          Project Name
-        </h2> */}
+        <h2
+          style={{ textAlign: "center", color: "orangered", marginBottom: 20 }}
+        >
+          {projectName}
+        </h2>
         {!input ? (
           <div style={{ position: "absolute", left: "50%" }}>
             <Empty />

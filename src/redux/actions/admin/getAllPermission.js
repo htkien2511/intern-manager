@@ -1,4 +1,4 @@
-// import { getAuth } from "../../../utils/helpers";
+import { getAuth } from "../../../utils/helpers";
 import * as types from "../../constants";
 import store from "../../store";
 export function getAllPermission(resolve = () => {}) {
@@ -9,7 +9,7 @@ export function getAllPermission(resolve = () => {}) {
     method: "GET",
     headers: {
       "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-      // Authorization: getAuth().token,
+      Authorization: getAuth().token,
     },
   })
     .then((response) => response.json())
