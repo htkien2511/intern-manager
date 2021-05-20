@@ -28,6 +28,7 @@ import {
   ROUTE_TASK_MANAGEMENT_DETAIL,
   ROUTE_MANAGE_PROJECT_DETAIL,
   ROUTE_MANAGE_PERMISSION_LEADER,
+  ROUTE_VIEW_STATISTIC_DETAIL,
 } from "./utils/routes";
 import { ForgotPassword } from "./containers/forgotPassword";
 import { ResetPassword } from "./containers/resetPassword";
@@ -58,6 +59,7 @@ import {
 import { ManageLeader } from "containers/admin/manageAccountLeader";
 import { ManageViewStatistic } from "containers/admin/manageViewStatistic.js";
 import ManagePermissionLeader from "containers/admin/managePermissionLeader.js/ManagePermissionLeader";
+import StatisticDetails from "containers/admin/manageViewStatistic.js/StatisticDetails";
 
 function App() {
   return (
@@ -234,6 +236,11 @@ function App() {
         <Route
           path={ROUTE_VIEW_STATISTIC}
           component={withAuth(ManageViewStatistic, false)}
+          exact
+        />
+        <Route
+          path={ROUTE_VIEW_STATISTIC_DETAIL}
+          component={withAuth(StatisticDetails, false)}
           exact
         />
       </Switch>

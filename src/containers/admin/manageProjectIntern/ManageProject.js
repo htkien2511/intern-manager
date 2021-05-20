@@ -465,7 +465,7 @@ export default function ManageProject() {
         <Popup
           onCancel={setOpenModalDelete}
           onConfirm={handleDeleteProject}
-          title="Are you sure delete this project?"
+          title="Are you sure to delete this project?"
         />
       )}
       {openModalEdit && (

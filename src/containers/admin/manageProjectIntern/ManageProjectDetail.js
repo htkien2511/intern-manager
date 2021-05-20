@@ -77,12 +77,8 @@ const ManageProjectDetail = () => {
     if (searchText === "") setFilteredData(data);
     else {
       const filteredData = data.filter((item) => {
-        console.log(item["title"]);
         return Object.keys(item).some((key) =>
-          (item[("title", "createDate", "dueDate")] + "")
-            .toString()
-            .toLowerCase()
-            .includes(searchText)
+          (item[key] + "").toString().toLowerCase().includes(searchText)
         );
       });
       setFilteredData(filteredData);
@@ -393,7 +389,7 @@ const ManageProjectDetail = () => {
         <Popup
           onCancel={setOpenModalDelete}
           onConfirm={handleConfirm}
-          title="Are you delete this task?"
+          title="Are you sure to delete this task?"
         />
       )}
     </>

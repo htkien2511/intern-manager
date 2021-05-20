@@ -5,6 +5,9 @@ import moment from "moment";
 import { RollbackOutlined } from "@ant-design/icons";
 import { setTitle } from "redux/actions/admin/setTitle";
 import { useDispatch } from "react-redux";
+import ModalUpdateSchedule from "./ModalUpdateSchedule";
+import ModalAddLeaveSchedule from "./ModalAddLeaveSchedule";
+import { useParams } from "react-router";
 
 export default function ManageScheduleDetail() {
   const dispatch = useDispatch();
@@ -48,90 +51,149 @@ export default function ManageScheduleDetail() {
   const [infoDetailsOffDay, setInfoDetailsOffDay] = useState({});
 
   const handleEventClick = (eventInfo) => {
-    setInfoDetailsOffDay(eventInfo.event._def.extendedProps.reason);
     setInfoDetailsOffDay(eventInfo);
+    setScheduleSelected({
+      ...scheduleSelected,
+      shift: eventInfo.event && eventInfo.event._def.extendedProps.shift,
+      leave_date: moment(
+        eventInfo.event && eventInfo.event._instance.range.start
+      ).format("YYYY/MM/DD"),
+      reason_content:
+        eventInfo.event && eventInfo.event._def.extendedProps.reason,
+    });
+
+    setShowModalEdit(true);
   };
+
+  const [data, setData] = useState([]);
+  const [scheduleSelected, setScheduleSelected] = useState({});
+  const [showModal, setShowModal] = useState(false);
+  const [showModalEdit, setShowModalEdit] = useState(false);
+  const { internID } = useParams();
+
+  function handleAddLeaveSchedule() {
+    setShowModal(true);
+  }
 
   return (
     <div className="manage-schedule-detail">
-      <div className="block__back-previous-page">
-        <RollbackOutlined onClick={() => window.history.back()} />
-        <div onClick={() => window.history.back()}>Back to previous page</div>
-      </div>
-      <div className="manage-schedule-detail__inner flex">
-        <div className="block__calendar">
-          <div
-            className="flex block__info_shift"
-            style={{ justifyContent: "flex-end" }}
-          >
-            <div className="flex">
-              <span>Off the morning</span>
-              <div
-                style={{
-                  background: "yellow",
-                }}
-              ></div>
-            </div>
-            <div className="flex">
-              <span>Off the afternoon</span>
-              <div
-                style={{
-                  background: "chocolate",
-                }}
-              ></div>
-            </div>
-            <div className="flex">
-              <span>Off all day</span>
-              <div
-                style={{
-                  background: "red",
-                }}
-              ></div>
+      <div className="manage-schedule-detail__inner">
+        <div
+          className="flex items-center space-between"
+          style={{ marginTop: 20, marginBottom: 30 }}
+        >
+          <div className="block__back-previous-page">
+            <RollbackOutlined onClick={() => window.history.back()} />
+            <div onClick={() => window.history.back()}>
+              Back to previous page
             </div>
           </div>
-          <Calendar
-            eventClick={handleEventClick}
-            plugins={[dayGridPlugin]}
-            events={dataEvents}
-            eventContent={renderEventContent}
-            headerToolbar={{
-              right: "prev,next",
-              left: "title",
+          <button
+            className="button button--add__schedule"
+            style={{
+              width: "auto",
+              padding: 15,
+              background: "chocolate",
+              color: "white",
+              height: 40,
             }}
-          />
+            onClick={handleAddLeaveSchedule}
+          >
+            Add leave schedule
+          </button>
         </div>
-        <div className="block__info_details">
-          <span className="block__info_details__title">
-            Information details of the off day
-          </span>
-          <div className="block__info">
-            <div>
-              <span>Reason: </span>
-              {infoDetailsOffDay.event &&
-              infoDetailsOffDay.event._def.extendedProps.reason
-                ? infoDetailsOffDay.event._def.extendedProps.reason
-                : "Empty"}
+        <div className="flex">
+          <div className="block__calendar">
+            <div
+              className="flex block__info_shift"
+              style={{ justifyContent: "flex-end" }}
+            >
+              <div className="flex">
+                <span>Off the morning</span>
+                <div
+                  style={{
+                    background: "yellow",
+                  }}
+                ></div>
+              </div>
+              <div className="flex">
+                <span>Off the afternoon</span>
+                <div
+                  style={{
+                    background: "chocolate",
+                  }}
+                ></div>
+              </div>
+              <div className="flex">
+                <span>Off all day</span>
+                <div
+                  style={{
+                    background: "red",
+                  }}
+                ></div>
+              </div>
             </div>
-            <div>
-              <span>Off date: </span>
-              {moment(
-                infoDetailsOffDay.event &&
-                  infoDetailsOffDay.event._instance.range.start
-              ).format("YYYY/MM/DD")}
-            </div>
-            <div>
-              <span>Absence: </span>
-              {infoDetailsOffDay.event &&
-              infoDetailsOffDay.event._def.extendedProps.shift === 0
-                ? "All day"
-                : infoDetailsOffDay.event &&
-                  infoDetailsOffDay.event._def.extendedProps.shift === 1
-                ? "The morning"
-                : "The afternoon"}
+            <Calendar
+              eventClick={handleEventClick}
+              plugins={[dayGridPlugin]}
+              events={dataEvents}
+              eventContent={renderEventContent}
+              headerToolbar={{
+                right: "prev,next",
+                left: "title",
+              }}
+            />
+          </div>
+          <div className="block__info_details">
+            <span className="block__info_details__title">
+              Information details of the off-day
+            </span>
+            <div className="block__info">
+              <div>
+                <span>Reason: </span>
+                {infoDetailsOffDay.event &&
+                infoDetailsOffDay.event._def.extendedProps.reason
+                  ? infoDetailsOffDay.event._def.extendedProps.reason
+                  : "Empty"}
+              </div>
+              <div>
+                <span>Date: </span>
+                {moment(
+                  infoDetailsOffDay.event &&
+                    infoDetailsOffDay.event._instance.range.start
+                ).format("YYYY/MM/DD")}
+              </div>
+              <div>
+                <span>Session: </span>
+                {infoDetailsOffDay.event &&
+                infoDetailsOffDay.event._def.extendedProps.shift === 0
+                  ? "All day"
+                  : infoDetailsOffDay.event &&
+                    infoDetailsOffDay.event._def.extendedProps.shift === 1
+                  ? "The morning"
+                  : "The afternoon"}
+              </div>
             </div>
           </div>
         </div>
       </div>
+      {showModal && (
+        <ModalAddLeaveSchedule
+          setOpenModal={setShowModal}
+          title="Add leave schedule"
+          setData={setData}
+          userID={internID}
+        />
+      )}
+      {showModalEdit && (
+        <ModalUpdateSchedule
+          setOpenModal={setShowModalEdit}
+          title="Edit leave schedule"
+          setData={setData}
+          userID={internID}
+          scheduleSelected={scheduleSelected}
+        />
+      )}
     </div>
   );
 }

@@ -356,7 +356,7 @@ export default function ManageIntern() {
         <Popup
           onCancel={setOpenModalDelete}
           onConfirm={handleConfirm}
-          title="Are you delete this user?"
+          title="Are you sure to delete this intern?"
         />
       )}
     </div>

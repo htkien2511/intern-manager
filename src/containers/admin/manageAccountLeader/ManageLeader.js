@@ -352,7 +352,7 @@ export default function ManageLeader() {
         <Popup
           onCancel={setOpenModalDelete}
           onConfirm={handleConfirm}
-          title="Are you delete this leader?"
+          title="Are you sure to delete this leader?"
         />
       )}
     </div>

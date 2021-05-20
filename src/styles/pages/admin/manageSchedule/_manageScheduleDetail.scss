@@ -3,6 +3,9 @@
   &__inner {
     position: relative;
     margin: 0 40px;
+    button:hover {
+      background: rgb(255, 185, 55) !important;
+    }
     .block__calendar {
       // box-shadow: rgb(192, 192, 192) 0px 2px 2px;
       margin-right: 10px;

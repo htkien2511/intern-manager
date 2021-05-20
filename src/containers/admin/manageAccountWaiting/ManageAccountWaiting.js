@@ -447,28 +447,28 @@ export default function ManageAccountWaiting() {
         <Popup
           onCancel={setOpenModalAccept}
           onConfirm={handleConfirmAccepted}
-          title="Are you sure you want to accept?"
+          title="Are you sure to accept?"
         />
       )}
       {openModalDelete && (
         <Popup
           onCancel={setOpenModalDelete}
           onConfirm={handleConfirmDenied}
-          title="Are you sure you want to deny?"
+          title="Are you sure to deny?"
         />
       )}
       {openModalAcceptAll && (
         <Popup
           onCancel={setOpenModalAcceptAll}
           onConfirm={handleConfirmAcceptedAll}
-          title="Are you sure you want to accept all user?"
+          title="Are you sure to accept all user?"
         />
       )}
       {openModalDeleteAll && (
         <Popup
           onCancel={setOpenModalDeleteAll}
           onConfirm={handleConfirmDeniedAll}
-          title="Are you sure you want to deny all user?"
+          title="Are you sure to deny all user?"
         />
       )}
     </div>
