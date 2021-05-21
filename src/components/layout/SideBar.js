@@ -8,7 +8,7 @@ import {
   ROUTE_MANAGE_LEADER,
   ROUTE_MANAGE_SCHEDULE,
   ROUTE_MANAGE_PROJECT,
-  ROUTE_VIEW_STATISTIC,
+  // ROUTE_VIEW_STATISTIC,
   ROUTE_MANAGE_PERMISSION_LEADER,
 } from "../../utils/routes";
 import Logo from "assets/images/logoGuess.png";
@@ -33,74 +33,112 @@ function SideBar() {
           </div>
           <div className="side-bar__inner__items--menu">
             {getAuth().role === "ROLE_ADMIN" && (
-              <div className="side-bar__inner__items--menu__item flex">
-                {storeSetShowSidebar.showSidebar ? (
-                  <>
-                    <div className="temp"></div>
-                    <UserOutlined
-                      onClick={() => {
-                        history.push(ROUTE_MANAGE_LEADER);
-                        dispatch(setTitle("Manage Leader"));
-                      }}
-                    />
-                    <NavLink
-                      activeClassName="side-bar__inner__items--menu__item--active border-corner"
-                      to={ROUTE_MANAGE_LEADER}
-                      onClick={() => dispatch(setTitle("Manage Leader"))}
-                    >
-                      Manage Leader
-                    </NavLink>
-                  </>
-                ) : (
-                  <>
-                    <div className="temp"></div>
-                    <Tooltip placement="top" title="Manage Leader">
+              <>
+                <div className="side-bar__inner__items--menu__item flex">
+                  {storeSetShowSidebar.showSidebar ? (
+                    <>
+                      <div className="temp"></div>
                       <UserOutlined
                         onClick={() => {
                           history.push(ROUTE_MANAGE_LEADER);
                           dispatch(setTitle("Manage Leader"));
                         }}
                       />
-                    </Tooltip>
-                  </>
-                )}
-              </div>
+                      <NavLink
+                        activeClassName="side-bar__inner__items--menu__item--active border-corner"
+                        to={ROUTE_MANAGE_LEADER}
+                        onClick={() => dispatch(setTitle("Manage Leader"))}
+                      >
+                        Manage Leader
+                      </NavLink>
+                    </>
+                  ) : (
+                    <>
+                      <div className="temp"></div>
+                      <Tooltip placement="top" title="Manage Leader">
+                        <UserOutlined
+                          onClick={() => {
+                            history.push(ROUTE_MANAGE_LEADER);
+                            dispatch(setTitle("Manage Leader"));
+                          }}
+                        />
+                      </Tooltip>
+                    </>
+                  )}
+                </div>
+                <div className="side-bar__inner__items--menu__item flex">
+                  {storeSetShowSidebar.showSidebar ? (
+                    <>
+                      <div className="temp"></div>
+                      <ChromeOutlined
+                        onClick={() => {
+                          history.push(ROUTE_MANAGE_PERMISSION_LEADER);
+                          dispatch(setTitle("Manage Permission Leader"));
+                        }}
+                      />
+                      <NavLink
+                        activeClassName="side-bar__inner__items--menu__item--active border-corner"
+                        to={ROUTE_MANAGE_PERMISSION_LEADER}
+                        onClick={() =>
+                          dispatch(setTitle("Manage Permission Leader"))
+                        }
+                      >
+                        Manage Permission Leader
+                      </NavLink>
+                    </>
+                  ) : (
+                    <>
+                      <div className="temp"></div>
+                      <Tooltip placement="top" title="Manage Permission Leader">
+                        <ChromeOutlined
+                          onClick={() => {
+                            history.push(ROUTE_MANAGE_PERMISSION_LEADER);
+                            dispatch(setTitle("Manage Permission Leader"));
+                          }}
+                        />
+                      </Tooltip>
+                    </>
+                  )}
+                </div>
+                <div className="side-bar__inner__items--menu__item flex">
+                  {storeSetShowSidebar.showSidebar ? (
+                    <>
+                      <div className="temp"></div>
+                      <i
+                        className="fi-rr-hourglass-end"
+                        onClick={() => {
+                          history.push(ROUTE_MANAGE_ACCOUNT_WAITING);
+                          dispatch(setTitle("Manage Account Waiting"));
+                        }}
+                      />
+                      <NavLink
+                        activeClassName="side-bar__inner__items--menu__item--active border-corner"
+                        to={ROUTE_MANAGE_ACCOUNT_WAITING}
+                        onClick={() =>
+                          dispatch(setTitle("Manage Account Waiting"))
+                        }
+                      >
+                        Manage Account Waiting
+                      </NavLink>
+                    </>
+                  ) : (
+                    <>
+                      <div className="temp"></div>
+                      <Tooltip placement="top" title="Manage Account Waiting">
+                        <i
+                          className="fi-rr-hourglass-end"
+                          onClick={() => {
+                            history.push(ROUTE_MANAGE_ACCOUNT_WAITING);
+                            dispatch(setTitle("Manage Account Waiting"));
+                          }}
+                        />
+                      </Tooltip>
+                    </>
+                  )}
+                </div>
+              </>
             )}
 
-            <div className="side-bar__inner__items--menu__item flex">
-              {storeSetShowSidebar.showSidebar ? (
-                <>
-                  <div className="temp"></div>
-                  <ChromeOutlined
-                    onClick={() => {
-                      history.push(ROUTE_MANAGE_PERMISSION_LEADER);
-                      dispatch(setTitle("Manage Permission Leader"));
-                    }}
-                  />
-                  <NavLink
-                    activeClassName="side-bar__inner__items--menu__item--active border-corner"
-                    to={ROUTE_MANAGE_PERMISSION_LEADER}
-                    onClick={() =>
-                      dispatch(setTitle("Manage Permission Leader"))
-                    }
-                  >
-                    Manage Permission Leader
-                  </NavLink>
-                </>
-              ) : (
-                <>
-                  <div className="temp"></div>
-                  <Tooltip placement="top" title="Manage Permission Leader">
-                    <ChromeOutlined
-                      onClick={() => {
-                        history.push(ROUTE_MANAGE_PERMISSION_LEADER);
-                        dispatch(setTitle("Manage Permission Leader"));
-                      }}
-                    />
-                  </Tooltip>
-                </>
-              )}
-            </div>
             <div className="side-bar__inner__items--menu__item flex">
               {storeSetShowSidebar.showSidebar ? (
                 <>
@@ -203,41 +241,8 @@ function SideBar() {
                 </>
               )}
             </div>
-            <div className="side-bar__inner__items--menu__item flex">
-              {storeSetShowSidebar.showSidebar ? (
-                <>
-                  <div className="temp"></div>
-                  <i
-                    className="fi-rr-hourglass-end"
-                    onClick={() => {
-                      history.push(ROUTE_MANAGE_ACCOUNT_WAITING);
-                      dispatch(setTitle("Manage Account Waiting"));
-                    }}
-                  />
-                  <NavLink
-                    activeClassName="side-bar__inner__items--menu__item--active border-corner"
-                    to={ROUTE_MANAGE_ACCOUNT_WAITING}
-                    onClick={() => dispatch(setTitle("Manage Account Waiting"))}
-                  >
-                    Manage Account Waiting
-                  </NavLink>
-                </>
-              ) : (
-                <>
-                  <div className="temp"></div>
-                  <Tooltip placement="top" title="Manage Account Waiting">
-                    <i
-                      className="fi-rr-hourglass-end"
-                      onClick={() => {
-                        history.push(ROUTE_MANAGE_ACCOUNT_WAITING);
-                        dispatch(setTitle("Manage Account Waiting"));
-                      }}
-                    />
-                  </Tooltip>
-                </>
-              )}
-            </div>
-            <div className="side-bar__inner__items--menu__item flex">
+
+            {/* <div className="side-bar__inner__items--menu__item flex">
               {storeSetShowSidebar.showSidebar ? (
                 <>
                   <div className="temp"></div>
@@ -270,7 +275,7 @@ function SideBar() {
                   </Tooltip>
                 </>
               )}
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

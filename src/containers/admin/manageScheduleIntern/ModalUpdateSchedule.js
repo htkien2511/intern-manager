@@ -5,9 +5,9 @@ import styled from "styled-components";
 import { Form as ReForm, Input } from "reactstrap";
 import { isEmpty } from "validator";
 import moment from "moment";
-import { toast } from "react-toastify";
-import { createTask } from "redux/actions/admin/createTask";
-import { getAllTasksByProjectID } from "redux/actions/admin/getAllTaskByProjectID";
+// import { toast } from "react-toastify";
+// import { createSchedule } from "redux/actions/admin/createSchedule";
+// import { getScheduleUserID } from "redux/actions/admin/getScheduleUserID";
 
 export const HeaderModal = ({ close, title }) => {
   return (
@@ -29,29 +29,41 @@ export const HeaderModal = ({ close, title }) => {
   );
 };
 
-export const ContentModal = ({ setOpenModal, setData, projectId }) => {
-  const DIFFICULTY = { Hard: 1, Normal: 2, Easy: 3 };
+export const ContentModal = ({
+  setOpenModal,
+  setData,
+  userID,
+  scheduleSelected,
+}) => {
+  const MAP = {
+    "All day": 0,
+    Morning: 1,
+    Afternoon: 2,
+  };
 
+  const MAP_REVERSE = {
+    0: "All day",
+    1: "Morning",
+    2: "Afternoon",
+  };
   const [error, setError] = React.useState({});
   const [form, setForm] = React.useState({
-    title: "",
-    description: "",
-    dueDate: "",
-    difficultId: 3,
-    projectId: projectId,
+    shift: MAP_REVERSE[scheduleSelected.shift] || "",
+    leave_date: moment(scheduleSelected.leave_date).format("YYYY-MM-DD") || "",
+    reason_content: scheduleSelected.reason_content || "",
   });
 
   const validate = () => {
     const errorState = {};
     // check validate
-    if (isEmpty(form.title)) {
-      errorState.title = "Please enter task name";
+    if (isEmpty(form.shift)) {
+      errorState.shift = "Please choice session leave";
     }
-    if (isEmpty(form.description)) {
-      errorState.description = "Please enter descriptions";
+    if (isEmpty(form.leave_date)) {
+      errorState.leave_date = "Please enter leave date";
     }
-    if (isEmpty(form.dueDate)) {
-      errorState.dueDate = "Please enter due date";
+    if (isEmpty(form.reason_content)) {
+      errorState.reason_content = "Please enter reason of absence";
     }
     return errorState;
   };
@@ -63,27 +75,27 @@ export const ContentModal = ({ setOpenModal, setData, projectId }) => {
     }
 
     const formData = {
-      title: form.title,
-      description: form.description,
-      dueDate: moment(form.dueDate).format("YYYY/MM/DD"),
-      difficultId: DIFFICULTY[form.difficultId],
-      idProject: Number(projectId),
+      shift: MAP[form.shift],
+      leave_date: moment(form.leave_date).format("YYYY/MM/DD"),
+      reason_content: form.reason_content,
     };
 
-    createTask(formData, (res) => {
-      if (res.success) {
-        getAllTasksByProjectID(projectId, (r) => {
-          if (r.success) {
-            toast.success("Create task successfully!");
-            setData(r.data);
-          } else {
-            toast.error(r.message);
-          }
-        });
-      } else {
-        toast.error(res.message);
-      }
-    });
+    console.log({ formData });
+
+    // createSchedule(formData, (res) => {
+    //   if (res.success) {
+    //     getScheduleUserID(userID, (r) => {
+    //       if (r.success) {
+    //         toast.success("Create schedule successfully!");
+    //         setData(r.data);
+    //       } else {
+    //         toast.error(r.message);
+    //       }
+    //     });
+    //   } else {
+    //     toast.error(res.message);
+    //   }
+    // });
     setOpenModal(false);
   };
   const handleChange = (event) => {
@@ -102,65 +114,35 @@ export const ContentModal = ({ setOpenModal, setData, projectId }) => {
       <div className="content__inner">
         <ReForm className="re__form">
           <div>
-            <label>Task Name</label>
-            <FormBox
-              propsInput={{
-                type: "text",
-                name: "title",
-                placeholder: "Task Name",
-                onChange: handleChange,
-                onFocus: handleFocus,
-                value: form.title,
-                disabled: false,
-              }}
-              error={error.title}
-            />
-          </div>
-          <div>
-            <label>Descriptions</label>
-            <FormBox
-              propsInput={{
-                type: "textarea",
-                name: "description",
-                placeholder: "Descriptions",
-                onChange: handleChange,
-                onFocus: handleFocus,
-                value: form.description,
-                disabled: false,
-              }}
-              error={error.description}
-            />
-          </div>
-          <div>
-            <label>Due date</label>
+            <label>Choice date</label>
+            {/* handle min max date (new week) */}
             <FormBox
               propsInput={{
                 type: "date",
-                name: "dueDate",
-                placeholder: "Due date",
+                name: "leave_date",
+                placeholder: "Leave date",
                 onChange: handleChange,
                 onFocus: handleFocus,
-                value: form.dueDate,
-                min: moment(Date.now()).format("YYYY-MM-DD"),
+                value: form.leave_date,
+                // min: moment(Date.now()).format("YYYY-MM-DD"),
                 disabled: false,
               }}
-              error={error.dueDate}
+              error={error.leave_date}
             />
           </div>
-
           <div>
-            <label>Level</label>
+            <label>Choice shift</label>
             <Input
               type="select"
-              name="difficultId"
-              id="difficultId"
-              placeholder="Level"
+              name="shift"
+              id="shift"
+              placeholder="Shift"
               onChange={handleChange}
               onFocus={handleFocus}
-              value={form.difficultId}
+              value={form.shift}
               disabled={false}
             >
-              {["Easy", "Normal", "Hard"].map((item, index) => (
+              {["All day", "Morning", "Afternoon"].map((item, index) => (
                 <option key={index}>{item}</option>
               ))}
             </Input>
@@ -168,8 +150,24 @@ export const ContentModal = ({ setOpenModal, setData, projectId }) => {
               className="invalid-feedback"
               style={{ display: "block", marginLeft: 15 }}
             >
-              {error.difficultId}
+              {error.shift}
             </span>
+          </div>
+
+          <div>
+            <label>Reason of absence</label>
+            <FormBox
+              propsInput={{
+                type: "text",
+                name: "reason_content",
+                placeholder: "Reason of absence",
+                onChange: handleChange,
+                onFocus: handleFocus,
+                value: form.reason_content,
+                disabled: false,
+              }}
+              error={error.reason_content}
+            />
           </div>
 
           <button className="btn--save align__center" style={{ marginTop: 20 }}>
@@ -188,7 +186,13 @@ export const ContentModal = ({ setOpenModal, setData, projectId }) => {
   );
 };
 
-const ModalAddTask = ({ setOpenModal, title, setData, projectId }) => {
+const ModalUpdateSchedule = ({
+  setOpenModal,
+  title,
+  setData,
+  userID,
+  scheduleSelected,
+}) => {
   return (
     <ModalAddAccountUserContainer className="modal__add__user__container">
       <CustomizedModal>
@@ -199,7 +203,8 @@ const ModalAddTask = ({ setOpenModal, title, setData, projectId }) => {
           <ContentModal
             setOpenModal={setOpenModal}
             setData={setData}
-            projectId={projectId}
+            userID={userID}
+            scheduleSelected={scheduleSelected}
           />
         </CustomizedModal.Content>
       </CustomizedModal>
@@ -252,4 +257,4 @@ const ModalAddAccountUserContainer = styled.div`
     }
   }
 `;
-export default ModalAddTask;
+export default ModalUpdateSchedule;

@@ -2,12 +2,13 @@ import { FormBox } from "components/common";
 import CustomizedModal from "components/common/core/CustomizeModal";
 import React from "react";
 import styled from "styled-components";
-import { Form as ReForm, Input } from "reactstrap";
+import { Form as ReForm } from "reactstrap";
 import { isEmpty } from "validator";
 import moment from "moment";
+import { updateTask } from "redux/actions/admin/updateTask";
 import { toast } from "react-toastify";
-import { createTask } from "redux/actions/admin/createTask";
 import { getAllTasksByProjectID } from "redux/actions/admin/getAllTaskByProjectID";
+import AvatarBlock from "components/common/core/AvatarBlock";
 
 export const HeaderModal = ({ close, title }) => {
   return (
@@ -29,16 +30,18 @@ export const HeaderModal = ({ close, title }) => {
   );
 };
 
-export const ContentModal = ({ setOpenModal, setData, projectId }) => {
+export const ContentModal = ({ setOpenModal, projectId, setData, input }) => {
   const DIFFICULTY = { Hard: 1, Normal: 2, Easy: 3 };
 
   const [error, setError] = React.useState({});
   const [form, setForm] = React.useState({
-    title: "",
-    description: "",
-    dueDate: "",
-    difficultId: 3,
-    projectId: projectId,
+    title: "" || input.title,
+    description: "" || input.description,
+    dueDate: input.dueDate ? moment(input.dueDate).format("YYYY-MM-DD") : null,
+    difficultId: input.difficulty,
+    isDone: "" || input.isDone,
+    point: "" || Number(input.point),
+    users_assignee: "" || input.usersAssignee,
   });
 
   const validate = () => {
@@ -50,7 +53,7 @@ export const ContentModal = ({ setOpenModal, setData, projectId }) => {
     if (isEmpty(form.description)) {
       errorState.description = "Please enter descriptions";
     }
-    if (isEmpty(form.dueDate)) {
+    if (!form.dueDate) {
       errorState.dueDate = "Please enter due date";
     }
     return errorState;
@@ -63,18 +66,21 @@ export const ContentModal = ({ setOpenModal, setData, projectId }) => {
     }
 
     const formData = {
+      task_id: input.taskId,
       title: form.title,
       description: form.description,
-      dueDate: moment(form.dueDate).format("YYYY/MM/DD"),
-      difficultId: DIFFICULTY[form.difficultId],
-      idProject: Number(projectId),
+      due_date: moment(form.dueDate).format("YYYY/MM/DD"),
+      difficulty: DIFFICULTY[form.difficultId],
+      done: form.isDone,
+      point: parseFloat(form.point) || 0,
+      users_assignee: form.users_assignee,
     };
 
-    createTask(formData, (res) => {
+    updateTask(formData, (res) => {
       if (res.success) {
         getAllTasksByProjectID(projectId, (r) => {
           if (r.success) {
-            toast.success("Create task successfully!");
+            toast.success("Update task successfully!");
             setData(r.data);
           } else {
             toast.error(r.message);
@@ -86,7 +92,12 @@ export const ContentModal = ({ setOpenModal, setData, projectId }) => {
     });
     setOpenModal(false);
   };
+  const MAP = { Done: true, Progressing: false };
   const handleChange = (event) => {
+    if (event.target.name === "status") {
+      setForm({ ...form, isDone: MAP[event.target.value] });
+      return;
+    }
     setForm({ ...form, [event.target.name]: event.target.value });
   };
 
@@ -102,22 +113,7 @@ export const ContentModal = ({ setOpenModal, setData, projectId }) => {
       <div className="content__inner">
         <ReForm className="re__form">
           <div>
-            <label>Task Name</label>
-            <FormBox
-              propsInput={{
-                type: "text",
-                name: "title",
-                placeholder: "Task Name",
-                onChange: handleChange,
-                onFocus: handleFocus,
-                value: form.title,
-                disabled: false,
-              }}
-              error={error.title}
-            />
-          </div>
-          <div>
-            <label>Descriptions</label>
+            <label>Descriptions: </label>
             <FormBox
               propsInput={{
                 type: "textarea",
@@ -126,69 +122,44 @@ export const ContentModal = ({ setOpenModal, setData, projectId }) => {
                 onChange: handleChange,
                 onFocus: handleFocus,
                 value: form.description,
-                disabled: false,
+                disabled: true,
               }}
               error={error.description}
             />
           </div>
           <div>
-            <label>Due date</label>
-            <FormBox
-              propsInput={{
-                type: "date",
-                name: "dueDate",
-                placeholder: "Due date",
-                onChange: handleChange,
-                onFocus: handleFocus,
-                value: form.dueDate,
-                min: moment(Date.now()).format("YYYY-MM-DD"),
-                disabled: false,
-              }}
-              error={error.dueDate}
-            />
+            <label>Point: </label>
+            <span> {form.point}</span>
           </div>
 
-          <div>
-            <label>Level</label>
-            <Input
-              type="select"
-              name="difficultId"
-              id="difficultId"
-              placeholder="Level"
-              onChange={handleChange}
-              onFocus={handleFocus}
-              value={form.difficultId}
-              disabled={false}
-            >
-              {["Easy", "Normal", "Hard"].map((item, index) => (
-                <option key={index}>{item}</option>
-              ))}
-            </Input>
-            <span
-              className="invalid-feedback"
-              style={{ display: "block", marginLeft: 15 }}
-            >
-              {error.difficultId}
-            </span>
-          </div>
-
-          <button className="btn--save align__center" style={{ marginTop: 20 }}>
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
-              <g id="Layer_2" data-name="Layer 2">
-                <path
-                  d="M14,0H2A2,2,0,0,0,0,2V16a2,2,0,0,0,2,2H16a2,2,0,0,0,2-2V4ZM9,16a3,3,0,1,1,3-3A3,3,0,0,1,9,16ZM12,6H2V2H12Z"
-                  fill="#ffff"
+          <div style={{ marginTop: 10 }} className="flex items-center">
+            <label style={{ marginRight: 5 }}>Assigned users: </label>
+            {input.usersAssignee.length ? (
+              <span>
+                <AvatarBlock
+                  users_list={input.usersAssignee.map((i) => i.name)}
+                  maxCount={4}
                 />
-              </g>
-            </svg>
-          </button>
+              </span>
+            ) : (
+              <div style={{ color: "gray", marginBottom: 8 }}>
+                No user assigned
+              </div>
+            )}
+          </div>
         </ReForm>
       </div>
     </div>
   );
 };
 
-const ModalAddTask = ({ setOpenModal, title, setData, projectId }) => {
+const ModalShowDetail = ({
+  setOpenModal,
+  title,
+  setData,
+  projectId,
+  input,
+}) => {
   return (
     <ModalAddAccountUserContainer className="modal__add__user__container">
       <CustomizedModal>
@@ -200,6 +171,7 @@ const ModalAddTask = ({ setOpenModal, title, setData, projectId }) => {
             setOpenModal={setOpenModal}
             setData={setData}
             projectId={projectId}
+            input={input}
           />
         </CustomizedModal.Content>
       </CustomizedModal>
@@ -210,6 +182,7 @@ const ModalAddTask = ({ setOpenModal, title, setData, projectId }) => {
 const ModalAddAccountUserContainer = styled.div`
   .modal__inner {
     .modal__header {
+      background: #c9d7ff;
       .header__container {
         .header__inner {
           padding: 10px 15px;
@@ -252,4 +225,4 @@ const ModalAddAccountUserContainer = styled.div`
     }
   }
 `;
-export default ModalAddTask;
+export default ModalShowDetail;

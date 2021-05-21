@@ -1,6 +1,6 @@
 import { Avatar, Tooltip } from "antd";
 
-const AvatarBlock = ({ users_list }) => {
+const AvatarBlock = ({ users_list, maxCount }) => {
   const colors = [
     "red",
     "#f56a00",
@@ -12,7 +12,7 @@ const AvatarBlock = ({ users_list }) => {
   ];
   return (
     <Avatar.Group
-      maxCount={2}
+      maxCount={maxCount || 2}
       size="large"
       maxStyle={{
         color: "#f56a00",

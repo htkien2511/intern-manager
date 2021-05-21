@@ -2,10 +2,11 @@ import { getAuth } from "../../../utils/helpers";
 import * as types from "../../constants";
 import store from "../../store";
 export function updatePermissionByLeaderID(input, resolve = () => {}) {
+  console.log(JSON.stringify(input));
   store.dispatch({
     type: types.UPDATE_PERMISSION_LEADER_ID,
   });
-  return fetch(`${process.env.REACT_APP_API_URL}permission/add`, {
+  return fetch(`${process.env.REACT_APP_API_URL}permission/edit`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

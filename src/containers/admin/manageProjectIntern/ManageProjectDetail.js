@@ -18,6 +18,7 @@ import SpinLoading from "components/common/core/SpinLoading";
 import { deleteTask } from "redux/actions/admin/deleteTask";
 import { toast } from "react-toastify";
 import ModalEditTask from "./ModalEditTask";
+import ModalShowDetail from "./ModalShowDetail";
 
 const Icon = ({ icon, color }) => {
   return (
@@ -46,16 +47,17 @@ const renderStars = (amount) => {
 const ManageProjectDetail = () => {
   const [showModal, setShowModal] = useState(false);
   const [showModalEdit, setShowModalEdit] = useState(false);
+  const [showModalSeeDetails, setShowModalSeeDetails] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
   const [data, setData] = useState([]);
-  const [filterData, setFilterData] = useState([]);
+  const [filteredData, setFilteredData] = useState([]);
   const [taskSelected, setTaskSelected] = useState({});
   const handleAddTask = () => {
     setShowModal(true);
   };
 
   const dispatch = useDispatch();
-  const { projectId } = useParams();
+  const { projectId, projectName } = useParams();
 
   useEffect(() => {
     getAllTasksByProjectID(Number(projectId), (res) => {
@@ -69,14 +71,36 @@ const ManageProjectDetail = () => {
     dispatch(setTitle("Manage List Tasks"));
   }, [dispatch]);
 
+  const [searchText, setSearchText] = useState("");
+
+  useEffect(() => {
+    if (searchText === "") setFilteredData(data);
+    else {
+      const filteredData = data.filter((item) => {
+        return Object.keys(item).some((key) =>
+          (item[key] + "").toString().toLowerCase().includes(searchText)
+        );
+      });
+      setFilteredData(filteredData);
+    }
+    // setFilteredData(data);
+  }, [searchText, data]);
+
+  const handleSearch = (event) => {
+    const lowercasedValue = event.target.value.toLowerCase().trim();
+    setSearchText(lowercasedValue);
+  };
+
   const storeGetAllTasks = useSelector((store) => store.getAllTasksByProjectID);
 
   const renderTable = (title, input) => {
     return (
       <div className="test-library__inner__content__test-plan">
-        {/* <h2 style={{ textAlign: "center", color: "orangered" }}>
-          Project Name
-        </h2> */}
+        <h2
+          style={{ textAlign: "center", color: "orangered", marginBottom: 20 }}
+        >
+          {projectName}
+        </h2>
         {!input ? (
           <div style={{ position: "absolute", left: "50%" }}>
             <Empty />
@@ -128,7 +152,7 @@ const ManageProjectDetail = () => {
                       <div className="test-plan__content">
                         <div className="test-plan__content__inner">
                           {item.createDate
-                            ? moment(item.createDate).format("DD/MM/YYYY")
+                            ? moment(item.createDate).format("YYYY-MM-DD")
                             : "Empty"}
                         </div>
                       </div>
@@ -137,7 +161,7 @@ const ManageProjectDetail = () => {
                       <div className="test-plan__content">
                         <div className="test-plan__content__inner">
                           {item.dueDate
-                            ? moment(item.dueDate).format("DD/MM/YYYY")
+                            ? moment(item.dueDate).format("YYYY-MM-DD")
                             : "Empty"}
                         </div>
                       </div>
@@ -261,6 +285,7 @@ const ManageProjectDetail = () => {
     switch (action) {
       case "See":
         console.log("See");
+        setShowModalSeeDetails(true);
         setTaskSelected(item);
         break;
       case "Edit":
@@ -295,14 +320,20 @@ const ManageProjectDetail = () => {
   };
 
   const storeCreateTask = useSelector((store) => store.createTask);
+  const storeEditTask = useSelector((store) => store.updateTask);
+  const storeDeleteTask = useSelector((store) => store.deleteTask);
 
   return (
     <>
       <div className="test-library">
-        {(storeGetAllTasks.loading || storeCreateTask.loading) && (
-          <SpinLoading />
-        )}
-        <div className="block__back-previous-page">
+        {(storeGetAllTasks.loading ||
+          storeCreateTask.loading ||
+          storeEditTask.loading ||
+          storeDeleteTask.loading) && <SpinLoading />}
+        <div
+          className="block__back-previous-page"
+          style={{ marginLeft: 30, marginTop: 15 }}
+        >
           <RollbackOutlined onClick={() => window.history.back()} />
           <div onClick={() => window.history.back()}>Back to previous page</div>
         </div>
@@ -323,12 +354,13 @@ const ManageProjectDetail = () => {
                 type="text"
                 name="search"
                 id="searchKey"
+                onChange={handleSearch}
                 placeholder="Search task(s)"
               />
             </div>
           </div>
           <div className="test-library__inner__content">
-            {renderTable("Project Name", data)}
+            {renderTable("Project Name", filteredData)}
           </div>
         </div>
       </div>
@@ -349,11 +381,20 @@ const ManageProjectDetail = () => {
           projectId={projectId}
         />
       )}
+      {showModalSeeDetails && (
+        <ModalShowDetail
+          setOpenModal={setShowModalSeeDetails}
+          title="Information details task"
+          setData={setData}
+          input={taskSelected}
+          projectId={projectId}
+        />
+      )}
       {openModalDelete && (
         <Popup
           onCancel={setOpenModalDelete}
           onConfirm={handleConfirm}
-          title="Are you delete this task?"
+          title="Are you sure to delete this task?"
         />
       )}
     </>

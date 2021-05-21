@@ -243,7 +243,6 @@ body {
 }
 .block__back-previous-page {
   display: flex;
-  margin: 30px 0 0 40px;
   color: blue;
   cursor: pointer;
   align-items: center;
@@ -263,4 +262,17 @@ body {
     }
     padding-top: 4px;
   }
+}
+.fc-h-event {
+  display: unset !important;
+}
+textarea {
+  height: 100% !important;
+}
+canvas {
+  width: 100% !important;
+  height: 720px !important;
+}
+.ant-result-subtitle {
+  font-size: 25px;
 }
