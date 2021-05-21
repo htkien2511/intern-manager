@@ -33,7 +33,6 @@ function TaskManagement() {
                   {[
                     "Project ID",
                     "Project",
-                    "In Progress",
                     "Created Date",
                     "Due Date",
                     "Actions",
@@ -49,7 +48,6 @@ function TaskManagement() {
                     <tr key={index}>
                       <td>{item.projectId}</td>
                       <td>{item.title}</td>
-                      <td>2/5</td>
                       <td>
                         {moment(new Date(item.startDate)).format("YYYY/MM/DD")}
                       </td>

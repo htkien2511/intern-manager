@@ -1,7 +1,10 @@
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { getScheduleUserID, } from "redux/actions/admin/getScheduleUserID";
+import { updateSchedule, } from "redux/actions/admin/updateSchedule";
 import { addLeaveSchedule } from "redux/actions/intern/addLeaveSchedule";
+import { getAuth } from "utils/helpers";
 function CalenderTable() {
   const [schedules, setSchedules] = useState([]);
   const MAP = [
@@ -17,22 +20,65 @@ function CalenderTable() {
   );
 
   useEffect(() => {
-    let array = [];
-    [1, 2, 3, 4, 5].forEach((item) => {
-      let date = moment(new Date(curr.setDate(firstDateWeek + item))).format(
-        "YYYY/MM/DD"
-      );
-      array.push({
-        leave_date: date,
-        shift_date: 3,
-      });
+    getScheduleUserID(getAuth().id, (output) => {
+      if (!output.data) {
+        let array = [];
+        [1, 2, 3, 4, 5].forEach((item) => {
+          let date = moment(
+            new Date(curr.setDate(firstDateWeek + item))
+          ).format("YYYY/MM/DD");
+          array.push({
+            leave_date: date,
+            shift_date: 3,
+          });
+        });
+        setSchedules(array);
+      } else {
+        let array = [];
+        let dem = 1;
+        let ar = [];
+        output.data.forEach((item) => {
+          ar.push({
+            id: item.id,
+            time: item.time,
+            shift: item.shift,
+          });
+        });
+        ar.sort(function (a, b) {
+          return a.id - b.id;
+        });
+        console.log(ar);
+        ar.forEach((item) => {
+          let date = moment(new Date(curr.setDate(firstDateWeek + dem))).format("YYYY/MM/DD");
+          dem++;
+          array.push({
+            leave_id: item.id,
+            // leave_date: item.time,
+            leave_date: date,
+            shift_date: item.shift,
+          });
+        });
+        setSchedules(array);
+      }
     });
-    setSchedules(array);
+    // let array = [];
+    // [1, 2, 3, 4, 5].forEach((item) => {
+    //   let date = moment(new Date(curr.setDate(firstDateWeek + item))).format(
+    //     "YYYY/MM/DD"
+    //   );
+    //   array.push({
+    //     leave_date: date,
+    //     shift_date: 3,
+    //   });
+    // });
+    // setSchedules(array);
     // eslint-disable-next-line
   }, [firstDateWeek]);
 
   useEffect(() => {
-    if ((new Date()).getTime() > new Date(curr.setDate(firstDateWeek + 5)).getTime()) {
+    if (
+      new Date().getTime() > new Date(curr.setDate(firstDateWeek + 6)).getTime()
+    ) {
       setFirstDateWeek(firstDateWeek + 7);
     }
     // eslint-disable-next-line
@@ -40,31 +86,54 @@ function CalenderTable() {
 
   const handleSubmit = () => {
     if (
-      new Date(curr.setDate(firstDateWeek + 6)).getTime() === (new Date()).getTime() ||
-      new Date(curr.setDate(firstDateWeek + 7)).getTime() === (new Date()).getTime()
+      new Date(curr.setDate(firstDateWeek + 6)).getTime() ===
+        new Date().getTime() ||
+      new Date(curr.setDate(firstDateWeek + 7)).getTime() ===
+        new Date().getTime()
     ) {
-      toast.error("Today you can not edit your schedule!");
-      console.log(schedules);
-      return;
-    }
-    console.log(schedules);
-    schedules.forEach((element, index) => {
-      const formData = {
-        shift_date: element.shift_date,
-        leave_date: element.leave_date,
-        reason_content: "",
-      };
-      console.log(formData);
-      addLeaveSchedule(formData, (res) => {
-        if (res.success) {
+      getScheduleUserID(getAuth().id, (output) => {
+        if (!output.data) {
+          schedules.forEach((element, index) => {
+            const formData = {
+              shift_date: element.shift_date,
+              leave_date: element.leave_date,
+              reason_content: "",
+            };
+            console.log(formData);
+            addLeaveSchedule(formData, (res) => {
+              // if (res.success) {
+              //   toast.success("Send schedule successfully");
+              // } else {
+              //   toast.error(res.message);
+              // }
+            });
+          });
           toast.success("Send schedule successfully");
         } else {
-          toast.error(res.message);
+          schedules.forEach((element, index) => {
+            const formData = {
+              leave_id: element.id,
+              shift: element.shift_date,
+              leave_date: element.leave_date,
+              reason_content: "",
+            };
+            console.log(formData);
+            updateSchedule(formData, (res) => {
+              // if (res.success) {
+              //   toast.success("Updated schedule successfully");
+              // } else {
+              //   toast.error(res.message);
+              // }
+            });
+          });
+          toast.success("Updated schedule successfully");
         }
       });
-    });
-    //call api create schedule
-    // toast.success("Send schedule successfully");
+    }else{
+      console.log(schedules);
+      toast.error("Today you can not edit your schedule!");
+      return;
+    }
   };
 
   function handleChange(event, item) {
@@ -97,16 +166,16 @@ function CalenderTable() {
                 <td key={index}>
                   <label>{item.leave_date}</label>
                   <select onChange={(event) => handleChange(event, item)}>
-                    <option value={MAP[3]}>All day</option>
-                    <option value={MAP[2]}>Morning</option>
-                    <option value={MAP[1]}>Afternoon</option>
-                    <option value={MAP[0]}>Leave</option>
+                    <option value={MAP[3]} selected={item.shift_date === 3  ? "selected" : ""}>All day</option>
+                    <option value={MAP[2]} selected={item.shift_date === 2  ? "selected" : ""}>Morning</option>
+                    <option value={MAP[1]} selected={item.shift_date === 1  ? "selected" : ""}>Afternoon</option>
+                    <option value={MAP[0]} selected={item.shift_date === 0  ? "selected" : ""}>Leave</option>
                   </select>
                 </td>
               ))}
             </tr>
           </tbody>
-        </table>
+        </table> 
         <center>
           <button className="btn-send" onClick={handleSubmit}>
             Submit

@@ -15,6 +15,7 @@ function TaskManagementDetail() {
       console.log(output);
       if (!output.data) return;
       setForm(output.data);
+      console.log(output.data);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -25,12 +26,22 @@ function TaskManagementDetail() {
 
   const handleChangeStatus = (event, item) => {
     console.log(item);
+    let difficulty = 0;
+    if(item.difficulty === "Hard"){
+      difficulty = 1;
+    }
+    if(item.difficulty === "Normal"){
+      difficulty = 2;
+    }
+    if(item.difficulty === "Easy"){
+      difficulty = 3;
+    }
     const formData = {
       task_id: item.taskId,
       description: item.description,
       title: item.title,
-      difficulty: item.difficulty,
-      is_done: !item.isDone,
+      difficulty: difficulty,   
+      done: !item.isDone,
       point: item.point,
       due_date: moment(new Date(item.dueDate)).format("YYYY/MM/DD"),
       users_assignee: item.usersAssignee,
