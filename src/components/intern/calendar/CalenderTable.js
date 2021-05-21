@@ -57,7 +57,7 @@ function CalenderTable() {
       console.log(formData);
       addLeaveSchedule(formData, (res) => {
         if (res.success) {
-          toast.success("Sendabc schedule successfully");
+          toast.success("Send schedule successfully");
         } else {
           toast.error(res.message);
         }
