@@ -12,6 +12,8 @@ import { getProfileIntern } from "redux/actions/intern/getProfileIntern";
 import { toast } from "react-toastify";
 import SpinLoading from "components/common/core/SpinLoading";
 import { getScheduleUserID } from "redux/actions/admin/getScheduleUserID";
+import { getAuth } from "utils/helpers";
+import ErrorPage from "components/common/ErrorPage";
 
 export default function ManageScheduleDetail() {
   const dispatch = useDispatch();
@@ -25,9 +27,19 @@ export default function ManageScheduleDetail() {
     dispatch(setTitle("Manage Schedule Detail"));
   }, [dispatch]);
 
+  const permissions =
+    getAuth().permissionDomains.map((item) => item.name.substring(7)) || [];
+
   const [dataEvents, setDataEvents] = useState([]);
 
   useEffect(() => {
+    if (
+      !(
+        permissions.includes("GetScheduleOfUser") ||
+        getAuth().role === "ROLE_ADMIN"
+      )
+    )
+      return;
     getScheduleUserID(internID, (res) => {
       if (res.success) {
         let arr = [];
@@ -42,6 +54,7 @@ export default function ManageScheduleDetail() {
         setDataEvents(arr);
       }
     });
+    // eslint-disable-next-line
   }, [internID]);
 
   const renderEventContent = (eventInfo) => {
@@ -70,6 +83,12 @@ export default function ManageScheduleDetail() {
     );
   };
   const handleEditSchedule = () => {
+    if (
+      !(permissions.includes("EditSchedule") || getAuth().role === "ROLE_ADMIN")
+    ) {
+      toast.error("Sorry, you are not authorized to edit schedule.");
+      return;
+    }
     if (!scheduleSelected.leave_id) {
       toast.warn("Please select schedule");
       return;
@@ -112,6 +131,15 @@ export default function ManageScheduleDetail() {
   }, []);
 
   function handleAddLeaveSchedule() {
+    if (
+      !(
+        permissions.includes("CreateSchedule") ||
+        getAuth().role === "ROLE_ADMIN"
+      )
+    ) {
+      toast.error("Sorry, you are not authorized to create schedule.");
+      return;
+    }
     if (
       dataEvents
         .map((i) => moment(i.date).format("YYYY/MM/DD"))
@@ -170,136 +198,144 @@ export default function ManageScheduleDetail() {
             Add leave schedule
           </button>
         </div>
-        <div className="flex">
-          <div className="block__calendar">
-            <div
-              className="flex block__info_shift"
-              style={{ justifyContent: "flex-end" }}
-            >
-              <div className="flex">
-                <span>Normal working</span>
-                <div
-                  style={{
-                    background: "blue",
-                  }}
-                ></div>
+      </div>
+      {permissions.includes("GetScheduleOfUser") ||
+      getAuth().role === "ROLE_ADMIN" ? (
+        <div className="manage-schedule-detail__inner">
+          <div className="flex">
+            <div className="block__calendar">
+              <div
+                className="flex block__info_shift"
+                style={{ justifyContent: "flex-end" }}
+              >
+                <div className="flex">
+                  <span>Normal working</span>
+                  <div
+                    style={{
+                      background: "blue",
+                    }}
+                  ></div>
+                </div>
+                <div className="flex">
+                  <span>Off the morning</span>
+                  <div
+                    style={{
+                      background: "yellow",
+                    }}
+                  ></div>
+                </div>
+                <div className="flex">
+                  <span>Off the afternoon</span>
+                  <div
+                    style={{
+                      background: "chocolate",
+                    }}
+                  ></div>
+                </div>
+                <div className="flex">
+                  <span>Off all day</span>
+                  <div
+                    style={{
+                      background: "red",
+                    }}
+                  ></div>
+                </div>
               </div>
-              <div className="flex">
-                <span>Off the morning</span>
-                <div
-                  style={{
-                    background: "yellow",
-                  }}
-                ></div>
-              </div>
-              <div className="flex">
-                <span>Off the afternoon</span>
-                <div
-                  style={{
-                    background: "chocolate",
-                  }}
-                ></div>
-              </div>
-              <div className="flex">
-                <span>Off all day</span>
-                <div
-                  style={{
-                    background: "red",
-                  }}
-                ></div>
-              </div>
+              <Calendar
+                eventClick={handleEventClick}
+                plugins={[dayGridPlugin]}
+                events={dataEvents}
+                eventContent={renderEventContent}
+                headerToolbar={{
+                  right: "prev,next",
+                  left: "title",
+                }}
+              />
             </div>
-            <Calendar
-              eventClick={handleEventClick}
-              plugins={[dayGridPlugin]}
-              events={dataEvents}
-              eventContent={renderEventContent}
-              headerToolbar={{
-                right: "prev,next",
-                left: "title",
-              }}
-            />
-          </div>
-          <div className="block__info_details">
-            <div>
-              <span className="title">Personal information intern</span>
-              <div className="block__info">
-                <div>
-                  <span>Name: </span>
-                  {intern.name || (
-                    <span style={{ fontSize: 15, color: "gray" }}>Empty</span>
-                  )}
-                </div>
-                <div>
-                  <span>Email: </span>
-                  {intern.email || (
-                    <span style={{ fontSize: 15, color: "gray" }}>Empty</span>
-                  )}
-                </div>
-                <div>
-                  <span>Gender: </span>
-                  {intern.gender || (
-                    <span style={{ fontSize: 15, color: "gray" }}>Empty</span>
-                  )}
-                </div>
-                <div>
-                  <span>Department: </span>
-                  {intern.department || (
-                    <span style={{ fontSize: 15, color: "gray" }}>Empty</span>
-                  )}
+            <div className="block__info_details">
+              <div>
+                <span className="title">Personal information intern</span>
+                <div className="block__info">
+                  <div>
+                    <span>Name: </span>
+                    {intern.name || (
+                      <span style={{ fontSize: 15, color: "gray" }}>Empty</span>
+                    )}
+                  </div>
+                  <div>
+                    <span>Email: </span>
+                    {intern.email || (
+                      <span style={{ fontSize: 15, color: "gray" }}>Empty</span>
+                    )}
+                  </div>
+                  <div>
+                    <span>Gender: </span>
+                    {intern.gender || (
+                      <span style={{ fontSize: 15, color: "gray" }}>Empty</span>
+                    )}
+                  </div>
+                  <div>
+                    <span>Department: </span>
+                    {intern.department || (
+                      <span style={{ fontSize: 15, color: "gray" }}>Empty</span>
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-            <div>
-              <div className="flex items-center space-between">
-                <span className="title">
-                  Information details of the off-day
-                </span>
-                <button
-                  className="button button--secondary btn-edit-schedule"
-                  style={{ width: 140, textAlign: "right" }}
-                  onClick={handleEditSchedule}
-                >
-                  Edit schedule
-                </button>
-              </div>
+              <div>
+                <div className="flex items-center space-between">
+                  <span className="title">
+                    Information details of the off-day
+                  </span>
+                  <button
+                    className="button button--secondary btn-edit-schedule"
+                    style={{ width: 140, textAlign: "right" }}
+                    onClick={handleEditSchedule}
+                  >
+                    Edit schedule
+                  </button>
+                </div>
 
-              <div className="block__info">
-                <div>
-                  <span>Reason: </span>
-                  {scheduleSelected.reason_content ? (
-                    scheduleSelected.reason_content
-                  ) : (
-                    <span style={{ fontSize: 15, color: "gray" }}>Empty</span>
-                  )}
-                </div>
-                <div>
-                  <span>Date: </span>
-                  {scheduleSelected.leave_date ? (
-                    moment(scheduleSelected.leave_date).format("YYYY/MM/DD")
-                  ) : (
-                    <span style={{ fontSize: 15, color: "gray" }}>Empty</span>
-                  )}
-                </div>
-                <div>
-                  <span>Session: </span>
-                  {scheduleSelected.shift === 0 ? (
-                    "All day"
-                  ) : scheduleSelected.shift === 1 ? (
-                    "The morning"
-                  ) : scheduleSelected.shift === 2 ? (
-                    "The afternoon"
-                  ) : scheduleSelected.shift === 3 ? (
-                    "Working normal"
-                  ) : (
-                    <span style={{ fontSize: 15, color: "gray" }}>Empty</span>
-                  )}
+                <div className="block__info">
+                  <div>
+                    <span>Reason: </span>
+                    {scheduleSelected.reason_content ? (
+                      scheduleSelected.reason_content
+                    ) : (
+                      <span style={{ fontSize: 15, color: "gray" }}>Empty</span>
+                    )}
+                  </div>
+                  <div>
+                    <span>Date: </span>
+                    {scheduleSelected.leave_date ? (
+                      moment(scheduleSelected.leave_date).format("YYYY/MM/DD")
+                    ) : (
+                      <span style={{ fontSize: 15, color: "gray" }}>Empty</span>
+                    )}
+                  </div>
+                  <div>
+                    <span>Session: </span>
+                    {scheduleSelected.shift === 0 ? (
+                      "All day"
+                    ) : scheduleSelected.shift === 1 ? (
+                      "The morning"
+                    ) : scheduleSelected.shift === 2 ? (
+                      "The afternoon"
+                    ) : scheduleSelected.shift === 3 ? (
+                      "Working normal"
+                    ) : (
+                      <span style={{ fontSize: 15, color: "gray" }}>Empty</span>
+                    )}
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <ErrorPage message="Sorry, you are not authorized to get data this page." />
+      )}
+
       {showModal && (
         <ModalAddLeaveSchedule
           setOpenModal={setShowModal}

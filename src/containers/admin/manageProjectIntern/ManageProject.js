@@ -26,6 +26,8 @@ import { deleteProject } from "redux/actions/admin/deleteProject";
 import { Collapse } from "antd";
 import { CaretRightOutlined } from "@ant-design/icons";
 import { setTitle } from "redux/actions/admin/setTitle";
+import { getAuth } from "utils/helpers";
+import ErrorPage from "components/common/ErrorPage";
 
 const { Panel } = Collapse;
 
@@ -111,6 +113,8 @@ export default function ManageProject() {
   const [filteredData, setFilteredData] = useState([]);
   const storeGetAllProject = useSelector((store) => store.getAllProject);
   const dispatch = useDispatch();
+  const permissions =
+    getAuth().permissionDomains.map((item) => item.name.substring(7)) || [];
 
   useEffect(() => {
     dispatch(setTitle("Manage Project"));
@@ -125,9 +129,14 @@ export default function ManageProject() {
     setPage(0);
   };
 
-  // const [managerRowSelected, setManageRowSelected] = useState();
-
   useEffect(() => {
+    if (
+      !(
+        permissions.includes("GetAllProjectsByLeaderId") ||
+        getAuth().role === "ROLE_ADMIN"
+      )
+    )
+      return;
     let arr = [];
     getAllProject((res) => {
       if (res.success) {
@@ -150,6 +159,7 @@ export default function ManageProject() {
         toast.error(res.message);
       }
     });
+    // eslint-disable-next-line
   }, []);
   const [searchText, setSearchText] = useState("");
 
@@ -185,11 +195,13 @@ export default function ManageProject() {
     setSearchText(lowercasedValue);
   };
 
-  // useEffect(() => {
-
-  // }, [searchText, data]);
-
   const handleEditProject = (item) => {
+    if (
+      !(permissions.includes("EditProject") || getAuth().role === "ROLE_ADMIN")
+    ) {
+      toast.error("Sorry, you are not authorized to edit project.");
+      return;
+    }
     setInfoSelected({
       ...infoSelected,
       title: item.title,
@@ -254,6 +266,17 @@ export default function ManageProject() {
                         </div>
                         <div
                           onClick={() => {
+                            if (
+                              !(
+                                permissions.includes("DeleteProject") ||
+                                getAuth().role === "ROLE_ADMIN"
+                              )
+                            ) {
+                              toast.error(
+                                "Sorry, you are not authorized to delete project."
+                              );
+                              return;
+                            }
                             setOpenModalDelete(true);
                             setInfoSelected({
                               ...infoSelected,
@@ -381,7 +404,18 @@ export default function ManageProject() {
           </div>
           <div
             className="manage-intern__inner__top__button--add"
-            onClick={() => setOpenModalAdd(true)}
+            onClick={() => {
+              if (
+                !(
+                  permissions.includes("CreateProject") ||
+                  getAuth().role === "ROLE_ADMIN"
+                )
+              ) {
+                toast.error("Sorry, you are not authorized to create project.");
+                return;
+              }
+              setOpenModalAdd(true);
+            }}
           >
             <Button className="button manage-intern__inner__top__button--add__btn">
               Create Project
@@ -389,69 +423,77 @@ export default function ManageProject() {
             <i className="fi-rr-plus"></i>
           </div>
         </div>
-        <Paper className={classes.root}>
-          <TableContainer className={classes.container}>
-            <Table stickyHeader aria-label="sticky table">
-              <TableHead>
-                <TableRow>
-                  {columns.map((column) => (
-                    <TableCell
-                      key={column.id}
-                      align={column.align}
-                      style={{ minWidth: column.minWidth }}
-                    >
-                      {column.label}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {filteredData.length > 0 ? (
-                  filteredData
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row, indexRow) => {
-                      return (
-                        <TableRow
-                          hover
-                          role="checkbox"
-                          tabIndex={-1}
-                          key={indexRow}
-                        >
-                          {columns.map((column) => {
-                            const value = row[column.id];
-                            return renderCell(column, value, indexRow, row);
-                          })}
-                        </TableRow>
-                      );
-                    })
-                ) : (
+        {permissions.includes("GetAllProjectsByLeaderId") ||
+        getAuth().role === "ROLE_ADMIN" ? (
+          <Paper className={classes.root}>
+            <TableContainer className={classes.container}>
+              <Table stickyHeader aria-label="sticky table">
+                <TableHead>
                   <TableRow>
-                    {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => {
-                      return (
-                        <TableCell key={item}>
-                          {storeGetAllProject.loading ? (
-                            <Skeleton style={{ height: 40 }} />
-                          ) : (
-                            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-                          )}
-                        </TableCell>
-                      );
-                    })}
+                    {columns.map((column) => (
+                      <TableCell
+                        key={column.id}
+                        align={column.align}
+                        style={{ minWidth: column.minWidth }}
+                      >
+                        {column.label}
+                      </TableCell>
+                    ))}
                   </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={[10, 25, 100]}
-            component="div"
-            count={filteredData.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onChangePage={handleChangePage}
-            onChangeRowsPerPage={handleChangeRowsPerPage}
-          />
-        </Paper>
+                </TableHead>
+                <TableBody>
+                  {filteredData.length > 0 ? (
+                    filteredData
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
+                      .map((row, indexRow) => {
+                        return (
+                          <TableRow
+                            hover
+                            role="checkbox"
+                            tabIndex={-1}
+                            key={indexRow}
+                          >
+                            {columns.map((column) => {
+                              const value = row[column.id];
+                              return renderCell(column, value, indexRow, row);
+                            })}
+                          </TableRow>
+                        );
+                      })
+                  ) : (
+                    <TableRow>
+                      {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => {
+                        return (
+                          <TableCell key={item}>
+                            {storeGetAllProject.loading ? (
+                              <Skeleton style={{ height: 40 }} />
+                            ) : (
+                              <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                            )}
+                          </TableCell>
+                        );
+                      })}
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[10, 25, 100]}
+              component="div"
+              count={filteredData.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onChangePage={handleChangePage}
+              onChangeRowsPerPage={handleChangeRowsPerPage}
+            />
+          </Paper>
+        ) : (
+          <ErrorPage message="Sorry, you are not authorized to get data this page." />
+        )}
       </div>
       {openModalAdd && (
         <ModalAddProject

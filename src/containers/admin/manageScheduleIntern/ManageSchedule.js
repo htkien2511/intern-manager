@@ -15,6 +15,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Empty } from "antd";
 import { setTitle } from "redux/actions/admin/setTitle";
 import { useHistory } from "react-router";
+import { getAuth } from "utils/helpers";
+import ErrorPage from "components/common/ErrorPage";
 
 const columns = [
   { id: "id", label: "Id", minWidth: 80 },
@@ -60,6 +62,8 @@ export default function ManageSchedule() {
   const [filteredData, setFilteredData] = useState([]);
 
   const dispatch = useDispatch();
+  const permissions =
+    getAuth().permissionDomains.map((item) => item.name.substring(7)) || [];
 
   useEffect(() => {
     dispatch(setTitle("Manage Schedule"));
@@ -80,6 +84,10 @@ export default function ManageSchedule() {
   const storeGetAllUser = useSelector((store) => store.getAllUser);
 
   useEffect(() => {
+    if (
+      !(permissions.includes("GetAllUsers") || getAuth().role === "ROLE_ADMIN")
+    )
+      return;
     let arr = [];
     getAllUser((data) => {
       if (data.data) {
@@ -97,6 +105,7 @@ export default function ManageSchedule() {
         setData(arr);
       }
     });
+    // eslint-disable-next-line
   }, []);
   const history = useHistory();
 
@@ -186,69 +195,77 @@ export default function ManageSchedule() {
             />
           </div>
         </div>
-        <Paper className={classes.root}>
-          <TableContainer className={classes.container}>
-            <Table stickyHeader aria-label="sticky table">
-              <TableHead>
-                <TableRow>
-                  {columns.map((column) => (
-                    <TableCell
-                      key={column.id}
-                      align={column.align}
-                      style={{ minWidth: column.minWidth }}
-                    >
-                      {column.label}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {filteredData.length > 0 ? (
-                  filteredData
-                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                    .map((row, indexRow) => {
-                      return (
-                        <TableRow
-                          hover
-                          role="checkbox"
-                          tabIndex={-1}
-                          key={indexRow}
-                        >
-                          {columns.map((column) => {
-                            const value = row[column.id];
-                            return renderCell(column, value, indexRow, row);
-                          })}
-                        </TableRow>
-                      );
-                    })
-                ) : (
+        {permissions.includes("GetAllUsers") ||
+        getAuth().role === "ROLE_ADMIN" ? (
+          <Paper className={classes.root}>
+            <TableContainer className={classes.container}>
+              <Table stickyHeader aria-label="sticky table">
+                <TableHead>
                   <TableRow>
-                    {[1, 2, 3, 4, 5].map((item) => {
-                      return (
-                        <TableCell key={item}>
-                          {storeGetAllUser.loading ? (
-                            <Skeleton style={{ height: 40 }} />
-                          ) : (
-                            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-                          )}
-                        </TableCell>
-                      );
-                    })}
+                    {columns.map((column) => (
+                      <TableCell
+                        key={column.id}
+                        align={column.align}
+                        style={{ minWidth: column.minWidth }}
+                      >
+                        {column.label}
+                      </TableCell>
+                    ))}
                   </TableRow>
-                )}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <TablePagination
-            rowsPerPageOptions={[10, 25, 100]}
-            component="div"
-            count={filteredData && filteredData.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onChangePage={handleChangePage}
-            onChangeRowsPerPage={handleChangeRowsPerPage}
-          />
-        </Paper>
+                </TableHead>
+                <TableBody>
+                  {filteredData.length > 0 ? (
+                    filteredData
+                      .slice(
+                        page * rowsPerPage,
+                        page * rowsPerPage + rowsPerPage
+                      )
+                      .map((row, indexRow) => {
+                        return (
+                          <TableRow
+                            hover
+                            role="checkbox"
+                            tabIndex={-1}
+                            key={indexRow}
+                          >
+                            {columns.map((column) => {
+                              const value = row[column.id];
+                              return renderCell(column, value, indexRow, row);
+                            })}
+                          </TableRow>
+                        );
+                      })
+                  ) : (
+                    <TableRow>
+                      {[1, 2, 3, 4, 5].map((item) => {
+                        return (
+                          <TableCell key={item}>
+                            {storeGetAllUser.loading ? (
+                              <Skeleton style={{ height: 40 }} />
+                            ) : (
+                              <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                            )}
+                          </TableCell>
+                        );
+                      })}
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <TablePagination
+              rowsPerPageOptions={[10, 25, 100]}
+              component="div"
+              count={filteredData && filteredData.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onChangePage={handleChangePage}
+              onChangeRowsPerPage={handleChangeRowsPerPage}
+            />
+          </Paper>
+        ) : (
+          <ErrorPage message="Sorry, you are not authorized to get data this page." />
+        )}
       </div>
     </div>
   );

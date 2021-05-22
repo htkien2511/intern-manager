@@ -152,12 +152,12 @@ export default function ManagePermissionLeader() {
   }
 
   const handleChangeSave = (idLeader) => {
-    if (
-      !leaders.find((item) => item.manager_id === idLeader).permission_id.length
-    ) {
-      toast.warn("Please choice permissions");
-      return;
-    }
+    // if (
+    //   !leaders.find((item) => item.manager_id === idLeader).permission_id.length
+    // ) {
+    //   toast.warn("Please choice permissions");
+    //   return;
+    // }
 
     updatePermissionByLeaderID(
       {

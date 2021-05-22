@@ -103,6 +103,7 @@ export const ContentModal = ({ setOpenModal, setData, userID }) => {
             toast.error(r.message);
           }
         });
+        toast.success("Created schedule successfully");
       } else {
         toast.error(res.message);
       }

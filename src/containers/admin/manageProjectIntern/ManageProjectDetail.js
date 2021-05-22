@@ -19,6 +19,8 @@ import { deleteTask } from "redux/actions/admin/deleteTask";
 import { toast } from "react-toastify";
 import ModalEditTask from "./ModalEditTask";
 import ModalShowDetail from "./ModalShowDetail";
+import { getAuth } from "utils/helpers";
+import ErrorPage from "components/common/ErrorPage";
 
 const Icon = ({ icon, color }) => {
   return (
@@ -52,19 +54,26 @@ const ManageProjectDetail = () => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [taskSelected, setTaskSelected] = useState({});
-  const handleAddTask = () => {
-    setShowModal(true);
-  };
+  const permissions =
+    getAuth().permissionDomains.map((item) => item.name.substring(7)) || [];
 
   const dispatch = useDispatch();
   const { projectId, projectName } = useParams();
 
   useEffect(() => {
+    if (
+      !(
+        permissions.includes("GetAllTasksByProjectId") ||
+        getAuth().role === "ROLE_ADMIN"
+      )
+    )
+      return;
     getAllTasksByProjectID(Number(projectId), (res) => {
       if (res.success) {
         setData(res.data);
       }
     });
+    // eslint-disable-next-line
   }, [projectId]);
 
   useEffect(() => {
@@ -83,12 +92,21 @@ const ManageProjectDetail = () => {
       });
       setFilteredData(filteredData);
     }
-    // setFilteredData(data);
   }, [searchText, data]);
 
   const handleSearch = (event) => {
     const lowercasedValue = event.target.value.toLowerCase().trim();
     setSearchText(lowercasedValue);
+  };
+
+  const handleAddTask = () => {
+    if (
+      !(permissions.includes("CreateTask") || getAuth().role === "ROLE_ADMIN")
+    ) {
+      toast.error("Sorry, you are not authorized to create task.");
+      return;
+    }
+    setShowModal(true);
   };
 
   const storeGetAllTasks = useSelector((store) => store.getAllTasksByProjectID);
@@ -113,11 +131,8 @@ const ManageProjectDetail = () => {
                 <th>Task name</th>
                 <th>CREATED AT</th>
                 <th>DUE DATE</th>
-                {/* <th>DESCRIPTIONS</th> */}
-                {/* <th>USERS ASSIGNED</th> */}
                 <th>Level</th>
                 <th>STATUS</th>
-                {/* <th>POINT</th> */}
                 <th>ACTIONS</th>
               </tr>
             </thead>
@@ -136,15 +151,6 @@ const ManageProjectDetail = () => {
                       <div className="test-plan__content">
                         <div className="test-plan__content__inner">
                           <span>{item.title}</span>
-                          {/* {item.title.progress ? (
-                          <div className="block__progress">
-                            <ProgressBar now={item.title.progress} />
-                            <Spinner
-                              animation="border"
-                              className="block__progress__spinner"
-                            />
-                          </div>
-                        ) : null} */}
                         </div>
                       </div>
                     </td>
@@ -166,24 +172,6 @@ const ManageProjectDetail = () => {
                         </div>
                       </div>
                     </td>
-                    {/* <td>
-                    <div className="test-plan__content">
-                      <div className="test-plan__content__inner ">
-                        <span>{item.description}</span>
-                      </div>
-                    </div>
-                  </td> */}
-                    {/* <td>
-                    <div className="test-plan__content">
-                      <div className="test-plan__content__inner">
-                        <span>
-                          <AvatarBlock
-                            users_list={item.usersAssignee.split(",")}
-                          />
-                        </span>
-                      </div>
-                    </div>
-                  </td> */}
                     <td>
                       <div className="test-plan__content">
                         <div className="test-plan__content__inner">
@@ -216,13 +204,6 @@ const ManageProjectDetail = () => {
                         </div>
                       </div>
                     </td>
-                    {/* <td>
-                    <div className="test-plan__content">
-                      <div className="test-plan__content__inner ">
-                        <span>{item.point}</span>
-                      </div>
-                    </div>
-                  </td> */}
                     <td>
                       <div className="test-plan__content test-plan__content--actions">
                         {iconsAction.map((element, index) => {
@@ -288,10 +269,25 @@ const ManageProjectDetail = () => {
         setTaskSelected(item);
         break;
       case "Edit":
+        if (
+          !(permissions.includes("EditTask") || getAuth().role === "ROLE_ADMIN")
+        ) {
+          toast.error("Sorry, you are not authorized to edit task.");
+          return;
+        }
         setShowModalEdit(true);
         setTaskSelected(item);
         break;
       case "Delete":
+        if (
+          !(
+            permissions.includes("DeleteTask") ||
+            getAuth().role === "ROLE_ADMIN"
+          )
+        ) {
+          toast.error("Sorry, you are not authorized to delete task.");
+          return;
+        }
         setTaskSelected(item);
         setOpenModalDelete(true);
         break;
@@ -355,9 +351,14 @@ const ManageProjectDetail = () => {
               />
             </div>
           </div>
-          <div className="test-library__inner__content">
-            {renderTable("Project Name", filteredData)}
-          </div>
+          {permissions.includes("GetAllTasksByProjectId") ||
+          getAuth().role === "ROLE_ADMIN" ? (
+            <div className="test-library__inner__content">
+              {renderTable("Project Name", filteredData)}
+            </div>
+          ) : (
+            <ErrorPage message="Sorry, you are not authorized to get data this page." />
+          )}
         </div>
       </div>
       {showModal && (

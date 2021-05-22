@@ -103,7 +103,7 @@ export const ContentModal = ({
             arr[index].reason = form.reason_content;
           }
         });
-
+        toast.success("Updated schedule successfully");
         setData(arr);
       }
     });
