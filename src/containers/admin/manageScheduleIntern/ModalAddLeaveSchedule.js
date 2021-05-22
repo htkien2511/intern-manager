@@ -1,13 +1,13 @@
 import { FormBox } from "components/common";
 import CustomizedModal from "components/common/core/CustomizeModal";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { Form as ReForm, Input } from "reactstrap";
 import { isEmpty } from "validator";
 import moment from "moment";
-// import { toast } from "react-toastify";
-// import { createSchedule } from "redux/actions/admin/createSchedule";
-// import { getScheduleUserID } from "redux/actions/admin/getScheduleUserID";
+import { createSchedule } from "redux/actions/admin/createSchedule";
+import { getScheduleUserID } from "redux/actions/admin/getScheduleUserID";
+import { toast } from "react-toastify";
 
 export const HeaderModal = ({ close, title }) => {
   return (
@@ -35,6 +35,28 @@ export const ContentModal = ({ setOpenModal, setData, userID }) => {
     Morning: 1,
     Afternoon: 2,
   };
+
+  const [workingWeek, setWorkingWeek] = useState([]);
+  const curr = new Date();
+  const [firstDateWeek, setFirstDateWeek] = useState(
+    new Date().getDate() -
+      new Date().getDay() +
+      (new Date().getDay() === 0 ? -6 : 1)
+  );
+
+  useEffect(() => {
+    if (curr.getTime() > new Date(curr.setDate(firstDateWeek + 4)).getTime()) {
+      setFirstDateWeek(firstDateWeek + 7);
+      let array = [];
+      [1, 2, 3, 4, 5].forEach((item) => {
+        let date = new Date(curr.setDate(firstDateWeek + 6 + item));
+        array.push(date);
+      });
+      setWorkingWeek(array);
+    }
+    // eslint-disable-next-line
+  }, []);
+
   const [error, setError] = React.useState({});
   const [form, setForm] = React.useState({
     shift: "All day",
@@ -71,20 +93,20 @@ export const ContentModal = ({ setOpenModal, setData, userID }) => {
 
     console.log({ formData });
 
-    // createSchedule(formData, (res) => {
-    //   if (res.success) {
-    //     getScheduleUserID(userID, (r) => {
-    //       if (r.success) {
-    //         toast.success("Create schedule successfully!");
-    //         setData(r.data);
-    //       } else {
-    //         toast.error(r.message);
-    //       }
-    //     });
-    //   } else {
-    //     toast.error(res.message);
-    //   }
-    // });
+    createSchedule(formData, (res) => {
+      if (res.success) {
+        getScheduleUserID(userID, (r) => {
+          if (r.success) {
+            toast.success("Created schedule successfully!");
+            setData(r.data);
+          } else {
+            toast.error(r.message);
+          }
+        });
+      } else {
+        toast.error(res.message);
+      }
+    });
     setOpenModal(false);
   };
   const handleChange = (event) => {
@@ -113,7 +135,8 @@ export const ContentModal = ({ setOpenModal, setData, userID }) => {
                 onChange: handleChange,
                 onFocus: handleFocus,
                 value: form.leave_date,
-                min: moment(Date.now()).format("YYYY-MM-DD"),
+                min: moment(workingWeek[0]).format("YYYY-MM-DD"),
+                max: moment(workingWeek[4]).format("YYYY-MM-DD"),
                 disabled: false,
               }}
               error={error.leave_date}

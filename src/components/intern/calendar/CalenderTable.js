@@ -148,9 +148,19 @@ function CalenderTable() {
     (store) => store.getScheduleUserID
   ).loading;
 
+  const loadingUpdateSchedule = useSelector(
+    (store) => store.updateSchedule
+  ).loading;
+
+  const loadingCreateSchedule = useSelector(
+    (store) => store.addLeaveSchedule
+  ).loading;
+
   return (
     <div className="calendar">
-      {loadingSchedule && <SpinLoading />}
+      {(loadingSchedule || loadingUpdateSchedule || loadingCreateSchedule) && (
+        <SpinLoading />
+      )}
       <h2>Working Calendar</h2>
       <div className="table">
         {schedules.length ? (

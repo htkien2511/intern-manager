@@ -16,7 +16,6 @@ import { getScheduleUserID } from "redux/actions/admin/getScheduleUserID";
 export default function ManageScheduleDetail() {
   const dispatch = useDispatch();
   // eslint-disable-next-line
-  const [data, setData] = useState([]);
   const [scheduleSelected, setScheduleSelected] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [showModalEdit, setShowModalEdit] = useState(false);
@@ -70,13 +69,18 @@ export default function ManageScheduleDetail() {
       ></div>
     );
   };
-  const [infoDetailsOffDay, setInfoDetailsOffDay] = useState({});
+  const handleEditSchedule = () => {
+    if (!scheduleSelected.leave_id) {
+      toast.warn("Please select schedule");
+      return;
+    }
+    setShowModalEdit(true);
+  };
 
   const handleEventClick = (eventInfo) => {
-    setInfoDetailsOffDay(eventInfo);
-    console.log(eventInfo.event._def.extendedProps.shift);
     setScheduleSelected({
       ...scheduleSelected,
+      leave_id: eventInfo.event && eventInfo.event._def.publicId,
       shift: eventInfo.event && eventInfo.event._def.extendedProps.shift,
       leave_date: moment(
         eventInfo.event && eventInfo.event._instance.range.start
@@ -84,11 +88,40 @@ export default function ManageScheduleDetail() {
       reason_content:
         eventInfo.event && eventInfo.event._def.extendedProps.reason,
     });
-
-    setShowModalEdit(true);
   };
 
+  const [workingWeek, setWorkingWeek] = useState([]);
+  const curr = new Date();
+  const [firstDateWeek, setFirstDateWeek] = useState(
+    new Date().getDate() -
+      new Date().getDay() +
+      (new Date().getDay() === 0 ? -6 : 1)
+  );
+
+  useEffect(() => {
+    if (curr.getTime() > new Date(curr.setDate(firstDateWeek + 4)).getTime()) {
+      setFirstDateWeek(firstDateWeek + 7);
+      let array = [];
+      [1, 2, 3, 4, 5].forEach((item) => {
+        let date = new Date(curr.setDate(firstDateWeek + 6 + item));
+        array.push(date);
+      });
+      setWorkingWeek(array);
+    }
+    // eslint-disable-next-line
+  }, []);
+
   function handleAddLeaveSchedule() {
+    if (
+      dataEvents
+        .map((i) => moment(i.date).format("YYYY/MM/DD"))
+        .includes(
+          workingWeek.map((item) => moment(item).format("YYYY/MM/DD"))[0]
+        )
+    ) {
+      toast.warn("You're only edited schedule!");
+      return;
+    }
     setShowModal(true);
   }
 
@@ -106,13 +139,15 @@ export default function ManageScheduleDetail() {
   }, [internID]);
 
   const loadingIntern = useSelector((store) => store.getProfileIntern).loading;
+  const editSchedule = useSelector((store) => store.updateSchedule).loading;
+  const createSchedule = useSelector((store) => store.addLeaveSchedule).loading;
 
   return (
     <div className="manage-schedule-detail">
-      {loadingIntern && <SpinLoading />}
+      {(loadingIntern || editSchedule || createSchedule) && <SpinLoading />}
       <div className="manage-schedule-detail__inner">
         <div
-          className="flex items-center space-between"
+          className="block__header flex items-center space-between"
           style={{ marginTop: 20, marginBottom: 30 }}
         >
           <div className="block__back-previous-page">
@@ -216,44 +251,46 @@ export default function ManageScheduleDetail() {
               </div>
             </div>
             <div>
-              <span className="title">Information details of the off-day</span>
+              <div className="flex items-center space-between">
+                <span className="title">
+                  Information details of the off-day
+                </span>
+                <button
+                  className="button button--secondary btn-edit-schedule"
+                  style={{ width: 140, textAlign: "right" }}
+                  onClick={handleEditSchedule}
+                >
+                  Edit schedule
+                </button>
+              </div>
+
               <div className="block__info">
                 <div>
                   <span>Reason: </span>
-                  {infoDetailsOffDay.event &&
-                  infoDetailsOffDay.event._def.extendedProps.reason ? (
-                    infoDetailsOffDay.event._def.extendedProps.reason
+                  {scheduleSelected.reason_content ? (
+                    scheduleSelected.reason_content
                   ) : (
                     <span style={{ fontSize: 15, color: "gray" }}>Empty</span>
                   )}
                 </div>
                 <div>
                   <span>Date: </span>
-                  {infoDetailsOffDay.event &&
-                  infoDetailsOffDay.event._instance.range.start ? (
-                    moment(
-                      infoDetailsOffDay.event &&
-                        infoDetailsOffDay.event._instance.range.start
-                    ).format("YYYY/MM/DD")
+                  {scheduleSelected.leave_date ? (
+                    moment(scheduleSelected.leave_date).format("YYYY/MM/DD")
                   ) : (
                     <span style={{ fontSize: 15, color: "gray" }}>Empty</span>
                   )}
                 </div>
                 <div>
                   <span>Session: </span>
-                  {infoDetailsOffDay.event &&
-                  infoDetailsOffDay.event._def.extendedProps.shift + "" ? (
-                    infoDetailsOffDay.event._def.extendedProps.shift === 0 ? (
-                      "All day"
-                    ) : infoDetailsOffDay.event &&
-                      infoDetailsOffDay.event._def.extendedProps.shift === 1 ? (
-                      "The morning"
-                    ) : infoDetailsOffDay.event &&
-                      infoDetailsOffDay.event._def.extendedProps.shift === 2 ? (
-                      "The afternoon"
-                    ) : (
-                      "Working normal"
-                    )
+                  {scheduleSelected.shift === 0 ? (
+                    "All day"
+                  ) : scheduleSelected.shift === 1 ? (
+                    "The morning"
+                  ) : scheduleSelected.shift === 2 ? (
+                    "The afternoon"
+                  ) : scheduleSelected.shift === 3 ? (
+                    "Working normal"
                   ) : (
                     <span style={{ fontSize: 15, color: "gray" }}>Empty</span>
                   )}
@@ -267,7 +304,7 @@ export default function ManageScheduleDetail() {
         <ModalAddLeaveSchedule
           setOpenModal={setShowModal}
           title="Add leave schedule"
-          setData={setData}
+          setData={setDataEvents}
           userID={internID}
         />
       )}
@@ -275,9 +312,10 @@ export default function ManageScheduleDetail() {
         <ModalUpdateSchedule
           setOpenModal={setShowModalEdit}
           title="Edit leave schedule"
-          setData={setData}
-          userID={internID}
+          data={dataEvents}
+          setData={setDataEvents}
           scheduleSelected={scheduleSelected}
+          setScheduleSelected={setScheduleSelected}
         />
       )}
     </div>

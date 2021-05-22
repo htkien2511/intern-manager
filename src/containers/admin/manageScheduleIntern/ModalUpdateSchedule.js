@@ -5,6 +5,8 @@ import styled from "styled-components";
 import { Form as ReForm, Input } from "reactstrap";
 import { isEmpty } from "validator";
 import moment from "moment";
+import { updateSchedule } from "redux/actions/admin/updateSchedule";
+import { toast } from "react-toastify";
 // import { toast } from "react-toastify";
 // import { createSchedule } from "redux/actions/admin/createSchedule";
 // import { getScheduleUserID } from "redux/actions/admin/getScheduleUserID";
@@ -32,13 +34,15 @@ export const HeaderModal = ({ close, title }) => {
 export const ContentModal = ({
   setOpenModal,
   setData,
-  userID,
   scheduleSelected,
+  data,
+  setScheduleSelected,
 }) => {
   const MAP = {
     "All day": 0,
     Morning: 1,
     Afternoon: 2,
+    "Normal working": 3,
   };
 
   const MAP_REVERSE = {
@@ -47,8 +51,10 @@ export const ContentModal = ({
     2: "Afternoon",
     3: "Normal working",
   };
+
   const [error, setError] = React.useState({});
   const [form, setForm] = React.useState({
+    leave_id: scheduleSelected.leave_id || "",
     shift: MAP_REVERSE[scheduleSelected.shift] || "",
     leave_date: moment(scheduleSelected.leave_date).format("YYYY-MM-DD") || "",
     reason_content: scheduleSelected.reason_content || "",
@@ -63,9 +69,6 @@ export const ContentModal = ({
     if (isEmpty(form.leave_date)) {
       errorState.leave_date = "Please enter leave date";
     }
-    if (isEmpty(form.reason_content)) {
-      errorState.reason_content = "Please enter reason of absence";
-    }
     return errorState;
   };
   const handleSubmitForm = (event) => {
@@ -76,27 +79,34 @@ export const ContentModal = ({
     }
 
     const formData = {
+      leave_id: Number(form.leave_id),
       shift: MAP[form.shift],
       leave_date: moment(form.leave_date).format("YYYY/MM/DD"),
       reason_content: form.reason_content,
     };
 
-    console.log({ formData });
+    updateSchedule(formData, (res) => {
+      if (!res.success) {
+        toast.error(res.message);
+      } else {
+        const arr = [...data];
+        arr.forEach((item, index) => {
+          if (item.id === Number(scheduleSelected.leave_id)) {
+            setScheduleSelected({
+              ...scheduleSelected,
+              shift: MAP[form.shift],
+              leave_date: form.leave_date,
+              reason_content: form.reason_content,
+            });
+            arr[index].shift = MAP[form.shift];
+            arr[index].date = form.leave_date;
+            arr[index].reason = form.reason_content;
+          }
+        });
 
-    // createSchedule(formData, (res) => {
-    //   if (res.success) {
-    //     getScheduleUserID(userID, (r) => {
-    //       if (r.success) {
-    //         toast.success("Create schedule successfully!");
-    //         setData(r.data);
-    //       } else {
-    //         toast.error(r.message);
-    //       }
-    //     });
-    //   } else {
-    //     toast.error(res.message);
-    //   }
-    // });
+        setData(arr);
+      }
+    });
     setOpenModal(false);
   };
   const handleChange = (event) => {
@@ -114,23 +124,6 @@ export const ContentModal = ({
     <div className="content__container" onSubmit={handleSubmitForm}>
       <div className="content__inner">
         <ReForm className="re__form">
-          <div>
-            <label>Choice date</label>
-            {/* handle min max date (new week) */}
-            <FormBox
-              propsInput={{
-                type: "date",
-                name: "leave_date",
-                placeholder: "Leave date",
-                onChange: handleChange,
-                onFocus: handleFocus,
-                value: form.leave_date,
-                // min: moment(Date.now()).format("YYYY-MM-DD"),
-                disabled: false,
-              }}
-              error={error.leave_date}
-            />
-          </div>
           <div>
             <label>Choice shift</label>
             <Input
@@ -192,9 +185,10 @@ export const ContentModal = ({
 const ModalUpdateSchedule = ({
   setOpenModal,
   title,
+  data,
   setData,
-  userID,
   scheduleSelected,
+  setScheduleSelected,
 }) => {
   return (
     <ModalAddAccountUserContainer className="modal__add__user__container">
@@ -206,8 +200,9 @@ const ModalUpdateSchedule = ({
           <ContentModal
             setOpenModal={setOpenModal}
             setData={setData}
-            userID={userID}
             scheduleSelected={scheduleSelected}
+            data={data}
+            setScheduleSelected={setScheduleSelected}
           />
         </CustomizedModal.Content>
       </CustomizedModal>
