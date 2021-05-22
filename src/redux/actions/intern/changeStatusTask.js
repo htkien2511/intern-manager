@@ -10,7 +10,7 @@ export function changeStatusTask(input, resolve = () => {}) {
     description: input.description,
     title: input.title,
     difficulty: input.difficulty,
-    is_done: input.is_done,
+    done: input.done,
     point: input.point,
     due_date: input.due_date,
     users_assignee: input.users_assignee,
