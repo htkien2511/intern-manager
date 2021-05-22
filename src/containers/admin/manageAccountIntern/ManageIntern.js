@@ -278,114 +278,113 @@ export default function ManageIntern() {
   return (
     <div className="manage-intern">
       {(loadingCreate || loadingDelete || loadingEdit) && <SpinLoading />}
-      {permissions.includes("GetAllUsers") ||
-      getAuth().role === "ROLE_ADMIN" ? (
-        <div className="manage-intern__inner">
-          <div className="manage-intern__inner__top">
-            <div
-              className="manage-intern__inner__top__button--add"
-              onClick={() => {
-                if (
-                  !(
-                    permissions.includes("CreateUser") ||
-                    getAuth().role === "ROLE_ADMIN"
-                  )
-                ) {
-                  toast.error(
-                    "Sorry, you are not authorized to create intern."
-                  );
-                  return;
-                }
-                setOpenModalAdd(true);
-              }}
-            >
-              <Button className="button manage-intern__inner__top__button--add__btn">
-                General Intern
-              </Button>
-              <i className="fi-rr-plus"></i>
-            </div>
-            <div className="button manage-intern__inner__top__search">
-              <i className="fi-rr-search pointer"></i>
-              <Input
-                type="text"
-                name="search"
-                id="searchKey"
-                onChange={handleSearch}
-                placeholder="Search intern(s)"
-              />
-            </div>
+      <div className="manage-intern__inner">
+        <div className="manage-intern__inner__top">
+          <div
+            className="manage-intern__inner__top__button--add"
+            onClick={() => {
+              if (
+                !(
+                  permissions.includes("CreateUser") ||
+                  getAuth().role === "ROLE_ADMIN"
+                )
+              ) {
+                toast.error("Sorry, you are not authorized to create intern.");
+                return;
+              }
+              setOpenModalAdd(true);
+            }}
+          >
+            <Button className="button manage-intern__inner__top__button--add__btn">
+              General Intern
+            </Button>
+            <i className="fi-rr-plus"></i>
           </div>
-          <Paper className={classes.root}>
-            <TableContainer className={classes.container}>
-              <Table stickyHeader aria-label="sticky table">
-                <TableHead>
-                  <TableRow>
-                    {columns.map((column) => (
-                      <TableCell
-                        key={column.id}
-                        align={column.align}
-                        style={{ minWidth: column.minWidth }}
-                      >
-                        {column.label}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {filteredData.length > 0 ? (
-                    filteredData
-                      .slice(
-                        page * rowsPerPage,
-                        page * rowsPerPage + rowsPerPage
-                      )
-                      .map((row, indexRow) => {
-                        return (
-                          <TableRow
-                            hover
-                            role="checkbox"
-                            tabIndex={-1}
-                            key={indexRow}
-                          >
-                            {columns.map((column) => {
-                              const value = row[column.id];
-                              return renderCell(column, value, indexRow, row);
-                            })}
-                          </TableRow>
-                        );
-                      })
-                  ) : (
-                    <TableRow>
-                      {[1, 2, 3, 4, 5, 6, 7].map((item) => {
-                        return (
-                          <TableCell key={item}>
-                            {storeGetAllUser.loading ? (
-                              <Skeleton style={{ height: 40 }} />
-                            ) : (
-                              <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
-                            )}
-                          </TableCell>
-                        );
-                      })}
-                    </TableRow>
-                  )}
-                </TableBody>
-              </Table>
-            </TableContainer>
-            <TablePagination
-              rowsPerPageOptions={[10, 25, 100]}
-              component="div"
-              count={filteredData && filteredData.length}
-              rowsPerPage={rowsPerPage}
-              page={page}
-              onChangePage={handleChangePage}
-              onChangeRowsPerPage={handleChangeRowsPerPage}
+          <div className="button manage-intern__inner__top__search">
+            <i className="fi-rr-search pointer"></i>
+            <Input
+              type="text"
+              name="search"
+              id="searchKey"
+              onChange={handleSearch}
+              placeholder="Search intern(s)"
             />
-          </Paper>
+          </div>
         </div>
-      ) : (
-        <ErrorPage message="Sorry, you are not authorized to get data this page." />
-      )}
-
+        {permissions.includes("GetAllUsers") ||
+        getAuth().role === "ROLE_ADMIN" ? (
+          <>
+            <Paper className={classes.root}>
+              <TableContainer className={classes.container}>
+                <Table stickyHeader aria-label="sticky table">
+                  <TableHead>
+                    <TableRow>
+                      {columns.map((column) => (
+                        <TableCell
+                          key={column.id}
+                          align={column.align}
+                          style={{ minWidth: column.minWidth }}
+                        >
+                          {column.label}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  </TableHead>
+                  <TableBody>
+                    {filteredData.length > 0 ? (
+                      filteredData
+                        .slice(
+                          page * rowsPerPage,
+                          page * rowsPerPage + rowsPerPage
+                        )
+                        .map((row, indexRow) => {
+                          return (
+                            <TableRow
+                              hover
+                              role="checkbox"
+                              tabIndex={-1}
+                              key={indexRow}
+                            >
+                              {columns.map((column) => {
+                                const value = row[column.id];
+                                return renderCell(column, value, indexRow, row);
+                              })}
+                            </TableRow>
+                          );
+                        })
+                    ) : (
+                      <TableRow>
+                        {[1, 2, 3, 4, 5, 6, 7].map((item) => {
+                          return (
+                            <TableCell key={item}>
+                              {storeGetAllUser.loading ? (
+                                <Skeleton style={{ height: 40 }} />
+                              ) : (
+                                <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+                              )}
+                            </TableCell>
+                          );
+                        })}
+                      </TableRow>
+                    )}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+              <TablePagination
+                rowsPerPageOptions={[10, 25, 100]}
+                component="div"
+                count={filteredData && filteredData.length}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onChangePage={handleChangePage}
+                onChangeRowsPerPage={handleChangeRowsPerPage}
+              />
+            </Paper>
+          </>
+        ) : (
+          <ErrorPage message="Sorry, you are not authorized to get data this page." />
+        )}
+      </div>
       {openModalAdd && (
         <ModalCreateAccount
           setOpenModal={setOpenModalAdd}
