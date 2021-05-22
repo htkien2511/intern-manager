@@ -37,7 +37,7 @@ function Header({ showLogo, title }) {
           </NavLink>
         )}
         <div className="header__inner__menu flex items-center">
-          {showLogo && (
+          {window.location.pathname !== "/admin" && showLogo && (
             <>
               <i className="fi-rr-home"></i>
               <NavLink activeClassName="--active" to="/" exact>
@@ -45,18 +45,19 @@ function Header({ showLogo, title }) {
               </NavLink>
             </>
           )}
-          {auth && auth.token ? (
-            <div className="flex items-center">
-              <span style={{ marginTop: 20, color: "white" }}>
-                {getAuth().name}
-              </span>
-              <DropdownUserMenu auth={auth} />
-            </div>
-          ) : (
-            <NavLink activeClassName="--active" to={ROUTE_LOGIN}>
-              <button className="button button--login">Login</button>
-            </NavLink>
-          )}
+          {window.location.pathname !== "/admin" &&
+            (auth && auth.token ? (
+              <div className="flex items-center">
+                <span style={{ marginTop: 20, color: "white" }}>
+                  {getAuth().name}
+                </span>
+                <DropdownUserMenu auth={auth} />
+              </div>
+            ) : (
+              <NavLink activeClassName="--active" to={ROUTE_LOGIN}>
+                <button className="button button--login">Login</button>
+              </NavLink>
+            ))}
         </div>
       </div>
     </div>

@@ -191,7 +191,7 @@ function FormEdit() {
               }}
             />
             <label htmlFor="file" style={{ marginBottom: 0 }}>
-              Upload Image
+              Change Avatar
             </label>
           </div>
         </div>

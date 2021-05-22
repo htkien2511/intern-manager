@@ -10,6 +10,8 @@ import { addLeaveSchedule } from "redux/actions/intern/addLeaveSchedule";
 import { getAuth } from "utils/helpers";
 function CalenderTable() {
   const [schedules, setSchedules] = useState([]);
+  const [workingWeek, setWorkingWeek] = useState([]);
+
   const [enabledSubmit, setEnabledSubmit] = useState(false);
 
   const MAP = [
@@ -24,60 +26,56 @@ function CalenderTable() {
     new Date().getDate() - new Date().getDay()
   );
 
+  function getUniqueListBy(arr, key) {
+    return [...new Map(arr.map((item) => [item[key], item])).values()];
+  }
+
   useEffect(() => {
+    if (!workingWeek.length || !firstDateWeek) return;
     getScheduleUserID(getAuth().id, (output) => {
-      if (!output.data) {
-        let array = [];
-        [1, 2, 3, 4, 5].forEach((item) => {
-          let date = moment(
-            new Date(curr.setDate(firstDateWeek + item))
-          ).format("YYYY/MM/DD");
-          array.push({
-            leave_date: date,
-            shift_date: 3,
-          });
-        });
-        setSchedules(array);
-      } else {
-        let array = [];
-        let dem = 1;
-        let ar = [];
-        output.data.forEach((item) => {
-          ar.push({
-            id: item.id,
-            time: item.time,
-            shift: item.shift,
-          });
-        });
-        ar.sort(function (a, b) {
-          return a.id - b.id;
-        });
-        ar.forEach((item) => {
-          let date = moment(new Date(curr.setDate(firstDateWeek + dem))).format(
-            "YYYY/MM/DD"
-          );
-          dem++;
-          array.push({
-            leave_id: item.id,
-            leave_date: date,
-            shift_date: item.shift,
-          });
-        });
-        setSchedules(array);
+      if (!output.success || !output.data.length) {
+        return;
       }
+      const newData = getUniqueListBy(output.data, "time").filter((item) =>
+        workingWeek.map((_e) => _e.leave_date).includes(item.time)
+      );
+
+      let ar = [];
+      newData.forEach((item) => {
+        ar.push({
+          leave_id: item.id,
+          leave_date: item.time,
+          shift_date: item.shift,
+        });
+      });
+      ar.sort(function (a, b) {
+        return a.id - b.id;
+      });
+      setSchedules(ar);
     });
     setEnabledSubmit(
       new Date(curr.setDate(firstDateWeek + 6)).getTime() === curr.getTime() ||
         new Date(curr.setDate(firstDateWeek + 7)).getTime() === curr.getTime()
     );
     // eslint-disable-next-line
-  }, [firstDateWeek]);
+  }, [firstDateWeek, workingWeek]);
 
   useEffect(() => {
     if (
       new Date().getTime() > new Date(curr.setDate(firstDateWeek + 6)).getTime()
     ) {
       setFirstDateWeek(firstDateWeek + 7);
+      let array = [];
+      [1, 2, 3, 4, 5].forEach((item) => {
+        let date = moment(
+          new Date(curr.setDate(firstDateWeek + 7 + item))
+        ).format("YYYY/MM/DD");
+        array.push({
+          leave_date: date,
+          shift_date: 3,
+        });
+      });
+      setWorkingWeek(array);
     }
     // eslint-disable-next-line
   }, []);
@@ -88,7 +86,16 @@ function CalenderTable() {
       new Date(curr.setDate(firstDateWeek + 7)).getTime() === curr.getTime()
     ) {
       getScheduleUserID(getAuth().id, (output) => {
-        if (!output.data) {
+        if (!output.success) {
+          toast.error(output.message);
+          return;
+        }
+        if (!output.data.length) return;
+        if (
+          !output.data
+            .map((_item) => _item.time)
+            .includes(schedules[0].leave_date)
+        ) {
           schedules.forEach((element, index) => {
             const formData = {
               shift_date: element.shift_date,
@@ -96,13 +103,14 @@ function CalenderTable() {
               reason_content: "",
             };
             addLeaveSchedule(formData, (res) => {
-              console.log(res);
+              if (!res.success) {
+                toast.error(res.message);
+              }
             });
           });
-          toast.success("Send schedule successfully");
+          toast.success("Create schedule new week successfully");
         } else {
           schedules.forEach((element) => {
-            console.log(element);
             const formData = {
               leave_id: element.leave_id,
               shift: element.shift_date,
@@ -110,7 +118,9 @@ function CalenderTable() {
               reason_content: "",
             };
             updateSchedule(formData, (res) => {
-              console.log(res);
+              if (!res.success) {
+                toast.error(res.message);
+              }
             });
           });
           toast.success("Updated schedule successfully");

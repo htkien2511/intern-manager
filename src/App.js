@@ -35,6 +35,7 @@ import { ResetPassword } from "./containers/resetPassword";
 import { ManageIntern } from "./containers/admin/manageAccountIntern";
 import { Register } from "./containers/register";
 import { Login } from "./containers/login";
+import { LoginAdmin } from "./containers/loginAdmin";
 import InfoIntern from "./containers/intern/infoIntern/InfoIntern";
 import EditProfile from "./containers/intern/infoIntern/EditProfile";
 import TaskManagement from "./containers/intern/taskManagement/TaskManagement";
@@ -69,7 +70,7 @@ function App() {
         <Route path={ROUTE_LOGIN} component={withAuthLayout(Login)} exact />
         <Route
           path={ROUTE_ADMIN_LOGIN}
-          component={withAuthLayout(Login)}
+          component={withAuthLayout(LoginAdmin)}
           exact
         />
         <Route
