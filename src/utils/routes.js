@@ -25,9 +25,6 @@ export const ROUTE_MANAGE_LEADER = "/admin/manage-leader";
 export const ROUTE_MANAGE_PROJECT = "/admin/manage-project";
 export const ROUTE_MANAGE_PROJECT_DETAIL =
   "/admin/manage-project/projectID=:projectId/projectName=:projectName";
-export const ROUTE_MANAGE_FEEDBACK__INTERN = "/admin/manage-feedback";
-export const ROUTE_MANAGE_FEEDBACK__INTERN_DETAIL =
-  "/admin/manage-feedback:userId";
 export const ROUTE_MANAGE_ACCOUNT_WAITING = "/admin/manage-account-waiting";
 export const ROUTE_VIEW_STATISTIC = "/admin/view-statistic";
 export const ROUTE_VIEW_STATISTIC_DETAIL =

@@ -6,7 +6,7 @@ export function deleteFeedback(feedback_id, resolve = () => {}) {
     type: types.DELETE_FEEDBACK,
   });
   return fetch(
-    `${process.env.REACT_APP_API_URL}delete?feedback_id=${feedback_id}`,
+    `${process.env.REACT_APP_API_URL}task/feedback/delete?feedback_id=${feedback_id}`,
     {
       method: "PUT",
       headers: {

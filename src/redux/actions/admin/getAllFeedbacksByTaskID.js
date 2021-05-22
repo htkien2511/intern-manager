@@ -5,13 +5,16 @@ export function getAllFeedbacksByTaskID(task_id, resolve = () => {}) {
   store.dispatch({
     type: types.GET_ALL_FEEDBACKS_BY_TASK_ID,
   });
-  return fetch(`${process.env.REACT_APP_API_URL}feedback?task_id=${task_id}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
-      Authorization: getAuth().token,
-    },
-  })
+  return fetch(
+    `${process.env.REACT_APP_API_URL}task/feedback?task_id=${task_id}`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+        Authorization: getAuth().token,
+      },
+    }
+  )
     .then((response) => response.json())
     .then((data) => {
       resolve(data);

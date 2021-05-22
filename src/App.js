@@ -23,8 +23,6 @@ import {
   ROUTE_TASK_MANAGEMENT,
   ROUTE_SEND_FEEDBACK,
   ROUTE_VIEW_STATISTIC,
-  ROUTE_MANAGE_FEEDBACK__INTERN,
-  ROUTE_MANAGE_FEEDBACK__INTERN_DETAIL,
   ROUTE_TASK_MANAGEMENT_DETAIL,
   ROUTE_MANAGE_PROJECT_DETAIL,
   ROUTE_MANAGE_PERMISSION_LEADER,
@@ -53,10 +51,6 @@ import {
   ManageProjectDetail,
 } from "containers/admin/manageProjectIntern";
 import { ManageAccountWaiting } from "containers/admin/manageAccountWaiting";
-import {
-  ManageFeedback,
-  ManageFeedbackDetail,
-} from "containers/admin/manageFeedback";
 import { ManageLeader } from "containers/admin/manageAccountLeader";
 import { ManageViewStatistic } from "containers/admin/manageViewStatistic.js";
 import ManagePermissionLeader from "containers/admin/managePermissionLeader.js/ManagePermissionLeader";
@@ -217,16 +211,6 @@ function App() {
         <Route
           path={ROUTE_MANAGE_PROJECT_DETAIL}
           component={withAuth(ManageProjectDetail, false)}
-          exact
-        />
-        <Route
-          path={ROUTE_MANAGE_FEEDBACK__INTERN}
-          component={withAuth(ManageFeedback, false)}
-          exact
-        />
-        <Route
-          path={ROUTE_MANAGE_FEEDBACK__INTERN_DETAIL}
-          component={withAuth(ManageFeedbackDetail, false)}
           exact
         />
         <Route

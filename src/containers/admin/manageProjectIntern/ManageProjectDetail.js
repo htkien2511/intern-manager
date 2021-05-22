@@ -21,6 +21,7 @@ import ModalEditTask from "./ModalEditTask";
 import ModalShowDetail from "./ModalShowDetail";
 import { getAuth } from "utils/helpers";
 import ErrorPage from "components/common/ErrorPage";
+import { ManageFeedback } from "../manageFeedback";
 
 const Icon = ({ icon, color }) => {
   return (
@@ -50,6 +51,7 @@ const ManageProjectDetail = () => {
   const [showModal, setShowModal] = useState(false);
   const [showModalEdit, setShowModalEdit] = useState(false);
   const [showModalSeeDetails, setShowModalSeeDetails] = useState(false);
+  const [showModalFeedback, setShowModalFeedback] = useState(false);
   const [openModalDelete, setOpenModalDelete] = useState(false);
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
@@ -292,6 +294,8 @@ const ManageProjectDetail = () => {
         setOpenModalDelete(true);
         break;
       case "Feedback": {
+        setTaskSelected(item);
+        setShowModalFeedback(true);
         break;
       }
       default:
@@ -315,13 +319,23 @@ const ManageProjectDetail = () => {
   const storeEditTask = useSelector((store) => store.updateTask);
   const storeDeleteTask = useSelector((store) => store.deleteTask);
 
+  const loadingGetAllFeedback = useSelector(
+    (store) => store.getAllFeedbacksByTaskID
+  ).loading;
+  const loadingDeleteFeedback = useSelector(
+    (store) => store.deleteFeedback
+  ).loading;
+  // const loadingUpdateFeedback = useSelector((store) => store.storeUpdateFeedback).loading;
+
   return (
     <>
       <div className="test-library">
         {(storeGetAllTasks.loading ||
           storeCreateTask.loading ||
           storeEditTask.loading ||
-          storeDeleteTask.loading) && <SpinLoading />}
+          storeDeleteTask.loading ||
+          loadingGetAllFeedback ||
+          loadingDeleteFeedback) && <SpinLoading />}
         <div
           className="block__back-previous-page"
           style={{ marginLeft: 30, marginTop: 15 }}
@@ -392,6 +406,13 @@ const ManageProjectDetail = () => {
           onCancel={setOpenModalDelete}
           onConfirm={handleConfirm}
           title="Are you sure to delete this task?"
+        />
+      )}
+      {showModalFeedback && (
+        <ManageFeedback
+          setOpenModal={setShowModalFeedback}
+          title="List Feedbacks"
+          task={taskSelected}
         />
       )}
     </>

@@ -40,7 +40,6 @@ export const ContentModal = ({ data, setOpenModal, setData }) => {
     department: info.department || "",
     address: info.address || "",
   });
-
   const [departObject, setDepartObject] = useState([]);
 
   const validate = () => {

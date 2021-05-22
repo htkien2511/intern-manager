@@ -1,6 +1,12 @@
-.manage-feedback-detail {
+.manage-feedback {
   &__inner {
     padding: 0 50px;
+    button {
+      :hover {
+        background: rgb(215, 227, 231);
+      }
+    }
+
     & > div {
       & > button {
         width: 200px;
