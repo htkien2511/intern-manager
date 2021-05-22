@@ -35,7 +35,6 @@ export function getPermissionLeader(manager_id, resolve = () => {}) {
       });
     })
     .catch((error) => {
-      console.log(error);
       store.dispatch({
         payload: error,
         type: types.GET_PERMISSIONS_BY_LEADER_ID_FAILED,

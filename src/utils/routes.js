@@ -1,10 +1,9 @@
 //user
 export const ROUTE_PROFILE = "/profile";
-export const ROUTE_EDIT_PROFILE = "/editProfile";
+export const ROUTE_EDIT_PROFILE = "/profile/edit";
 
-export const ROUTE_TASK_MANAGEMENT = "/taskManagement:userId";
-export const ROUTE_TASK_MANAGEMENT_DETAIL = "/taskManagement/project:projectId";
-// export const ROUTE_TASK_MANAGEMENT_DETAIL = "/taskManagement/project";
+export const ROUTE_TASK_MANAGEMENT = "/projects";
+export const ROUTE_TASK_MANAGEMENT_DETAIL = "/projects/projectId=:projectId";
 
 export const ROUTE_REGISTER_SCHEDULE = "/registerSchedule";
 export const ROUTE_FEEDBACKS = "/feedbacks";

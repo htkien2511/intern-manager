@@ -248,7 +248,6 @@ export default function ManageProject() {
                         <div
                           onClick={() => {
                             handleEditProject(row);
-                            console.log(row.managerName.managerId);
                           }}
                         >
                           Edit project

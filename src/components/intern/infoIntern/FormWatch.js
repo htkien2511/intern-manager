@@ -1,30 +1,32 @@
 import React, { useEffect, useState } from "react";
-import logo from "../../../assets/images/logoGuess.png";
 import { NavLink } from "react-router-dom";
 import { ROUTE_EDIT_PROFILE } from "../../../utils/routes";
 import { getProfileIntern } from "redux/actions/intern/getProfileIntern";
 import { getAuth } from "utils/helpers";
+import { useSelector } from "react-redux";
+import SpinLoading from "components/common/core/SpinLoading";
 function FormWatch() {
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    department: "",
-    gender: "",
-    address: "",
-  });
+  const [form, setForm] = useState([]);
   useEffect(() => {
     getProfileIntern(getAuth().id, (output) => {
       if (!output.data) return;
       setForm(output.data);
     });
   }, []);
+
+  const loadingGetData = useSelector((store) => store.getProfileIntern).loading;
+
   return (
     <div className="form-watch">
-      <h2>Intern's Profile</h2>
+      {loadingGetData && <SpinLoading />}
       <div className="form-watch__body">
         <div className="form-watch__body__info">
           <div className="info_avatar align__center">
-            <img src={logo} className="avatar" alt="avatar" />
+            <img
+              src="https://picsum.photos/200"
+              className="avatar"
+              alt="avatar"
+            />
           </div>
           <form>
             <div className="info__name">
@@ -48,7 +50,12 @@ function FormWatch() {
               <p>{form.address ? form.address : "No fill address"}</p>
             </div>
             <NavLink activeClassName="--active" to={ROUTE_EDIT_PROFILE}>
-              <button className="btn-edit">Edit Profile</button>
+              <button
+                className="btn-edit"
+                style={{ width: "300px", textAlign: "center" }}
+              >
+                Edit Profile & Change Password
+              </button>
             </NavLink>
           </form>
         </div>

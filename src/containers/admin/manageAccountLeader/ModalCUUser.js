@@ -82,7 +82,6 @@ export const ContentModal = ({ data, setOpenModal, setData }) => {
       address: form.address,
     };
 
-    console.log({ formData });
     updateAccount(formData, (res) => {
       if (res.success) {
         getAllManager((r) => {

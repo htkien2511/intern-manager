@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import logo from "../../../assets/images/logoGuess.png";
 import { isEmpty, isEmail } from "validator";
 import { getProfileIntern } from "redux/actions/intern/getProfileIntern";
 import { getAuth } from "utils/helpers";
@@ -11,10 +10,11 @@ import { toast } from "react-toastify";
 import { changePassword } from "redux/actions/changePassword";
 import { useSelector } from "react-redux";
 import SpinLoading from "components/common/core/SpinLoading";
+import { RollbackOutlined } from "@ant-design/icons";
 
 function FormEdit() {
   const { TabPane } = Tabs;
-  const [imageUrl, setImageUrl] = useState(logo);
+  const [imageUrl, setImageUrl] = useState("https://picsum.photos/200");
   const [error, setError] = React.useState({});
   const [form, setForm] = React.useState({
     id: "",
@@ -51,6 +51,8 @@ function FormEdit() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const loadingGetData = useSelector((store) => store.getProfileIntern).loading;
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const errorState = validate();
@@ -76,7 +78,6 @@ function FormEdit() {
     updateAccount(formData, (res) => {
       if (res.success) {
         setForm(res.data);
-        console.log(res);
         toast.success("Updated successfully");
       } else {
         toast.error(res.message);
@@ -168,10 +169,14 @@ function FormEdit() {
   const storeChangePassword = useSelector((store) => store.changePassword);
 
   return (
-    <div className="form-edit flex flex-row align__center">
-      {(storeUpdateProfile.loading || storeChangePassword.loading) && (
-        <SpinLoading />
-      )}
+    <div className="form-edit flex flex-col">
+      {(loadingGetData ||
+        storeUpdateProfile.loading ||
+        storeChangePassword.loading) && <SpinLoading />}
+      <div className="block__back-previous-page" style={{ marginLeft: 30 }}>
+        <RollbackOutlined onClick={() => window.history.back()} />
+        <div onClick={() => window.history.back()}>Back to previous page</div>
+      </div>
       <div className="form-edit__body__edit__info">
         <div className="edit-avatar">
           <img src={imageUrl} className="avatar" alt="avatar" />

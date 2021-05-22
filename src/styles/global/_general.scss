@@ -217,7 +217,9 @@ body {
 .ant-empty-normal {
   margin: 0;
 }
-
+select {
+  outline: none !important;
+}
 // toast
 .Toastify__toast--error {
   background: #ffbfb8 !important;

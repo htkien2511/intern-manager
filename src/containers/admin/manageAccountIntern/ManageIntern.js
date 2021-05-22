@@ -81,8 +81,6 @@ export default function ManageIntern() {
   const permissions =
     getAuth().permissionDomains.map((item) => item.name.substring(7)) || [];
 
-  console.log(permissions);
-
   const dispatch = useDispatch();
 
   useEffect(() => {

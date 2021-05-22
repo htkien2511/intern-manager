@@ -18,11 +18,11 @@ function HeaderUser() {
 
         <div className="header__inner__menu flex items-center space-between">
           <NavLink activeClassName="--active" to={ROUTE_PROFILE} exact>
-            <span>Profile</span>
+            <span>My Profile</span>
           </NavLink>
 
           <NavLink activeClassName="--active" to={ROUTE_TASK_MANAGEMENT} exact>
-            <span>Project Management</span>
+            <span>My Projects</span>
           </NavLink>
 
           <NavLink
@@ -30,7 +30,7 @@ function HeaderUser() {
             to={ROUTE_REGISTER_SCHEDULE}
             exact
           >
-            <span>Register Schedule</span>
+            <span>Register Working Schedule</span>
           </NavLink>
           <DropdownUserMenu />
         </div>

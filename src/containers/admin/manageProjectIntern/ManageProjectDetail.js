@@ -284,22 +284,18 @@ const ManageProjectDetail = () => {
   const handleActions = (item, action) => {
     switch (action) {
       case "See":
-        console.log("See");
         setShowModalSeeDetails(true);
         setTaskSelected(item);
         break;
       case "Edit":
-        console.log("Edit");
         setShowModalEdit(true);
         setTaskSelected(item);
         break;
       case "Delete":
-        console.log("Delete");
         setTaskSelected(item);
         setOpenModalDelete(true);
         break;
       case "Feedback": {
-        console.log("Feedback");
         break;
       }
       default:

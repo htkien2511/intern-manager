@@ -129,6 +129,9 @@
           font-weight: bold;
           margin-top: 25px;
           outline: none;
+          &:hover {
+            background-color: #04bbf8;
+          }
         }
       }
     }
