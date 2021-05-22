@@ -45,6 +45,7 @@ export const ContentModal = ({
     0: "All day",
     1: "Morning",
     2: "Afternoon",
+    3: "Normal working",
   };
   const [error, setError] = React.useState({});
   const [form, setForm] = React.useState({
@@ -142,9 +143,11 @@ export const ContentModal = ({
               value={form.shift}
               disabled={false}
             >
-              {["All day", "Morning", "Afternoon"].map((item, index) => (
-                <option key={index}>{item}</option>
-              ))}
+              {["All day", "Morning", "Afternoon", "Normal working"].map(
+                (item, index) => (
+                  <option key={index}>{item}</option>
+                )
+              )}
             </Input>
             <span
               className="invalid-feedback"

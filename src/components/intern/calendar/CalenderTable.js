@@ -23,7 +23,9 @@ function CalenderTable() {
 
   const curr = new Date();
   const [firstDateWeek, setFirstDateWeek] = useState(
-    new Date().getDate() - new Date().getDay()
+    new Date().getDate() -
+      new Date().getDay() +
+      (new Date().getDay() === 0 ? -6 : 1)
   );
 
   function getUniqueListBy(arr, key) {
@@ -46,10 +48,11 @@ function CalenderTable() {
           leave_id: item.id,
           leave_date: item.time,
           shift_date: item.shift,
+          reason_content: item.reason,
         });
       });
       ar.sort(function (a, b) {
-        return a.id - b.id;
+        return a.leave_id - b.leave_id;
       });
       setSchedules(ar);
     });
@@ -61,14 +64,12 @@ function CalenderTable() {
   }, [firstDateWeek, workingWeek]);
 
   useEffect(() => {
-    if (
-      new Date().getTime() > new Date(curr.setDate(firstDateWeek + 6)).getTime()
-    ) {
+    if (curr.getTime() > new Date(curr.setDate(firstDateWeek + 4)).getTime()) {
       setFirstDateWeek(firstDateWeek + 7);
       let array = [];
       [1, 2, 3, 4, 5].forEach((item) => {
         let date = moment(
-          new Date(curr.setDate(firstDateWeek + 7 + item))
+          new Date(curr.setDate(firstDateWeek + 6 + item))
         ).format("YYYY/MM/DD");
         array.push({
           leave_date: date,
@@ -100,7 +101,7 @@ function CalenderTable() {
             const formData = {
               shift_date: element.shift_date,
               leave_date: element.leave_date,
-              reason_content: "",
+              reason_content: element.reason_content.trim(),
             };
             addLeaveSchedule(formData, (res) => {
               if (!res.success) {
@@ -115,7 +116,7 @@ function CalenderTable() {
               leave_id: element.leave_id,
               shift: element.shift_date,
               leave_date: element.leave_date,
-              reason_content: "",
+              reason_content: element.reason_content.trim(),
             };
             updateSchedule(formData, (res) => {
               if (!res.success) {
@@ -132,14 +133,14 @@ function CalenderTable() {
     }
   };
 
-  function handleChange(event, item) {
+  function handleChange(event, index) {
     let arr = [...schedules];
 
-    arr.forEach((element, index) => {
-      if (element.leave_date === item.leave_date) {
-        arr[index].shift_date = MAP.findIndex((e) => e === event.target.value);
-      }
-    });
+    if (event.target.name === "reason") {
+      arr[index].reason_content = event.target.value;
+    } else {
+      arr[index].shift_date = MAP.findIndex((e) => e === event.target.value);
+    }
     setSchedules(arr);
   }
 
@@ -171,7 +172,7 @@ function CalenderTable() {
                       <label>{item.leave_date}</label>
                       <select
                         disabled={!enabledSubmit}
-                        onChange={(event) => handleChange(event, item)}
+                        onChange={(event) => handleChange(event, index)}
                         value={MAP[item.shift_date]}
                       >
                         <option value={MAP[3]}>All day</option>
@@ -179,6 +180,25 @@ function CalenderTable() {
                         <option value={MAP[1]}>Afternoon</option>
                         <option value={MAP[0]}>Leave</option>
                       </select>
+                      {item.shift_date !== 3 && (
+                        <>
+                          <label style={{ fontSize: 16 }}>
+                            Reason (Absence
+                            {item.shift_date === 0
+                              ? " today"
+                              : item.shift_date === 1
+                              ? " this morning"
+                              : " this afternoon"}
+                            )
+                          </label>
+                          <input
+                            disabled={item.shift_date === 3}
+                            name="reason"
+                            value={item.reason_content}
+                            onChange={(event) => handleChange(event, index)}
+                          />
+                        </>
+                      )}
                     </td>
                   ))}
                 </tr>

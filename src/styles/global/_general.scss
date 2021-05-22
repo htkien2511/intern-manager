@@ -217,7 +217,8 @@ body {
 .ant-empty-normal {
   margin: 0;
 }
-select {
+select,
+input {
   outline: none !important;
 }
 // toast

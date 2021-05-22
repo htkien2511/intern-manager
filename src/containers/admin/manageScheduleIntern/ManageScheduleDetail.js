@@ -74,6 +74,7 @@ export default function ManageScheduleDetail() {
 
   const handleEventClick = (eventInfo) => {
     setInfoDetailsOffDay(eventInfo);
+    console.log(eventInfo.event._def.extendedProps.shift);
     setScheduleSelected({
       ...scheduleSelected,
       shift: eventInfo.event && eventInfo.event._def.extendedProps.shift,
@@ -140,6 +141,14 @@ export default function ManageScheduleDetail() {
               className="flex block__info_shift"
               style={{ justifyContent: "flex-end" }}
             >
+              <div className="flex">
+                <span>Normal working</span>
+                <div
+                  style={{
+                    background: "blue",
+                  }}
+                ></div>
+              </div>
               <div className="flex">
                 <span>Off the morning</span>
                 <div
@@ -233,14 +242,17 @@ export default function ManageScheduleDetail() {
                 <div>
                   <span>Session: </span>
                   {infoDetailsOffDay.event &&
-                  infoDetailsOffDay.event._def.extendedProps.shift ? (
+                  infoDetailsOffDay.event._def.extendedProps.shift + "" ? (
                     infoDetailsOffDay.event._def.extendedProps.shift === 0 ? (
                       "All day"
                     ) : infoDetailsOffDay.event &&
                       infoDetailsOffDay.event._def.extendedProps.shift === 1 ? (
                       "The morning"
-                    ) : (
+                    ) : infoDetailsOffDay.event &&
+                      infoDetailsOffDay.event._def.extendedProps.shift === 2 ? (
                       "The afternoon"
+                    ) : (
+                      "Working normal"
                     )
                   ) : (
                     <span style={{ fontSize: 15, color: "gray" }}>Empty</span>
