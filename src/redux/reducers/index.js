@@ -41,6 +41,7 @@ import getAllFeedbacksByTaskID from "./admin/getAllFeedbacksByTaskID";
 import updatePermissionByLeaderID from "./admin/updatePermissionByLeaderID";
 import getPermissionLeader from "./admin/getPermissionLeader";
 import getAllPermission from "./admin/getAllPermission";
+import getAllProjectByLeader from "./admin/getAllProjectByLeader";
 
 export default combineReducers({
   login,
@@ -85,4 +86,5 @@ export default combineReducers({
   updatePermissionByLeaderID,
   getPermissionLeader,
   getAllPermission,
+  getAllProjectByLeader,
 });

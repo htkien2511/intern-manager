@@ -121,7 +121,7 @@ const ManageProjectDetail = () => {
         >
           {projectName}
         </h2>
-        {!input ? (
+        {!(input && input.length) ? (
           <div style={{ position: "absolute", left: "50%" }}>
             <Empty />
           </div>

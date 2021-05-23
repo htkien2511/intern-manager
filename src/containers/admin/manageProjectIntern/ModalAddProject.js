@@ -9,6 +9,8 @@ import { createProject } from "redux/actions/admin/createProject";
 import { toast } from "react-toastify";
 import { getAllProject } from "redux/actions/admin/getAllProject";
 import { getAllManager } from "redux/actions/admin/getAllManager";
+import { getAuth } from "utils/helpers";
+import { getAllProjectByLeader } from "redux/actions/admin/getAllProjectByLeader";
 
 export const HeaderModal = ({ close, title }) => {
   return (
@@ -103,34 +105,59 @@ export const ContentModal = ({ setOpenModal, setData }) => {
       title: form.title,
       description: form.description,
       dueDate: moment(form.dueDate).format("YYYY/MM/DD"),
-      idOfAdmin: form.idOfAdmin,
+      idOfAdmin:
+        getAuth().role === "ROLE_MANAGER" ? getAuth().id : form.idOfAdmin,
     };
 
     createProject(formData, (res) => {
       if (res.success) {
         toast.success("General project successfully");
         let arr = [];
-        getAllProject((response) => {
-          if (response.success) {
-            response.data.forEach((item) => {
-              arr.push(
-                createData(
-                  item.projectId,
-                  item.title,
-                  item.description,
-                  item.managerName,
-                  item.userAssignee,
-                  item.startDate,
-                  item.dueDate,
-                  "More"
-                )
-              );
-            });
-            setData(arr);
-          } else {
-            toast.error(response.message);
-          }
-        });
+        if (getAuth().role === "ROLE_ADMIN") {
+          getAllProject((response) => {
+            if (response.success) {
+              response.data.forEach((item) => {
+                arr.push(
+                  createData(
+                    item.projectId,
+                    item.title,
+                    item.description,
+                    item.managerName,
+                    item.userAssignee,
+                    item.startDate,
+                    item.dueDate,
+                    "More"
+                  )
+                );
+              });
+              setData(arr);
+            } else {
+              toast.error(response.message);
+            }
+          });
+        } else if (getAuth().role === "ROLE_MANAGER") {
+          getAllProjectByLeader(getAuth().id, (a) => {
+            if (a.success) {
+              a.data.forEach((item) => {
+                arr.push(
+                  createData(
+                    item.projectId,
+                    item.title,
+                    item.description,
+                    item.managerName,
+                    item.userAssignee,
+                    item.startDate,
+                    item.dueDate,
+                    "More"
+                  )
+                );
+                setData(arr);
+              });
+            } else {
+              toast.error(a.message);
+            }
+          });
+        }
       } else {
         toast.error(res.message);
       }
@@ -208,40 +235,42 @@ export const ContentModal = ({ setOpenModal, setData }) => {
             />
           </div>
 
-          <div>
-            <label>Select leader for project</label>
-            <Input
-              type="select"
-              name="idOfAdmin"
-              id="leader"
-              placeholder="Leader"
-              onChange={handleChange}
-              onFocus={handleFocus}
-              value={
-                leaders
-                  .filter((item) => item.id === form.idOfAdmin)
-                  .find((e, idx) => idx === 0) &&
-                `Id: ${form.idOfAdmin} - Name: ${
+          {getAuth().role === "ROLE_ADMIN" && (
+            <div>
+              <label>Select leader for project</label>
+              <Input
+                type="select"
+                name="idOfAdmin"
+                id="leader"
+                placeholder="Leader"
+                onChange={handleChange}
+                onFocus={handleFocus}
+                value={
                   leaders
                     .filter((item) => item.id === form.idOfAdmin)
-                    .find((e, idx) => idx === 0).name
-                }`
-              }
-              disabled={false}
-            >
-              {leaders.map((item, index) => (
-                <option
-                  key={index}
-                >{`Id: ${item.id} - Name: ${item.name}`}</option>
-              ))}
-            </Input>
-            <span
-              className="invalid-feedback"
-              style={{ display: "block", marginLeft: 15 }}
-            >
-              {error.idOfAdmin}
-            </span>
-          </div>
+                    .find((e, idx) => idx === 0) &&
+                  `Id: ${form.idOfAdmin} - Name: ${
+                    leaders
+                      .filter((item) => item.id === form.idOfAdmin)
+                      .find((e, idx) => idx === 0).name
+                  }`
+                }
+                disabled={false}
+              >
+                {leaders.map((item, index) => (
+                  <option
+                    key={index}
+                  >{`Id: ${item.id} - Name: ${item.name}`}</option>
+                ))}
+              </Input>
+              <span
+                className="invalid-feedback"
+                style={{ display: "block", marginLeft: 15 }}
+              >
+                {error.idOfAdmin}
+              </span>
+            </div>
+          )}
 
           <button className="btn--save align__center" style={{ marginTop: 20 }}>
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">

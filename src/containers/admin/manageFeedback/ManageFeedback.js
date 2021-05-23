@@ -85,7 +85,7 @@ export const ContentModal = ({ setOpenModal, task }) => {
                 </span>
                 <span>
                   {_item.date &&
-                    moment(_item.date).format("HH:MM:SS - DD/MM/YYYY ")}
+                    moment(_item.date).format("HH:mm:ss - DD/MM/YYYY ")}
                 </span>
               </div>
               <div className="flex items-center">
@@ -181,7 +181,6 @@ const ManageFeedback = ({ setOpenModal, title, task }) => {
 const ModalFeedbackContainer = styled.div`
   .modal__inner {
     width: 600px !important;
-    height: auto !important;
     .modal__header {
       .header__container {
         .header__inner {
@@ -208,6 +207,8 @@ const ModalFeedbackContainer = styled.div`
       }
     }
     .modal__content {
+      max-height: 600px !important;
+      overflow-y: scroll;
       .content__inner {
         & > div {
           &:not(:last-child) {

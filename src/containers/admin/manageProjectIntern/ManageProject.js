@@ -28,6 +28,7 @@ import { CaretRightOutlined } from "@ant-design/icons";
 import { setTitle } from "redux/actions/admin/setTitle";
 import { getAuth } from "utils/helpers";
 import ErrorPage from "components/common/ErrorPage";
+import { getAllProjectByLeader } from "redux/actions/admin/getAllProjectByLeader";
 
 const { Panel } = Collapse;
 
@@ -138,27 +139,51 @@ export default function ManageProject() {
     )
       return;
     let arr = [];
-    getAllProject((res) => {
-      if (res.success) {
-        res.data.forEach((item) => {
-          arr.push(
-            createData(
-              item.projectId,
-              item.title,
-              item.description,
-              item.managerName,
-              item.userAssignee,
-              item.startDate,
-              item.dueDate,
-              "More"
-            )
-          );
-          setData(arr);
-        });
-      } else {
-        toast.error(res.message);
-      }
-    });
+    if (getAuth().role === "ROLE_ADMIN") {
+      getAllProject((res) => {
+        if (res.success) {
+          res.data.forEach((item) => {
+            arr.push(
+              createData(
+                item.projectId,
+                item.title,
+                item.description,
+                item.managerName,
+                item.userAssignee,
+                item.startDate,
+                item.dueDate,
+                "More"
+              )
+            );
+            setData(arr);
+          });
+        } else {
+          toast.error(res.message);
+        }
+      });
+    } else if (getAuth().role === "ROLE_MANAGER") {
+      getAllProjectByLeader(getAuth().id, (res) => {
+        if (res.success) {
+          res.data.forEach((item) => {
+            arr.push(
+              createData(
+                item.projectId,
+                item.title,
+                item.description,
+                item.managerName,
+                item.userAssignee,
+                item.startDate,
+                item.dueDate,
+                "More"
+              )
+            );
+            setData(arr);
+          });
+        } else {
+          toast.error(res.message);
+        }
+      });
+    }
     // eslint-disable-next-line
   }, []);
   const [searchText, setSearchText] = useState("");
@@ -384,6 +409,10 @@ export default function ManageProject() {
     (store) => store.assignUsersIntoProject
   );
 
+  const loadingGetAllProjectByLeader = useSelector(
+    (store) => store.getAllProjectByLeader
+  ).loading;
+
   return (
     <div className="manage-intern">
       {(storeCreateProject.loading ||
@@ -468,7 +497,8 @@ export default function ManageProject() {
                       {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => {
                         return (
                           <TableCell key={item}>
-                            {storeGetAllProject.loading ? (
+                            {storeGetAllProject.loading ||
+                            loadingGetAllProjectByLeader ? (
                               <Skeleton style={{ height: 40 }} />
                             ) : (
                               <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />

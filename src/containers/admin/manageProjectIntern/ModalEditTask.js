@@ -139,7 +139,7 @@ export const ContentModal = ({ setOpenModal, projectId, setData, input }) => {
 
   const [options, setOptions] = useState([]);
   useEffect(() => {
-    if (!usersAssignedInProject.length) return;
+    if (!(usersAssignedInProject && usersAssignedInProject.length)) return;
     let arr = [];
     usersAssignedInProject.forEach((item) => {
       let option = {
