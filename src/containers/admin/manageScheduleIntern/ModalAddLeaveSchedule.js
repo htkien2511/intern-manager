@@ -45,11 +45,25 @@ export const ContentModal = ({ setOpenModal, setData, userID }) => {
   );
 
   useEffect(() => {
-    if (curr.getTime() > new Date(curr.setDate(firstDateWeek + 4)).getTime()) {
+    if (
+      curr.getTime() > new Date(new Date().setDate(firstDateWeek + 4)).getTime()
+    ) {
       setFirstDateWeek(firstDateWeek + 7);
       let array = [];
       [1, 2, 3, 4, 5].forEach((item) => {
-        let date = new Date(curr.setDate(firstDateWeek + 6 + item));
+        let date = moment(
+          new Date(new Date().setDate(firstDateWeek + 6 + item))
+        ).format("YYYY/MM/DD");
+        array.push(date);
+      });
+      setWorkingWeek(array);
+    } else {
+      setFirstDateWeek(firstDateWeek);
+      let array = [];
+      [1, 2, 3, 4, 5].forEach((item) => {
+        let date = moment(
+          new Date(new Date().setDate(firstDateWeek - 1 + item))
+        ).format("YYYY/MM/DD");
         array.push(date);
       });
       setWorkingWeek(array);

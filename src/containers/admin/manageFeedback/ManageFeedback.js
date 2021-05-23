@@ -8,6 +8,10 @@ import AvatarBlock from "components/common/core/AvatarBlock";
 import moment from "moment";
 import { deleteFeedback } from "redux/actions/admin/deteteFeedback";
 import { addFeedback } from "redux/actions/admin/addFeedback";
+import { EditOutlined } from "@ant-design/icons";
+import { Tooltip } from "element-react";
+import { IconButton } from "@material-ui/core";
+import { FormBox } from "components/common";
 
 export const HeaderModal = ({ close, title }) => {
   return (
@@ -77,37 +81,61 @@ export const ContentModal = ({ setOpenModal, task }) => {
                 paddingBottom: 10,
               }}
             >
-              <div className="flex items-center">
-                <span style={{ color: "gray", fontSize: 14 }}>
-                  {_item.date &&
-                    moment(_item.date).format("HH:mm:ss - DD/MM/YYYY ")}
-                </span>
-              </div>
               <div className="flex items-center space-between">
-                <div className="flex items-center">
-                  <AvatarBlock users_list={[_item.user]} />
-                  <span
-                    style={{ margin: 13, color: "#394075", fontSize: 18 }}
-                    key={index}
-                  >
-                    {_item.feedbackContent}
-                  </span>
+                <div
+                  className="flex flex-col"
+                  style={{ width: "100%", position: "relative" }}
+                >
+                  <div className="flex items-center">
+                    <div style={{ marginRight: 8 }}>
+                      <AvatarBlock users_list={[_item.user]} />
+                    </div>
+                    <FormBox
+                      propsInput={{
+                        type: "textarea",
+                        name: "content",
+                        className: "input__content",
+                        placeholder: "Content",
+                        value: _item.feedbackContent,
+                        disabled: true,
+                      }}
+                    />
+                  </div>
+                  <div className="flex items-center">
+                    <span
+                      style={{
+                        color: "gray",
+                        fontSize: 12,
+                        position: "absolute",
+                        right: 0,
+                      }}
+                    >
+                      {_item.date &&
+                        moment(_item.date).format("HH:mm:ss - DD/MM/YYYY ")}
+                    </span>
+                  </div>
                 </div>
-                <div>
-                  <button
-                    className="btn-cancel"
-                    style={{
-                      width: 35,
-                      height: 35,
-                      borderRadius: "50%",
-                      border: "none",
-                      marginLeft: 3,
-                      background: "none",
-                    }}
-                    onClick={() => handleDeleteFeedback(_item.feedbackId)}
-                  >
-                    x
-                  </button>
+
+                <div className="flex items-center">
+                  <Tooltip>
+                    <IconButton>
+                      <EditOutlined style={{ fontSize: 14 }} />
+                    </IconButton>
+                  </Tooltip>
+                  <Tooltip>
+                    <IconButton
+                      style={{
+                        width: 35,
+                        height: 35,
+                        borderRadius: "50%",
+                        border: "none",
+                        marginLeft: 3,
+                      }}
+                      onClick={() => handleDeleteFeedback(_item.feedbackId)}
+                    >
+                      <span style={{ fontSize: 16 }}>x</span>
+                    </IconButton>
+                  </Tooltip>
                 </div>
               </div>
             </div>
