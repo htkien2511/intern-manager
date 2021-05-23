@@ -6,7 +6,7 @@ export function addFeedback(input, resolve = () => {}) {
     type: types.ADD_FEEDBACK,
   });
 
-  return fetch(`${process.env.REACT_APP_API_URL}manager/add`, {
+  return fetch(`${process.env.REACT_APP_API_URL}task/feedback/add`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

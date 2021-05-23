@@ -7,6 +7,7 @@ import { Empty, Input } from "antd";
 import AvatarBlock from "components/common/core/AvatarBlock";
 import moment from "moment";
 import { deleteFeedback } from "redux/actions/admin/deteteFeedback";
+import { addFeedback } from "redux/actions/admin/addFeedback";
 
 export const HeaderModal = ({ close, title }) => {
   return (
@@ -31,7 +32,7 @@ export const HeaderModal = ({ close, title }) => {
 export const ContentModal = ({ setOpenModal, task }) => {
   const [feedbacks, setFeedbacks] = useState();
 
-  const [showButtonSave, setShowButtonSave] = useState([]);
+  const [showButtonSave, setShowButtonSave] = useState(false);
   const handleSubmitForm = (event) => {
     event.preventDefault();
     setOpenModal(false);
@@ -47,15 +48,6 @@ export const ContentModal = ({ setOpenModal, task }) => {
     });
   }, [task]);
 
-  useEffect(() => {
-    if (!(feedbacks && feedbacks.length)) return;
-    let arr = [];
-    feedbacks.forEach((item) => {
-      arr.push({ id: item.feedbackId, status: false });
-    });
-    setShowButtonSave(arr);
-  }, [feedbacks]);
-
   const handleDeleteFeedback = (id) => {
     deleteFeedback(id, (res) => {
       if (res.success) {
@@ -65,6 +57,12 @@ export const ContentModal = ({ setOpenModal, task }) => {
       }
     });
   };
+
+  const [contentFeedback, setContentFeedback] = useState("");
+
+  function handleChange(event) {
+    setContentFeedback(event.target.value);
+  }
 
   return (
     <div className="content__container" onSubmit={handleSubmitForm}>
@@ -80,26 +78,22 @@ export const ContentModal = ({ setOpenModal, task }) => {
               }}
             >
               <div className="flex items-center">
-                <span style={{ color: "blue", fontSize: 17, marginRight: 8 }}>
-                  Created at:
-                </span>
-                <span>
+                <span style={{ color: "gray", fontSize: 14 }}>
                   {_item.date &&
                     moment(_item.date).format("HH:mm:ss - DD/MM/YYYY ")}
                 </span>
               </div>
-              <div className="flex items-center">
-                <span style={{ color: "blue", fontSize: 17, marginRight: 8 }}>
-                  Author:
-                </span>
-                <AvatarBlock users_list={["Phan Trọng Đức"]} />
-              </div>
-              <div className="flex flex-col">
-                <span style={{ color: "blue", fontSize: 17, marginRight: 8 }}>
-                  Content:
-                </span>
-                <div className="flex items-center space-between">
-                  <span key={index}>{_item.feedbackContent}</span>
+              <div className="flex items-center space-between">
+                <div className="flex items-center">
+                  <AvatarBlock users_list={[_item.user]} />
+                  <span
+                    style={{ margin: 13, color: "#394075", fontSize: 18 }}
+                    key={index}
+                  >
+                    {_item.feedbackContent}
+                  </span>
+                </div>
+                <div>
                   <button
                     className="btn-cancel"
                     style={{
@@ -116,48 +110,77 @@ export const ContentModal = ({ setOpenModal, task }) => {
                   </button>
                 </div>
               </div>
-              <div className="flex flex-col">
-                <Input
-                  placeholder="Content reply"
-                  style={{ marginBottom: 10, marginTop: 15, borderRadius: 5 }}
-                  onFocus={() => {
-                    let arr = [...showButtonSave];
-                    arr.forEach((_a, indx) => {
-                      if (_a.id === _item.feedbackId) {
-                        arr[indx].status = true;
-                      } else {
-                        arr[indx].status = false;
-                      }
-                    });
-                    setShowButtonSave(arr);
-                  }}
-                />
-                {showButtonSave[index] && showButtonSave[index].status && (
-                  <div className="flex items-center">
-                    <button className="button button--secondary">Save</button>
-                    <button
-                      className="button"
-                      style={{
-                        background: "red",
-                        color: "white",
-                        marginLeft: 5,
-                      }}
-                      onClick={() => {
-                        let arr = [...showButtonSave];
-                        arr[index].status = !arr[index].status;
-                        setShowButtonSave(arr);
-                      }}
-                    >
-                      Cancel
-                    </button>
-                  </div>
-                )}
-              </div>
             </div>
           ))
         ) : (
           <Empty />
         )}
+        <div className="flex flex-col">
+          <Input
+            placeholder="Content feedback"
+            value={contentFeedback}
+            onChange={handleChange}
+            style={{
+              marginBottom: 10,
+              marginTop: 15,
+              borderRadius: 5,
+              fontSize: 17,
+            }}
+            onFocus={() => {
+              setShowButtonSave(true);
+            }}
+          />
+          {showButtonSave && (
+            <div className="flex items-center">
+              <button
+                className="button button--secondary"
+                onClick={() => {
+                  if (contentFeedback) {
+                    addFeedback(
+                      {
+                        task_id: task.taskId,
+                        feedback_content: contentFeedback.trim(),
+                      },
+                      (result) => {
+                        if (result.success) {
+                          getAllFeedbacksByTaskID(task.taskId, (r) => {
+                            if (r.success) {
+                              setFeedbacks(r.data);
+                              setShowButtonSave(false);
+                              setContentFeedback("");
+                            } else {
+                              toast.error(r.message);
+                            }
+                          });
+                        } else {
+                          toast.error(result.message || "Send feedback failed");
+                        }
+                      }
+                    );
+                  } else {
+                    toast.warn("Please enter feedback!");
+                  }
+                }}
+              >
+                Save
+              </button>
+              <button
+                className="button"
+                style={{
+                  background: "red",
+                  color: "white",
+                  marginLeft: 5,
+                }}
+                onClick={() => {
+                  setShowButtonSave(false);
+                  setContentFeedback("");
+                }}
+              >
+                Cancel
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

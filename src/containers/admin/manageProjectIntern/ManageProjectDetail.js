@@ -325,6 +325,10 @@ const ManageProjectDetail = () => {
   const loadingDeleteFeedback = useSelector(
     (store) => store.deleteFeedback
   ).loading;
+
+  const loadingCreateFeedback = useSelector(
+    (store) => store.addFeedback
+  ).loading;
   // const loadingUpdateFeedback = useSelector((store) => store.storeUpdateFeedback).loading;
 
   return (
@@ -335,7 +339,8 @@ const ManageProjectDetail = () => {
           storeEditTask.loading ||
           storeDeleteTask.loading ||
           loadingGetAllFeedback ||
-          loadingDeleteFeedback) && <SpinLoading />}
+          loadingDeleteFeedback ||
+          loadingCreateFeedback) && <SpinLoading />}
         <div
           className="block__back-previous-page"
           style={{ marginLeft: 30, marginTop: 15 }}

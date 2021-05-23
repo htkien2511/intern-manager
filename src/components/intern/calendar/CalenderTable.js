@@ -8,6 +8,8 @@ import { getScheduleUserID } from "redux/actions/admin/getScheduleUserID";
 import { updateSchedule } from "redux/actions/admin/updateSchedule";
 import { addLeaveSchedule } from "redux/actions/intern/addLeaveSchedule";
 import { getAuth } from "utils/helpers";
+import Alert from "@material-ui/lab/Alert";
+
 function CalenderTable() {
   const [schedules, setSchedules] = useState([]);
   const [workingWeek, setWorkingWeek] = useState([]);
@@ -35,7 +37,19 @@ function CalenderTable() {
   useEffect(() => {
     if (!workingWeek.length || !firstDateWeek) return;
     getScheduleUserID(getAuth().id, (output) => {
-      if (!output.success || !output.data.length) {
+      if (!output.success) {
+        return;
+      }
+      if (!output.data.length) {
+        let a = [];
+        workingWeek.forEach((_item, indx) => {
+          a.push({
+            leave_date: _item.leave_date,
+            shift_date: _item.shift_date,
+            reason_content: "",
+          });
+        });
+        setSchedules(a);
         return;
       }
       const newData = getUniqueListBy(output.data, "time").filter((item) =>
@@ -56,20 +70,18 @@ function CalenderTable() {
       });
       setSchedules(ar);
     });
-    setEnabledSubmit(
-      new Date(curr.setDate(firstDateWeek + 6)).getTime() === curr.getTime() ||
-        new Date(curr.setDate(firstDateWeek + 7)).getTime() === curr.getTime()
-    );
     // eslint-disable-next-line
   }, [firstDateWeek, workingWeek]);
 
   useEffect(() => {
-    if (curr.getTime() > new Date(curr.setDate(firstDateWeek + 4)).getTime()) {
+    if (
+      curr.getTime() > new Date(new Date().setDate(firstDateWeek + 4)).getTime()
+    ) {
       setFirstDateWeek(firstDateWeek + 7);
       let array = [];
       [1, 2, 3, 4, 5].forEach((item) => {
         let date = moment(
-          new Date(curr.setDate(firstDateWeek + 6 + item))
+          new Date(new Date().setDate(firstDateWeek + 6 + item))
         ).format("YYYY/MM/DD");
         array.push({
           leave_date: date,
@@ -77,14 +89,31 @@ function CalenderTable() {
         });
       });
       setWorkingWeek(array);
+      setEnabledSubmit(true);
+    } else {
+      setFirstDateWeek(firstDateWeek);
+      let array = [];
+      [1, 2, 3, 4, 5].forEach((item) => {
+        let date = moment(
+          new Date(new Date().setDate(firstDateWeek - 1 + item))
+        ).format("YYYY/MM/DD");
+        array.push({
+          leave_date: date,
+          shift_date: 3,
+        });
+      });
+      setWorkingWeek(array);
+      setEnabledSubmit(false);
     }
     // eslint-disable-next-line
   }, []);
 
   const handleSubmit = () => {
     if (
-      new Date(curr.setDate(firstDateWeek + 6)).getTime() === curr.getTime() ||
-      new Date(curr.setDate(firstDateWeek + 7)).getTime() === curr.getTime()
+      new Date(new Date().setDate(firstDateWeek + 5)).getTime() ===
+        new Date().getTime() ||
+      new Date(new Date().setDate(firstDateWeek + 6)).getTime() ===
+        new Date().getTime()
     ) {
       getScheduleUserID(getAuth().id, (output) => {
         if (!output.success) {
@@ -128,7 +157,7 @@ function CalenderTable() {
         }
       });
     } else {
-      toast.error("Today you can not edit your schedule!");
+      toast.error("You only can edit schedule on Saturday or Sunday");
       return;
     }
   };
@@ -158,12 +187,18 @@ function CalenderTable() {
 
   return (
     <div className="calendar">
+      {!enabledSubmit && (
+        <Alert severity="error">
+          You only can edit schedule on Saturday or Sunday
+        </Alert>
+      )}
+
       {(loadingSchedule || loadingUpdateSchedule || loadingCreateSchedule) && (
         <SpinLoading />
       )}
       <h2>Working Calendar</h2>
       <div className="table">
-        {schedules.length ? (
+        {schedules.length > 0 ? (
           <>
             <table>
               <thead>
@@ -202,7 +237,7 @@ function CalenderTable() {
                             )
                           </label>
                           <input
-                            disabled={item.shift_date === 3}
+                            disabled={!enabledSubmit}
                             name="reason"
                             value={item.reason_content}
                             onChange={(event) => handleChange(event, index)}
@@ -215,7 +250,11 @@ function CalenderTable() {
               </tbody>
             </table>
             <center>
-              <button className="btn-send" onClick={handleSubmit}>
+              <button
+                className={`btn-send ${!enabledSubmit ? "disabled" : ""}`}
+                onClick={handleSubmit}
+                disabled={!enabledSubmit}
+              >
                 Submit
               </button>
             </center>

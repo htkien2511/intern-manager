@@ -301,5 +301,17 @@ canvas {
   background: #555;
 }
 h2 {
-  font-size: 1.5em !important;
+  font-size: 30px !important;
+}
+.MuiAlert-root {
+  position: absolute;
+  top: 0;
+  left: calc(50% - 220px);
+  font-size: 18px !important;
+  color: rgb(187, 3, 3) !important;
+}
+.disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+  background: gray !important;
 }

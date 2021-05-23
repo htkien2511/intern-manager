@@ -1,5 +1,5 @@
 // import DropPanel from "components/common/core/DropPanel";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getTaskProjectIntern } from "redux/actions/intern/getTaskProjectIntern";
 import moment from "moment";
@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import { changeStatusTask } from "redux/actions/intern/changeStatusTask";
 import { RollbackOutlined } from "@ant-design/icons";
 import { Empty } from "antd";
+import { ManageFeedback } from "containers/admin/manageFeedback";
 function TaskManagementDetail() {
   const { projectId } = useParams();
   const [form, setForm] = React.useState([]);
@@ -60,12 +61,27 @@ function TaskManagementDetail() {
     });
   };
 
-  const handleOpenFeedback = () => {
-    alert("Open feedback modal");
+  const [showModalFeedback, setShowModalFeedback] = useState(false);
+  const [taskSelected, setTaskSelected] = useState();
+
+  const handleOpenFeedback = (item) => {
+    setTaskSelected(item);
+    setShowModalFeedback(true);
   };
 
   const loadingChangeStatus = useSelector(
     (store) => store.changeStatusTask
+  ).loading;
+
+  const loadingGetAllFeedback = useSelector(
+    (store) => store.getAllFeedbacksByTaskID
+  ).loading;
+  const loadingDeleteFeedback = useSelector(
+    (store) => store.deleteFeedback
+  ).loading;
+
+  const loadingCreateFeedback = useSelector(
+    (store) => store.addFeedback
   ).loading;
 
   return (
@@ -77,9 +93,11 @@ function TaskManagementDetail() {
         </div>
         <h2>List Tasks</h2>
       </div>
-      {(storeGetTaskProjectIntern.loading || loadingChangeStatus) && (
-        <SpinLoading />
-      )}
+      {(storeGetTaskProjectIntern.loading ||
+        loadingChangeStatus ||
+        loadingGetAllFeedback ||
+        loadingDeleteFeedback ||
+        loadingCreateFeedback) && <SpinLoading />}
       {form && (
         <div className="task-management">
           {form.length > 0 ? (
@@ -138,7 +156,7 @@ function TaskManagementDetail() {
                           <td>
                             <button
                               className="button button--secondary"
-                              onClick={handleOpenFeedback}
+                              onClick={() => handleOpenFeedback(item)}
                               style={{ background: "gray" }}
                             >
                               Feedback
@@ -154,6 +172,13 @@ function TaskManagementDetail() {
             <Empty />
           )}
         </div>
+      )}
+      {showModalFeedback && (
+        <ManageFeedback
+          setOpenModal={setShowModalFeedback}
+          title="List Feedbacks"
+          task={taskSelected}
+        />
       )}
     </>
   );

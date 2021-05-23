@@ -67,7 +67,7 @@ export default function ManageScheduleDetail() {
         case 2:
           return "chocolate";
         default:
-          return "blue";
+          return "white";
       }
     };
     return (
@@ -208,14 +208,14 @@ export default function ManageScheduleDetail() {
                 className="flex block__info_shift"
                 style={{ justifyContent: "flex-end" }}
               >
-                <div className="flex">
+                {/* <div className="flex">
                   <span>Normal working</span>
                   <div
                     style={{
                       background: "blue",
                     }}
                   ></div>
-                </div>
+                </div> */}
                 <div className="flex">
                   <span>Off the morning</span>
                   <div
