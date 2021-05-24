@@ -55,6 +55,7 @@ import { ManageLeader } from "containers/admin/manageAccountLeader";
 import { ManageViewStatistic } from "containers/admin/manageViewStatistic.js";
 import ManagePermissionLeader from "containers/admin/managePermissionLeader.js/ManagePermissionLeader";
 import StatisticDetails from "containers/admin/manageViewStatistic.js/StatisticDetails";
+import InvalidPage from "components/common/InvalidPage";
 
 function App() {
   return (
@@ -228,6 +229,7 @@ function App() {
           component={withAuth(StatisticDetails, false)}
           exact
         />
+        <Route component={InvalidPage} />
       </Switch>
     </Router>
   );
