@@ -95,7 +95,9 @@ export default function ManagePermissionLeader() {
         data.data.forEach((item) => {
           temp.push({
             manager_id: item.id,
-            permission_id: [],
+            permission_id: item.permissionDomains.map(
+              (item) => item.name.split("Leader.")[1]
+            ),
           });
           arr.push(
             createData(
@@ -131,8 +133,6 @@ export default function ManagePermissionLeader() {
     });
   }, []);
 
-  useEffect(() => {}, []);
-
   function tagRender(props) {
     const { label, closable, onClose } = props;
     const onPreventMouseDown = (event) => {
@@ -152,42 +152,69 @@ export default function ManagePermissionLeader() {
   }
 
   const handleChangeSave = (idLeader) => {
-    // if (
-    //   !leaders.find((item) => item.manager_id === idLeader).permission_id.length
-    // ) {
-    //   toast.warn("Please choice permissions");
-    //   return;
-    // }
-
-    updatePermissionByLeaderID(
-      {
-        manager_id: leaders.find((item) => item.manager_id === idLeader)
-          .manager_id,
-        permission_id: leaders.find((item) => item.manager_id === idLeader)
-          .permission_id,
-      },
-      (res) => {
-        if (res.success) {
-          toast.success(`Update permission successfully`);
-        } else {
-          toast.error(res.message);
-        }
+    const input = {
+      manager_id: leaders.find((item) => item.manager_id === idLeader)
+        .manager_id,
+      permission_id: leaders
+        .find((item) => item.manager_id === idLeader)
+        .permission_id.map(
+          (_item) =>
+            permissions.find((permission) => permission.name === _item).id
+        ),
+    };
+    if (
+      !validatorChoosePermissions(
+        leaders.find((item) => item.manager_id === idLeader).permission_id
+      )
+    ) {
+      toast.warn(
+        "Please choose GetAll permission before choosing Edit or Delete permission"
+      );
+      return;
+    }
+    updatePermissionByLeaderID(input, (res) => {
+      if (res.success) {
+        toast.success(`Update permission successfully`);
+      } else {
+        toast.error(res.message);
       }
-    );
+    });
   };
+
+  function validatorChoosePermissions(input) {
+    if (
+      !input.includes("GetAllUsers") &&
+      (input.includes("EditUser") || input.includes("DeleteUser"))
+    ) {
+      return false;
+    }
+    if (
+      !input.includes("GetAllProjectsByLeaderId") &&
+      (input.includes("EditProject") || input.includes("DeleteProject"))
+    ) {
+      return false;
+    }
+    if (
+      !input.includes("GetAllTasksByProjectId") &&
+      (input.includes("EditTask") || input.includes("DeleteTask"))
+    ) {
+      return false;
+    }
+    if (
+      !input.includes("GetScheduleOfUser") &&
+      input.includes("EditSchedule")
+    ) {
+      return false;
+    }
+    return true;
+  }
 
   const handleChangePermission = (options, idLeader) => {
     let temp = [...leaders];
     temp
       .filter((item) => item.manager_id === idLeader)
       .forEach((element) => {
-        let permissionID = [];
-        options.forEach((e) => {
-          permissionID.push(
-            permissions.find((permission) => permission.name === e).id
-          );
-        });
-        element.permission_id = permissionID;
+        element.permission_id = options;
       });
   };
 

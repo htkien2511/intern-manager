@@ -9,7 +9,7 @@ import {
   ROUTE_PROFILE,
 } from "utils/routes";
 
-const InvalidPage = ({ message }) => {
+const InvalidPage = () => {
   const history = useHistory();
   function handleBackHome() {
     if (getAuth().token) {

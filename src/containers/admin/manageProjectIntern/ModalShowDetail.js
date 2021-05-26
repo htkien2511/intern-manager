@@ -142,9 +142,9 @@ export const ContentModal = ({ setOpenModal, projectId, setData, input }) => {
                 />
               </span>
             ) : (
-              <div style={{ color: "gray", marginBottom: 8 }}>
+              <span style={{ color: "gray", marginBottom: 5 }}>
                 No user assigned
-              </div>
+              </span>
             )}
           </div>
         </ReForm>

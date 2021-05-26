@@ -50,7 +50,7 @@ const DropContainer = styled.div`
     position: absolute;
     z-index: 1;
     top: -2px;
-    left: -90px;
+    left: -70px;
   }
 `;
 export default DropPanel;

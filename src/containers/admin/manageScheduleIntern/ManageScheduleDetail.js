@@ -109,49 +109,49 @@ export default function ManageScheduleDetail() {
     });
   };
 
-  const [workingWeek, setWorkingWeek] = useState([]);
-  const curr = new Date();
-  const [firstDateWeek, setFirstDateWeek] = useState(
-    new Date().getDate() -
-      new Date().getDay() +
-      (new Date().getDay() === 0 ? -6 : 1)
-  );
+  // const [workingWeek, setWorkingWeek] = useState([]);
+  // const curr = new Date();
+  // const [firstDateWeek, setFirstDateWeek] = useState(
+  //   new Date().getDate() -
+  //     new Date().getDay() +
+  //     (new Date().getDay() === 0 ? -6 : 1)
+  // );
 
-  useEffect(() => {
-    if (curr.getTime() > new Date(curr.setDate(firstDateWeek + 4)).getTime()) {
-      setFirstDateWeek(firstDateWeek + 7);
-      let array = [];
-      [1, 2, 3, 4, 5].forEach((item) => {
-        let date = new Date(curr.setDate(firstDateWeek + 6 + item));
-        array.push(date);
-      });
-      setWorkingWeek(array);
-    }
-    // eslint-disable-next-line
-  }, []);
+  // useEffect(() => {
+  //   if (curr.getTime() > new Date(curr.setDate(firstDateWeek + 4)).getTime()) {
+  //     setFirstDateWeek(firstDateWeek + 7);
+  //     let array = [];
+  //     [1, 2, 3, 4, 5].forEach((item) => {
+  //       let date = new Date(curr.setDate(firstDateWeek + 6 + item));
+  //       array.push(date);
+  //     });
+  //     setWorkingWeek(array);
+  //   }
+  //   // eslint-disable-next-line
+  // }, []);
 
-  function handleAddLeaveSchedule() {
-    if (
-      !(
-        permissions.includes("CreateSchedule") ||
-        getAuth().role === "ROLE_ADMIN"
-      )
-    ) {
-      toast.error("Sorry, you are not authorized to create schedule.");
-      return;
-    }
-    if (
-      dataEvents
-        .map((i) => moment(i.date).format("YYYY/MM/DD"))
-        .includes(
-          workingWeek.map((item) => moment(item).format("YYYY/MM/DD"))[0]
-        )
-    ) {
-      toast.warn("You're only edited schedule!");
-      return;
-    }
-    setShowModal(true);
-  }
+  // function handleAddLeaveSchedule() {
+  //   if (
+  //     !(
+  //       permissions.includes("CreateSchedule") ||
+  //       getAuth().role === "ROLE_ADMIN"
+  //     )
+  //   ) {
+  //     toast.error("Sorry, you are not authorized to create schedule.");
+  //     return;
+  //   }
+  //   if (
+  //     dataEvents
+  //       .map((i) => moment(i.date).format("YYYY/MM/DD"))
+  //       .includes(
+  //         workingWeek.map((item) => moment(item).format("YYYY/MM/DD"))[0]
+  //       )
+  //   ) {
+  //     toast.warn("You're only edited schedule!");
+  //     return;
+  //   }
+  //   setShowModal(true);
+  // }
 
   const [intern, setIntern] = useState({});
 
@@ -184,7 +184,7 @@ export default function ManageScheduleDetail() {
               Back to previous page
             </div>
           </div>
-          <button
+          {/* <button
             className="button button--add__schedule"
             style={{
               width: "auto",
@@ -196,7 +196,7 @@ export default function ManageScheduleDetail() {
             onClick={handleAddLeaveSchedule}
           >
             Add leave schedule
-          </button>
+          </button> */}
         </div>
       </div>
       {permissions.includes("GetScheduleOfUser") ||
@@ -208,14 +208,6 @@ export default function ManageScheduleDetail() {
                 className="flex block__info_shift"
                 style={{ justifyContent: "flex-end" }}
               >
-                {/* <div className="flex">
-                  <span>Normal working</span>
-                  <div
-                    style={{
-                      background: "blue",
-                    }}
-                  ></div>
-                </div> */}
                 <div className="flex">
                   <span>Off the morning</span>
                   <div
