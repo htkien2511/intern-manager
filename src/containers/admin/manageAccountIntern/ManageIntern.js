@@ -23,42 +23,74 @@ import { setTitle } from "redux/actions/admin/setTitle";
 import { getAuth } from "utils/helpers";
 import ErrorPage from "components/common/ErrorPage";
 
-const columns = [
-  { id: "id", label: "Id", minWidth: 80 },
-  { id: "name", label: "Name", minWidth: 100 },
-  {
-    id: "email",
-    label: "Email",
-    minWidth: 170,
-    align: "left",
-  },
-  {
-    id: "gender",
-    label: "Gender",
-    minWidth: 100,
-    align: "center",
-  },
-  {
-    id: "department",
-    label: "Department",
-    minWidth: 100,
-    align: "center",
-  },
-  {
-    id: "address",
-    label: "Address",
-    minWidth: 170,
-    align: "center",
-  },
-  {
-    id: "actions",
-    label: "Actions",
-    minWidth: 160,
-    align: "center",
-  },
-];
+const columns =
+  getAuth().role === "ROLE_ADMIN"
+    ? [
+        { id: "id", label: "Id", minWidth: 80 },
+        { id: "name", label: "Name", minWidth: 100 },
+        {
+          id: "email",
+          label: "Email",
+          minWidth: 170,
+          align: "left",
+        },
+        {
+          id: "gender",
+          label: "Gender",
+          minWidth: 100,
+          align: "center",
+        },
+        {
+          id: "department",
+          label: "Department",
+          minWidth: 100,
+          align: "center",
+        },
+        {
+          id: "address",
+          label: "Address",
+          minWidth: 170,
+          align: "center",
+        },
+        {
+          id: "actions",
+          label: "Actions",
+          minWidth: 160,
+          align: "center",
+        },
+      ]
+    : [
+        { id: "id", label: "Id", minWidth: 80 },
+        { id: "name", label: "Name", minWidth: 100 },
+        {
+          id: "email",
+          label: "Email",
+          minWidth: 170,
+          align: "left",
+        },
+        {
+          id: "gender",
+          label: "Gender",
+          minWidth: 100,
+          align: "center",
+        },
+        {
+          id: "department",
+          label: "Department",
+          minWidth: 100,
+          align: "center",
+        },
+        {
+          id: "address",
+          label: "Address",
+          minWidth: 170,
+          align: "center",
+        },
+      ];
 
 function createData(id, name, email, gender, department, address, actions) {
+  if (getAuth().role !== "ROLE_ADMIN")
+    return { id, name, email, gender, department, address };
   return { id, name, email, gender, department, address, actions };
 }
 
@@ -203,6 +235,7 @@ export default function ManageIntern() {
     switch (column.id) {
       case "actions": {
         const actions = value && value.split("|");
+        if (getAuth().role !== "ROLE_ADMIN") return <></>;
         return (
           <TableCell key={column.id + " - " + indexRow} align={column.align}>
             <div>
@@ -278,26 +311,31 @@ export default function ManageIntern() {
       {(loadingCreate || loadingDelete || loadingEdit) && <SpinLoading />}
       <div className="manage-intern__inner">
         <div className="manage-intern__inner__top">
-          <div
-            className="manage-intern__inner__top__button--add"
-            onClick={() => {
-              if (
-                !(
-                  permissions.includes("CreateUser") ||
-                  getAuth().role === "ROLE_ADMIN"
-                )
-              ) {
-                toast.error("Sorry, you are not authorized to create intern.");
-                return;
-              }
-              setOpenModalAdd(true);
-            }}
-          >
-            <Button className="button manage-intern__inner__top__button--add__btn">
-              General Intern
-            </Button>
-            <i className="fi-rr-plus"></i>
-          </div>
+          {getAuth().role === "ROLE_ADMIN" && (
+            <div
+              className="manage-intern__inner__top__button--add"
+              onClick={() => {
+                if (
+                  !(
+                    permissions.includes("CreateUser") ||
+                    getAuth().role === "ROLE_ADMIN"
+                  )
+                ) {
+                  toast.error(
+                    "Sorry, you are not authorized to create intern."
+                  );
+                  return;
+                }
+                setOpenModalAdd(true);
+              }}
+            >
+              <Button className="button manage-intern__inner__top__button--add__btn">
+                General Intern
+              </Button>
+              <i className="fi-rr-plus"></i>
+            </div>
+          )}
+
           <div className="button manage-intern__inner__top__search">
             <i className="fi-rr-search pointer"></i>
             <Input
@@ -352,7 +390,10 @@ export default function ManageIntern() {
                         })
                     ) : (
                       <TableRow>
-                        {[1, 2, 3, 4, 5, 6, 7].map((item) => {
+                        {(getAuth().role === "ROLE_ADMIN"
+                          ? [1, 2, 3, 4, 5, 6, 7]
+                          : [1, 2, 3, 4, 5, 6]
+                        ).map((item) => {
                           return (
                             <TableCell key={item}>
                               {storeGetAllUser.loading ? (
