@@ -22,71 +22,7 @@ import { Empty } from "antd";
 import { setTitle } from "redux/actions/admin/setTitle";
 import { getAuth } from "utils/helpers";
 import ErrorPage from "components/common/ErrorPage";
-
-const columns =
-  getAuth().role === "ROLE_ADMIN"
-    ? [
-        { id: "id", label: "Id", minWidth: 80 },
-        { id: "name", label: "Name", minWidth: 100 },
-        {
-          id: "email",
-          label: "Email",
-          minWidth: 170,
-          align: "left",
-        },
-        {
-          id: "gender",
-          label: "Gender",
-          minWidth: 100,
-          align: "center",
-        },
-        {
-          id: "department",
-          label: "Department",
-          minWidth: 100,
-          align: "center",
-        },
-        {
-          id: "address",
-          label: "Address",
-          minWidth: 170,
-          align: "center",
-        },
-        {
-          id: "actions",
-          label: "Actions",
-          minWidth: 160,
-          align: "center",
-        },
-      ]
-    : [
-        { id: "id", label: "Id", minWidth: 80 },
-        { id: "name", label: "Name", minWidth: 100 },
-        {
-          id: "email",
-          label: "Email",
-          minWidth: 170,
-          align: "left",
-        },
-        {
-          id: "gender",
-          label: "Gender",
-          minWidth: 100,
-          align: "center",
-        },
-        {
-          id: "department",
-          label: "Department",
-          minWidth: 100,
-          align: "center",
-        },
-        {
-          id: "address",
-          label: "Address",
-          minWidth: 170,
-          align: "center",
-        },
-      ];
+import { getAllUserByLeader } from "redux/actions/admin/getAllUserByLeader";
 
 function createData(id, name, email, gender, department, address, actions) {
   if (getAuth().role !== "ROLE_ADMIN")
@@ -104,6 +40,71 @@ const useStyles = makeStyles({
 });
 
 export default function ManageIntern() {
+  // eslint-disable-next-line
+  const columns =
+    getAuth().role === "ROLE_ADMIN"
+      ? [
+          { id: "id", label: "Id", minWidth: 80 },
+          { id: "name", label: "Name", minWidth: 100 },
+          {
+            id: "email",
+            label: "Email",
+            minWidth: 170,
+            align: "left",
+          },
+          {
+            id: "gender",
+            label: "Gender",
+            minWidth: 100,
+            align: "center",
+          },
+          {
+            id: "department",
+            label: "Department",
+            minWidth: 100,
+            align: "center",
+          },
+          {
+            id: "address",
+            label: "Address",
+            minWidth: 170,
+            align: "center",
+          },
+          {
+            id: "actions",
+            label: "Actions",
+            minWidth: 160,
+            align: "center",
+          },
+        ]
+      : [
+          { id: "id", label: "Id", minWidth: 80 },
+          { id: "name", label: "Name", minWidth: 100 },
+          {
+            id: "email",
+            label: "Email",
+            minWidth: 170,
+            align: "left",
+          },
+          {
+            id: "gender",
+            label: "Gender",
+            minWidth: 100,
+            align: "center",
+          },
+          {
+            id: "department",
+            label: "Department",
+            minWidth: 100,
+            align: "center",
+          },
+          {
+            id: "address",
+            label: "Address",
+            minWidth: 170,
+            align: "center",
+          },
+        ];
   const classes = useStyles();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -155,6 +156,9 @@ export default function ManageIntern() {
     address: "",
   });
   const storeGetAllUser = useSelector((store) => store.getAllUser);
+  const storeGetAllUserByLeader = useSelector(
+    (store) => store.getAllUserByLeader
+  );
   const [openModalDelete, setOpenModalDelete] = useState(false);
   const handleAction = (item, row) => {
     switch (item) {
@@ -205,29 +209,51 @@ export default function ManageIntern() {
   };
 
   useEffect(() => {
-    let arr = [];
     if (
       !(permissions.includes("GetAllUsers") || getAuth().role === "ROLE_ADMIN")
     )
       return;
-    getAllUser((data) => {
-      if (data.data) {
-        data.data.forEach((item) => {
-          arr.push(
-            createData(
-              item.id,
-              item.name,
-              item.email,
-              item.gender,
-              item.department,
-              item.address,
-              "Edit|Delete"
-            )
-          );
-        });
-        setData(arr.sort((a, b) => (a.id > b.id ? 1 : -1)));
-      }
-    });
+    let arr = [];
+    if (getAuth().role === "ROLE_ADMIN") {
+      getAllUser((data) => {
+        if (data.data) {
+          data.data.forEach((item) => {
+            arr.push(
+              createData(
+                item.id,
+                item.name,
+                item.email,
+                item.gender,
+                item.department,
+                item.address,
+                "Edit|Delete"
+              )
+            );
+          });
+          setData(arr.sort((a, b) => (a.id > b.id ? 1 : -1)));
+        }
+      });
+    } else if (getAuth().role === "ROLE_MANAGER") {
+      getAllUserByLeader((data) => {
+        if (data.data) {
+          data.data.forEach((item) => {
+            arr.push(
+              createData(
+                item.id,
+                item.name,
+                item.email,
+                item.gender,
+                item.department,
+                item.address,
+                "Edit|Delete"
+              )
+            );
+          });
+          setData(arr.sort((a, b) => (a.id > b.id ? 1 : -1)));
+        }
+      });
+    }
+
     // eslint-disable-next-line
   }, []);
 
@@ -298,8 +324,7 @@ export default function ManageIntern() {
       });
       setFilteredData(filteredData);
     }
-    // setFilteredData(data);
-  }, [searchText, data]);
+  }, [searchText, data, columns]);
 
   const handleSearch = (event) => {
     const lowercasedValue = event.target.value.toLowerCase().trim();
@@ -396,7 +421,8 @@ export default function ManageIntern() {
                         ).map((item) => {
                           return (
                             <TableCell key={item}>
-                              {storeGetAllUser.loading ? (
+                              {storeGetAllUser.loading ||
+                              storeGetAllUserByLeader.loading ? (
                                 <Skeleton style={{ height: 40 }} />
                               ) : (
                                 <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />

@@ -17,6 +17,7 @@ import { setTitle } from "redux/actions/admin/setTitle";
 import { useHistory } from "react-router";
 import { getAuth } from "utils/helpers";
 import ErrorPage from "components/common/ErrorPage";
+import { getAllUserByLeader } from "redux/actions/admin/getAllUserByLeader";
 
 const columns = [
   { id: "id", label: "Id", minWidth: 80 },
@@ -89,22 +90,41 @@ export default function ManageSchedule() {
     )
       return;
     let arr = [];
-    getAllUser((data) => {
-      if (data.data) {
-        data.data.forEach((item) => {
-          arr.push(
-            createData(
-              item.id,
-              item.name,
-              item.email,
-              item.department,
-              "See details"
-            )
-          );
-        });
-        setData(arr.sort((a, b) => (a.id > b.id ? 1 : -1)));
-      }
-    });
+    if (getAuth().role === "ROLE_ADMIN") {
+      getAllUser((data) => {
+        if (data.data) {
+          data.data.forEach((item) => {
+            arr.push(
+              createData(
+                item.id,
+                item.name,
+                item.email,
+                item.department,
+                "Schedules"
+              )
+            );
+          });
+          setData(arr.sort((a, b) => (a.id > b.id ? 1 : -1)));
+        }
+      });
+    } else if (getAuth().role === "ROLE_MANAGER") {
+      getAllUserByLeader((data) => {
+        if (data.data) {
+          data.data.forEach((item) => {
+            arr.push(
+              createData(
+                item.id,
+                item.name,
+                item.email,
+                item.department,
+                "Schedules"
+              )
+            );
+          });
+          setData(arr.sort((a, b) => (a.id > b.id ? 1 : -1)));
+        }
+      });
+    }
     // eslint-disable-next-line
   }, []);
   const history = useHistory();
@@ -179,6 +199,9 @@ export default function ManageSchedule() {
     const lowercasedValue = event.target.value.toLowerCase().trim();
     setSearchText(lowercasedValue);
   };
+  const storeGetAllUserByLeader = useSelector(
+    (store) => store.getAllUserByLeader
+  );
 
   return (
     <div className="manage-intern">
@@ -240,7 +263,8 @@ export default function ManageSchedule() {
                       {[1, 2, 3, 4, 5].map((item) => {
                         return (
                           <TableCell key={item}>
-                            {storeGetAllUser.loading ? (
+                            {storeGetAllUser.loading ||
+                            storeGetAllUserByLeader.loading ? (
                               <Skeleton style={{ height: 40 }} />
                             ) : (
                               <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />

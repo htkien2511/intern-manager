@@ -11,7 +11,7 @@ import { Empty, Spin, Tooltip } from "antd";
 import { IconButton } from "@material-ui/core";
 import { useDispatch, useSelector } from "react-redux";
 import { setTitle } from "redux/actions/admin/setTitle";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import { getAllTasksByProjectID } from "redux/actions/admin/getAllTaskByProjectID";
 import moment from "moment";
 import SpinLoading from "components/common/core/SpinLoading";
@@ -61,6 +61,7 @@ const ManageProjectDetail = () => {
 
   const dispatch = useDispatch();
   const { projectId, projectName } = useParams();
+  const history = useHistory();
 
   useEffect(() => {
     if (
@@ -113,7 +114,7 @@ const ManageProjectDetail = () => {
 
   const storeGetAllTasks = useSelector((store) => store.getAllTasksByProjectID);
 
-  const renderTable = (title, input) => {
+  const renderTable = (input) => {
     return (
       <div className="test-library__inner__content__test-plan">
         <h2
@@ -373,7 +374,7 @@ const ManageProjectDetail = () => {
           {permissions.includes("GetAllTasksByProjectId") ||
           getAuth().role === "ROLE_ADMIN" ? (
             <div className="test-library__inner__content">
-              {renderTable("Project Name", filteredData)}
+              {renderTable(filteredData)}
             </div>
           ) : (
             <ErrorPage message="Sorry, you are not authorized to get data this page." />
@@ -386,6 +387,7 @@ const ManageProjectDetail = () => {
           title="Add task"
           setData={setData}
           projectId={projectId}
+          dueDateProject={history.location.state.dueDate}
         />
       )}
       {showModalEdit && (
@@ -395,6 +397,7 @@ const ManageProjectDetail = () => {
           setData={setData}
           input={taskSelected}
           projectId={projectId}
+          dueDateProject={history.location.state.dueDate}
         />
       )}
       {showModalSeeDetails && (

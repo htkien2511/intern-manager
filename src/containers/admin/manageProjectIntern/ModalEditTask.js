@@ -31,7 +31,13 @@ export const HeaderModal = ({ close, title }) => {
   );
 };
 
-export const ContentModal = ({ setOpenModal, projectId, setData, input }) => {
+export const ContentModal = ({
+  setOpenModal,
+  projectId,
+  setData,
+  input,
+  dueDateProject,
+}) => {
   const DIFFICULTY = { Hard: 1, Normal: 2, Easy: 3 };
 
   const [error, setError] = React.useState({});
@@ -210,6 +216,7 @@ export const ContentModal = ({ setOpenModal, projectId, setData, input }) => {
                 onFocus: handleFocus,
                 value: form.dueDate || "",
                 min: moment(Date.now()).format("YYYY-MM-DD"),
+                max: moment(dueDateProject).format("YYYY-MM-DD"),
                 disabled: false,
               }}
               error={error.dueDate}
@@ -329,7 +336,14 @@ export const ContentModal = ({ setOpenModal, projectId, setData, input }) => {
   );
 };
 
-const ModalEditTask = ({ setOpenModal, title, setData, projectId, input }) => {
+const ModalEditTask = ({
+  setOpenModal,
+  title,
+  setData,
+  projectId,
+  input,
+  dueDateProject,
+}) => {
   return (
     <ModalAddAccountUserContainer className="modal__add__user__container">
       <CustomizedModal>
@@ -342,6 +356,7 @@ const ModalEditTask = ({ setOpenModal, title, setData, projectId, input }) => {
             setData={setData}
             projectId={projectId}
             input={input}
+            dueDateProject={dueDateProject}
           />
         </CustomizedModal.Content>
       </CustomizedModal>

@@ -274,9 +274,14 @@ export default function ManageProject() {
                       <div className="manager-project__menu-more__inner">
                         <div
                           onClick={() => {
-                            history.push(
-                              `/admin/manage-project/projectID=${row.projectID}/projectName=${row.title}`
-                            );
+                            history.push({
+                              pathname: `/admin/manage-project/projectID=${row.projectID}/projectName=${row.title}`,
+                              state: {
+                                dueDate: moment(row.dueDate).format(
+                                  "YYYY-MM-DD"
+                                ),
+                              },
+                            });
                             dispatch(setTitle("Manage list tasks"));
                           }}
                         >
