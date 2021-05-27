@@ -101,7 +101,7 @@ export const ContentModal = ({ data, setOpenModal, setData }) => {
                 )
               );
             });
-            setData(arr);
+            setData(arr.sort((a, b) => (a.id > b.id ? 1 : -1)));
             toast.success(`Updated account ${res.data.name} successfully!`);
           } else {
             toast.error(r.message);

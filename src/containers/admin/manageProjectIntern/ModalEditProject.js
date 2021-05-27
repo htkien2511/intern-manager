@@ -131,7 +131,9 @@ export const ContentModal = ({ setOpenModal, setData, data }) => {
                         )
                       );
                     });
-                    setData(arr);
+                    setData(
+                      arr.sort((a, b) => (a.projectID > b.projectID ? 1 : -1))
+                    );
                   } else {
                     toast.error(response.message);
                   }
@@ -152,7 +154,9 @@ export const ContentModal = ({ setOpenModal, setData, data }) => {
                           "More"
                         )
                       );
-                      setData(arr);
+                      setData(
+                        arr.sort((a, b) => (a.projectId > b.projectId ? 1 : -1))
+                      );
                     });
                   } else {
                     toast.error(res.message);

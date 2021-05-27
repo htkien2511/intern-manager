@@ -225,7 +225,7 @@ export default function ManageIntern() {
             )
           );
         });
-        setData(arr);
+        setData(arr.sort((a, b) => (a.id > b.id ? 1 : -1)));
       }
     });
     // eslint-disable-next-line

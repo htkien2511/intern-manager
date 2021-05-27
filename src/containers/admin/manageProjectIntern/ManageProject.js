@@ -155,7 +155,7 @@ export default function ManageProject() {
                 "More"
               )
             );
-            setData(arr);
+            setData(arr.sort((a, b) => (a.projectID > b.projectID ? 1 : -1)));
           });
         } else {
           toast.error(res.message);
@@ -177,7 +177,7 @@ export default function ManageProject() {
                 "More"
               )
             );
-            setData(arr);
+            setData(arr.sort((a, b) => (a.projectId > b.projectId ? 1 : -1)));
           });
         } else {
           toast.error(res.message);
@@ -232,7 +232,7 @@ export default function ManageProject() {
       title: item.title,
       description: item.description,
       dueDate: item.dueDate,
-      idOfAdmin: item.managerName.managerId,
+      idOfAdmin: item.managerName && item.managerName.managerId,
       projectId: item.projectID,
       usersAssigned: item.usersAssigned,
     });
@@ -356,7 +356,16 @@ export default function ManageProject() {
       }
       case "managerName": {
         return (
-          <TableCell key={column.id + " - " + indexRow}>{value.name}</TableCell>
+          <TableCell key={column.id + " - " + indexRow}>
+            {value ? (
+              value.name
+            ) : (
+              <Empty
+                image={Empty.PRESENTED_IMAGE_SIMPLE}
+                style={{ padding: 0 }}
+              />
+            )}
+          </TableCell>
         );
       }
       case "description": {

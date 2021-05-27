@@ -105,7 +105,7 @@ export const ContentModal = ({ setOpenModal, title, setData }) => {
                     )
                   );
                 });
-                setData(arr);
+                setData(arr.sort((a, b) => (a.id > b.id ? 1 : -1)));
                 toast.success(`General account ${res.data.name} successfully!`);
               } else {
                 toast.error(response.message);

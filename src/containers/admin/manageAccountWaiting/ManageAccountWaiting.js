@@ -102,7 +102,7 @@ export default function ManageAccountWaiting() {
             )
           );
         });
-        setData(arr);
+        setData(arr.sort((a, b) => (a.id > b.id ? 1 : -1)));
       }
     });
   }, []);

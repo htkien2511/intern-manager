@@ -72,7 +72,7 @@ const ManageProjectDetail = () => {
       return;
     getAllTasksByProjectID(Number(projectId), (res) => {
       if (res.success) {
-        setData(res.data);
+        setData(res.data.sort((a, b) => (a.taskId > b.taskId ? 1 : -1)));
       }
     });
     // eslint-disable-next-line

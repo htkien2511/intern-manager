@@ -111,7 +111,7 @@ export default function ManagePermissionLeader() {
             )
           );
         });
-        setData(arr);
+        setData(arr.sort((a, b) => (a.id > b.id ? 1 : -1)));
         setLeaders(temp);
       } else {
         toast.error(data.message);

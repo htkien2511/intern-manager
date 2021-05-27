@@ -75,7 +75,7 @@ export const ContentModal = ({ setOpenModal, setData, projectId }) => {
         getAllTasksByProjectID(projectId, (r) => {
           if (r.success) {
             toast.success("Create task successfully!");
-            setData(r.data);
+            setData(r.data.sort((a, b) => (a.taskId > b.taskId ? 1 : -1)));
           } else {
             toast.error(r.message);
           }
