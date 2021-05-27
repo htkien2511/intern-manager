@@ -12,6 +12,8 @@ import { EditOutlined } from "@ant-design/icons";
 import { Tooltip } from "element-react";
 import { IconButton } from "@material-ui/core";
 import { FormBox } from "components/common";
+import { getAuth } from "utils/helpers";
+import { updateFeedback } from "redux/actions/admin/updateFeedback";
 
 export const HeaderModal = ({ close, title }) => {
   return (
@@ -45,7 +47,18 @@ export const ContentModal = ({ setOpenModal, task }) => {
     getAllFeedbacksByTaskID(task.taskId, (res) => {
       if (res.success) {
         if (!res.data) return;
-        setFeedbacks(res.data);
+        let arr = [];
+        res.data.forEach((_item) => {
+          arr.push({
+            date: _item.date,
+            feedbackContent: _item.feedbackContent,
+            feedbackId: _item.feedbackId,
+            user: _item.user,
+            userId: Number(_item.userId),
+            activeContent: false,
+          });
+        });
+        setFeedbacks(arr);
       } else {
         toast.error(res.message);
       }
@@ -66,6 +79,47 @@ export const ContentModal = ({ setOpenModal, task }) => {
 
   function handleChange(event) {
     setContentFeedback(event.target.value);
+  }
+
+  function handleEditFeedback(feedback) {
+    let temp = [...feedbacks];
+    temp.forEach((item, index) => {
+      if (item.feedbackId === feedback.feedbackId) {
+        item.activeContent = true;
+      }
+    });
+    setFeedbacks(temp);
+  }
+
+  function handleUpdateFeedback(feedback) {
+    const input = {
+      feedback_id: feedback.feedbackId,
+      feedback_content: feedback.feedbackContent.trim(),
+    };
+
+    updateFeedback(input, (res) => {
+      if (!res.success) {
+        toast.error(res.message || "Updated failed");
+      } else {
+        let temp = [...feedbacks];
+        temp.forEach((item, index) => {
+          if (item.feedbackId === feedback.feedbackId) {
+            item.activeContent = false;
+          }
+        });
+        setFeedbacks(temp);
+      }
+    });
+  }
+
+  function handleChangeUpdateFeedback(event, feedback) {
+    let temp = [...feedbacks];
+    temp.forEach((item, index) => {
+      if (item.feedbackId === feedback.feedbackId) {
+        item.feedbackContent = event.target.value;
+      }
+    });
+    setFeedbacks(temp);
   }
 
   return (
@@ -97,46 +151,64 @@ export const ContentModal = ({ setOpenModal, task }) => {
                         className: "input__content",
                         placeholder: "Content",
                         value: _item.feedbackContent,
-                        disabled: true,
+                        onChange: (e) => handleChangeUpdateFeedback(e, _item),
+                        disabled: !_item.activeContent,
                       }}
                     />
                   </div>
-                  <div className="flex items-center">
+                  <div
+                    className="flex items-center space-between"
+                    style={{ marginTop: _item.activeContent ? "-10px" : 0 }}
+                  >
+                    {_item.activeContent && (
+                      <button
+                        className="button button--success"
+                        style={{ color: "white", marginLeft: "45px" }}
+                        onClick={() => handleUpdateFeedback(_item)}
+                      >
+                        Save
+                      </button>
+                    )}
                     <span
                       style={{
-                        color: "gray",
-                        fontSize: 12,
+                        color: "#556f8a;",
+                        fontSize: 13,
                         position: "absolute",
                         right: 0,
                       }}
                     >
                       {_item.date &&
-                        moment(_item.date).format("HH:mm:ss - DD/MM/YYYY ")}
+                        moment(_item.date).format("DD/MM/YYYY  HH:mm:ss")}
                     </span>
                   </div>
                 </div>
 
-                <div className="flex items-center">
-                  <Tooltip>
-                    <IconButton>
-                      <EditOutlined style={{ fontSize: 14 }} />
-                    </IconButton>
-                  </Tooltip>
-                  <Tooltip>
-                    <IconButton
-                      style={{
-                        width: 35,
-                        height: 35,
-                        borderRadius: "50%",
-                        border: "none",
-                        marginLeft: 3,
-                      }}
-                      onClick={() => handleDeleteFeedback(_item.feedbackId)}
-                    >
-                      <span style={{ fontSize: 16 }}>x</span>
-                    </IconButton>
-                  </Tooltip>
-                </div>
+                {Number(_item.userId) === getAuth().id && (
+                  <div className="flex items-center">
+                    <Tooltip>
+                      <IconButton>
+                        <EditOutlined
+                          style={{ fontSize: 14 }}
+                          onClick={() => handleEditFeedback(_item)}
+                        />
+                      </IconButton>
+                    </Tooltip>
+                    <Tooltip>
+                      <IconButton
+                        style={{
+                          width: 35,
+                          height: 35,
+                          borderRadius: "50%",
+                          border: "none",
+                          marginLeft: 3,
+                        }}
+                        onClick={() => handleDeleteFeedback(_item.feedbackId)}
+                      >
+                        <span style={{ fontSize: 16 }}>x</span>
+                      </IconButton>
+                    </Tooltip>
+                  </div>
+                )}
               </div>
             </div>
           ))
@@ -190,7 +262,7 @@ export const ContentModal = ({ setOpenModal, task }) => {
                   }
                 }}
               >
-                Save
+                Send
               </button>
               <button
                 className="button"

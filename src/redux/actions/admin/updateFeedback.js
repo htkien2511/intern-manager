@@ -5,7 +5,7 @@ export function updateFeedback(input, resolve = () => {}) {
   store.dispatch({
     type: types.UPDATE_FEEDBACK,
   });
-  return fetch(`${process.env.REACT_APP_API_URL}feedback/update`, {
+  return fetch(`${process.env.REACT_APP_API_URL}task/feedback/update`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
