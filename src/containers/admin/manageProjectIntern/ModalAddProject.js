@@ -159,6 +159,7 @@ export const ContentModal = ({ setOpenModal, setData }) => {
             }
           });
         }
+        toast.success("Created successfully");
       } else {
         toast.error(res.message);
       }

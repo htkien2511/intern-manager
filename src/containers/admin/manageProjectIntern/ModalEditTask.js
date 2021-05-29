@@ -120,6 +120,7 @@ export const ContentModal = ({
             toast.error(r.message);
           }
         });
+        toast.success("Updated successfully");
       } else {
         toast.error(res.message);
       }

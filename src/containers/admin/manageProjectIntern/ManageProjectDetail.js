@@ -314,6 +314,7 @@ const ManageProjectDetail = () => {
     deleteTask(taskSelected.taskId, (res) => {
       if (res.success) {
         setData(data.filter((item) => item.taskId !== taskSelected.taskId));
+        toast.success("Deleted successfully");
       } else {
         toast.error(res.message || "Delete failed");
       }

@@ -185,7 +185,7 @@ export const ContentModal = ({ setOpenModal, task }) => {
                   </div>
                 </div>
 
-                {Number(_item.userId) !== getAuth().id && (
+                {Number(_item.userId) === getAuth().id && (
                   <div className="flex items-center">
                     <Tooltip>
                       <IconButton>

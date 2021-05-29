@@ -167,6 +167,7 @@ export const ContentModal = ({ setOpenModal, setData, data }) => {
             }
           }
         );
+        toast.success("Updated successfully");
       } else {
         toast.error(res.message);
       }

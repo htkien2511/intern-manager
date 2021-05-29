@@ -245,6 +245,7 @@ export default function ManageProject() {
         setData(
           data.filter((item) => item.projectID !== infoSelected.projectId)
         );
+        toast.success("Deleted successfully");
       } else {
         toast.error(res.message);
       }

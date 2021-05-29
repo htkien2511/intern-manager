@@ -84,6 +84,7 @@ export const ContentModal = ({
             toast.error(r.message);
           }
         });
+        toast.success("Created successfully");
       } else {
         toast.error(res.message);
       }

@@ -85,6 +85,7 @@ export const ContentModal = ({ setOpenModal, projectId, setData, input }) => {
             toast.error(r.message);
           }
         });
+        toast.success("Updated successfully");
       } else {
         toast.error(res.message);
       }
