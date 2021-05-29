@@ -115,7 +115,6 @@ export const ContentModal = ({
       if (res.success) {
         getAllTasksByProjectID(projectId, (r) => {
           if (r.success) {
-            toast.success("Update task successfully!");
             setData(r.data.sort((a, b) => (a.taskId > b.taskId ? 1 : -1)));
           } else {
             toast.error(r.message);

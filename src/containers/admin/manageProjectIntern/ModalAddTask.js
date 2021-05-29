@@ -42,7 +42,7 @@ export const ContentModal = ({
     title: "",
     description: "",
     dueDate: "",
-    difficultId: 3,
+    difficultId: "Easy",
     projectId: projectId,
   });
 
@@ -79,7 +79,6 @@ export const ContentModal = ({
       if (res.success) {
         getAllTasksByProjectID(projectId, (r) => {
           if (r.success) {
-            toast.success("Create task successfully!");
             setData(r.data.sort((a, b) => (a.taskId > b.taskId ? 1 : -1)));
           } else {
             toast.error(r.message);

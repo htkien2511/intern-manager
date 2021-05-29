@@ -72,14 +72,18 @@ export default function ManageScheduleDetail() {
     };
     return (
       <div
+        className="align__center"
         style={{
           background: renderColorByShift(),
-          height: 60,
-          width: 60,
+          height: 30,
+          width: 40,
           borderRadius: 5,
+          color: "blue",
           textAlign: "center",
         }}
-      ></div>
+      >
+        {/* {eventInfo.event._def.extendedProps.shift !== 3 && "Details"} */}
+      </div>
     );
   };
   const handleEditSchedule = () => {

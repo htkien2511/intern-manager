@@ -58,7 +58,9 @@ export const ContentModal = ({ setOpenModal, task }) => {
             activeContent: false,
           });
         });
-        setFeedbacks(arr);
+        setFeedbacks(
+          arr.sort((a, b) => (a.feedbackId > b.feedbackId ? 1 : -1))
+        );
       } else {
         toast.error(res.message);
       }
@@ -171,7 +173,7 @@ export const ContentModal = ({ setOpenModal, task }) => {
                     )}
                     <span
                       style={{
-                        color: "#556f8a;",
+                        color: "#556f8a",
                         fontSize: 13,
                         position: "absolute",
                         right: 0,
@@ -183,7 +185,7 @@ export const ContentModal = ({ setOpenModal, task }) => {
                   </div>
                 </div>
 
-                {Number(_item.userId) === getAuth().id && (
+                {Number(_item.userId) !== getAuth().id && (
                   <div className="flex items-center">
                     <Tooltip>
                       <IconButton>
@@ -245,7 +247,11 @@ export const ContentModal = ({ setOpenModal, task }) => {
                         if (result.success) {
                           getAllFeedbacksByTaskID(task.taskId, (r) => {
                             if (r.success) {
-                              setFeedbacks(r.data);
+                              setFeedbacks(
+                                r.data.sort((a, b) =>
+                                  a.feedbackId > b.feedbackId ? 1 : -1
+                                )
+                              );
                               setShowButtonSave(false);
                               setContentFeedback("");
                             } else {

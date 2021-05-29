@@ -111,7 +111,6 @@ export const ContentModal = ({ setOpenModal, setData }) => {
 
     createProject(formData, (res) => {
       if (res.success) {
-        toast.success("General project successfully");
         let arr = [];
         if (getAuth().role === "ROLE_ADMIN") {
           getAllProject((response) => {

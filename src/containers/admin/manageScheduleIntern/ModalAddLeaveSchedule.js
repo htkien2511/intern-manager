@@ -105,19 +105,15 @@ export const ContentModal = ({ setOpenModal, setData, userID }) => {
       reason_content: form.reason_content,
     };
 
-    console.log({ formData });
-
     createSchedule(formData, (res) => {
       if (res.success) {
         getScheduleUserID(userID, (r) => {
           if (r.success) {
-            toast.success("Created schedule successfully!");
             setData(r.data);
           } else {
             toast.error(r.message);
           }
         });
-        toast.success("Created schedule successfully");
       } else {
         toast.error(res.message);
       }

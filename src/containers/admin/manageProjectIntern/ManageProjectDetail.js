@@ -127,7 +127,7 @@ const ManageProjectDetail = () => {
             <Empty />
           </div>
         ) : (
-          <Table>
+          <Table style={{ marginLeft: 80 }}>
             <thead>
               <tr>
                 <th>Task ID</th>
@@ -150,7 +150,13 @@ const ManageProjectDetail = () => {
                         </div>
                       </div>
                     </td>
-                    <td>
+                    <td
+                      style={{
+                        maxWidth: "180px",
+                        paddingRight: 50,
+                        overflowWrap: "anywhere",
+                      }}
+                    >
                       <div className="test-plan__content">
                         <div className="test-plan__content__inner">
                           <span>{item.title}</span>
@@ -307,7 +313,6 @@ const ManageProjectDetail = () => {
   const handleConfirm = () => {
     deleteTask(taskSelected.taskId, (res) => {
       if (res.success) {
-        toast.success("Deleted successfully");
         setData(data.filter((item) => item.taskId !== taskSelected.taskId));
       } else {
         toast.error(res.message || "Delete failed");

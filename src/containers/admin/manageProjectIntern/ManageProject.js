@@ -242,7 +242,6 @@ export default function ManageProject() {
     setOpenModalDelete(false);
     deleteProject(infoSelected.projectId, (res) => {
       if (res.success) {
-        toast.success("Deleted successfully");
         setData(
           data.filter((item) => item.projectID !== infoSelected.projectId)
         );

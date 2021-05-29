@@ -105,7 +105,6 @@ export const ContentModal = ({ setOpenModal, setData, data }) => {
 
     updateProject(formData, (res) => {
       if (res.success) {
-        toast.success("Edit project successfully");
         let arr = [];
         assignUsersIntoProject(
           {

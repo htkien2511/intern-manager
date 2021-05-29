@@ -40,7 +40,10 @@ function CalenderTable() {
       if (!output.success) {
         return;
       }
-      if (!output.data.length) {
+      const haveRegisterNewWeek = output.data
+        .map((_a) => _a.time)
+        .includes(workingWeek[0].leave_date);
+      if (!output.data.length || !haveRegisterNewWeek) {
         let a = [];
         workingWeek.forEach((_item, indx) => {
           a.push({
@@ -55,7 +58,6 @@ function CalenderTable() {
       const newData = getUniqueListBy(output.data, "time").filter((item) =>
         workingWeek.map((_e) => _e.leave_date).includes(item.time)
       );
-
       let ar = [];
       newData.forEach((item) => {
         ar.push({
@@ -89,7 +91,6 @@ function CalenderTable() {
         });
       });
       setWorkingWeek(array);
-      setEnabledSubmit(true);
     } else {
       setFirstDateWeek(firstDateWeek);
       let array = [];
@@ -103,18 +104,16 @@ function CalenderTable() {
         });
       });
       setWorkingWeek(array);
-      setEnabledSubmit(false);
     }
     // eslint-disable-next-line
   }, []);
 
+  useEffect(() => {
+    setEnabledSubmit(curr.getDay() === 6 || curr.getDay() === 0);
+    // eslint-disable-next-line
+  }, []);
   const handleSubmit = () => {
-    if (
-      new Date(new Date().setDate(firstDateWeek + 5)).getTime() ===
-        new Date().getTime() ||
-      new Date(new Date().setDate(firstDateWeek + 6)).getTime() ===
-        new Date().getTime()
-    ) {
+    if (curr.getDay() === 6 || curr.getDay() === 0) {
       getScheduleUserID(getAuth().id, (output) => {
         if (!output.success) {
           toast.error(output.message);
