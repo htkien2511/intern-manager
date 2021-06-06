@@ -11,10 +11,12 @@ import { changePassword } from "redux/actions/changePassword";
 import { useSelector } from "react-redux";
 import SpinLoading from "components/common/core/SpinLoading";
 import { RollbackOutlined } from "@ant-design/icons";
+import { uploadImage } from "redux/actions/intern/uploadImage";
+import avatarDefault from "assets/images/avtDefault.png";
 
 function FormEdit() {
   const { TabPane } = Tabs;
-  const [imageUrl, setImageUrl] = useState("https://picsum.photos/200");
+  const [imageUrl, setImageUrl] = useState();
   const [error, setError] = React.useState({});
   const [form, setForm] = React.useState({
     id: "",
@@ -36,6 +38,13 @@ function FormEdit() {
       setForm(output.data);
     });
   }, []);
+
+  const storeUploadImage = useSelector((store) => store.uploadImage);
+
+  useEffect(() => {
+    if (!storeUploadImage.data) return;
+    setImageUrl(storeUploadImage.data);
+  }, [storeUploadImage]);
 
   const [departments, setDepartments] = useState([]);
   const [departObject, setDepartObject] = useState([]);
@@ -172,14 +181,19 @@ function FormEdit() {
     <div className="form-edit flex flex-col">
       {(loadingGetData ||
         storeUpdateProfile.loading ||
-        storeChangePassword.loading) && <SpinLoading />}
+        storeChangePassword.loading ||
+        storeUploadImage.loading) && <SpinLoading />}
       <div className="block__back-previous-page" style={{ marginLeft: 30 }}>
         <RollbackOutlined onClick={() => window.history.back()} />
         <div onClick={() => window.history.back()}>Back to previous page</div>
       </div>
       <div className="form-edit__body__edit__info">
         <div className="edit-avatar">
-          <img src={imageUrl} className="avatar" alt="avatar" />
+          <img
+            src={imageUrl ? imageUrl : avatarDefault}
+            className="avatar"
+            alt="avatar"
+          />
           <div className="file align__center">
             <input
               type="file"
@@ -187,7 +201,10 @@ function FormEdit() {
               id="file"
               className="inputfile"
               onChange={(event) => {
-                setImageUrl(URL.createObjectURL(event.target.files[0]));
+                uploadImage(event.target.files[0], (res) => {
+                  setImageUrl(res);
+                  localStorage.setItem("imageUrl", res);
+                });
               }}
             />
             <label htmlFor="file" style={{ marginBottom: 0 }}>

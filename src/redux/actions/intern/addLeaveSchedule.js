@@ -10,17 +10,14 @@ export function addLeaveSchedule(input, resolve = () => {}) {
     leave_date: input.leave_date,
     reason_content: input.reason_content,
   };
-  return fetch(
-    `${process.env.REACT_APP_API_URL}schedule/add`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: getAuth().token,
-      },
-      body: JSON.stringify(details),
-    }
-  )
+  return fetch(`${process.env.REACT_APP_API_URL}schedule/add`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: getAuth().token,
+    },
+    body: JSON.stringify(details),
+  })
     .then((response) => response.json())
     .then((data) => {
       resolve(data);

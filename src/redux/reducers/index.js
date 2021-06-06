@@ -43,6 +43,7 @@ import getPermissionLeader from "./admin/getPermissionLeader";
 import getAllPermission from "./admin/getAllPermission";
 import getAllProjectByLeader from "./admin/getAllProjectByLeader";
 import getAllUserByLeader from "./admin/getAllUserByLeader";
+import uploadImage from "./intern/uploadImage";
 
 export default combineReducers({
   login,
@@ -89,4 +90,5 @@ export default combineReducers({
   getAllPermission,
   getAllProjectByLeader,
   getAllUserByLeader,
+  uploadImage,
 });

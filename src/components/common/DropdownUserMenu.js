@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { useHistory } from "react-router";
 import { getAuth } from "utils/helpers";
 import { ROUTE_ADMIN_LOGIN, ROUTE_LOGIN } from "../../utils/routes";
+import avatarDefault from "assets/images/avtDefault.png";
+import { useSelector } from "react-redux";
 
 const DropdownUserMenu = () => {
   const [isShown, setIsShown] = useState(false);
@@ -23,11 +25,13 @@ const DropdownUserMenu = () => {
   };
   useClickOutside(logoutWrapper);
   const history = useHistory();
+  const storeUploadImage = useSelector((store) => store.uploadImage);
+
   return (
     <div ref={logoutWrapper} className="style-userContainer">
       {/* <div className="style-userInfor"> */}
       <img
-        src="https://picsum.photos/200"
+        src={storeUploadImage.data ? storeUploadImage.data : avatarDefault}
         alt=""
         className="style-avatarContainer"
         onClick={() => setIsShown(!isShown)}

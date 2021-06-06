@@ -5,6 +5,8 @@ import { getProfileIntern } from "redux/actions/intern/getProfileIntern";
 import { getAuth } from "utils/helpers";
 import { useSelector } from "react-redux";
 import SpinLoading from "components/common/core/SpinLoading";
+import avatarDefault from "assets/images/avtDefault.png";
+
 function FormWatch() {
   const [form, setForm] = useState([]);
   useEffect(() => {
@@ -15,6 +17,7 @@ function FormWatch() {
   }, []);
 
   const loadingGetData = useSelector((store) => store.getProfileIntern).loading;
+  const storeUploadImage = useSelector((store) => store.uploadImage);
 
   return (
     <div className="form-watch">
@@ -23,7 +26,9 @@ function FormWatch() {
         <div className="form-watch__body__info">
           <div className="info_avatar align__center">
             <img
-              src="https://picsum.photos/200"
+              src={
+                storeUploadImage.data ? storeUploadImage.data : avatarDefault
+              }
               className="avatar"
               alt="avatar"
             />

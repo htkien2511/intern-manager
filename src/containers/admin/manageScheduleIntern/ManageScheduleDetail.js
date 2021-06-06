@@ -14,6 +14,7 @@ import SpinLoading from "components/common/core/SpinLoading";
 import { getScheduleUserID } from "redux/actions/admin/getScheduleUserID";
 import { getAuth } from "utils/helpers";
 import ErrorPage from "components/common/ErrorPage";
+import IconEye from "assets/icons/TTM_Icon-Eye.svg";
 
 export default function ManageScheduleDetail() {
   const dispatch = useDispatch();
@@ -63,9 +64,9 @@ export default function ManageScheduleDetail() {
         case 0:
           return "red";
         case 1:
-          return "yellow";
+          return "#afaf05";
         case 2:
-          return "chocolate";
+          return "#f19402";
         default:
           return "white";
       }
@@ -79,10 +80,9 @@ export default function ManageScheduleDetail() {
           width: 40,
           borderRadius: 5,
           color: "blue",
-          textAlign: "center",
         }}
       >
-        {/* {eventInfo.event._def.extendedProps.shift !== 3 && "Details"} */}
+        <img src={IconEye} alt="" style={{ width: 14 }} />
       </div>
     );
   };
@@ -216,7 +216,7 @@ export default function ManageScheduleDetail() {
                   <span>Off the morning</span>
                   <div
                     style={{
-                      background: "yellow",
+                      background: "#afaf05",
                     }}
                   ></div>
                 </div>
@@ -224,7 +224,7 @@ export default function ManageScheduleDetail() {
                   <span>Off the afternoon</span>
                   <div
                     style={{
-                      background: "chocolate",
+                      background: "#f19402",
                     }}
                   ></div>
                 </div>
