@@ -67,10 +67,13 @@ function CalenderTable() {
           reason_content: item.reason,
         });
       });
-      ar.sort(function (a, b) {
-        return a.leave_id - b.leave_id;
-      });
-      setSchedules(ar);
+      setSchedules(
+        ar.sort((a, b) =>
+          new Date(a.leave_date).getTime() > new Date(b.leave_date).getTime()
+            ? 1
+            : -1
+        )
+      );
     });
     // eslint-disable-next-line
   }, [firstDateWeek, workingWeek]);
