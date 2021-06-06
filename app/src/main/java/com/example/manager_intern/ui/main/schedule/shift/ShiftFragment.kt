@@ -26,6 +26,7 @@ class ShiftFragment : BaseFragment<ScheduleViewModel>(R.layout.shift_frag) {
     private val dates = mutableListOf<String>()
     private val daysOff = mutableListOf<ScheduleData>()
     private var userData: UserData? = null
+    private var daysOffString = mutableListOf<String>()
 
     override fun initView() {
 
@@ -44,17 +45,37 @@ class ShiftFragment : BaseFragment<ScheduleViewModel>(R.layout.shift_frag) {
             dates.addAll(getDaysInNetWeek())
             daysOff.addAll(it)
             binding.rvSpinner.adapter = adapter
+            daysOffString.addAll(it.map { item -> item.time })
         }
+
+//        viewModel!!.requestSuccess.observe(this) {
+//            if (userData != null) {
+//                viewModel?.getScheduleById(userData!!.token, userData!!.id)
+//            }
+//        }
 
         binding.btnSubmitShift.setOnClickListener {
             val listShift = adapter.listShift
-            (0 until listShift.size - 1).forEach { i ->
+            (0 until listShift.size).forEach { i ->
+                Log.d("___TAG", "initListener: out " + i)
+                if (daysOffString.contains(dates[i]) && listShift[i] == 3) {
+                    Log.d("___TAG", "initListener: in1 " + i)
+                    val index = daysOffString.indexOf(dates[i]);
+                    userData?.let { it1 -> viewModel?.deleteSchedule(it1.token, daysOff[index].id) }
+                }
+
                 if (listShift[i] != 3) {
                     val body = ScheduleRequest("Personal reason", dates[i], listShift[i])
                     if (userData != null) {
-                        viewModel?.addLeave(userData!!.token, body)
+                        if (daysOffString.contains(dates[i])) {
+                            val index = daysOffString.indexOf(dates[i]);
+                            Log.d("___TAG", "initListener: in2 " + i)
+                            viewModel?.updateLeave(userData!!.token, daysOff[index].id, body)
+                        } else {
+                            Log.d("___TAG", "initListener: in3 " + i)
+                            viewModel?.addLeave(userData!!.token, body)
+                        }
                     }
-
                 }
             }
         }

@@ -6,9 +6,12 @@ import com.example.manager_intern.data.remote.request.ScheduleRequest
 import com.example.manager_intern.data.remote.responsive.ScheduleData
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlin.random.Random
 
 class ScheduleViewModel : BaseViewModel() {
     val scheduleData = MutableLiveData<List<ScheduleData>>()
+    val requestSuccess = MutableLiveData<Int>()
+
 
     fun getScheduleById(auth: String, userId: Int) {
         showLoading()
@@ -38,6 +41,11 @@ class ScheduleViewModel : BaseViewModel() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     closeLoading()
+                    if (it.isSuccess) {
+                        requestSuccess.value = Random(10000000).nextInt()
+                    } else {
+                        onError.value = it.message
+                    }
                 }, {
                     closeLoading()
                     onError.value = it.message
@@ -45,14 +53,39 @@ class ScheduleViewModel : BaseViewModel() {
         )
     }
 
-    fun updateLeave(leaveId: Int, scheduleRequest: ScheduleRequest) {
+    fun updateLeave(auth: String, leaveId: Int, scheduleRequest: ScheduleRequest) {
         showLoading()
         addDisposable(
-            repository.putUpdateSchedule(leaveId, scheduleRequest)
+            repository.putUpdateSchedule(auth, leaveId, scheduleRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     closeLoading()
+                    if (it.isSuccess) {
+                        requestSuccess.value = Random(10000000).nextInt()
+                    } else {
+                        onError.value = it.message
+                    }
+                }, {
+                    closeLoading()
+                    onError.value = it.message
+                })
+        )
+    }
+
+    fun deleteSchedule(auth: String, leaveId: Int) {
+        showLoading()
+        addDisposable(
+            repository.putDeleteSchedule(auth, leaveId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    closeLoading()
+                    if (it.isSuccess) {
+                        requestSuccess.value = Random(10000000).nextInt()
+                    } else {
+                        onError.value = it.message
+                    }
                 }, {
                     closeLoading()
                     onError.value = it.message

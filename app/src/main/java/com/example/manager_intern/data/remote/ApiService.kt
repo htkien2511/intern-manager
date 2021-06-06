@@ -63,13 +63,14 @@ interface ApiService {
     fun postAddSchedule(
         @Header("Authorization") auth: String,
         @Body scheduleRequest: ScheduleRequest
-    ): Single<Any>
+    ): Single<ForgotResponsive>
 
     @PUT("schedule/update")
     fun putUpdateSchedule(
+        @Header("Authorization") auth: String,
         @Query("leave_id") leaveId: Int,
         @Body scheduleRequest: ScheduleRequest
-    ): Single<Any>
+    ): Single<ForgotResponsive>
 
     @PUT("task/update")
     fun putUpdateTask(
@@ -81,5 +82,11 @@ interface ApiService {
     fun postAddFeedBack(
         @Header("Authorization") auth: String,
         @Body feedBackRequest: FeedBackRequest
+    ): Single<ForgotResponsive>
+
+    @PUT("schedule/delete")
+    fun putDeleteSchedule(
+        @Header("Authorization") auth: String,
+        @Query("leave_id") leaveId: Int
     ): Single<ForgotResponsive>
 }
