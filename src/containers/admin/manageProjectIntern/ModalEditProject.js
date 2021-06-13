@@ -82,9 +82,9 @@ export const ContentModal = ({ setOpenModal, setData, data }) => {
     if (isEmpty(form.idOfAdmin + "")) {
       errorState.idOfAdmin = "Please enter leader";
     }
-    if (!usersSelected.length) {
-      errorState.assignedUsers = "Please assigned intern";
-    }
+    // if (!usersSelected.length) {
+    //   errorState.assignedUsers = "Please assigned intern";
+    // }
     return errorState;
   };
   const handleSubmitForm = (event) => {

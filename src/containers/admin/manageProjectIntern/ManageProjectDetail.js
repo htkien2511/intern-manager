@@ -22,6 +22,7 @@ import ModalShowDetail from "./ModalShowDetail";
 import { getAuth } from "utils/helpers";
 import ErrorPage from "components/common/ErrorPage";
 import { ManageFeedback } from "../manageFeedback";
+import { Badge } from "antd";
 
 const Icon = ({ icon, color }) => {
   return (
@@ -242,23 +243,25 @@ const ManageProjectDetail = () => {
                             </div>
                           );
                         })}
-                        <div onClick={() => handleActions(item, "Feedback")}>
-                          <div
-                            style={{
-                              width: 40,
-                              height: 40,
-                              background: "gray",
-                              borderRadius: 5,
-                            }}
-                            className="flex align__center"
-                          >
-                            <Tooltip placement="top" title="Feedback">
-                              <IconButton>
-                                <CommentOutlined style={{ color: "white" }} />
-                              </IconButton>
-                            </Tooltip>
+                        <Badge count={5}>
+                          <div onClick={() => handleActions(item, "Feedback")}>
+                            <div
+                              style={{
+                                width: 40,
+                                height: 40,
+                                background: "gray",
+                                borderRadius: 5,
+                              }}
+                              className="flex align__center"
+                            >
+                              <Tooltip placement="top" title="Feedback">
+                                <IconButton>
+                                  <CommentOutlined style={{ color: "white" }} />
+                                </IconButton>
+                              </Tooltip>
+                            </div>
                           </div>
-                        </div>
+                        </Badge>
                       </div>
                     </td>
                   </tr>

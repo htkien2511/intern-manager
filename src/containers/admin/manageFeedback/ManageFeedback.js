@@ -107,6 +107,7 @@ export const ContentModal = ({ setOpenModal, task }) => {
         temp.forEach((item, index) => {
           if (item.feedbackId === feedback.feedbackId) {
             item.activeContent = false;
+            item.date = new Date();
           }
         });
         setFeedbacks(temp);
