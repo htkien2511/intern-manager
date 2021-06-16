@@ -23,6 +23,7 @@ import { getAuth } from "utils/helpers";
 import ErrorPage from "components/common/ErrorPage";
 import { ManageFeedback } from "../manageFeedback";
 import { Badge } from "antd";
+import { getAllFeedbacksByTaskID } from "redux/actions/admin/getAllFeedbacksByTaskID";
 
 const Icon = ({ icon, color }) => {
   return (
@@ -63,6 +64,9 @@ const ManageProjectDetail = () => {
   const dispatch = useDispatch();
   const { projectId, projectName } = useParams();
   const history = useHistory();
+  const storeGetAllFeedback = useSelector(
+    (store) => store.getAllFeedbacksByTaskID
+  );
 
   useEffect(() => {
     if (
@@ -74,7 +78,15 @@ const ManageProjectDetail = () => {
       return;
     getAllTasksByProjectID(Number(projectId), (res) => {
       if (res.success) {
-        setData(res.data.sort((a, b) => (a.taskId > b.taskId ? 1 : -1)));
+        let arr = [];
+        res.data.forEach((_data) => {
+          getAllFeedbacksByTaskID(_data.taskId, (r) => {
+            if (r.success) {
+              arr.push({ ..._data, feedBacks: r.data.length });
+            }
+          });
+        });
+        setData(arr.sort((a, b) => (a.taskId > b.taskId ? 1 : -1)));
       }
     });
     // eslint-disable-next-line
@@ -128,7 +140,7 @@ const ManageProjectDetail = () => {
             <Empty />
           </div>
         ) : (
-          <Table style={{ marginLeft: 80 }}>
+          <Table style={{ margin: 20 }}>
             <thead>
               <tr>
                 <th>Task ID</th>
@@ -243,7 +255,7 @@ const ManageProjectDetail = () => {
                             </div>
                           );
                         })}
-                        <Badge count={5}>
+                        <Badge count={item.feedBacks}>
                           <div onClick={() => handleActions(item, "Feedback")}>
                             <div
                               style={{
@@ -353,7 +365,8 @@ const ManageProjectDetail = () => {
           loadingGetAllFeedback ||
           loadingDeleteFeedback ||
           loadingCreateFeedback ||
-          loadingUpdateFeedback) && <SpinLoading />}
+          loadingUpdateFeedback ||
+          storeGetAllFeedback.loading) && <SpinLoading />}
         <div
           className="block__back-previous-page"
           style={{ marginLeft: 30, marginTop: 15 }}
@@ -433,6 +446,9 @@ const ManageProjectDetail = () => {
           setOpenModal={setShowModalFeedback}
           title="List Feedbacks"
           task={taskSelected}
+          data={data}
+          setData={setData}
+          projectId={projectId}
         />
       )}
     </>

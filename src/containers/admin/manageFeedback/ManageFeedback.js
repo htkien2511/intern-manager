@@ -35,7 +35,13 @@ export const HeaderModal = ({ close, title }) => {
   );
 };
 
-export const ContentModal = ({ setOpenModal, task }) => {
+export const ContentModal = ({
+  setOpenModal,
+  task,
+  data,
+  setData,
+  projectId,
+}) => {
   const [feedbacks, setFeedbacks] = useState();
 
   const [showButtonSave, setShowButtonSave] = useState(false);
@@ -70,6 +76,13 @@ export const ContentModal = ({ setOpenModal, task }) => {
   const handleDeleteFeedback = (id) => {
     deleteFeedback(id, (res) => {
       if (res.success) {
+        let temp = [...data];
+        temp.forEach((t) => {
+          if (t.taskId === task.taskId) {
+            t.feedBacks = feedbacks.filter((d) => d.feedbackId !== id).length;
+          }
+        });
+        setData(temp);
         setFeedbacks(feedbacks.filter((d) => d.feedbackId !== id));
       } else {
         toast.error(res.message);
@@ -248,6 +261,14 @@ export const ContentModal = ({ setOpenModal, task }) => {
                         if (result.success) {
                           getAllFeedbacksByTaskID(task.taskId, (r) => {
                             if (r.success) {
+                              let temp = [...data];
+                              temp.forEach((t) => {
+                                if (t.taskId === task.taskId) {
+                                  t.feedBacks = r.data.length;
+                                }
+                              });
+                              setData(temp);
+
                               setFeedbacks(
                                 r.data.sort((a, b) =>
                                   a.feedbackId > b.feedbackId ? 1 : -1
@@ -293,7 +314,14 @@ export const ContentModal = ({ setOpenModal, task }) => {
   );
 };
 
-const ManageFeedback = ({ setOpenModal, title, task }) => {
+const ManageFeedback = ({
+  setOpenModal,
+  title,
+  task,
+  data,
+  setData,
+  projectId,
+}) => {
   return (
     <ModalFeedbackContainer className="modal__add__user__container">
       <CustomizedModal>
@@ -301,7 +329,13 @@ const ManageFeedback = ({ setOpenModal, title, task }) => {
           {() => <HeaderModal close={setOpenModal} title={title} />}
         </CustomizedModal.Header>
         <CustomizedModal.Content>
-          <ContentModal setOpenModal={setOpenModal} task={task} />
+          <ContentModal
+            setOpenModal={setOpenModal}
+            task={task}
+            data={data}
+            setData={setData}
+            projectId={projectId}
+          />
         </CustomizedModal.Content>
       </CustomizedModal>
     </ModalFeedbackContainer>
