@@ -25,4 +25,9 @@
     <string name="tasks">Tasks</string>
     <string name="attachment">Attachment</string>
     <string name="logout">Logout</string>
+    <string name="enter">Enter</string>
+    <string name="enter_token">Enter token</string>
+    <string name="enter_new_password">Enter new password</string>
+    <string name="enter_new_password_again">Enter new password again</string>
+    <string name="empty">Empty</string>
 </resources>

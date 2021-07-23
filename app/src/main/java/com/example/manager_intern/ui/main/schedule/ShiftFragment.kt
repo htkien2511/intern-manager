@@ -1,6 +1,5 @@
-package com.example.manager_intern.ui.main.schedule.shift
+package com.example.manager_intern.ui.main.schedule
 
-import android.util.Log
 import android.view.View
 import com.example.manager_intern.R
 import com.example.manager_intern.base.BaseFragment
@@ -10,7 +9,6 @@ import com.example.manager_intern.data.remote.request.ScheduleRequest
 import com.example.manager_intern.data.remote.responsive.ScheduleData
 import com.example.manager_intern.data.remote.responsive.UserData
 import com.example.manager_intern.databinding.ShiftFragBinding
-import com.example.manager_intern.ui.main.schedule.ScheduleViewModel
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -48,18 +46,10 @@ class ShiftFragment : BaseFragment<ScheduleViewModel>(R.layout.shift_frag) {
             daysOffString.addAll(it.map { item -> item.time })
         }
 
-//        viewModel!!.requestSuccess.observe(this) {
-//            if (userData != null) {
-//                viewModel?.getScheduleById(userData!!.token, userData!!.id)
-//            }
-//        }
-
         binding.btnSubmitShift.setOnClickListener {
             val listShift = adapter.listShift
             (0 until listShift.size).forEach { i ->
-                Log.d("___TAG", "initListener: out " + i)
                 if (daysOffString.contains(dates[i]) && listShift[i] == 3) {
-                    Log.d("___TAG", "initListener: in1 " + i)
                     val index = daysOffString.indexOf(dates[i]);
                     userData?.let { it1 -> viewModel?.deleteSchedule(it1.token, daysOff[index].id) }
                 }
@@ -69,10 +59,8 @@ class ShiftFragment : BaseFragment<ScheduleViewModel>(R.layout.shift_frag) {
                     if (userData != null) {
                         if (daysOffString.contains(dates[i])) {
                             val index = daysOffString.indexOf(dates[i]);
-                            Log.d("___TAG", "initListener: in2 " + i)
                             viewModel?.updateLeave(userData!!.token, daysOff[index].id, body)
                         } else {
-                            Log.d("___TAG", "initListener: in3 " + i)
                             viewModel?.addLeave(userData!!.token, body)
                         }
                     }

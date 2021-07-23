@@ -33,10 +33,6 @@ class HomeAdapter(
         override fun onBind(item: ProjectData) {
             with(binding) {
                 titleTask.text = item.title
-
-                val rd = Random()
-                val color = Color.argb(255, rd.nextInt(256), rd.nextInt(256), rd.nextInt(256))
-                binding.backgroundTask.setBackgroundColor(color)
             }
 
             itemView.setOnClickListener { itemHomeClickListener(item) }
@@ -49,13 +45,13 @@ class HomeAdapter(
                 val query = constraint.toString()
                 val filterResults = FilterResults()
                 filterList = if (query.isEmpty()) {
-                    list
-                } else (
-                        originList.filter { item ->
-                            item.title.toLowerCase(Locale.ROOT)
-                                .contains(query.toLowerCase(Locale.ROOT))
-                        }
-                        )
+                    originList
+                } else {
+                    originList.filter { item ->
+                        item.title.toLowerCase(Locale.ROOT)
+                            .contains(query.toLowerCase(Locale.ROOT))
+                    }
+                }
 
                 filterResults.values = filterList
 

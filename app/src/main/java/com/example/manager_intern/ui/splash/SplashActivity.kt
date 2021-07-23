@@ -1,7 +1,6 @@
 package com.example.manager_intern.ui.splash
 
 import android.content.Intent
-import com.example.manager_intern.R
 import com.example.manager_intern.base.BaseActivity
 import com.example.manager_intern.base.BaseViewModel
 import com.example.manager_intern.data.remote.responsive.UserResponsive
@@ -14,7 +13,6 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import java.util.*
 import java.util.concurrent.TimeUnit
 
 class SplashActivity : BaseActivity<LoginViewModel>() {

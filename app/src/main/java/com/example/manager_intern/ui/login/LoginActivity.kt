@@ -1,7 +1,6 @@
 package com.example.manager_intern.ui.login
 
 import android.content.Intent
-import com.example.manager_intern.R
 import com.example.manager_intern.base.BaseActivity
 import com.example.manager_intern.base.BaseViewModel
 import com.example.manager_intern.databinding.LoginActBinding

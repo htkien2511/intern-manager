@@ -64,16 +64,13 @@ class HomeFragment : BaseFragment<HomeViewModel>(R.layout.home_frag) {
                 count: Int,
                 after: Int
             ) {
-
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 adapter.filter.filter(s)
             }
 
-            override fun afterTextChanged(s: Editable?) {
-
-            }
+            override fun afterTextChanged(s: Editable?) {}
 
         })
     }

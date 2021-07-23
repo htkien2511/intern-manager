@@ -10,11 +10,7 @@
         android:title="@string/schedule"
         android:icon="@drawable/ic_baseline_event_note"
         />
-    <item
-        android:id="@+id/bottomNavMessage"
-        android:title="@string/message"
-        android:icon="@drawable/ic_baseline_send"
-        />
+
     <item
         android:id="@+id/bottomNavUser"
         android:title="@string/user"

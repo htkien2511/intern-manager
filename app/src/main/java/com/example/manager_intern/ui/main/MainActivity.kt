@@ -5,8 +5,7 @@ import com.example.manager_intern.R
 import com.example.manager_intern.base.BaseActivity
 import com.example.manager_intern.databinding.MainActBinding
 import com.example.manager_intern.ui.main.home.HomeFragment
-import com.example.manager_intern.ui.main.message.MessageFragment
-import com.example.manager_intern.ui.main.schedule.ScheduleFragment
+import com.example.manager_intern.ui.main.schedule.ShiftFragment
 import com.example.manager_intern.ui.main.user.UserFragment
 
 class MainActivity : BaseActivity<MainViewModel>() {
@@ -26,11 +25,7 @@ class MainActivity : BaseActivity<MainViewModel>() {
                     true
                 }
                 R.id.bottomNavScheduler -> {
-                    loadFragment(ScheduleFragment())
-                    true
-                }
-                R.id.bottomNavMessage -> {
-                    loadFragment(MessageFragment())
+                    loadFragment(ShiftFragment())
                     true
                 }
                 R.id.bottomNavUser -> {
@@ -49,7 +44,4 @@ class MainActivity : BaseActivity<MainViewModel>() {
             .commit()
     }
 
-    override fun onBackPressed() {
-        moveTaskToBack(true)
-    }
 }

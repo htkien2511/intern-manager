@@ -1,4 +1,4 @@
-package com.example.manager_intern.ui.main.schedule.shift
+package com.example.manager_intern.ui.main.schedule
 
 import android.view.LayoutInflater
 import android.view.View
