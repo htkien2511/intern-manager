@@ -1,26 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_marginBottom="@dimen/dimen_8"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_schedule"
+    android:paddingHorizontal="@dimen/dimen_8"
+    android:paddingVertical="@dimen/dimen_12">
 
     <TextView
         android:id="@+id/tvDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="left"
-        android:layout_marginStart="@dimen/dimen_8"
+        android:drawablePadding="@dimen/dimen_4"
+        android:gravity="center_vertical"
         android:text="12/12/2012"
         android:textColor="@color/textPrimary"
         android:textSize="@dimen/text_14"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:drawableStartCompat="@drawable/ic_baseline_calendar_today_24"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="RtlHardcoded" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="3dp"
-        android:layout_weight=".28"
+        android:layout_marginTop="@dimen/dimen_4"
         android:background="@drawable/bg_spinner"
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
@@ -32,7 +36,6 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_gravity="center"
-            android:layout_marginLeft="5dp"
             android:background="@android:color/transparent"
             android:gravity="center"
             android:spinnerMode="dropdown" />
