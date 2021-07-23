@@ -30,4 +30,9 @@
     <string name="enter_new_password">Enter new password</string>
     <string name="enter_new_password_again">Enter new password again</string>
     <string name="empty">Empty</string>
+    <string name="point">Score: %s</string>
+    <string name="des">Description: %s</string>
+    <string name="team">Teams: %s</string>
+    <string name="feedback">Watch Feedback</string>
+    <string name="duedate">Due date: %s</string>
 </resources>

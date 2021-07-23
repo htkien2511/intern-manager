@@ -32,7 +32,9 @@ data class TaskData(
     @SerializedName("usersAssignee")
     val usersAssignee: List<User>,
     @Expose
-    val feedbacks: List<FeedbackData>
+    val feedbacks: List<FeedbackData>,
+    @Expose
+    var isExpanded: Boolean = false
 )
 
 data class User(

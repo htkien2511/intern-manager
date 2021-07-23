@@ -60,5 +60,7 @@ class FeedBackActivity : BaseActivity<FeedBackViewModel>() {
                 }
             }
         }
+
+        binding.toolbar.setOnClickListener { onBackPressed() }
     }
 }

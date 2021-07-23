@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.manager_intern.R
 import com.example.manager_intern.data.remote.responsive.TaskData
 import com.example.manager_intern.databinding.ItemTaskBinding
-import com.example.manager_intern.ui.feedback.FeedbackAdapter
+import com.example.manager_intern.extensions.animateCollapse
 
 class TaskAdapter(
     private val tasks: List<TaskData>,
@@ -17,18 +17,40 @@ class TaskAdapter(
 
     inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val binding = ItemTaskBinding.bind(itemView)
-        private lateinit var adapter: FeedbackAdapter
-
-        init {
-            binding.chkIsDone.setOnCheckedChangeListener { _, isChecked ->
-                onCheckedListener(tasks[adapterPosition], isChecked)
-            }
-        }
 
         fun onBind(item: TaskData) {
-            itemView.setOnClickListener { itemClick(item.taskId) }
-            binding.tvTask.text = item.title
-            binding.chkIsDone.isChecked = item.isDone
+
+            binding.run {
+                tvTask.setOnClickListener {
+                    item.isExpanded = !item.isExpanded
+                    notifyItemChanged(adapterPosition)
+                }
+
+                chkIsDone.setOnCheckedChangeListener { _, isChecked ->
+                    onCheckedListener(tasks[adapterPosition], isChecked)
+                }
+
+                tvFeedback.setOnClickListener {
+                    itemClick(item.taskId)
+                }
+
+                if (item.isExpanded) {
+                    imgUp.animateCollapse()
+                    llDes.visibility = View.VISIBLE
+                } else {
+                    llDes.visibility = View.GONE
+                    imgUp.animateCollapse()
+                }
+
+                tvTask.text = item.title
+                chkIsDone.isChecked = item.isDone
+                tvDescription.text = root.context.getString(R.string.des, item.description)
+                tvPoint.text = root.context.getString(R.string.point, item.point.toString())
+                tvPeople.text =
+                    root.context.getString(R.string.des,
+                        item.usersAssignee.joinToString(", ") { it.name })
+                tvDuedate.text = root.context.getString(R.string.duedate, item.dueDate)
+            }
         }
     }
 
