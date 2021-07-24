@@ -25,36 +25,28 @@ class TaskActivity : BaseActivity<TaskViewModel>() {
 
     override fun initView() {
         taskAdapter = TaskAdapter(data, { task, isChecked ->
-//            var progress = binding.progressBar.progress
-//            if (isChecked) {
-//                progress += 100 / data.size
-//            } else {
-//                progress -= 100 / data.size
-//            }
-//
-//            binding.progressBar.progress = progress
-//            binding.tvProgress.text = binding.progressBar.progress.toString() + " %"
-//
-//            val taskRequest = TaskRequest(
-//                task.taskId,
-//                task.description,
-//                task.title,
-//                task.difficulty,
-//                isChecked,
-//                task.point,
-//                task.dueDate ?: "",
-//                task.usersAssignee
-//            )
-//            if (userData != null) {
-//                viewModel?.updateTask(userData!!.token, taskRequest)
-//            }
+            val taskRequest = TaskRequest(
+                task.taskId,
+                task.description,
+                task.title,
+                1,
+                isChecked,
+                task.point,
+                task.dueDate ?: "",
+                task.usersAssignee
+            )
+            if (userData != null) {
+                viewModel?.updateTask(userData!!.token, taskRequest)
+            }
         }, {
             Intent(this, FeedBackActivity::class.java)
                 .putExtra("TaskId", it)
                 .apply {
                     startActivity(this)
                 }
-        })
+        }).apply {
+            isChanged = false
+        }
 
         with(binding) {
             toolbar.title = "Shappe Clound App"
@@ -76,6 +68,7 @@ class TaskActivity : BaseActivity<TaskViewModel>() {
                 }
             }
         }
+
     }
 
     override fun initListener() {
@@ -86,15 +79,17 @@ class TaskActivity : BaseActivity<TaskViewModel>() {
                 taskAdapter.itemCount
                 taskAdapter.notifyDataSetChanged()
 
-                val percent  = (it.data.filter { item -> item.isDone }.size.toFloat() / it.data.size.toFloat()) * 100
+                val percent =
+                    (it.data.filter { item -> item.isDone }.size.toFloat() / it.data.size.toFloat()) * 100
                 binding.tvProgress.text = "${percent.toInt()} %"
                 binding.progressBar.progress = percent.toInt()
             }
 
             updateSuccess.observe(this@TaskActivity) {
-                if (!it) {
-
-                }
+                val percent =
+                    (taskAdapter.tasks.filter { item -> item.isDone }.size.toFloat() / taskAdapter.tasks.size.toFloat()) * 100
+                binding.tvProgress.text = "${percent.toInt()} %"
+                binding.progressBar.progress = percent.toInt()
             }
         }
 

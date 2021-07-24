@@ -11,7 +11,7 @@ data class TaskRequest(
     @SerializedName("title")
     val title: String,
     @SerializedName("difficulty")
-    val difficulty: String,
+    val difficulty: Int,
     @SerializedName("done")
     val isDone: Boolean,
     @SerializedName("point")

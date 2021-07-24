@@ -22,7 +22,7 @@ data class TaskData(
     @SerializedName("difficulty")
     val difficulty: String,
     @SerializedName("isDone")
-    val isDone: Boolean,
+    var isDone: Boolean,
     @SerializedName("point")
     val point: Double,
     @SerializedName("projectName")

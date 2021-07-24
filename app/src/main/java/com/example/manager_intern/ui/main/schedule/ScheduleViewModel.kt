@@ -12,7 +12,6 @@ class ScheduleViewModel : BaseViewModel() {
     val scheduleData = MutableLiveData<List<ScheduleData>>()
     val requestSuccess = MutableLiveData<Int>()
 
-
     fun getScheduleById(auth: String, userId: Int) {
         showLoading()
         addDisposable(
@@ -22,6 +21,7 @@ class ScheduleViewModel : BaseViewModel() {
                 .subscribe({
                     closeLoading()
                     if (it.isSuccess) {
+                        requestSuccess.value = 0
                         scheduleData.value = it.data
                     } else {
                         onError.value = it.message
@@ -42,7 +42,7 @@ class ScheduleViewModel : BaseViewModel() {
                 .subscribe({
                     closeLoading()
                     if (it.isSuccess) {
-                        requestSuccess.value = Random(10000000).nextInt()
+                        requestSuccess.value = requestSuccess.value?.plus(1)
                     } else {
                         onError.value = it.message
                     }
@@ -62,7 +62,7 @@ class ScheduleViewModel : BaseViewModel() {
                 .subscribe({
                     closeLoading()
                     if (it.isSuccess) {
-                        requestSuccess.value = Random(10000000).nextInt()
+//                        requestSuccess.value = Random(10000000).nextInt()
                     } else {
                         onError.value = it.message
                     }
@@ -82,7 +82,7 @@ class ScheduleViewModel : BaseViewModel() {
                 .subscribe({
                     closeLoading()
                     if (it.isSuccess) {
-                        requestSuccess.value = Random(10000000).nextInt()
+//                        requestSuccess.value = Random(10000000).nextInt()
                     } else {
                         onError.value = it.message
                     }

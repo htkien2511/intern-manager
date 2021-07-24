@@ -3,6 +3,7 @@ package com.example.manager_intern.ui.task
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import androidx.recyclerview.widget.RecyclerView
 import com.example.manager_intern.R
 import com.example.manager_intern.data.remote.responsive.TaskData
@@ -10,10 +11,11 @@ import com.example.manager_intern.databinding.ItemTaskBinding
 import com.example.manager_intern.extensions.animateCollapse
 
 class TaskAdapter(
-    private val tasks: List<TaskData>,
+    val tasks: List<TaskData>,
     val onCheckedListener: (TaskData, Boolean) -> Unit, val itemClick: (Int) -> Unit
 ) : RecyclerView.Adapter<TaskAdapter.TaskViewHolder>() {
 
+    var isChanged = false
 
     inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val binding = ItemTaskBinding.bind(itemView)
@@ -26,8 +28,14 @@ class TaskAdapter(
                     notifyItemChanged(adapterPosition)
                 }
 
-                chkIsDone.setOnCheckedChangeListener { _, isChecked ->
-                    onCheckedListener(tasks[adapterPosition], isChecked)
+
+                chkIsDone.setOnClickListener { v ->
+                    run {
+                        val isChecked = (v as CheckBox).isChecked
+                        item.isDone = isChecked
+                        notifyItemChanged(adapterPosition)
+                        onCheckedListener(tasks[adapterPosition], isChecked)
+                    }
                 }
 
                 tvFeedback.setOnClickListener {
@@ -46,8 +54,7 @@ class TaskAdapter(
                 chkIsDone.isChecked = item.isDone
                 tvDescription.text = root.context.getString(R.string.des, item.description)
                 tvPoint.text = root.context.getString(R.string.point, item.point.toString())
-                tvPeople.text =
-                    root.context.getString(R.string.des,
+                tvPeople.text = root.context.getString(R.string.people,
                         item.usersAssignee.joinToString(", ") { it.name })
                 tvDuedate.text = root.context.getString(R.string.duedate, item.dueDate)
             }
@@ -64,4 +71,5 @@ class TaskAdapter(
     override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
         holder.onBind(tasks[position])
     }
+
 }

@@ -38,4 +38,5 @@
     <string name="submit">Submit</string>
     <string name="morning_13h_17h">Afternoon: 13h - 17h</string>
     <string name="morning_8h_12h">Morning: 8h - 12h</string>
+    <string name="people">People: %s</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.example.manager_intern.ui.main.schedule
 
+import android.util.Log
 import android.view.View
 import com.example.manager_intern.R
 import com.example.manager_intern.base.BaseFragment
@@ -20,6 +21,8 @@ class ShiftFragment : BaseFragment<ScheduleViewModel>(R.layout.shift_frag) {
     private val binding by viewBinding(ShiftFragBinding::bind)
 
     private lateinit var adapter: ShiftAdapter
+
+    private var count = 0
 
     private val dates = mutableListOf<String>()
     private val daysOff = mutableListOf<ScheduleData>()
@@ -61,9 +64,19 @@ class ShiftFragment : BaseFragment<ScheduleViewModel>(R.layout.shift_frag) {
                             val index = daysOffString.indexOf(dates[i]);
                             viewModel?.updateLeave(userData!!.token, daysOff[index].id, body)
                         } else {
+                            count++
                             viewModel?.addLeave(userData!!.token, body)
                         }
                     }
+                }
+            }
+        }
+
+        viewModel?.requestSuccess?.observe(this) {
+            if (it != 0 && it == count) {
+                userData?.let { user ->
+                    Log.d("___TAG", "refresh : ")
+//                    viewModel?.deleteSchedule(user.token, user.id)
                 }
             }
         }
