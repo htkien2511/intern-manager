@@ -1,12 +1,12 @@
 package com.example.manager_intern.ui.main.schedule
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.manager_intern.base.BaseViewModel
 import com.example.manager_intern.data.remote.request.ScheduleRequest
 import com.example.manager_intern.data.remote.responsive.ScheduleData
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlin.random.Random
 
 class ScheduleViewModel : BaseViewModel() {
     val scheduleData = MutableLiveData<List<ScheduleData>>()
@@ -42,6 +42,7 @@ class ScheduleViewModel : BaseViewModel() {
                 .subscribe({
                     closeLoading()
                     if (it.isSuccess) {
+                        Log.d("___TAG", "deleteSchedule: ${requestSuccess.value}")
                         requestSuccess.value = requestSuccess.value?.plus(1)
                     } else {
                         onError.value = it.message
@@ -82,7 +83,8 @@ class ScheduleViewModel : BaseViewModel() {
                 .subscribe({
                     closeLoading()
                     if (it.isSuccess) {
-//                        requestSuccess.value = Random(10000000).nextInt()
+                        Log.d("___TAG", "deleteSchedule: ${requestSuccess.value}")
+                        requestSuccess.value = requestSuccess.value?.plus(1)
                     } else {
                         onError.value = it.message
                     }

@@ -24,6 +24,8 @@ class ShiftFragment : BaseFragment<ScheduleViewModel>(R.layout.shift_frag) {
 
     private var count = 0
 
+    private var isSubmit = false
+
     private val dates = mutableListOf<String>()
     private val daysOff = mutableListOf<ScheduleData>()
     private var userData: UserData? = null
@@ -43,10 +45,17 @@ class ShiftFragment : BaseFragment<ScheduleViewModel>(R.layout.shift_frag) {
 
         viewModel?.scheduleData?.observe(this) {
             adapter = ShiftAdapter(getDaysInNetWeek(), it)
+            dates.clear()
             dates.addAll(getDaysInNetWeek())
+            dates.sort()
+            daysOff.clear()
             daysOff.addAll(it)
-            binding.rvSpinner.adapter = adapter
+            daysOff.sortBy { d -> d.time }
+            daysOffString.clear()
             daysOffString.addAll(it.map { item -> item.time })
+            daysOffString.sort()
+            binding.rvSpinner.adapter = adapter
+            count = 0
         }
 
         binding.btnSubmitShift.setOnClickListener {
@@ -54,6 +63,7 @@ class ShiftFragment : BaseFragment<ScheduleViewModel>(R.layout.shift_frag) {
             (0 until listShift.size).forEach { i ->
                 if (daysOffString.contains(dates[i]) && listShift[i] == 3) {
                     val index = daysOffString.indexOf(dates[i]);
+                    count++
                     userData?.let { it1 -> viewModel?.deleteSchedule(it1.token, daysOff[index].id) }
                 }
 
@@ -65,6 +75,7 @@ class ShiftFragment : BaseFragment<ScheduleViewModel>(R.layout.shift_frag) {
                             viewModel?.updateLeave(userData!!.token, daysOff[index].id, body)
                         } else {
                             count++
+                            Log.d("___TAG", "initListener: $count")
                             viewModel?.addLeave(userData!!.token, body)
                         }
                     }
@@ -76,7 +87,7 @@ class ShiftFragment : BaseFragment<ScheduleViewModel>(R.layout.shift_frag) {
             if (it != 0 && it == count) {
                 userData?.let { user ->
                     Log.d("___TAG", "refresh : ")
-//                    viewModel?.deleteSchedule(user.token, user.id)
+                    viewModel?.getScheduleById(user.token, user.id)
                 }
             }
         }
