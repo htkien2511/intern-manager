@@ -9,22 +9,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.4" />
+        app:layout_constraintGuide_percent="0.5" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
+    <RelativeLayout
+        android:id="@+id/rlAvatar"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/bubbleLight"
         app:layout_constraintBottom_toTopOf="@+id/guidelineUser"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.cardview.widget.CardView
-            android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:id="@+id/cardView"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_centerInParent="true"
             android:layout_gravity="center"
-            app:cardCornerRadius="75dp">
+            app:cardCornerRadius="100dp">
 
             <ImageView
                 android:id="@+id/avatar"
@@ -32,45 +35,82 @@
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 android:src="@drawable/bg_binh" />
+
         </androidx.cardview.widget.CardView>
 
         <TextView
             android:id="@+id/username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/dimen_16"
+            android:gravity="center"
             android:text="Phan Thanh Binh"
-            android:textColor="@color/black"
-            android:textSize="@dimen/text_17" />
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@id/cardView"
+            android:textColor="@color/primary"
+            android:textStyle="bold"
+            android:textSize="30dp" />
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        app:layout_constraintTop_toBottomOf="@+id/rlAvatar"
+        app:layout_constraintBottom_toTopOf="@id/clsContainer"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:paddingHorizontal="@dimen/dimen_24"
+        android:layout_height="0dp">
 
         <TextView
             android:id="@+id/tvGender"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/dimen_8"
+            android:gravity="center"
+            android:drawableStart="@drawable/ic_baseline_accessibility_24"
+            android:drawablePadding="@dimen/dimen_8"
             android:text="Phan Thanh Binh"
+            android:paddingVertical="@dimen/dimen_8"
             android:textColor="@color/black"
-            android:textSize="@dimen/text_17" />
+            android:textSize="20dp" />
 
         <TextView
             android:id="@+id/department"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="@dimen/dimen_8"
-            android:text="Android developer"
-            android:textColor="@color/textPrimary"
-            android:textSize="@dimen/text_14" />
+            android:gravity="center"
+            android:drawableStart="@drawable/ic_baseline_home_work_24"
+            android:drawablePadding="@dimen/dimen_8"
+            android:text="Phan Thanh Binh"
+            android:paddingVertical="@dimen/dimen_8"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/tvAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:drawableStart="@drawable/ic_baseline_location_on_24"
+            android:drawablePadding="@dimen/dimen_8"
+            android:text="Phan Thanh Binh"
+            android:paddingVertical="@dimen/dimen_8"
+            android:textColor="@color/black"
+            android:textSize="20dp" />
+
     </LinearLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clsContainer"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/dimen_24"
         android:background="@drawable/bg_user"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guidelineUser">
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <LinearLayout
             android:id="@+id/llUser"
@@ -115,43 +155,9 @@
                     app:layout_constraintTop_toTopOf="parent" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/stat"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_24">
-
-                <ImageView
-                    android:id="@+id/bgStat"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:src="@drawable/stat"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dimen_16"
-                    android:text="@string/my_stats"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_17"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/bgStat"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/ic_baseline_navigate_next_24"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/setting"
+                android:id="@+id/btnLogout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_24">
@@ -166,10 +172,11 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dimen_16"
-                    android:text="@string/settings"
+                    android:text="@string/logout"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_17"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -186,64 +193,6 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </LinearLayout>
 
-        <View
-            android:id="@+id/viewUser"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="@dimen/dimen_8"
-            android:background="@color/bubbleLight"
-            app:layout_constraintTop_toBottomOf="@+id/llUser" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/help"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/dimen_16"
-            android:layout_marginTop="@dimen/dimen_8"
-            android:layout_marginBottom="@dimen/dimen_24"
-            app:layout_constraintTop_toBottomOf="@id/viewUser">
-
-            <ImageView
-                android:id="@+id/bgHelp"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/help"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dimen_16"
-                android:text="@string/help"
-                android:textColor="@color/black"
-                android:textSize="@dimen/text_17"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/bgHelp"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:src="@drawable/ic_baseline_navigate_next_24"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <Button
-            android:id="@+id/btnLogout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/dimen_24"
-            android:layout_marginTop="@dimen/dimen_16"
-            android:background="@drawable/bg_department"
-            android:text="@string/logout"
-            android:textAllCaps="false"
-            android:textColor="@color/white"
-            android:textSize="@dimen/text_17"
-            app:layout_constraintTop_toBottomOf="@+id/help" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

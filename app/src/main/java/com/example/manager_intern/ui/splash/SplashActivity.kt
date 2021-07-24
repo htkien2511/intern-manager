@@ -35,13 +35,10 @@ class SplashActivity : BaseActivity<LoginViewModel>() {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
-                    if (userResponsive != null) {
-                        startActivity(Intent(this, MainActivity::class.java))
-                    } else {
+                    if (!Pref.isLogin) {
                         startActivity(Intent(this, LoginActivity::class.java))
+                        finish()
                     }
-
-                    finish()
                 }
         )
     }
@@ -49,6 +46,7 @@ class SplashActivity : BaseActivity<LoginViewModel>() {
     override fun initListener() {
         BaseViewModel.userResponsive.observe(this) {
             userResponsive = it
+            startActivity(Intent(this, MainActivity::class.java))
         }
     }
 
