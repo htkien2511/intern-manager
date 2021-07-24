@@ -61,6 +61,7 @@ import { useEffect } from "react";
 // import { updatePermissionsLeader } from "redux/actions/login";
 import { getProfileIntern } from "redux/actions/intern/getProfileIntern";
 import { toast } from "react-toastify";
+import { updatePermissionsLeader } from "redux/actions/login";
 
 function App() {
   // update permissions for leader when refresh page
@@ -69,8 +70,10 @@ function App() {
     if (getAuth().role === "ROLE_MANAGER") {
       getProfileIntern(getAuth().id, (res) => {
         if (res.success) {
-          // const newPermissions = res?.permissionDomains || [];
-          // updatePermissionsLeader(newPermissions);
+          const newPermissions = res?.permissionDomains || [];
+          if (newPermissions.length) {
+            updatePermissionsLeader(newPermissions);
+          }
         } else {
           toast.error(res.message);
         }
