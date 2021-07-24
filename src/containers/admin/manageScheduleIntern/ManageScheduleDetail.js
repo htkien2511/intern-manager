@@ -15,6 +15,8 @@ import { getScheduleUserID } from "redux/actions/admin/getScheduleUserID";
 import { getAuth } from "utils/helpers";
 import ErrorPage from "components/common/ErrorPage";
 import IconEye from "assets/icons/TTM_Icon-Eye.svg";
+import { useHistory } from "react-router-dom";
+import { ROUTE_MANAGE_SCHEDULE } from "utils/routes";
 
 export default function ManageScheduleDetail() {
   const dispatch = useDispatch();
@@ -173,6 +175,7 @@ export default function ManageScheduleDetail() {
   const loadingIntern = useSelector((store) => store.getProfileIntern).loading;
   const editSchedule = useSelector((store) => store.updateSchedule).loading;
   const createSchedule = useSelector((store) => store.addLeaveSchedule).loading;
+  const history = useHistory();
 
   return (
     <div className="manage-schedule-detail">
@@ -183,8 +186,10 @@ export default function ManageScheduleDetail() {
           style={{ marginTop: 20, marginBottom: 30 }}
         >
           <div className="block__back-previous-page">
-            <RollbackOutlined onClick={() => window.history.back()} />
-            <div onClick={() => window.history.back()}>
+            <RollbackOutlined
+              onClick={() => history.push(ROUTE_MANAGE_SCHEDULE)}
+            />
+            <div onClick={() => history.push(ROUTE_MANAGE_SCHEDULE)}>
               Back to previous page
             </div>
           </div>

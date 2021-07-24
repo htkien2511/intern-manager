@@ -56,8 +56,28 @@ import { ManageViewStatistic } from "containers/admin/manageViewStatistic.js";
 import ManagePermissionLeader from "containers/admin/managePermissionLeader.js/ManagePermissionLeader";
 import StatisticDetails from "containers/admin/manageViewStatistic.js/StatisticDetails";
 import InvalidPage from "components/common/InvalidPage";
+import { getAuth } from "utils/helpers";
+import { useEffect } from "react";
+// import { updatePermissionsLeader } from "redux/actions/login";
+import { getProfileIntern } from "redux/actions/intern/getProfileIntern";
+import { toast } from "react-toastify";
 
 function App() {
+  // update permissions for leader when refresh page
+
+  useEffect(() => {
+    if (getAuth().role === "ROLE_MANAGER") {
+      getProfileIntern(getAuth().id, (res) => {
+        if (res.success) {
+          // const newPermissions = res?.permissionDomains || [];
+          // updatePermissionsLeader(newPermissions);
+        } else {
+          toast.error(res.message);
+        }
+      });
+    }
+  }, []);
+
   return (
     <Router>
       <Switch>

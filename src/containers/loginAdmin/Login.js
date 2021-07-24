@@ -16,13 +16,23 @@ const LoginAdmin = () => {
       if (data.success) {
         if (data.data.role === "ROLE_ADMIN") {
           setAuth(data.data);
+          const rememberedPath = localStorage.getItem("rememberedPath");
+          if (rememberedPath) {
+            history.push(rememberedPath);
+          } else {
+            history.push(ROUTE_MANAGE_LEADER);
+          }
           dispatch(setTitle("Manage Leader"));
-          history.push(ROUTE_MANAGE_LEADER);
         } else if (data.data.role === "ROLE_USER") {
           toast.error("Your password or email is incorrect!");
         } else if (data.data.role === "ROLE_MANAGER") {
           setAuth(data.data);
-          history.push(ROUTE_MANAGE_INTERN);
+          const rememberedPath = localStorage.getItem("rememberedPath");
+          if (rememberedPath) {
+            history.push(rememberedPath);
+          } else {
+            history.push(ROUTE_MANAGE_INTERN);
+          }
         }
       } else {
         toast.error(data.message);

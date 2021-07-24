@@ -112,7 +112,7 @@ export default function ManageIntern() {
   const [filteredData, setFilteredData] = useState([]);
 
   const permissions =
-    getAuth().permissionDomains.map((item) => item.name.substring(7)) || [];
+    getAuth().permissionDomains?.map((item) => item.name.substring(7)) || [];
 
   const dispatch = useDispatch();
 

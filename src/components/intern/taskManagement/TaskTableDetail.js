@@ -1,6 +1,6 @@
 // import DropPanel from "components/common/core/DropPanel";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { getTaskProjectIntern } from "redux/actions/intern/getTaskProjectIntern";
 import moment from "moment";
 import { useSelector } from "react-redux";
@@ -10,6 +10,7 @@ import { changeStatusTask } from "redux/actions/intern/changeStatusTask";
 import { RollbackOutlined } from "@ant-design/icons";
 import { Empty } from "antd";
 import { ManageFeedback } from "containers/admin/manageFeedback";
+import { ROUTE_TASK_MANAGEMENT } from "utils/routes";
 function TaskManagementDetail() {
   const { projectId } = useParams();
   const [form, setForm] = React.useState([]);
@@ -84,12 +85,18 @@ function TaskManagementDetail() {
     (store) => store.addFeedback
   ).loading;
 
+  const history = useHistory();
+
   return (
     <>
       <div className="task-management">
         <div className="block__back-previous-page">
-          <RollbackOutlined onClick={() => window.history.back()} />
-          <div onClick={() => window.history.back()}>Back to previous page</div>
+          <RollbackOutlined
+            onClick={() => history.push(ROUTE_TASK_MANAGEMENT)}
+          />
+          <div onClick={() => history.push(ROUTE_TASK_MANAGEMENT)}>
+            Back to previous page
+          </div>
         </div>
         <h2>List Tasks</h2>
       </div>

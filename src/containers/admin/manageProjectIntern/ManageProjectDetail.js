@@ -24,6 +24,7 @@ import ErrorPage from "components/common/ErrorPage";
 import { ManageFeedback } from "../manageFeedback";
 import { Badge } from "antd";
 import { getAllFeedbacksByTaskID } from "redux/actions/admin/getAllFeedbacksByTaskID";
+import { ROUTE_MANAGE_PROJECT } from "utils/routes";
 
 const Icon = ({ icon, color }) => {
   return (
@@ -371,8 +372,12 @@ const ManageProjectDetail = () => {
           className="block__back-previous-page"
           style={{ marginLeft: 30, marginTop: 15 }}
         >
-          <RollbackOutlined onClick={() => window.history.back()} />
-          <div onClick={() => window.history.back()}>Back to previous page</div>
+          <RollbackOutlined
+            onClick={() => history.push(ROUTE_MANAGE_PROJECT)}
+          />
+          <div onClick={() => history.push(ROUTE_MANAGE_PROJECT)}>
+            Back to previous page
+          </div>
         </div>
         <div className="test-library__inner">
           <div className="test-library__inner__header">

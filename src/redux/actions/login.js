@@ -1,12 +1,13 @@
 import * as types from "../constants";
 import store from "../store";
-export function login(data, resolve = () => { }) {
+
+export function login(data, resolve = () => {}) {
   store.dispatch({
     type: types.LOGIN_API,
   });
   var details = {
-    'email': data.email,
-    'password': data.password,
+    email: data.email,
+    password: data.password,
   };
 
   var formBody = [];
@@ -20,7 +21,7 @@ export function login(data, resolve = () => { }) {
   return fetch(`${process.env.REACT_APP_API_URL}login`, {
     method: "POST",
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+      "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
     },
     body: formBody,
   })
@@ -38,4 +39,18 @@ export function login(data, resolve = () => { }) {
         type: types.LOGIN_API_FAIL,
       });
     });
+}
+
+export function updatePermissionsLeader(newPermissions, resolve = () => {}) {
+  store.dispatch({
+    type: types.UPDATE_PERMISSIONS_LEADER,
+    payload: newPermissions,
+  });
+}
+
+export function rememberPath(path, resolve = () => {}) {
+  store.dispatch({
+    type: types.REMEMBER_PATH,
+    payload: path,
+  });
 }

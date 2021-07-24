@@ -13,6 +13,8 @@ import SpinLoading from "components/common/core/SpinLoading";
 import { RollbackOutlined } from "@ant-design/icons";
 import { uploadImage } from "redux/actions/intern/uploadImage";
 import avatarDefault from "assets/images/avtDefault.png";
+import { useHistory } from "react-router-dom";
+import { ROUTE_PROFILE } from "utils/routes";
 
 function FormEdit() {
   const { TabPane } = Tabs;
@@ -177,6 +179,8 @@ function FormEdit() {
   const storeUpdateProfile = useSelector((store) => store.updateAccount);
   const storeChangePassword = useSelector((store) => store.changePassword);
 
+  const history = useHistory();
+
   return (
     <div className="form-edit flex flex-col">
       {(loadingGetData ||
@@ -184,8 +188,10 @@ function FormEdit() {
         storeChangePassword.loading ||
         storeUploadImage.loading) && <SpinLoading />}
       <div className="block__back-previous-page" style={{ marginLeft: 30 }}>
-        <RollbackOutlined onClick={() => window.history.back()} />
-        <div onClick={() => window.history.back()}>Back to previous page</div>
+        <RollbackOutlined onClick={() => history.push(ROUTE_PROFILE)} />
+        <div onClick={() => history.push(ROUTE_PROFILE)}>
+          Back to previous page
+        </div>
       </div>
       <div className="form-edit__body__edit__info">
         <div className="edit-avatar">

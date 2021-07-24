@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Redirect } from "react-router";
 import { ToastContainer } from "react-toastify";
+import { rememberPath } from "redux/actions/login";
 import { Header, SideBar } from "../components/layout";
 import { getAuth } from "../utils/helpers";
 import { ROUTE_ADMIN_LOGIN } from "../utils/routes";
@@ -11,6 +12,7 @@ const withAuth =
   (props) => {
     const titleCurrent = useSelector((store) => store.setTitle.title);
     const storeSetShowSidebar = useSelector((store) => store.setShowSidebar);
+    rememberPath(window.location.pathname);
 
     return (
       <div className="app__admin flex flex-row">

@@ -8,6 +8,7 @@ import moment from "moment";
 import { useSelector } from "react-redux";
 import SpinLoading from "components/common/core/SpinLoading";
 import { Empty } from "antd";
+import AvatarBlock from "components/common/core/AvatarBlock";
 
 function TaskManagement() {
   const [form, setForm] = React.useState(null);
@@ -35,6 +36,7 @@ function TaskManagement() {
                     {[
                       "Project ID",
                       "Project",
+                      "Leader",
                       "Created Date",
                       "Due Date",
                       "Actions",
@@ -50,6 +52,17 @@ function TaskManagement() {
                       <tr key={index}>
                         <td>{item.projectId}</td>
                         <td>{item.title}</td>
+                        <td>
+                          <div className="flex items-center contents-center">
+                            <AvatarBlock
+                              users_list={[item.managerName.name]}
+                              maxCount={3}
+                            />
+                            <span style={{ marginLeft: 10 }}>
+                              {item.managerName.name}
+                            </span>
+                          </div>
+                        </td>
                         <td>
                           {moment(new Date(item.startDate)).format(
                             "YYYY/MM/DD"

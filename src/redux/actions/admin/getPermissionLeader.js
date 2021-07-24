@@ -10,6 +10,8 @@ export function getPermissionLeader(manager_id, resolve = () => {}) {
     manager_id: manager_id,
   };
 
+  console.log(details);
+
   var formBody = [];
   for (var property in details) {
     var encodedKey = encodeURIComponent(property);
@@ -29,6 +31,7 @@ export function getPermissionLeader(manager_id, resolve = () => {}) {
     .then((response) => response.json())
     .then((data) => {
       resolve(data);
+      console.log(data);
       store.dispatch({
         payload: data,
         type: types.GET_PERMISSIONS_BY_LEADER_ID_SUCCEED,

@@ -2,7 +2,9 @@ import { RollbackOutlined } from "@ant-design/icons";
 import React, { useEffect } from "react";
 import { Bar } from "react-chartjs-2";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import { setTitle } from "redux/actions/admin/setTitle";
+import { ROUTE_VIEW_STATISTIC } from "utils/routes";
 
 const input = [
   {
@@ -170,6 +172,7 @@ const StatisticDetails = () => {
   useEffect(() => {
     dispatch(setTitle("View Statistics detail"));
   }, [dispatch]);
+  const history = useHistory();
 
   return (
     <div className="manage-schedule-detail">
@@ -178,8 +181,12 @@ const StatisticDetails = () => {
           className="block__back-previous-page"
           style={{ marginLeft: -2, marginTop: 15 }}
         >
-          <RollbackOutlined onClick={() => window.history.back()} />
-          <div onClick={() => window.history.back()}>Back to previous page</div>
+          <RollbackOutlined
+            onClick={() => history.push(ROUTE_VIEW_STATISTIC)}
+          />
+          <div onClick={() => history.push(ROUTE_VIEW_STATISTIC)}>
+            Back to previous page
+          </div>
         </div>
         <div style={{ marginBottom: 30 }}>
           <Bar data={data} options={options} />

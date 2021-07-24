@@ -10,6 +10,19 @@ const AvatarBlock = ({ users_list, maxCount }) => {
     "orange",
     "chocolate",
   ];
+
+  const getFirstChartName = (input) => {
+    input.reverse();
+    let res = "";
+    input.forEach((item) => {
+      if (item) {
+        res = item;
+        return;
+      }
+    });
+    return res;
+  };
+
   return (
     <Avatar.Group
       maxCount={maxCount || 2}
@@ -30,9 +43,8 @@ const AvatarBlock = ({ users_list, maxCount }) => {
                   cursor: "pointer",
                 }}
               >
-                {item
-                  .split(" ")
-                  [item.split(" ").length - 1].charAt(0)
+                {getFirstChartName(item.split(" ").reverse())
+                  .charAt(0)
                   .toUpperCase()}
               </Avatar>
             </Tooltip>
