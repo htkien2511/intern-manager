@@ -19,5 +19,9 @@ data class FeedbackData(
     @SerializedName("date")
     val date: String,
     @SerializedName("feedbackId")
-    val feedbackId: Int
+    val feedbackId: Int,
+    @SerializedName("userId")
+    val userId: Int,
+    @SerializedName("user")
+    val user: String
 )

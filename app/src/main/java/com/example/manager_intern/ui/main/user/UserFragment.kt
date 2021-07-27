@@ -38,14 +38,6 @@ class UserFragment : BaseFragment<UserViewModel>(R.layout.profile_frag) {
         binding.imgSetting.setOnClickListener {
             showPopup(it)
         }
-
-//        binding.btnLogout.setOnClickListener {
-//            Pref.isLogin = false
-//            BaseViewModel.userResponsive.value = null
-//            startActivity(Intent(requireActivity(), LoginActivity::class.java))
-//        }
-//
-//        binding.edit.setOnClickListener {  }
     }
 
     private fun showPopup(view: View) {
@@ -58,6 +50,11 @@ class UserFragment : BaseFragment<UserViewModel>(R.layout.profile_frag) {
                 R.id.itemEdit -> {
                     startActivity(Intent(requireContext(), EditProfileActivity::class.java))
                 }
+
+                R.id.itemChange -> {
+                    startActivity(Intent(requireContext(), ChangePasswordAct::class.java))
+                }
+
                 else -> {
                     Pref.isLogin = false
                     BaseViewModel.userResponsive.value = null

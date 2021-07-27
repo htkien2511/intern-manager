@@ -3,10 +3,12 @@ package com.example.manager_intern.ui.feedback
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.recyclerview.widget.RecyclerView
 import com.example.manager_intern.R
 import com.example.manager_intern.data.remote.responsive.FeedbackData
 import com.example.manager_intern.databinding.ItemFeedbackBinding
+import com.example.manager_intern.utils.Pref
 
 class FeedbackAdapter(val list: List<FeedbackData>) :
     RecyclerView.Adapter<FeedbackAdapter.FeedbackViewHolder>() {
@@ -17,6 +19,29 @@ class FeedbackAdapter(val list: List<FeedbackData>) :
 
         fun onBind(item: FeedbackData) {
             binding.tvFeedback.text = item.feedbackContent
+
+            val constraintSet = ConstraintSet()
+            constraintSet.clone(binding.root)
+
+            binding.tvUser.text = item.user
+
+            if (item.userId == Pref.userId) {
+                constraintSet.connect(
+                    binding.rlMessage.id,
+                    ConstraintSet.END,
+                    ConstraintSet.PARENT_ID,
+                    ConstraintSet.END,
+                    0
+                )
+            } else {
+                constraintSet.connect(
+                    binding.rlMessage.id,
+                    ConstraintSet.START,
+                    ConstraintSet.PARENT_ID,
+                    ConstraintSet.START,
+                    0
+                )
+            }
         }
     }
 

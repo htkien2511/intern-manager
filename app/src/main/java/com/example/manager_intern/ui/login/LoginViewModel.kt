@@ -3,6 +3,7 @@ package com.example.manager_intern.ui.login
 import com.example.manager_intern.base.BaseViewModel
 import com.example.manager_intern.data.model.ROLE
 import com.example.manager_intern.utils.Constants
+import com.example.manager_intern.utils.Pref
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import okhttp3.MultipartBody
@@ -28,8 +29,11 @@ class LoginViewModel : BaseViewModel() {
                             onError.value = "Permission is denied (ADMIN)"
                         } else {
                             userResponsive.value = it
+                            Pref.userId = it.userData.id
+                            Pref.token = it.userData.token
                         }
                     } else {
+                        userResponsive.value = null
                         onError.value = it.message
                     }
                 }, {

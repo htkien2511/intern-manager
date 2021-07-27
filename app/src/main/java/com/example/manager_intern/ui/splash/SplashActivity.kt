@@ -45,8 +45,14 @@ class SplashActivity : BaseActivity<LoginViewModel>() {
 
     override fun initListener() {
         BaseViewModel.userResponsive.observe(this) {
-            userResponsive = it
-            startActivity(Intent(this, MainActivity::class.java))
+            if (it == null) {
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
+            } else {
+                userResponsive = it
+                startActivity(Intent(this, MainActivity::class.java))
+            }
+
         }
     }
 

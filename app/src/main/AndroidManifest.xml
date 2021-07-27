@@ -52,6 +52,10 @@
         <activity
             android:name=".ui.feedback.FeedBackActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".ui.main.user.ChangePasswordAct"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

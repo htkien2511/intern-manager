@@ -4,6 +4,12 @@
         android:id="@+id/itemEdit"
         android:icon="@drawable/ic_baseline_edit_24"
         android:title="Edit profile" />
+
+    <item
+        android:id="@+id/itemChange"
+        android:icon="@drawable/ic_baseline_edit_24"
+        android:title="Change password" />
+
     <item
         android:id="@+id/itemLogout"
         android:icon="@drawable/ic_baseline_login_24"

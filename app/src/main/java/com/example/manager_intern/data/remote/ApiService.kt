@@ -1,5 +1,6 @@
 package com.example.manager_intern.data.remote
 
+import com.example.manager_intern.data.remote.request.ChangePassRequest
 import com.example.manager_intern.data.remote.request.FeedBackRequest
 import com.example.manager_intern.data.remote.request.ScheduleRequest
 import com.example.manager_intern.data.remote.request.TaskRequest
@@ -89,4 +90,10 @@ interface ApiService {
         @Header("Authorization") auth: String,
         @Query("leave_id") leaveId: Int
     ): Single<ForgotResponsive>
+
+    @POST("change-pass")
+    fun changePass(
+        @Header("Authorization") auth: String,
+        @Body request: ChangePassRequest
+    ): Single<ChangePassResponsive>
 }
