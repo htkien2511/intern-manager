@@ -114,8 +114,16 @@ export default function ManageProject() {
   const [filteredData, setFilteredData] = useState([]);
   const storeGetAllProject = useSelector((store) => store.getAllProject);
   const dispatch = useDispatch();
-  const permissions =
-    getAuth().permissionDomains.map((item) => item.name.substring(7)) || [];
+  const getProfileLeader = useSelector((store) => store.getProfileLeader)?.data;
+
+  const [permissions, setPermissions] = useState([]);
+  useEffect(() => {
+    setPermissions(
+      getProfileLeader?.data?.permissionDomains.map((item) =>
+        item.name.substring(7)
+      ) || []
+    );
+  }, [getProfileLeader]);
 
   useEffect(() => {
     dispatch(setTitle("Manage Project"));
@@ -185,7 +193,7 @@ export default function ManageProject() {
       });
     }
     // eslint-disable-next-line
-  }, []);
+  }, [permissions]);
   const [searchText, setSearchText] = useState("");
 
   useEffect(() => {

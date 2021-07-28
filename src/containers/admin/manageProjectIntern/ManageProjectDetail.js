@@ -59,8 +59,16 @@ const ManageProjectDetail = () => {
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
   const [taskSelected, setTaskSelected] = useState({});
-  const permissions =
-    getAuth().permissionDomains.map((item) => item.name.substring(7)) || [];
+  const getProfileLeader = useSelector((store) => store.getProfileLeader)?.data;
+
+  const [permissions, setPermissions] = useState([]);
+  useEffect(() => {
+    setPermissions(
+      getProfileLeader?.data?.permissionDomains.map((item) =>
+        item.name.substring(7)
+      ) || []
+    );
+  }, [getProfileLeader]);
 
   const dispatch = useDispatch();
   const { projectId, projectName } = useParams();
@@ -91,7 +99,7 @@ const ManageProjectDetail = () => {
       }
     });
     // eslint-disable-next-line
-  }, [projectId]);
+  }, [projectId, permissions]);
 
   useEffect(() => {
     dispatch(setTitle("Manage List Tasks"));

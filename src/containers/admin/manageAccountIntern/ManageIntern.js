@@ -110,9 +110,16 @@ export default function ManageIntern() {
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [data, setData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
+  const getProfileLeader = useSelector((store) => store.getProfileLeader)?.data;
 
-  const permissions =
-    getAuth().permissionDomains?.map((item) => item.name.substring(7)) || [];
+  const [permissions, setPermissions] = useState([]);
+  useEffect(() => {
+    setPermissions(
+      getProfileLeader?.data?.permissionDomains.map((item) =>
+        item.name.substring(7)
+      ) || []
+    );
+  }, [getProfileLeader]);
 
   const dispatch = useDispatch();
 
@@ -255,7 +262,7 @@ export default function ManageIntern() {
     }
 
     // eslint-disable-next-line
-  }, []);
+  }, [permissions]);
 
   const renderCell = (column, value, indexRow, row) => {
     switch (column.id) {

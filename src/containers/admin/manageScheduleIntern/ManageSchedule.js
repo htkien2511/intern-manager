@@ -63,8 +63,16 @@ export default function ManageSchedule() {
   const [filteredData, setFilteredData] = useState([]);
 
   const dispatch = useDispatch();
-  const permissions =
-    getAuth().permissionDomains.map((item) => item.name.substring(7)) || [];
+  const getProfileLeader = useSelector((store) => store.getProfileLeader)?.data;
+
+  const [permissions, setPermissions] = useState([]);
+  useEffect(() => {
+    setPermissions(
+      getProfileLeader?.data?.permissionDomains.map((item) =>
+        item.name.substring(7)
+      ) || []
+    );
+  }, [getProfileLeader]);
 
   useEffect(() => {
     dispatch(setTitle("Manage Schedule"));
@@ -126,7 +134,7 @@ export default function ManageSchedule() {
       });
     }
     // eslint-disable-next-line
-  }, []);
+  }, [permissions]);
   const history = useHistory();
 
   const renderCell = (column, value, indexRow, row) => {

@@ -30,8 +30,16 @@ export default function ManageScheduleDetail() {
     dispatch(setTitle("Manage Schedule Detail"));
   }, [dispatch]);
 
-  const permissions =
-    getAuth().permissionDomains.map((item) => item.name.substring(7)) || [];
+  const getProfileLeader = useSelector((store) => store.getProfileLeader)?.data;
+
+  const [permissions, setPermissions] = useState([]);
+  useEffect(() => {
+    setPermissions(
+      getProfileLeader?.data?.permissionDomains.map((item) =>
+        item.name.substring(7)
+      ) || []
+    );
+  }, [getProfileLeader]);
 
   const [dataEvents, setDataEvents] = useState([]);
 
@@ -58,7 +66,7 @@ export default function ManageScheduleDetail() {
       }
     });
     // eslint-disable-next-line
-  }, [internID]);
+  }, [internID, permissions]);
 
   const renderEventContent = (eventInfo) => {
     const renderColorByShift = () => {

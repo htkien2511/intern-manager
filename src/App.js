@@ -56,21 +56,22 @@ import { ManageViewStatistic } from "containers/admin/manageViewStatistic.js";
 import ManagePermissionLeader from "containers/admin/managePermissionLeader.js/ManagePermissionLeader";
 import StatisticDetails from "containers/admin/manageViewStatistic.js/StatisticDetails";
 import InvalidPage from "components/common/InvalidPage";
-import { getAuth } from "utils/helpers";
+import { getAuth, setAuth } from "utils/helpers";
 import { useEffect } from "react";
-// import { updatePermissionsLeader } from "redux/actions/login";
-import { getProfileIntern } from "redux/actions/intern/getProfileIntern";
 import { toast } from "react-toastify";
-import { updatePermissionsLeader } from "redux/actions/login";
+import { getProfileLeader } from "redux/actions/admin/getProfilleLeader";
 
 function App() {
-  // update permissions for leader when refresh page
-
   useEffect(() => {
     if (getAuth().role === "ROLE_MANAGER") {
-      getProfileIntern(getAuth().id, (res) => {
+      getProfileLeader(getAuth().id, (res) => {
         if (res.success) {
-          updatePermissionsLeader(res?.data?.permissionDomains);
+          setAuth({
+            ...getAuth(),
+            permissionDomains: res?.data.permissionDomains.map(
+              (item) => item.name.substring(7) || []
+            ),
+          });
         } else {
           toast.error(res.message);
         }
