@@ -70,10 +70,7 @@ function App() {
     if (getAuth().role === "ROLE_MANAGER") {
       getProfileIntern(getAuth().id, (res) => {
         if (res.success) {
-          const newPermissions = res?.permissionDomains || [];
-          if (newPermissions.length) {
-            updatePermissionsLeader(newPermissions);
-          }
+          updatePermissionsLeader(res?.data?.permissionDomains);
         } else {
           toast.error(res.message);
         }
