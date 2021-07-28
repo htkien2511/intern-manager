@@ -168,7 +168,7 @@ export default function ManagePermissionLeader() {
       )
     ) {
       toast.warn(
-        "Please choose GetAll permission before choosing Edit or Delete permission"
+        "Please choose GetAll permission before choosing Edit, Delete permission or choose GetAllIntern before choosing GetScheduleOfUser"
       );
       return;
     }
@@ -204,6 +204,9 @@ export default function ManagePermissionLeader() {
       !input.includes("GetScheduleOfUser") &&
       input.includes("EditSchedule")
     ) {
+      return false;
+    }
+    if (!input.includes("GetAllUsers") && input.includes("GetScheduleOfUser")) {
       return false;
     }
     return true;
