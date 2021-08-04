@@ -17,6 +17,7 @@ import ErrorPage from "components/common/ErrorPage";
 import IconEye from "assets/icons/TTM_Icon-Eye.svg";
 import { useHistory } from "react-router-dom";
 import { ROUTE_MANAGE_SCHEDULE } from "utils/routes";
+import { addLeaveSchedule } from "redux/actions/intern/addLeaveSchedule";
 
 export default function ManageScheduleDetail() {
   const dispatch = useDispatch();
@@ -31,6 +32,13 @@ export default function ManageScheduleDetail() {
   }, [dispatch]);
 
   const getProfileLeader = useSelector((store) => store.getProfileLeader)?.data;
+  const [workingWeek, setWorkingWeek] = useState([]);
+  const curr = new Date();
+  const [firstDateWeek, setFirstDateWeek] = useState(
+    new Date().getDate() -
+      new Date().getDay() +
+      (new Date().getDay() === 0 ? -6 : 1)
+  );
 
   const [permissions, setPermissions] = useState([]);
   useEffect(() => {
@@ -63,10 +71,34 @@ export default function ManageScheduleDetail() {
           });
         });
         setDataEvents(arr);
+
+        // create schedule for intern when intern have not create new schedule for new week.
+        if (!res.data.length) return;
+        if (
+          !res.data
+            .map((_item) => _item.time)
+            .includes(workingWeek[0].leave_date)
+        ) {
+          console.log(res.data);
+          console.log(workingWeek);
+          workingWeek.forEach((element, index) => {
+            const formData = {
+              shift_date: element.shift_date,
+              leave_date: element.leave_date,
+              reason_content: "nothing",
+            };
+            addLeaveSchedule(formData, (res) => {
+              if (!res.success) {
+                toast.error(res.message);
+              }
+            });
+          });
+        } else {
+          console.log("updatedddd");
+        }
       }
     });
-    // eslint-disable-next-line
-  }, [internID, permissions]);
+  }, [internID, permissions, workingWeek]);
 
   const renderEventContent = (eventInfo) => {
     const renderColorByShift = () => {
@@ -78,7 +110,7 @@ export default function ManageScheduleDetail() {
         case 2:
           return "#f19402";
         default:
-          return "white";
+          return "blue";
       }
     };
     return (
@@ -123,49 +155,38 @@ export default function ManageScheduleDetail() {
     });
   };
 
-  // const [workingWeek, setWorkingWeek] = useState([]);
-  // const curr = new Date();
-  // const [firstDateWeek, setFirstDateWeek] = useState(
-  //   new Date().getDate() -
-  //     new Date().getDay() +
-  //     (new Date().getDay() === 0 ? -6 : 1)
-  // );
-
-  // useEffect(() => {
-  //   if (curr.getTime() > new Date(curr.setDate(firstDateWeek + 4)).getTime()) {
-  //     setFirstDateWeek(firstDateWeek + 7);
-  //     let array = [];
-  //     [1, 2, 3, 4, 5].forEach((item) => {
-  //       let date = new Date(curr.setDate(firstDateWeek + 6 + item));
-  //       array.push(date);
-  //     });
-  //     setWorkingWeek(array);
-  //   }
-  //   // eslint-disable-next-line
-  // }, []);
-
-  // function handleAddLeaveSchedule() {
-  //   if (
-  //     !(
-  //       permissions.includes("CreateSchedule") ||
-  //       getAuth().role === "ROLE_ADMIN"
-  //     )
-  //   ) {
-  //     toast.error("Sorry, you are not authorized to create schedule.");
-  //     return;
-  //   }
-  //   if (
-  //     dataEvents
-  //       .map((i) => moment(i.date).format("YYYY/MM/DD"))
-  //       .includes(
-  //         workingWeek.map((item) => moment(item).format("YYYY/MM/DD"))[0]
-  //       )
-  //   ) {
-  //     toast.warn("You're only edited schedule!");
-  //     return;
-  //   }
-  //   setShowModal(true);
-  // }
+  useEffect(() => {
+    if (
+      curr.getTime() > new Date(new Date().setDate(firstDateWeek + 4)).getTime()
+    ) {
+      setFirstDateWeek(firstDateWeek + 7);
+      let array = [];
+      [1, 2, 3, 4, 5].forEach((item) => {
+        let date = moment(
+          new Date(new Date().setDate(firstDateWeek + 6 + item))
+        ).format("YYYY/MM/DD");
+        array.push({
+          leave_date: date,
+          shift_date: 3,
+        });
+      });
+      setWorkingWeek(array);
+    } else {
+      setFirstDateWeek(firstDateWeek);
+      let array = [];
+      [1, 2, 3, 4, 5].forEach((item) => {
+        let date = moment(
+          new Date(new Date().setDate(firstDateWeek - 1 + item))
+        ).format("YYYY/MM/DD");
+        array.push({
+          leave_date: date,
+          shift_date: 3,
+        });
+      });
+      setWorkingWeek(array);
+    }
+    // eslint-disable-next-line
+  }, []);
 
   const [intern, setIntern] = useState({});
 
