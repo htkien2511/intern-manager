@@ -247,7 +247,7 @@ export const ContentModal = ({
             }}
           />
           {showButtonSave && (
-            <div className="flex items-center">
+            <div className="flex items-center  block__action__feedback">
               <button
                 className="button button--secondary"
                 onClick={() => {
@@ -276,6 +276,13 @@ export const ContentModal = ({
                               );
                               setShowButtonSave(false);
                               setContentFeedback("");
+
+                              document.querySelector(
+                                ".modal__content"
+                              ).scrollTop =
+                                document.querySelector(
+                                  ".modal__content"
+                                ).scrollHeight;
                             } else {
                               toast.error(r.message);
                             }
@@ -374,7 +381,14 @@ const ModalFeedbackContainer = styled.div`
       max-height: 600px !important;
       overflow-y: scroll;
       .content__inner {
+        padding: 10px 20px 0 20px !important;
         & > div {
+          &:last-child {
+            position: sticky;
+            bottom: 0px;
+            z-index: 99999;
+            background: white;
+          }
           &:not(:last-child) {
             border-bottom: 0.5px solid #e4e1e1;
           }
@@ -395,6 +409,9 @@ const ModalFeedbackContainer = styled.div`
               height: 50px;
             }
           }
+        }
+        .block__action__feedback {
+          margin-bottom: 10px;
         }
       }
     }

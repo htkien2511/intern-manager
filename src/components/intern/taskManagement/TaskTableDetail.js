@@ -7,20 +7,31 @@ import { useSelector } from "react-redux";
 import SpinLoading from "components/common/core/SpinLoading";
 import { toast } from "react-toastify";
 import { changeStatusTask } from "redux/actions/intern/changeStatusTask";
-import { RollbackOutlined } from "@ant-design/icons";
+import { CommentOutlined, RollbackOutlined } from "@ant-design/icons";
 import { Empty } from "antd";
 import { ManageFeedback } from "containers/admin/manageFeedback";
 import { ROUTE_TASK_MANAGEMENT } from "utils/routes";
+import { Badge } from "antd";
+import { getAllFeedbacksByTaskID } from "redux/actions/admin/getAllFeedbacksByTaskID";
 function TaskManagementDetail() {
   const { projectId } = useParams();
   const [form, setForm] = React.useState([]);
+
   useEffect(() => {
     getTaskProjectIntern(projectId, (output) => {
-      if (!output.data) return;
-      setForm(output.data);
+      if (output.success) {
+        let arr = [];
+        output.data.forEach((_data) => {
+          getAllFeedbacksByTaskID(_data.taskId, (r) => {
+            if (r.success) {
+              arr.push({ ..._data, feedBacks: r.data ? r.data.length : 0 });
+            }
+          });
+        });
+        setForm(arr);
+      }
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [projectId]);
 
   const storeGetTaskProjectIntern = useSelector(
     (store) => store.getTaskProjectIntern
@@ -66,6 +77,7 @@ function TaskManagementDetail() {
   const [taskSelected, setTaskSelected] = useState();
 
   const handleOpenFeedback = (item) => {
+    console.log(item);
     setTaskSelected(item);
     setShowModalFeedback(true);
   };
@@ -120,7 +132,7 @@ function TaskManagementDetail() {
                       "Due date",
                       "Level",
                       "Status",
-                      "Actions",
+                      "Feedbacks",
                     ].map((item, index) => {
                       return <th key={index}>{item}</th>;
                     })}
@@ -161,13 +173,15 @@ function TaskManagementDetail() {
                             </button>
                           </td>
                           <td>
-                            <button
-                              className="button button--secondary"
-                              onClick={() => handleOpenFeedback(item)}
-                              style={{ background: "gray" }}
-                            >
-                              Feedback
-                            </button>
+                            <Badge count={item.feedBacks} showZero>
+                              <button
+                                className="button button--secondary"
+                                onClick={() => handleOpenFeedback(item)}
+                                style={{ background: "gray" }}
+                              >
+                                <CommentOutlined />
+                              </button>
+                            </Badge>
                           </td>
                         </tr>
                       );
@@ -185,6 +199,9 @@ function TaskManagementDetail() {
           setOpenModal={setShowModalFeedback}
           title="List Feedbacks"
           task={taskSelected}
+          data={form}
+          setData={setForm}
+          projectId={projectId}
         />
       )}
     </>

@@ -137,6 +137,7 @@ const ManageProjectDetail = () => {
   const storeGetAllTasks = useSelector((store) => store.getAllTasksByProjectID);
 
   const renderTable = (input) => {
+    console.log(input);
     return (
       <div className="test-library__inner__content__test-plan">
         <h2
@@ -296,6 +297,7 @@ const ManageProjectDetail = () => {
   };
 
   const handleActions = (item, action) => {
+    console.log(item);
     switch (action) {
       case "See":
         setShowModalSeeDetails(true);
