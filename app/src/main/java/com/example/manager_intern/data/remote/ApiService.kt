@@ -18,8 +18,11 @@ interface ApiService {
     @POST("register")
     fun postRegister(@Body body: RequestBody): Observable<RegisterResponsive>
 
-    @GET("manager_profile")
-    fun getProfile(@Header("Authorization") auth: String): Observable<UserResponsive>
+    @GET("user_profile")
+    fun getProfile(
+        @Header("Authorization") auth: String,
+        @Query("id_user") id: Int
+    ): Observable<UserResponsive>
 
     @GET("project")
     fun getProjects(
@@ -96,4 +99,11 @@ interface ApiService {
         @Header("Authorization") auth: String,
         @Body request: ChangePassRequest
     ): Single<ChangePassResponsive>
+
+    @POST("user/change_avatar")
+    fun changeAvatar(
+        @Header("Authorization") auth: String,
+        @Query("user_id") id: Int,
+        @Body avatar: String
+    ): Observable<ChangePassResponsive>
 }

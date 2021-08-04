@@ -29,4 +29,6 @@ data class UserData(
     val role: String,
     @SerializedName("token")
     var token: String,
+    @SerializedName("avatar")
+    var avatar: String
 )

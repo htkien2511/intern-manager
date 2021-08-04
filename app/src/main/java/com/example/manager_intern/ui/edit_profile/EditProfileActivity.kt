@@ -2,12 +2,14 @@ package com.example.manager_intern.ui.edit_profile
 
 import android.R
 import android.widget.ArrayAdapter
+import com.bumptech.glide.Glide
 import com.example.manager_intern.base.BaseActivity
 import com.example.manager_intern.base.BaseViewModel
 import com.example.manager_intern.data.model.Gender
 import com.example.manager_intern.data.remote.responsive.DepartmentData
 import com.example.manager_intern.data.remote.responsive.UserData
 import com.example.manager_intern.databinding.EditProfileActBinding
+import com.example.manager_intern.utils.Pref
 
 class EditProfileActivity : BaseActivity<EditProfileViewModel>() {
 
@@ -25,6 +27,8 @@ class EditProfileActivity : BaseActivity<EditProfileViewModel>() {
         options = Gender.values().map { it.value }
         genderAdapter = ArrayAdapter(this, R.layout.simple_spinner_item, listOf("Male", "Female"))
         binding.spinnerGender.adapter = genderAdapter
+
+        Glide.with(this).load(Pref.avatar).circleCrop().into(binding.imgAvatar)
     }
 
     override fun initListener() {

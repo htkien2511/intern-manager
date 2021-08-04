@@ -3,7 +3,9 @@ package com.example.manager_intern.extensions
 import android.app.AlertDialog
 import androidx.fragment.app.FragmentActivity
 import com.example.manager_intern.R
-import java.lang.Exception
+import com.example.manager_intern.utils.AppUtils
+import com.example.manager_intern.utils.DialogUtils
+import com.tbruyelle.rxpermissions2.RxPermissions
 
 private var alertDialog: AlertDialog? = null
 
@@ -30,4 +32,29 @@ fun FragmentActivity.closeProgress() {
     } catch (e: Exception) {
         e.printStackTrace()
     }
+}
+
+fun FragmentActivity.requestPermission(
+    permission: String,
+    permissionGranted: (() -> Unit)? = null
+) {
+    val rxPermissions = RxPermissions(this)
+    rxPermissions
+        .request(permission)
+        .subscribe { granted: Boolean ->
+            if (granted) { // Always true pre-M
+                permissionGranted?.invoke()
+            } else {
+                DialogUtils.showMessage(
+                    context = this,
+                    title = resources.getString(R.string.permission_failed_title),
+                    message = resources.getString(R.string.permission_failed_message),
+                    positiveText = getString(R.string.cancel),
+                    negativeText = getString(R.string.ok),
+                    negativeClick = { _, _ ->
+                        AppUtils.goToSettings(this, 9999)
+                    }
+                )
+            }
+        }
 }

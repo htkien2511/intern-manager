@@ -14,4 +14,9 @@
         android:id="@+id/itemLogout"
         android:icon="@drawable/ic_baseline_login_24"
         android:title="@string/logout" />
+
+    <item
+        android:id="@+id/itemAvatar"
+        android:icon="@drawable/ic_baseline_login_24"
+        android:title="Change avatar" />
 </menu>

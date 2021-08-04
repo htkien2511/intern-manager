@@ -39,7 +39,6 @@ abstract class BaseActivity<T : BaseViewModel> : AppCompatActivity() {
             }
         })
 
-        //setStatusBar()
         initView()
         initListener()
     }
@@ -72,11 +71,11 @@ abstract class BaseActivity<T : BaseViewModel> : AppCompatActivity() {
         Toasty.error(this, message, Toast.LENGTH_SHORT, true).show()
     }
 
-    private fun showLoading() {
+    fun showLoading() {
         showProgress()
     }
 
-    private fun closeLoading() {
+    fun closeLoading() {
         closeProgress()
     }
 }

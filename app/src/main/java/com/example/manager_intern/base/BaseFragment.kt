@@ -47,11 +47,11 @@ abstract class BaseFragment<T : BaseViewModel>(layoutId: Int) : Fragment(layoutI
         Toasty.error(requireContext(), message, Toast.LENGTH_SHORT, true).show()
     }
 
-    private fun showLoading() {
+    fun showLoading() {
         activity?.showProgress()
     }
 
-    private fun closeLoading() {
+    fun closeLoading() {
         activity?.closeProgress()
     }
 }

@@ -42,4 +42,7 @@
     <string name="address">Address</string>
     <string name="gender">Gender</string>
     <string name="enter_old_password">Enter old password</string>
+    <string name="permission_failed_title">Permission not allow</string>
+    <string name="permission_failed_message">Permission is not allowed. Please go to the setting and enabled this permission for uploading</string>
+    <string name="ok">Ok</string>
 </resources>

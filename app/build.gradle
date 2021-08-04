@@ -109,4 +109,8 @@ dependencies {
 
     // toast
     implementation 'com.github.GrenderG:Toasty:1.5.0'
+
+    implementation group: 'com.cloudinary', name: 'cloudinary-android', version: '1.30.0'
+
+    implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
 }
