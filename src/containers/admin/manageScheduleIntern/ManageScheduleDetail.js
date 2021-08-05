@@ -53,6 +53,8 @@ export default function ManageScheduleDetail() {
   function getUniqueListBy(arr, key) {
     return [...new Map(arr.map((item) => [item[key], item])).values()];
   }
+
+  const createSchedule = useSelector((store) => store.createSchedule);
   useEffect(() => {
     if (
       !(
@@ -92,8 +94,9 @@ export default function ManageScheduleDetail() {
               if (!res.success) {
                 toast.error(res.message);
               } else {
-                // handle lai sau ***
-                window.location.reload();
+                console.log("adddinggg");
+                // // handle lai sau ***
+                // window.location.reload();
               }
             });
           });
@@ -102,7 +105,7 @@ export default function ManageScheduleDetail() {
         }
       }
     });
-  }, [internID, permissions, workingWeek]);
+  }, [internID, permissions, workingWeek, createSchedule?.data]);
 
   const renderEventContent = (eventInfo) => {
     const renderColorByShift = () => {
@@ -207,12 +210,13 @@ export default function ManageScheduleDetail() {
 
   const loadingIntern = useSelector((store) => store.getProfileIntern).loading;
   const editSchedule = useSelector((store) => store.updateSchedule).loading;
-  const createSchedule = useSelector((store) => store.addLeaveSchedule).loading;
   const history = useHistory();
 
   return (
     <div className="manage-schedule-detail">
-      {(loadingIntern || editSchedule || createSchedule) && <SpinLoading />}
+      {(loadingIntern || editSchedule || createSchedule?.loading) && (
+        <SpinLoading />
+      )}
       <div className="manage-schedule-detail__inner">
         <div
           className="block__header flex items-center space-between"
@@ -271,6 +275,14 @@ export default function ManageScheduleDetail() {
                   <div
                     style={{
                       background: "red",
+                    }}
+                  ></div>
+                </div>
+                <div className="flex">
+                  <span>Working normal</span>
+                  <div
+                    style={{
+                      background: "blue",
                     }}
                   ></div>
                 </div>
