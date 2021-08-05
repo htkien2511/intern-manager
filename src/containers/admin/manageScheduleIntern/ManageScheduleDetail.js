@@ -50,7 +50,9 @@ export default function ManageScheduleDetail() {
   }, [getProfileLeader]);
 
   const [dataEvents, setDataEvents] = useState([]);
-
+  function getUniqueListBy(arr, key) {
+    return [...new Map(arr.map((item) => [item[key], item])).values()];
+  }
   useEffect(() => {
     if (
       !(
@@ -70,26 +72,28 @@ export default function ManageScheduleDetail() {
             id: item.id,
           });
         });
-        setDataEvents(arr);
+        setDataEvents(getUniqueListBy(arr, "date"));
 
         // create schedule for intern when intern have not create new schedule for new week.
-        if (!res.data.length) return;
+        // if (!res.data.length) return;
         if (
           !res.data
             .map((_item) => _item.time)
             .includes(workingWeek[0].leave_date)
         ) {
-          console.log(res.data);
-          console.log(workingWeek);
           workingWeek.forEach((element, index) => {
             const formData = {
               shift_date: element.shift_date,
               leave_date: element.leave_date,
-              reason_content: "nothing",
+              reason_content: "",
+              user_id: internID,
             };
             addLeaveSchedule(formData, (res) => {
               if (!res.success) {
                 toast.error(res.message);
+              } else {
+                // handle lai sau ***
+                window.location.reload();
               }
             });
           });

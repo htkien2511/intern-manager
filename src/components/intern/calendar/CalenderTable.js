@@ -133,6 +133,7 @@ function CalenderTable() {
               shift_date: element.shift_date,
               leave_date: element.leave_date,
               reason_content: element.reason_content.trim(),
+              user_id: getAuth()?.id,
             };
             addLeaveSchedule(formData, (res) => {
               if (!res.success) {

@@ -9,6 +9,7 @@ export function addLeaveSchedule(input, resolve = () => {}) {
     shift: input.shift_date,
     leave_date: input.leave_date,
     reason_content: input.reason_content,
+    user_id: input.user_id,
   };
   return fetch(`${process.env.REACT_APP_API_URL}schedule/add`, {
     method: "POST",
