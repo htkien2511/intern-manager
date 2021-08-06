@@ -1,6 +1,7 @@
 package com.example.manager_intern.ui.edit_profile
 
 import android.R
+import android.content.Intent
 import android.widget.ArrayAdapter
 import com.bumptech.glide.Glide
 import com.example.manager_intern.base.BaseActivity
@@ -9,11 +10,13 @@ import com.example.manager_intern.data.model.Gender
 import com.example.manager_intern.data.remote.responsive.DepartmentData
 import com.example.manager_intern.data.remote.responsive.UserData
 import com.example.manager_intern.databinding.EditProfileActBinding
+import com.example.manager_intern.ui.main.MainActivity
+import com.example.manager_intern.ui.main.user.UserViewModel
 import com.example.manager_intern.utils.Pref
 
-class EditProfileActivity : BaseActivity<EditProfileViewModel>() {
+class EditProfileActivity : BaseActivity<UserViewModel>() {
 
-    override var viewModelFactory: Class<EditProfileViewModel> = EditProfileViewModel::class.java
+    override var viewModelFactory: Class<UserViewModel> = UserViewModel::class.java
 
     override val binding by viewBinding(EditProfileActBinding::inflate)
 
@@ -48,7 +51,10 @@ class EditProfileActivity : BaseActivity<EditProfileViewModel>() {
         viewModel?.userUpdatedResponsive?.observe(this) {
             it.userData.token = user!!.token
             BaseViewModel.userResponsive.value = it
-            onBackPressed()
+            Intent(this, MainActivity::class.java).apply {
+                putExtra("test", 1)
+                startActivity(this)
+            }
         }
 
         binding.btnUpdate.setOnClickListener {

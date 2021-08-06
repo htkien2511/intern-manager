@@ -14,7 +14,12 @@ class MainActivity : BaseActivity<MainViewModel>() {
     override val binding by viewBinding(MainActBinding::inflate)
 
     override fun initView() {
-        loadFragment(HomeFragment())
+        if (intent.getIntExtra("test", 0) == 1) {
+            binding.bottomNav.selectedItemId = R.id.bottomNavUser
+            loadFragment(UserFragment())
+        } else{
+            loadFragment(HomeFragment())
+        }
     }
 
     override fun initListener() {
