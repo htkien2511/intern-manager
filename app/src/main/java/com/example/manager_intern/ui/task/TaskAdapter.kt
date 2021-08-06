@@ -9,6 +9,9 @@ import com.example.manager_intern.R
 import com.example.manager_intern.data.remote.responsive.TaskData
 import com.example.manager_intern.databinding.ItemTaskBinding
 import com.example.manager_intern.extensions.animateCollapse
+import java.text.DateFormat
+import java.text.SimpleDateFormat
+import java.util.*
 
 class TaskAdapter(
     val tasks: List<TaskData>,
@@ -50,13 +53,18 @@ class TaskAdapter(
                     imgUp.animateCollapse()
                 }
 
+                val format: DateFormat = SimpleDateFormat("yyyy/MM/dd")
+                val calendar: Calendar = Calendar.getInstance()
+                calendar.firstDayOfWeek = Calendar.MONDAY
+
+                val date = item.dueDate ?: format.format(calendar.time)
                 tvTask.text = item.title
                 chkIsDone.isChecked = item.isDone
                 tvDescription.text = root.context.getString(R.string.des, item.description)
                 tvPoint.text = root.context.getString(R.string.point, item.point.toString())
                 tvPeople.text = root.context.getString(R.string.people,
                         item.usersAssignee.joinToString(", ") { it.name })
-                tvDuedate.text = root.context.getString(R.string.duedate, item.dueDate)
+                tvDuedate.text = root.context.getString(R.string.duedate, date)
             }
         }
     }

@@ -10,6 +10,7 @@ import com.example.manager_intern.data.remote.request.ScheduleRequest
 import com.example.manager_intern.data.remote.responsive.ScheduleData
 import com.example.manager_intern.data.remote.responsive.UserData
 import com.example.manager_intern.databinding.ShiftFragBinding
+import com.example.manager_intern.utils.Pref
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -68,7 +69,8 @@ class ShiftFragment : BaseFragment<ScheduleViewModel>(R.layout.shift_frag) {
                 }
 
                 if (listShift[i] != 3) {
-                    val body = ScheduleRequest("Personal reason", dates[i], listShift[i])
+                    val body =
+                        ScheduleRequest("Personal reason", dates[i], listShift[i], Pref.userId)
                     if (userData != null) {
                         if (daysOffString.contains(dates[i])) {
                             val index = daysOffString.indexOf(dates[i]);
@@ -98,7 +100,10 @@ class ShiftFragment : BaseFragment<ScheduleViewModel>(R.layout.shift_frag) {
         val calendar: Calendar = Calendar.getInstance()
         calendar.firstDayOfWeek = Calendar.MONDAY
 
-        if (calendar.get(Calendar.DAY_OF_WEEK) == 7 || calendar.get(Calendar.DAY_OF_WEEK) == 1) {
+        if (calendar.get(Calendar.DAY_OF_WEEK) == 7 || calendar.get(Calendar.DAY_OF_WEEK) == 1 || calendar.get(
+                Calendar.DAY_OF_WEEK
+            ) == 6
+        ) {
             calendar.add(Calendar.DAY_OF_WEEK, 7)
             binding.btnSubmitShift.visibility = View.VISIBLE
         }

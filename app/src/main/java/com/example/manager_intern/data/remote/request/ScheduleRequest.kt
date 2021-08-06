@@ -9,4 +9,6 @@ data class ScheduleRequest(
     val time: String,
     @SerializedName("shift")
     val shift: Int,
+    @SerializedName("user_id")
+    val userId: Int
 )

@@ -1,6 +1,8 @@
 package com.example.manager_intern.ui.task
 
 import android.content.Intent
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.manager_intern.R
 import com.example.manager_intern.base.BaseActivity
@@ -11,6 +13,10 @@ import com.example.manager_intern.data.remote.responsive.TaskData
 import com.example.manager_intern.data.remote.responsive.UserData
 import com.example.manager_intern.databinding.DetailTaskActBinding
 import com.example.manager_intern.ui.feedback.FeedBackActivity
+import java.lang.Exception
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 class TaskActivity : BaseActivity<TaskViewModel>() {
 
@@ -23,20 +29,39 @@ class TaskActivity : BaseActivity<TaskViewModel>() {
 
     private var userData: UserData? = null
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun initView() {
         taskAdapter = TaskAdapter(data, { task, isChecked ->
-            val taskRequest = TaskRequest(
-                task.taskId,
-                task.description,
-                task.title,
-                1,
-                isChecked,
-                task.point,
-                task.dueDate ?: "",
-                task.usersAssignee
-            )
-            if (userData != null) {
-                viewModel?.updateTask(userData!!.token, taskRequest)
+            try {
+                DateTimeFormatter.ofPattern("yyyy/MM/dd").format(LocalDate.parse(task.dueDate?.split(" ")?.get(0), DateTimeFormatter.ISO_DATE)).apply {
+                    val taskRequest = TaskRequest(
+                        task.taskId,
+                        task.description,
+                        task.title,
+                        1,
+                        isChecked,
+                        task.point,
+                        this,
+                        task.usersAssignee
+                    )
+                    if (userData != null) {
+                        viewModel?.updateTask(userData!!.token, taskRequest)
+                    }
+                }
+            } catch (e: Exception) {
+                val taskRequest = TaskRequest(
+                    task.taskId,
+                    task.description,
+                    task.title,
+                    1,
+                    isChecked,
+                    task.point,
+                    "2021/08/06",
+                    task.usersAssignee
+                )
+                if (userData != null) {
+                    viewModel?.updateTask(userData!!.token, taskRequest)
+                }
             }
         }, {
             Intent(this, FeedBackActivity::class.java)
