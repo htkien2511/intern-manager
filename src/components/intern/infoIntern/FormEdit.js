@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { isEmpty, isEmail } from "validator";
 import { getProfileIntern } from "redux/actions/intern/getProfileIntern";
-import { getAuth } from "utils/helpers";
+import { getAuth, setAuth } from "utils/helpers";
 import { Tabs } from "antd";
 import { getAllDepartments } from "redux/actions/getAllDepartments";
 import { Input } from "reactstrap";
@@ -211,7 +211,15 @@ function FormEdit() {
                 uploadImage(event.target.files[0], (res) => {
                   setImageUrl(res);
                   localStorage.setItem("imageUrl", res);
-                  changeAvatar({ user_id: getAuth()?.id, url_avatar: res });
+                  changeAvatar(
+                    { user_id: getAuth()?.id, url_avatar: res },
+                    (r) => {
+                      if (r.success) {
+                        const temp = getAuth();
+                        setAuth({ ...temp, avatar: `/${res}/` });
+                      }
+                    }
+                  );
                 });
               }}
             />
