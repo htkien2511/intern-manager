@@ -112,13 +112,11 @@ function CalenderTable() {
   }, []);
 
   useEffect(() => {
-    setEnabledSubmit(
-      curr.getDay() === 5 || curr.getDay() === 0 || curr.getDay() === 6
-    );
+    setEnabledSubmit(curr.getDay() === 0 || curr.getDay() === 6);
     // eslint-disable-next-line
   }, []);
   const handleSubmit = () => {
-    if (curr.getDay() === 5 || curr.getDay() === 0 || curr.getDay() === 6) {
+    if (curr.getDay() === 0 || curr.getDay() === 6) {
       getScheduleUserID(getAuth().id, (output) => {
         if (!output.success) {
           toast.error(output.message);
