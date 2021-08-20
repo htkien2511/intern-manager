@@ -10,6 +10,10 @@ const DropdownUserMenu = () => {
 
   const logoutWrapper = useRef(null);
 
+  const storeSetAvatar = useSelector((store) => store.setAvatar);
+
+  console.log(storeSetAvatar.avatar);
+
   const useClickOutside = (ref) => {
     useEffect(() => {
       function handleClickOutside(event) {
@@ -25,13 +29,11 @@ const DropdownUserMenu = () => {
   };
   useClickOutside(logoutWrapper);
   const history = useHistory();
-  const storeUploadImage = useSelector((store) => store.uploadImage);
-
   return (
     <div ref={logoutWrapper} className="style-userContainer">
       {/* <div className="style-userInfor"> */}
       <img
-        src={storeUploadImage.data ? storeUploadImage.data : avatarDefault}
+        src={storeSetAvatar.avatar ? storeSetAvatar.avatar : avatarDefault}
         alt=""
         className="style-avatarContainer"
         onClick={() => setIsShown(!isShown)}

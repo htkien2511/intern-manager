@@ -46,6 +46,7 @@ import getAllUserByLeader from "./admin/getAllUserByLeader";
 import getProfileLeader from "./admin/getProfileLeader";
 import uploadImage from "./intern/uploadImage";
 import changeAvatar from "./intern/changeAvatar";
+import setAvatar from "./intern/setAvatar";
 
 export default combineReducers({
   login,
@@ -95,4 +96,5 @@ export default combineReducers({
   uploadImage,
   getProfileLeader,
   changeAvatar,
+  setAvatar,
 });

@@ -3,21 +3,27 @@ import { NavLink } from "react-router-dom";
 import { ROUTE_EDIT_PROFILE } from "../../../utils/routes";
 import { getProfileIntern } from "redux/actions/intern/getProfileIntern";
 import { getAuth } from "utils/helpers";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import SpinLoading from "components/common/core/SpinLoading";
 import avatarDefault from "assets/images/avtDefault.png";
+import { setAvatar } from "redux/actions/intern/setAvatar";
 
 function FormWatch() {
   const [form, setForm] = useState([]);
+  const dispatch = useDispatch();
   useEffect(() => {
     getProfileIntern(getAuth().id, (output) => {
       if (!output.data) return;
       setForm(output.data);
+      dispatch(setAvatar(output.data.avatar));
     });
+    // eslint-disable-next-line
   }, []);
 
   const loadingGetData = useSelector((store) => store.getProfileIntern).loading;
-  const storeUploadImage = useSelector((store) => store.uploadImage);
+  const storeSetAvatar = useSelector((store) => store.setAvatar);
+
+  console.log(storeSetAvatar.avatar);
 
   return (
     <div className="form-watch">
@@ -27,7 +33,7 @@ function FormWatch() {
           <div className="info_avatar align__center">
             <img
               src={
-                storeUploadImage.data ? storeUploadImage.data : avatarDefault
+                storeSetAvatar.avatar ? storeSetAvatar.avatar : avatarDefault
               }
               className="avatar"
               alt="avatar"

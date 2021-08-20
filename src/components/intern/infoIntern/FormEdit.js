@@ -8,7 +8,7 @@ import { Input } from "reactstrap";
 import { updateAccount } from "redux/actions/updateAccount";
 import { toast } from "react-toastify";
 import { changePassword } from "redux/actions/changePassword";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import SpinLoading from "components/common/core/SpinLoading";
 import { RollbackOutlined } from "@ant-design/icons";
 import { uploadImage } from "redux/actions/intern/uploadImage";
@@ -16,6 +16,7 @@ import avatarDefault from "assets/images/avtDefault.png";
 import { useHistory } from "react-router-dom";
 import { ROUTE_PROFILE } from "utils/routes";
 import { changeAvatar } from "redux/actions/intern/changeAvatar";
+import { setAvatar } from "redux/actions/intern/setAvatar";
 
 function FormEdit() {
   const { TabPane } = Tabs;
@@ -44,10 +45,14 @@ function FormEdit() {
 
   const storeUploadImage = useSelector((store) => store.uploadImage);
 
+  const storeSetAvatar = useSelector((store) => store.setAvatar);
+
+  console.log(storeSetAvatar.avatar);
+
   useEffect(() => {
-    if (!storeUploadImage.data) return;
-    setImageUrl(storeUploadImage.data);
-  }, [storeUploadImage]);
+    if (!storeSetAvatar.avatar) return;
+    setImageUrl(storeSetAvatar.avatar);
+  }, [storeSetAvatar]);
 
   const [departments, setDepartments] = useState([]);
   const [departObject, setDepartObject] = useState([]);
@@ -177,6 +182,8 @@ function FormEdit() {
     console.log(key);
   }
 
+  const dispatch = useDispatch();
+
   const storeUpdateProfile = useSelector((store) => store.updateAccount);
   const storeChangePassword = useSelector((store) => store.changePassword);
 
@@ -217,6 +224,7 @@ function FormEdit() {
                       if (r.success) {
                         const temp = getAuth();
                         setAuth({ ...temp, avatar: `/${res}/` });
+                        dispatch(setAvatar(`/${res}/`));
                       }
                     }
                   );
