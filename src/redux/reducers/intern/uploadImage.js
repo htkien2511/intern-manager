@@ -2,7 +2,7 @@ import { getAuth } from "utils/helpers";
 import * as types from "../../constants";
 
 const initialState = {
-  data: "" || getAuth()?.avatar.substring(1, getAuth()?.avatar.length - 1),
+  data: "" || getAuth()?.avatar?.substring(1, getAuth()?.avatar.length - 1),
   error: {},
   loading: false,
 };
