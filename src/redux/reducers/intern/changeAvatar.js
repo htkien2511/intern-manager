@@ -1,27 +1,26 @@
-import { getAuth } from "utils/helpers";
 import * as types from "../../constants";
 
 const initialState = {
-  data: "" || getAuth()?.avatar.substring(1, getAuth()?.avatar.length - 1),
+  data: {},
   error: {},
   loading: false,
 };
 
 export default function reducer(state = initialState, actions) {
   switch (actions.type) {
-    case types.UPLOAD_IMAGE:
+    case types.CHANGE_AVATAR:
       return {
         ...state,
         loading: true,
         error: {},
       };
-    case types.UPLOAD_IMAGE_SUCCEED:
+    case types.CHANGE_AVATAR_SUCCEED:
       return {
         ...state,
         data: actions.payload,
         loading: false,
       };
-    case types.UPLOAD_IMAGE_FAILED:
+    case types.CHANGE_AVATAR_FAILED:
       return {
         ...state,
         error: actions.payload,

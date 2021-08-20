@@ -15,6 +15,7 @@ import { uploadImage } from "redux/actions/intern/uploadImage";
 import avatarDefault from "assets/images/avtDefault.png";
 import { useHistory } from "react-router-dom";
 import { ROUTE_PROFILE } from "utils/routes";
+import { changeAvatar } from "redux/actions/intern/changeAvatar";
 
 function FormEdit() {
   const { TabPane } = Tabs;
@@ -210,6 +211,7 @@ function FormEdit() {
                 uploadImage(event.target.files[0], (res) => {
                   setImageUrl(res);
                   localStorage.setItem("imageUrl", res);
+                  changeAvatar({ user_id: getAuth()?.id, url_avatar: res });
                 });
               }}
             />
