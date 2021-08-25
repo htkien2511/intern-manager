@@ -22,6 +22,7 @@
         tools:ignore="RtlHardcoded" />
 
     <RelativeLayout
+        android:id="@+id/rlSpiner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dimen_4"
@@ -49,6 +50,14 @@
             android:src="@drawable/ic_baseline_arrow_drop_down_24" />
 
     </RelativeLayout>
+
+    <EditText
+        android:id="@+id/edtReason"
+        app:layout_constraintTop_toBottomOf="@+id/rlSpiner"
+        android:layout_width="match_parent"
+        android:hint="Enter reason"
+        android:minHeight="30dp"
+        android:layout_height="wrap_content"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

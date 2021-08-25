@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintTop_toTopOf="parent"
-            app:spanCount="3"
+            app:spanCount="2"
             tools:listitem="@layout/item_spinner" />
 
         <TextView

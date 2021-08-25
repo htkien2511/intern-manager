@@ -61,6 +61,7 @@ class ShiftFragment : BaseFragment<ScheduleViewModel>(R.layout.shift_frag) {
 
         binding.btnSubmitShift.setOnClickListener {
             val listShift = adapter.listShift
+            val reasons = adapter.reasons
             (0 until listShift.size).forEach { i ->
                 if (daysOffString.contains(dates[i]) && listShift[i] == 3) {
                     val index = daysOffString.indexOf(dates[i]);
@@ -70,7 +71,7 @@ class ShiftFragment : BaseFragment<ScheduleViewModel>(R.layout.shift_frag) {
 
                 if (listShift[i] != 3) {
                     val body =
-                        ScheduleRequest("Personal reason", dates[i], listShift[i], Pref.userId)
+                        ScheduleRequest(reasons[i], dates[i], listShift[i], Pref.userId)
                     if (userData != null) {
                         if (daysOffString.contains(dates[i])) {
                             val index = daysOffString.indexOf(dates[i]);
@@ -102,7 +103,7 @@ class ShiftFragment : BaseFragment<ScheduleViewModel>(R.layout.shift_frag) {
 
         if (calendar.get(Calendar.DAY_OF_WEEK) == 7 || calendar.get(Calendar.DAY_OF_WEEK) == 1 || calendar.get(
                 Calendar.DAY_OF_WEEK
-            ) == 6
+            ) == 3
         ) {
             calendar.add(Calendar.DAY_OF_WEEK, 7)
             binding.btnSubmitShift.visibility = View.VISIBLE

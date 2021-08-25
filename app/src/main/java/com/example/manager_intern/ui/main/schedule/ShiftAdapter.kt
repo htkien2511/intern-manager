@@ -1,5 +1,8 @@
 package com.example.manager_intern.ui.main.schedule
 
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +21,8 @@ class ShiftAdapter(
 ) : BaseRecyclerViewAdapter<String>(list) {
 
     val listShift = mutableListOf(3, 3, 3, 3, 3)
+
+    val reasons = mutableListOf("", "", "", "", "")
 
     override fun setViewHolder(parent: ViewGroup, viewType: Int): BaseViewHolder<String> {
         return ShiftViewHolder(
@@ -52,6 +57,7 @@ class ShiftAdapter(
             val spinnerAdapter =
                 ArrayAdapter(itemView.context, android.R.layout.simple_spinner_item, options)
 
+
             with(binding) {
                 tvDate.text = item
                 spinner.adapter = spinnerAdapter
@@ -63,9 +69,34 @@ class ShiftAdapter(
                     val date = scheduleData[i].time
                     if (item == date) {
                         binding.spinner.setSelection(scheduleData[i].shift)
+                        binding.edtReason.setText(scheduleData[i].reason)
+                        reasons[adapterPosition] = scheduleData[i].reason
                     }
+
+                    Log.d("___TAG", "onBind: ${scheduleData[i].reason}")
+
                 }
             }
+
+            binding.edtReason.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+
+                }
+
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+                }
+
+                override fun afterTextChanged(s: Editable?) {
+                    reasons[adapterPosition] = binding.edtReason.text.toString()
+                }
+
+            })
         }
     }
 }
